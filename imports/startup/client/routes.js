@@ -1,21 +1,22 @@
-import { FlowRouter } from 'meteor/kadira:flow-router';
-import { BlazeLayout } from 'meteor/kadira:blaze-layout';
+import React from 'react';
+import { Router, Route, Switch } from 'react-router';
+import createBrowserHistory from 'history/createBrowserHistory';
 
-// Import needed templates
-import '../../ui/layouts/body/body.js';
-import '../../ui/pages/home/home.js';
-import '../../ui/pages/not-found/not-found.js';
+// route components
+import App from '../../ui/pages/Home/App.js';
+import AuthPageSignIn from '../../ui/pages/SignUp/AuthPageSignIn.js';
 
-// Set up all routes in the app
-FlowRouter.route('/', {
-  name: 'App.home',
-  action() {
-    BlazeLayout.render('App_body', { main: 'App_home' });
-  },
-});
+/*import ListPageContainer from '../../ui/containers/ListPageContainer.js';
+import AuthPageSignIn from '../../ui/pages/AuthPageSignIn.js';
+import AuthPageJoin from '../../ui/pages/AuthPageJoin.js';
+import NotFoundPage from '../../ui/pages/NotFoundPage.js';*/
 
-FlowRouter.notFound = {
-  action() {
-    BlazeLayout.render('App_body', { main: 'App_notFound' });
-  },
-};
+const browserHistory = createBrowserHistory();
+
+export const renderRoutes = () => (
+    <Router history={browserHistory}>
+        <Switch>
+            <Route exact path="/" component={App}/>
+        </Switch>
+    </Router>
+);
