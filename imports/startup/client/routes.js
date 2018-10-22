@@ -1,24 +1,21 @@
 import React from 'react';
-import { Router, Route, Switch } from 'react-router';
-import createBrowserHistory from 'history/createBrowserHistory';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { render } from 'react-dom';
 
 // route components
 import App from '../../ui/pages/Home/App.js';
+import LogIn from '../../ui/pages/LogIn/LogIn.js';
+import SignUp from '../../ui/pages/SignUp/SignUp.js';
 
-/*import ListPageContainer from '../../ui/containers/ListPageContainer.js';
-import AuthPageSignIn from '../../ui/pages/AuthPageSignIn.js';
-import AuthPageJoin from '../../ui/pages/AuthPageJoin.js';
-import NotFoundPage from '../../ui/pages/NotFoundPage.js';*/
-import AuthPageSignUp from '../../ui/pages/SignUp/AuthPageSignIn.js';
-
-const browserHistory = createBrowserHistory();
-
-export const renderRoutes = () => (
-    <Router history={browserHistory}>
-        <Switch>
-            <Route exact path="/" component={App}/>
-            <Route exact path="/signUp" component={AuthPageSignUp}/>
-
-        </Switch>
-    </Router>
-);
+Meteor.startup(() => {
+    render(
+        <Router>
+            <div>
+                <Route exact path="/" component={App} />
+                <Route path="/login" component={LogIn}/>
+                <Route path="/signup" component={SignUp}/>
+            </div>
+        </Router>,
+        document.getElementById('render-target')
+    )
+})
