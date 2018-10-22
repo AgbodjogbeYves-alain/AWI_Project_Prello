@@ -1,4 +1,2 @@
-// Import server startup through a single index entry point
+//Users = new Mongo.Collection('users');
 
-/*import './fixtures.js';
-import './register-api.js';*/
