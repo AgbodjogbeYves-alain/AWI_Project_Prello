@@ -23,3 +23,4 @@ johanbrook:publication-collector  # Test a Meteor publication by collecting its 
 static-html
 nimble:restivus
 accounts-password
+meteortoys:allthings
