@@ -27,9 +27,9 @@ export default class SignUp extends Component {
                 }
             };
 
-            console.log(options);
-
-            Accounts.createUser(options);
+            Accounts.createUser(options, function(error){
+                if(error) alert(error.reason);
+            });
         }
     }
 
