@@ -3,19 +3,47 @@ import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 
 import ForgottenPasswordModal from "../../layouts/ForgottenPasswordModal.js"
+import Alert from "../../partials/Alert.js"
 
 
 export default class LogIn extends Component {
 
+    constructor(props) {
+        super(props);
+     
+        this.state = {
+            alerts: []
+        };
+    }
+
+    addAlert(type, text) {
+        let newAlerts = this.state.alerts;
+        newAlerts.push({type: type, text: text});
+
+        this.setState({
+            alerts: newAlerts
+        });
+    }
+
     handleSubmit = (event) => {
         event.preventDefault();
-        
-        Meteor.loginWithPassword(this.email.value, this.password.value);
+        let that = this;
+        Meteor.loginWithPassword(this.email.value, this.password.value, function(error){
+            if(error) that.addAlert('danger', error.reason);
+            else that.addAlert("success", "You're Loged In !");
+        });
+    }
+
+    renderAlerts(){
+        return this.state.alerts.map(a => (<Alert key={this.state.alerts.indexOf(a)} type={a.type}  text={a.text}/>));
     }
 
     render() {
         return (
             <main>
+                <div className='alert-container'>
+                    {this.renderAlerts()}
+                </div>
                 <section className="section section-shaped section-lg">
                     <div className="shape shape-style-1 bg-gradient-default">
                         <span></span>
