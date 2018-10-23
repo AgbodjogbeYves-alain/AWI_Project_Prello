@@ -17,19 +17,10 @@ export default class SignUp extends Component {
         else if(password != password2) alert("Passwords doesn't match.")
         else if(password.length < 6) alert("Too short password, at least 6 characters.")
         else if(!email || !lastname || !firstname) alert("Some field are empty.")
-        else{
-            let options = {
-                email: email,
-                password: password,
-                profile: {
-                    lastname: lastname,
-                    firstname: firstname
-                }
-            };
-
-            Accounts.createUser(options, function(error){
-                if(error) alert(error.reason);
-            });
+        else {
+           Meteor.call('users.signUp', firstname, lastname, email, password, function(error){
+               if(error) alert(error.reason)
+           });
         }
     }
 

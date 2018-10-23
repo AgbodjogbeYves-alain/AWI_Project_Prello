@@ -26,5 +26,4 @@ simple:json-routes
 react-meteor-data
 accounts-password
 accounts-ui
-accounts-password
 meteortoys:allthings

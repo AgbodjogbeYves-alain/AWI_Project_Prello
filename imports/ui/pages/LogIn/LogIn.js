@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Meteor } from 'meteor/meteor';
+
+import ForgottenPasswordModal from "../../layouts/ForgottenPasswordModal.js"
+
 
 export default class LogIn extends Component {
 
@@ -75,7 +79,7 @@ export default class LogIn extends Component {
                                 </div>
                                 <div className="row mt-3">
                                     <div className="col-6">
-                                        <a href="#" className="text-light">
+                                        <a href="" className="text-light" data-toggle="modal" data-target="#modal-forgottenPassword">
                                             <small>Forgot password?</small>
                                         </a>
                                     </div>
@@ -89,6 +93,7 @@ export default class LogIn extends Component {
                         </div>
                     </div>
                 </section>
+                <ForgottenPasswordModal/>
             </main>
         );
     }
