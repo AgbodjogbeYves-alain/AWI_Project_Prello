@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import Alert from "../../partials/Alert.js";
+import NavBar from "../../partials/NavBar.js"
 
 export default class SignUp extends Component {
 
@@ -52,6 +53,7 @@ export default class SignUp extends Component {
     render() {
         return(
             <main>
+                <NavBar/>
                 <div className='alert-container'>
                     {this.renderAlerts()}
                 </div>

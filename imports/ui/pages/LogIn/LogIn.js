@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
+import NavBar from "../../partials/NavBar.js"
 
 import ForgottenPasswordModal from "../../layouts/ForgottenPasswordModal.js"
 import Alert from "../../partials/Alert.js"
@@ -41,6 +42,7 @@ export default class LogIn extends Component {
     render() {
         return (
             <main>
+                <NavBar/>
                 <div className='alert-container'>
                     {this.renderAlerts()}
                 </div>
