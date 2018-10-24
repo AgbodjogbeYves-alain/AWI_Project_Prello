@@ -44,7 +44,7 @@ class SubscribeForm extends Component {
     }
 
     handleSubmit(event) {
-        axios.post('/signUp/',{ state : this.state})
+        axios.post('/api',{ state : this.state})
             .then((response) => {
                 console.log(response)
             })

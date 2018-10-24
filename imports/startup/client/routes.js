@@ -6,16 +6,24 @@ import { render } from 'react-dom';
 import App from '../../ui/pages/Home/App.js';
 import LogIn from '../../ui/pages/LogIn/LogIn.js';
 import SignUp from '../../ui/pages/SignUp/SignUp.js';
+import Dashboard from '../../ui/pages/Home/Dashboard.js'
+import NavBar from '../../ui/pages/Home/Navbar.js'
 
 Meteor.startup(() => {
+    render(NavBar,document.getElementById('navbar'))
     render(
         <Router>
             <div>
                 <Route exact path="/" component={App} />
                 <Route path="/login" component={LogIn}/>
                 <Route path="/signup" component={SignUp}/>
+                <Route path='/dashboard' component={Dashboard}/>
+
             </div>
         </Router>,
+
         document.getElementById('render-target')
     )
+
+
 })

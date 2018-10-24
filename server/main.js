@@ -4,10 +4,10 @@ import '/imports/startup/server';
 import '/imports/startup/both';
 
 import { JsonRoutes } from 'meteor/simple:json-routes';
-import {Users} from '../imports/startup/server/models/Users'
-
+import {Board} from '../imports/startup/server/models/Boards'
 
 Meteor.startup(() => {
+
     // code to run on server at startup
     JsonRoutes.Middleware.use(function(req, res, next) {
         if(req.query.error) {
@@ -38,4 +38,15 @@ Meteor.startup(() => {
             }
         });
     });
+
+    Meteor.methods({
+        'createBoard' ({boardName}){
+            new SimpleSchema({
+                boardName: { type: String },
+            }).validate({ boardName });
+
+            Board.insert(boardName)
+
+        }
+    })
 });
