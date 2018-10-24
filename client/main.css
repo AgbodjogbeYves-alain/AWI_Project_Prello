@@ -1,5 +1,5 @@
 .alert-container{
-    position: absolute !important;
+    position: fixed !important;
     width: 90%;
     margin: 10px 5% 10px 5%;
     z-index: 1;
@@ -7,5 +7,11 @@
 nav {
     position: fixed !important;
     width: 100%;
-    z-index: 1;
+    z-index: 6;
+}
+.nav-link-icon{
+    padding: 10px 4px 10px 4px !important;
+}
+.section-profile-cover {
+    height: 400px !important;
 }

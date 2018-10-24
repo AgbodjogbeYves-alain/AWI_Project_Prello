@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
-import NavBar from "../../partials/NavBar.js"
+import { withRouter } from "react-router-dom";
 
-import ForgottenPasswordModal from "../../layouts/ForgottenPasswordModal.js"
+import NavBar from "../../partials/NavBar.js"
+import ForgottenPasswordModal from "./ForgottenPasswordModal/ForgottenPasswordModal.js"
 import Alert from "../../partials/Alert.js"
 
 
-export default class LogIn extends Component {
+class LogIn extends Component {
 
     constructor(props) {
         super(props);
@@ -31,7 +32,10 @@ export default class LogIn extends Component {
         let that = this;
         Meteor.loginWithPassword(this.email.value, this.password.value, function(error){
             if(error) that.addAlert('danger', error.reason);
-            else that.addAlert("success", "You're Loged In !");
+            else {
+                that.addAlert("success", "You're Loged In !");
+                that.props.history.push('/myaccount');
+            } 
         });
     }
 
@@ -78,7 +82,7 @@ export default class LogIn extends Component {
                                         <div className="text-center text-muted mb-4">
                                             <small>Or sign in with credentials</small>
                                         </div>
-                                        <form role="form" onSubmit={this.handleSubmit}>
+                                        <form role="form" onSubmit={(event) => this.handleSubmit(event)}>
                                             <div className="form-group mb-3">
                                                 <div className="input-group input-group-alternative">
                                                     <div className="input-group-prepend">
@@ -128,3 +132,5 @@ export default class LogIn extends Component {
         );
     }
 }
+
+export default withRouter(LogIn);
