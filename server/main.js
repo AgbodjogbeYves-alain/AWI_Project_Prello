@@ -5,7 +5,7 @@ import '/imports/startup/both';
 
 import { JsonRoutes } from 'meteor/simple:json-routes';
 import {Users} from '../imports/startup/server/models/Users'
-
+import Card from "../imports/startup/server/models/Card.js"
 
 Meteor.startup(() => {
     // code to run on server at startup
@@ -25,16 +25,13 @@ Meteor.startup(() => {
 
     JsonRoutes.add('post', '/signUp/', function(req, res, next) {
         console.log(req)
-        Meteor.users.insert({
-            username: req.body.state.username,
-            firstname: req.body.state.firstname,
-            lastname: req.body.state.lastname,
-            password: req.body.state.password,
-            email: req.body.state.email
+        Card.insert({
+            cardtitle: "oui",
+            description: "non"
         })
         JsonRoutes.sendResult(res, {
             data: {
-                result: Meteor.users.find().fetch()
+                result: Card.find().fetch()
             }
         });
     });
