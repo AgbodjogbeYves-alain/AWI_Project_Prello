@@ -13,11 +13,9 @@ export default class Dashboard extends Component {
         return(
             <div>
                 <Navbar/>
-                <Route render={({ history}) => (
                 <button type='button'>
                     <Link to="/signup">Click Me!</Link>
                 </button>
-            )} />
             </div>
         )
     }

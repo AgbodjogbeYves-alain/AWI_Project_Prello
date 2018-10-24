@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { render } from 'react-dom';
+
 import ModalFormCreateInBoard from "../../../client/components/Dashboard/ModalFormCreateInBoard";
 
 export default class Navbar extends Component {
@@ -9,8 +10,6 @@ export default class Navbar extends Component {
         super(props);
         this.state = {
             showModal: false,
-            privacy: '',
-            boardName: ''
         };
 
         this.handleOpenModal = this.handleOpenModal.bind(this);
@@ -81,7 +80,7 @@ export default class Navbar extends Component {
                             </div>
                         </li>
                     </ul>
-                        <ModalFormCreateInBoard showModal={this.state.showModal}/>
+                        <ModalFormCreateInBoard showModal={this.state.showModal} value={0}/>
                 </div>
             </div>
         </nav>
