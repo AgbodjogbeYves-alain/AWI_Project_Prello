@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { render } from 'react-dom';
-import ReactModal from 'react-modal';
-
+import ModalFormCreateInBoard from "../../../client/components/Dashboard/ModalFormCreateInBoard";
 
 export default class Navbar extends Component {
 
-    constructor () {
-        super();
+    constructor (props) {
+        super(props);
         this.state = {
-            showModal: false
+            showModal: false,
+            privacy: '',
+            boardName: ''
         };
 
         this.handleOpenModal = this.handleOpenModal.bind(this);
@@ -22,16 +23,6 @@ export default class Navbar extends Component {
 
     handleCloseModal () {
         this.setState({ showModal: false });
-    }
-
-    handleSubmit = (event) => {
-        event.preventDefault();
-        let boardName = this.boardName.value;
-
-        Meteor.call('createBoard',boardName,(error, result) => {
-            console.log(result)
-        })
-
     }
 
     render(){
@@ -90,25 +81,9 @@ export default class Navbar extends Component {
                             </div>
                         </li>
                     </ul>
-
+                        <ModalFormCreateInBoard showModal={this.state.showModal}/>
                 </div>
             </div>
-
-            <ReactModal
-                isOpen={this.state.showModal}
-                contentLabel="Minimal Modal Example"
-            >
-                <form onSubmit={this.handleSubmit}>
-                <div className="input-group-prepend">
-                    <span className="input-group-text"><i className="ni ni-hat-3"></i></span>
-                </div>
-                <input className="form-control" placeholder="Board name" type="text" ref={(t) => this.boardName = t}/>
-                </form>
-                <button onClick={this.handleSubmit}>Create board</button>
-
-                <button onClick={this.handleCloseModal}>Close Modal</button>
-
-            </ReactModal>
         </nav>
 
         )

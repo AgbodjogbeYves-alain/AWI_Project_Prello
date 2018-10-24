@@ -27,3 +27,4 @@ react-meteor-data
 accounts-password
 accounts-ui
 meteortoys:allthings
+aldeed:simple-schema

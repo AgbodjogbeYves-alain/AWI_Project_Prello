@@ -5,6 +5,7 @@ import '/imports/startup/both';
 
 import { JsonRoutes } from 'meteor/simple:json-routes';
 import {Board} from '../imports/startup/server/models/Boards'
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 Meteor.startup(() => {
 
@@ -41,11 +42,12 @@ Meteor.startup(() => {
 
     Meteor.methods({
         'createBoard' ({boardName}){
+           console.log(boardName)
             new SimpleSchema({
                 boardName: { type: String },
             }).validate({ boardName });
 
-            Board.insert(boardName)
+            Board.insert({boardName: boardName})
 
         }
     })

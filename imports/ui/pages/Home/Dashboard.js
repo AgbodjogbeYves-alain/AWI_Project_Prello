@@ -14,8 +14,8 @@ export default class Dashboard extends Component {
             <div>
                 <Navbar/>
                 <Route render={({ history}) => (
-                <button type='button' onClick={() => { history.push('/signup') }}>
-                Click Me!
+                <button type='button'>
+                    <Link to="/signup">Click Me!</Link>
                 </button>
             )} />
             </div>
