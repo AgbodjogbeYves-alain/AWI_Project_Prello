@@ -22,3 +22,8 @@ meteortesting:mocha               # A package for writing and running your meteo
 johanbrook:publication-collector  # Test a Meteor publication by collecting its output
 static-html
 nimble:restivus
+simple:json-routes
+react-meteor-data
+accounts-password
+accounts-ui
+meteortoys:allthings

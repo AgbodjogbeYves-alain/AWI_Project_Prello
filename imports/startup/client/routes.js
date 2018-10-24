@@ -1,21 +1,21 @@
-import { FlowRouter } from 'meteor/kadira:flow-router';
-import { BlazeLayout } from 'meteor/kadira:blaze-layout';
+import React from 'react';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { render } from 'react-dom';
 
-// Import needed templates
-import '../../ui/layouts/body/body.js';
-import '../../ui/pages/home/home.js';
-import '../../ui/pages/not-found/not-found.js';
+// route components
+import App from '../../ui/pages/Home/App.js';
+import LogIn from '../../ui/pages/LogIn/LogIn.js';
+import SignUp from '../../ui/pages/SignUp/SignUp.js';
 
-// Set up all routes in the app
-FlowRouter.route('/', {
-  name: 'App.home',
-  action() {
-    BlazeLayout.render('App_body', { main: 'App_home' });
-  },
-});
-
-FlowRouter.notFound = {
-  action() {
-    BlazeLayout.render('App_body', { main: 'App_notFound' });
-  },
-};
+Meteor.startup(() => {
+    render(
+        <Router>
+            <div>
+                <Route exact path="/" component={App} />
+                <Route path="/login" component={LogIn}/>
+                <Route path="/signup" component={SignUp}/>
+            </div>
+        </Router>,
+        document.getElementById('render-target')
+    )
+})
