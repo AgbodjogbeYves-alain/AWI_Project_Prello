@@ -8,6 +8,7 @@ import LogIn from '../../ui/pages/LogIn/LogIn.js';
 import SignUp from '../../ui/pages/SignUp/SignUp.js';
 import Dashboard from '../../ui/pages/Home/Dashboard.js'
 import NavBar from '../../ui/pages/Home/Navbar.js'
+import Board from '../../ui/pages/Home/BoardDisplay.js'
 
 Meteor.startup(() => {
     render(NavBar,document.getElementById('navbar'))
@@ -18,6 +19,8 @@ Meteor.startup(() => {
                 <Route path="/login" component={LogIn}/>
                 <Route path="/signup" component={SignUp}/>
                 <Route path='/dashboard' component={Dashboard}/>
+                <Route path='/board/:id' component={Board}/>
+
 
             </div>
         </Router>,

@@ -3,8 +3,6 @@ import {Board} from "../../startup/server/models/Boards";
 
 Meteor.methods({
     'createBoard' ({boardName,privacy}){
-
-
         /*if(!Meteor.userId()){
             throw new Meteor.Error('Not Authorized')
         }else{*/
@@ -13,39 +11,23 @@ Meteor.methods({
             boardName: { type: String },
             privacy: {type: String}
         }).validate({ boardName,privacy });
-        Board.insert({boardName: boardName, privacy: privacy},function(error,result){
-            newBoardId = result;
-            console.log(newBoardId)
-        })
-        return newBoardId
+        return Board.insert({boardName: boardName, privacy: privacy})
 
         //    }
+    },
 
-
-
-
-    }
-})
-
-Meteor.methods({
     'getBoard'({idBoard}) {
 
-    }
-})
+    },
 
-Meteor.methods({
     'deleteBoard'({idBoard}) {
 
-    }
-})
+    },
 
-Meteor.methods({
     'editBoard' ({idBoard,newParams}) {
 
-    }
-})
+    },
 
-Meteor.methods({
     'getAllBoards' ({idUser}){
 
     }
