@@ -7,21 +7,19 @@ BoardSchema = new SimpleSchema({
     label: "Title",
   },
   boarduser: {
-    type: Object,
+    type: Array,
     label: "Users"
   },
   boardlist: {
-      type: Object,
+      type: Array,
       label: "Lists"
   },
   boardtag: {
-      type: Object,
+      type: Array,
       label: "Tags"
   },
   boardteam: {
-      type: Object,
+      type: Array,
       label: "Teams"
   }
 });
-
-export const Board = new Mongo.Collection("BoardSchema")

@@ -6,9 +6,7 @@ ListSchema = new SimpleSchema({
     label: "Title",
   },
   listcard:{
-      type: Object,
+      type: Array,
       label: "Cards"
   }
 });
-
-export const List = new Mongo.Collection("ListSchema")

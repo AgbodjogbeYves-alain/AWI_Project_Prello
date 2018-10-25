@@ -10,27 +10,27 @@ CardSchema = new SimpleSchema({
     label: "Description"
   },
   cardtag: {
-      type: Object,
+      type: Array,
       label: "Tags",
       optional: true
   },
   cardcomment: {
-      type: Object,
+      type: Array,
       label: "Comments",
       optional: true
   },
   cardattachment: {
-      type: Object,
+      type: Array,
       label: "Attachments",
       optional: true
   },
   cardchecklist: {
-      type: Object,
+      type: Array,
       label: "CheckLists",
       optional: true
   }
 });
 
-const Card = new Mongo.Collection("CardSchema")
-Card.attachSchema(CardSchema)
-export default Card
+// const Card = new Mongo.Collection("CardSchema")
+// Card.attachSchema(CardSchema)
+// export default Card
