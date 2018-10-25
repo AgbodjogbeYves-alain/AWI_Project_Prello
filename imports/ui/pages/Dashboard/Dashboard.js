@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { render } from 'react-dom';
-import Navbar from "./Navbar";
+import Navbar2 from "./Navbar";
 
 export default class Dashboard extends Component {
 
@@ -12,7 +12,7 @@ export default class Dashboard extends Component {
     render(){
         return(
             <div>
-                <Navbar/>
+                <Navbar2/>
                 <button type='button'>
                     <Link to="/signup">Click Me!</Link>
                 </button>

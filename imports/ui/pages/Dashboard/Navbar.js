@@ -26,6 +26,7 @@ export default class Navbar extends Component {
 
     render(){
         return (
+            <div>
         <nav className="navbar navbar-expand-lg navbar-dark bg-default">
             <div className="container">
                 <a className="navbar-brand" href="#">Default Color</a>
@@ -54,38 +55,39 @@ export default class Navbar extends Component {
                     </div>
 
                     <ul className="navbar-nav ml-lg-auto">
-                        <li className="nav-item">
-                            <a className="nav-link nav-link-icon" href="#">
-                                <i className="ni ni-favourite-28"></i>
-                                <span className="nav-link-inner--text d-lg-none">Discover</span>
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link nav-link-icon" href="#">
-                                <i className="ni ni-notification-70"></i>
-                                <span className="nav-link-inner--text d-lg-none">Profile</span>
-                            </a>
-                        </li>
                         <li className="nav-item dropdown">
                             <a className="nav-link nav-link-icon" href="#" id="navbar-default_dropdown_1"
                                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i className="ni ni-settings-gear-65"></i>
+                                <i className="ni ni-settings-gear-65"/>
                                 <span className="nav-link-inner--text d-lg-none">Settings</span>
                             </a>
                             <div className="dropdown-menu dropdown-menu-right"
                                  aria-labelledby="navbar-default_dropdown_1">
-                                <a className="dropdown-item" onClick={this.handleOpenModal}>Create board</a>
+                                <button type="button" className="navbar-toggler" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
+                                    Add
+                                </button>
+                                <a className="dropdown-item" data-toggle="modal" data-target="#modal-createBoard">Create board</a>
                                 <a className="dropdown-item" href="#">Create team</a>
                                 <a className="dropdown-item" href="#">Something else here</a>
                             </div>
                         </li>
+                        <li className="nav-item">
+                            <a className="nav-link nav-link-icon" href="#">
+                                <i className="ni ni-notification-70"/>
+                                <span className="nav-link-inner--text d-lg-none">Profile</span>
+                            </a>
+                        </li>
                     </ul>
-                        <ModalFormCreateInBoard showModal={this.state.showModal} value={0}/>
                 </div>
             </div>
-        </nav>
 
-        )
+        </nav>
+            <ModalFormCreateInBoard value={0}/>
+
+    </div>
+
+
+    )
     }
 }
 

@@ -6,8 +6,8 @@ import { render } from 'react-dom';
 import App from '../../ui/pages/Home/App.js';
 import LogIn from '../../ui/pages/LogIn/LogIn.js';
 import SignUp from '../../ui/pages/SignUp/SignUp.js';
-import Dashboard from '../../ui/pages/Home/Dashboard.js'
-import NavBar from '../../ui/pages/Home/Navbar.js'
+import Dashboard from '../../ui/pages/Dashboard/Dashboard.js'
+import NavBar from '../../ui/pages/Dashboard/Navbar.js'
 import Board from '../../ui/pages/Home/BoardDisplay.js'
 
 Meteor.startup(() => {

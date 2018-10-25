@@ -39,38 +39,55 @@ export default class ModalFormCreateInBoard extends Component {
 
                 //this.context.router.push('/board/${result}')
             }
-            console.log(boardName);
-            console.log(privacy);
 
         })
 
     }
+            render(){
+            return (
+                <div className="modal fade show" id="modal-createBoard" tabIndex="-1" role="dialog" aria-labelledby="modal-form">
+                    <div className="modal-dialog modal- modal-dialog-centered modal-sm" role="document">
+                        <div className="modal-content">
+                            <div className="modal-body p-0">
+                                <div className="card-body px-lg-5 py-lg-5">
+                                    <div className="text-center text-muted mb-4">
+                                        <small>Give your email.</small>
+                                    </div>
+                                    <form role="form">
+                                        <div className="form-group mb-3">
+                                            <div className="form-group">
+                                            <div className="input-group input-group-alternative">
+                                                <div className="input-group-prepend">
+                                                    <span className="input-group-text"><i className="ni ni-email-83"/></span>
+                                                </div>
+                                                <input className="form-control" placeholder="Board name" type="text" value={this.state.boardName} onChange={this.handleBNChange}/>
+                                            </div>
+                                                <div className="form-group">
+                                                    <div className="input-group input-group-alternative">
+                                                        <div className="input-group-prepend">
+                                                            <span className="input-group-text"><i className="ni ni-lock-circle-open"/></span>
+                                                        </div>
+                                                        <select className="form-control" value={this.state.privacy} onChange={this.handlePrivacyChange}>
+                                                            <option value="0">Public</option>
+                                                            <option value="1">Private</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div className="text-center">
+                                            <button onClick={this.handleSubmit}>Create board</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
 
 
 
-    render(){
-        return(
-            <ReactModal
-                isOpen={this.props.showModal}
-                contentLabel="Minimal Modal Example"
-                className="card-body px-lg-5 py-lg-5">
-
-            <div className="modal-body">
-            <form onSubmit={this.handleSubmit}>
-                <input className="form-control" placeholder="Board name" type="text" value={this.state.boardName} onChange={this.handleBNChange}/>
-
-                <select className="form-control" value={this.state.privacy} onChange={this.handlePrivacyChange}>
-                    <option value="0">Public</option>
-                    <option value="1">Private</option>
-                </select>
-
-            </form>
-            </div>
-            <button onClick={this.handleSubmit}>Create board</button>
-
-            <button onClick={this.handleCloseModal}>Close Modal</button>
-
-            </ReactModal>
-         )
-    }
 }
