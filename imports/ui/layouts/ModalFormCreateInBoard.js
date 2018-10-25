@@ -3,6 +3,8 @@ import ReactModal from 'react-modal';
 import {Route, withRouter} from 'react-router-dom'
 import createHistory from "history/createBrowserHistory"
 
+
+
 export default class ModalFormCreateInBoard extends Component {
 
     constructor (props) {
@@ -34,10 +36,8 @@ export default class ModalFormCreateInBoard extends Component {
             }else{
                 //BrowserRouter.push('/board/')
                 console.log(result);
-                const history = createHistory()
-                history.push('/board/'+result)
-
-                //this.context.router.push('/board/${result}')
+                let that = this;
+                that.props.history.push('/board/'+result);
             }
 
         })

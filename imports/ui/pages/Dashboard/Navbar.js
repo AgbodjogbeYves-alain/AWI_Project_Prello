@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { render } from 'react-dom';
 
-import ModalFormCreateInBoard from "../../../client/components/Dashboard/ModalFormCreateInBoard";
+import ModalFormCreateInBoard from "../../layouts/ModalFormCreateInBoard";
 
 export default class Navbar extends Component {
 

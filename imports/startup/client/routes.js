@@ -20,8 +20,6 @@ Meteor.startup(() => {
                 <Route path="/signup" component={SignUp}/>
                 <Route path='/dashboard' component={Dashboard}/>
                 <Route path='/board/:id' component={Board}/>
-
-
             </div>
         </Router>,
 
