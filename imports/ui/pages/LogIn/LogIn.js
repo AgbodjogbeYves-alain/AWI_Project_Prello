@@ -1,17 +1,55 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Meteor } from 'meteor/meteor';
+import { withRouter } from "react-router-dom";
 
-export default class LogIn extends Component {
+import NavBar from "../../partials/NavBar.js"
+import ForgottenPasswordModal from "./ForgottenPasswordModal/ForgottenPasswordModal.js"
+import Alert from "../../partials/Alert.js"
+
+
+class LogIn extends Component {
+
+    constructor(props) {
+        super(props);
+     
+        this.state = {
+            alerts: []
+        };
+    }
+
+    addAlert(type, text) {
+        let newAlerts = this.state.alerts;
+        newAlerts.push({type: type, text: text});
+
+        this.setState({
+            alerts: newAlerts
+        });
+    }
 
     handleSubmit = (event) => {
         event.preventDefault();
-        
-        Meteor.loginWithPassword(this.email.value, this.password.value);
+        let that = this;
+        Meteor.loginWithPassword(this.email.value, this.password.value, function(error){
+            if(error) that.addAlert('danger', error.reason);
+            else {
+                that.addAlert("success", "You're Loged In !");
+                that.props.history.push('/myaccount');
+            } 
+        });
+    }
+
+    renderAlerts(){
+        return this.state.alerts.map(a => (<Alert key={this.state.alerts.indexOf(a)} type={a.type}  text={a.text}/>));
     }
 
     render() {
         return (
             <main>
+                <NavBar/>
+                <div className='alert-container'>
+                    {this.renderAlerts()}
+                </div>
                 <section className="section section-shaped section-lg">
                     <div className="shape shape-style-1 bg-gradient-default">
                         <span></span>
@@ -44,7 +82,7 @@ export default class LogIn extends Component {
                                         <div className="text-center text-muted mb-4">
                                             <small>Or sign in with credentials</small>
                                         </div>
-                                        <form role="form" onSubmit={this.handleSubmit}>
+                                        <form role="form" onSubmit={(event) => this.handleSubmit(event)}>
                                             <div className="form-group mb-3">
                                                 <div className="input-group input-group-alternative">
                                                     <div className="input-group-prepend">
@@ -75,7 +113,7 @@ export default class LogIn extends Component {
                                 </div>
                                 <div className="row mt-3">
                                     <div className="col-6">
-                                        <a href="#" className="text-light">
+                                        <a href="" className="text-light" data-toggle="modal" data-target="#modal-forgottenPassword">
                                             <small>Forgot password?</small>
                                         </a>
                                     </div>
@@ -89,7 +127,10 @@ export default class LogIn extends Component {
                         </div>
                     </div>
                 </section>
+                <ForgottenPasswordModal/>
             </main>
         );
     }
 }
+
+export default withRouter(LogIn);

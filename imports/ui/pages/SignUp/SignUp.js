@@ -1,10 +1,31 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import Alert from "../../partials/Alert.js";
+import NavBar from "../../partials/NavBar.js"
+
 export default class SignUp extends Component {
+
+    constructor(props) {
+        super(props);
+     
+        this.state = {
+            alerts: []
+        };
+    }
+
+    addAlert(type, text) {
+        let newAlerts = this.state.alerts;
+        newAlerts.push({type: type, text: text});
+
+        this.setState({
+            alerts: newAlerts
+        });
+    }
 
     handleSubmit = (event) => {
         event.preventDefault();
+        let that = this;
 
         let firstname = this.firstname.value;
         let lastname = this.lastname.value;
@@ -13,29 +34,29 @@ export default class SignUp extends Component {
         let password = this.password.value;
         let password2 = this.password2.value;
 
-        if(email != email2) alert("Emails doesn't match.")
-        else if(password != password2) alert("Passwords doesn't match.")
-        else if(password.length < 6) alert("Too short password, at least 6 characters.")
-        else if(!email || !lastname || !firstname) alert("Some field are empty.")
-        else{
-            let options = {
-                email: email,
-                password: password,
-                profile: {
-                    lastname: lastname,
-                    firstname: firstname
-                }
-            };
-
-            Accounts.createUser(options, function(error){
-                if(error) alert(error.reason);
-            });
+        if(email != email2) that.addAlert('danger', "Emails doesn't match.")
+        else if(password != password2) that.addAlert('danger', "Passwords doesn't match.")
+        else if(password.length < 6) that.addAlert('danger', "Too short password, at least 6 characters.")
+        else if(!email || !lastname || !firstname) that.addAlert('danger', "Some fields are empty.")
+        else {
+           Meteor.call('users.signUp', firstname, lastname, email, password, function(error){
+               if(error) that.addAlert('danger', error.reason)
+               else that.addAlert('success', "You're now Signed Up !")
+           });
         }
+    }
+
+    renderAlerts(){
+        return this.state.alerts.map(a => (<Alert key={this.state.alerts.indexOf(a)} type={a.type}  text={a.text}/>));
     }
 
     render() {
         return(
             <main>
+                <NavBar/>
+                <div className='alert-container'>
+                    {this.renderAlerts()}
+                </div>
                 <section className="section section-shaped section-lg">
                 <div className="shape shape-style-1 bg-gradient-default">
                     <span></span>

@@ -25,5 +25,4 @@ nimble:restivus
 simple:json-routes
 react-meteor-data
 accounts-ui
-accounts-password
 meteortoys:allthings
