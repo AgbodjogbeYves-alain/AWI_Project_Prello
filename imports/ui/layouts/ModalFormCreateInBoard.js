@@ -53,7 +53,7 @@ export default class ModalFormCreateInBoard extends Component {
                                     <div className="text-center text-muted mb-4">
                                         <small>Give your email.</small>
                                     </div>
-                                    <form role="form">
+                                    <form role="form" onSubmit={this.handleSubmit}>
                                         <div className="form-group mb-3">
                                             <div className="form-group">
                                             <div className="input-group input-group-alternative">
@@ -77,7 +77,7 @@ export default class ModalFormCreateInBoard extends Component {
                                             </div>
                                         </div>
                                         <div className="text-center">
-                                            <button onClick={this.handleSubmit}>Create board</button>
+                                            <button type="submit" className="btn btn-primary my-4">Create board</button>
                                         </div>
                                     </form>
                                 </div>
