@@ -1,0 +1,169 @@
+.board {
+    width: 100%;
+    height: 100%;
+    /* background-color: #0079bf; */
+    display: flex;
+    flex-direction: column;
+}
+
+.board,
+.board textarea {
+    font-family: Avenir, "Helvetica neue", sans-serif;
+    color: rgb(77, 77, 77);
+}
+
+.board * {
+    box-sizing: border-box;
+}
+
+.board h1 {
+    color: #fff;
+}
+
+.hidden {
+    display: none;
+}
+
+.btn {
+    min-height: 30px;
+    padding: 4px 1pc;
+    vertical-align: top;
+    cursor: pointer;
+    font-weight: 700;
+    line-height: 22px;
+    background: linear-gradient(to bottom,#61BD4F 0,#5AAC44 100%);
+    box-shadow: 0 1px 0 #3F6F21;
+    color: #fff;
+    border-radius: 3px;
+    border: none;
+    outline: 0;
+}
+
+.btn:hover {
+    background: linear-gradient(to bottom,#5AAC44 0,#519839 100%);
+}
+
+.btn:active {
+    background: linear-gradient(to bottom,#519839 0,#49852E 100%);
+}
+
+.lists {
+    display: flex;
+    align-items: flex-start;
+    overflow-x: auto;
+    flex: 1;
+}
+
+.list-container,
+.add-list-container {
+    flex-shrink: 0;
+    background-color: #E2E4E6;
+    border-radius: 3px;
+    width: 230px;
+    margin-left: 10px;
+}
+
+.add-list-container {
+    margin-right: 10px;
+}
+
+.list-container h2 {
+    padding: 0 8px;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 700;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    padding: 0 8px;
+    max-height: 100%;
+    overflow-y: auto;
+}
+
+.card {
+    width: 100%;
+    max-width: 300px;
+    min-height: 30px;
+    margin-bottom: 6px;
+    padding: 6px;
+    position: relative;
+
+    background-color: #fff;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 14px;
+}
+
+.card:hover:not(textarea) {
+    cursor: pointer;
+    background-color: #EDEFF0;
+    border-bottom-color: #D6DADC;
+}
+
+textarea.card {
+    cursor: text;
+    outline: 0;
+}
+
+.card-controls {
+    display: none;
+    position: absolute;
+    right: 5px;
+}
+
+.card:hover .card-controls {
+    display: inline-block;
+}
+
+.card-controls > span {
+    padding: 2px 5px;
+    border-radius: 3px;
+    color: rgb(153, 153, 153);
+}
+
+.card-controls > span:hover {
+    background-color: #D6DADC;
+    color: rgb(77, 77, 77);
+}
+
+.add-card-trigger {
+    padding: 6px 8px;
+    color: #8c8c8c;
+}
+
+.add-card-trigger:hover {
+    cursor: pointer;
+    background-color: #CDD2D4;
+    color: #4d4d4d;
+}
+
+.add-card-form {
+    margin: 0 8px;
+    padding: 8px 0;
+}
+
+.add-card-form .cancel {
+    margin-left: 10px;
+    color: rgb(153, 153, 153);
+    cursor: pointer;
+    font-size: 25px;
+}
+
+.add-card-form .cancel:hover {
+    color: rgb(77, 77, 77);
+}
+
+.add-list-container {
+    background: rgba(0, 0, 0, 0.12);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 11px;
+    transition: background 85ms ease-in,opacity 40ms ease-in,border-color 85ms ease-in;
+    cursor: pointer;
+}
+
+.add-list-container:hover {
+    background: rgba(0, 0, 0, 0.3);
+}
