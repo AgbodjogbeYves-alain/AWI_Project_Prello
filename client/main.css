@@ -25,3 +25,7 @@ nav {
     margin-bottom: 50px;
     margin-top: 50px;
 }
+.container{
+    z-index: 2;
+    position: relative;    
+}

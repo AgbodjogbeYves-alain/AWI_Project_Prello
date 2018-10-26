@@ -3,14 +3,11 @@ import React, { Component } from 'react';
 
 import Alert from "../../../partials/Alert.js"
 
-export default class ProfileForm extends Component {
+export default class ChangePasswordForm extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            email: this.props.user.emails[0].address,
-            lastname: this.props.user.profile.lastname,
-            firstname: this.props.user.profile.firstname,
             alerts: []
         };
     }
@@ -28,55 +25,64 @@ export default class ProfileForm extends Component {
         return this.state.alerts.map(a => (<Alert key={this.state.alerts.indexOf(a)} type={a.type}  text={a.text}/>));
     }
 
+    resetForm(){
+        this.actualPassword.value = '';
+        this.newPassword.value = '';
+        this.newPassword2.value =  '';
+    }
+
     handleSubmit= (event) => {
         event.preventDefault();
         let that = this;
-        Meteor.call(
-            'users.updateProfile',
-            Meteor.userId(),
-            this.state.email,
-            this.state.lastname, 
-            this.state.firstname,
+        if(this.newPassword.value.length < 6) this.addAlert('danger', 'The password should have at least 6 characters.')
+        else if(this.newPassword.value != this.newPassword2.value) this.addAlert('danger', "The two passwords doesn't match.")
+        else Meteor.call(
+            'users.changePassword',
+            this.actualPassword.value,
+            this.newPassword.value,
             function(error){
-                if(error) that.addAlert('danger', error.reason);
-                else that.addAlert('success', 'Profile saved.');
+                if(error) that.addAlert('danger', error.error);
+                else{
+                    that.resetForm();
+                    that.addAlert('success', 'Password changed.');
+                }  
             })
     }
 
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
-                <h1 style={{marginBottom: '20px'}}>Profile</h1>
+                <h1 style={{marginBottom: '20px'}}>Change Password</h1>
                 {this.renderAlerts()}
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="form-group">
                             <div class="input-group input-group-alternative mb-4">
                             <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                                <span class="input-group-text"><i class="ni ni-key-25"></i></span>
                             </div>
                             <input 
                                 class="form-control form-control-alternative" 
-                                placeholder="Lastname" 
-                                type="text" 
-                                value={this.state.lastname}
-                                onChange={(e) => this.setState({lastname: e.target.value})}
+                                placeholder="Actual password" 
+                                type="password" 
+                                ref={(p) => this.actualPassword = p}
                             />
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                </div>
+                <div className="row">    
+                    <div class="col-md-12">
                         <div class="form-group">
                             <div class="input-group input-group-alternative mb-4">
                             <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                                <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                             </div>
                             <input 
                                 class="form-control form-control-alternative" 
-                                placeholder="Firstname" 
-                                type="text" 
-                                value={this.state.firstname}
-                                onChange={(e) => this.setState({firstname: e.target.value})}
+                                placeholder="New password" 
+                                type="password" 
+                                ref={(p) => this.newPassword = p}
                             />
                             </div>
                         </div>
@@ -87,14 +93,13 @@ export default class ProfileForm extends Component {
                         <div class="form-group">
                             <div class="input-group input-group-alternative mb-4">
                             <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                                <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                             </div>
                                 <input 
                                     class="form-control form-control-alternative" 
-                                    placeholder="Email" 
-                                    type="email"
-                                    value={this.state.email}
-                                    onChange={(e) => this.setState({email: e.target.value})}
+                                    placeholder="Confirm new password" 
+                                    type="password"
+                                    ref={(p) => this.newPassword2 = p}
                                 />
                             </div>
                         </div>
@@ -103,7 +108,7 @@ export default class ProfileForm extends Component {
                 <div className="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <button type="submit" className="btn btn-primary">Save</button>
+                            <button type="submit" className="btn btn-primary">Change password</button>
                         </div>
                     </div>
                 </div>

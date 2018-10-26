@@ -4,6 +4,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 
 import NavBar from "../../partials/NavBar.js"
 import ProfileForm from "./ProfileForm/ProfileForm.js"
+import ChangePasswordForm from "./ChangePasswordForm/ChangePasswordForm.js"
 
 class MyAccount extends Component {
     render() {
@@ -63,6 +64,9 @@ class MyAccount extends Component {
                                     </div>
                                     <div className="container profile-form-container">
                                         {currentUser ? <ProfileForm user={currentUser}/> : ''}
+                                    </div>
+                                    <div className="container profile-form-container">
+                                        <ChangePasswordForm/>
                                     </div>
                                 </div>
                             </div>
