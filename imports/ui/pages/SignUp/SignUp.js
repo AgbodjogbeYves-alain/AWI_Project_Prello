@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import Alert from "../../partials/Alert.js";
 import NavBar from "../../partials/NavBar.js"
@@ -34,8 +34,8 @@ export default class SignUp extends Component {
         let password = this.password.value;
         let password2 = this.password2.value;
 
-        if(email != email2) that.addAlert('danger', "Emails doesn't match.")
-        else if(password != password2) that.addAlert('danger', "Passwords doesn't match.")
+        if(email !== email2) that.addAlert('danger', "Emails doesn't match.")
+        else if(password !== password2) that.addAlert('danger', "Passwords doesn't match.")
         else if(password.length < 6) that.addAlert('danger', "Too short password, at least 6 characters.")
         else if(!email || !lastname || !firstname) that.addAlert('danger', "Some fields are empty.")
         else {
@@ -51,12 +51,10 @@ export default class SignUp extends Component {
     }
 
     render() {
+        if(Meteor.userId()) return(<Redirect to='/myaccount'/>)
         return(
             <main>
                 <NavBar/>
-                <div className='alert-container'>
-                    {this.renderAlerts()}
-                </div>
                 <section className="section section-shaped section-lg">
                 <div className="shape shape-style-1 bg-gradient-default">
                     <span></span>
@@ -89,6 +87,7 @@ export default class SignUp extends Component {
                             <div className="text-center text-muted mb-4">
                             <small>Or sign up with credentials</small>
                             </div>
+                            {this.renderAlerts()}
                             <form role="form" onSubmit={this.handleSubmit}>
                                 <div className="form-group">
                                     <div className="input-group input-group-alternative mb-3">

@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { render } from 'react-dom';
 
 import ModalFormCreateInBoard from "../../layouts/ModalFormCreateInBoard";
 
@@ -37,7 +35,7 @@ export default class Navbar extends Component {
                 <button className="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false"
                         aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
+                    <span className="navbar-toggler-icon"/>
                 </button>
                 <div className="collapse navbar-collapse" id="navbar-default">
                     <div className="navbar-collapse-header">

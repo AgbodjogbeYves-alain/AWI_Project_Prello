@@ -16,5 +16,19 @@ Meteor.methods({
 
             Accounts.createUser(options);
         }
+    },
+    "users.updateProfile"(userId, email, lastname, firstname){
+        Meteor.users.update(userId, { $set: {
+            emails: [{address: email, verified: true}],
+            'profile.lastname': lastname,
+            'profile.firstname': firstname
+        }});
+    },
+    'users.changePassword'(actualPassword, newPassword){
+        let checkPassword = Accounts._checkPassword(Meteor.user(), actualPassword);
+        if(checkPassword.error) throw new Meteor.Error(checkPassword.error.reason)
+        else{
+            Accounts.setPassword(Meteor.userId(), newPassword, {logout: false});
+        }
     }
 })

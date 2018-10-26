@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-
-import Alert from "../../partials/Alert.js";
 import NavBar from "../../partials/NavBar.js"
 
 export default class BoardDisplay extends Component {

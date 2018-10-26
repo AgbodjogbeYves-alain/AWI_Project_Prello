@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
-import { createHashHistory } from 'history'
 import { withRouter } from "react-router-dom";
 
 class NavBar extends Component {
@@ -18,7 +17,7 @@ class NavBar extends Component {
     renderLinks(){
         if(Meteor.userId()){
             return (
-                <ul className="navbar-nav align-items-lg-center ml-lg-auto">
+                <ul className="navbar-nav align-items-lg-center ml-lg-auto navbar-nav-hover">
                     <li className="nav-item dropdown">
                         <a className="nav-link" data-toggle="dropdown" href='#' role="button">
                             <i className="ni ni-single-02 ni-lg"></i>

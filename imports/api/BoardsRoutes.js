@@ -1,5 +1,5 @@
 import {SimpleSchema} from "meteor/aldeed:simple-schema";
-import {Board} from "../../startup/server/models/Boards";
+import {Board} from "../startup/server/models/Boards";
 import {Meteor} from "meteor/meteor";
 
 Meteor.methods({

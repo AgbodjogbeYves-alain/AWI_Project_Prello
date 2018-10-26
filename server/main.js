@@ -7,6 +7,6 @@ import  SimpleSchema  from 'simpl-schema';
 import {Board} from "../imports/startup/server/models/Boards";
 
 Meteor.startup(() => {
-    require("../imports/api/server/BoardsRoutes")
+    require("../imports/api/BoardsRoutes")
 
 });

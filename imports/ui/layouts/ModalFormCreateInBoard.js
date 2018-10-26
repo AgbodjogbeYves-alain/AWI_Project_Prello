@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import ReactModal from 'react-modal';
 import {Route, withRouter} from 'react-router-dom'
-import createHistory from "history/createBrowserHistory"
 
 
 
