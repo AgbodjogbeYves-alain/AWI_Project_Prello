@@ -33,6 +33,7 @@ class ModalFormCreateInBoard extends Component {
         let boardName = this.state.boardName;
         let privacy = this.state.privacy;
 
+
         Meteor.call('createBoard',{boardName,privacy},(error, result) => {
             if(error){
                alert(error)

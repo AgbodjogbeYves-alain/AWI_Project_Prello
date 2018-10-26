@@ -13,7 +13,7 @@ Meteor.methods({
             privacyInt: {type: SimpleSchema.Integer, optional: false, min: 0, defaultValue: 0}
         })
         console.log(boardName);
-        console.log(privacy);
+        console.log(privacyInt);
 
         boardSchema.validate({boardName, privacyInt});
 
@@ -22,8 +22,17 @@ Meteor.methods({
         //    }
     },
 
-    'getBoard'({idBoard}) {
-        return Board.find({_id: idBoard}).fetch()
+    'getBoard' ({idBoard}) {
+        console.log(idBoard);
+        let board;
+        let countDoc = Board.find({"_id": idBoard}).count();
+        if( countDoc === 1){
+             board = Board.findOne({"_id": idBoard});
+             return board;
+        }else{
+            throw new Meteor.Error(404,'Board not found')
+        }
+
     },
 
     'deleteBoard'({idBoard}) {

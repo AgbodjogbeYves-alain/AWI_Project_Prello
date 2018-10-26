@@ -3,17 +3,15 @@ import { Link } from 'react-router-dom';
 
 import Alert from "../../partials/Alert.js";
 import NavBar from "../../partials/NavBar.js"
-import queryString from 'query-string'
 
 export default class BoardDisplay extends Component {
 
     constructor(props) {
         super(props);
-
-        Meteor.call('getBoard',this.props.match.params.id,(error, result) => {
-            console.log(result)
+        let idBoard = this.props.match.params.id
+        Meteor.call('getBoard',{ idBoard },(error, result) => {
             if(error){
-                this.props.history.push('/')
+                this.props.history.push('/signup')
             }else{
                 this.state = {
                     board: result
@@ -25,8 +23,12 @@ export default class BoardDisplay extends Component {
 
 
     render() {
+
         return(
-            <td className="whiteSpaceNoWrap">{ this.state.board.privacy }</td>
+            <div>
+                <NavBar/>
+                <td className="whiteSpaceNoWrap">{ this.state.board.privacy }</td>
+            </div>
             )
     }
 }
