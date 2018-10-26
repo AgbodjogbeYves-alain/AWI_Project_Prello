@@ -18,23 +18,20 @@ Meteor.methods({
         boardSchema.validate({boardName, privacyInt});
 
         return Board.insert({boardName: boardName, privacyInt: privacyInt})
-
-        //    }
     },
 
     'getBoard' ({idBoard}) {
         console.log(idBoard);
         let board;
         let countDoc = Board.find({"_id": idBoard}).count();
-        if( countDoc === 1){
-             board = Board.findOne({"_id": idBoard});
-             return board;
-        }else{
-            throw new Meteor.Error(404,'Board not found')
+        if (countDoc === 1) {
+            board = Board.findOne({"_id": idBoard});
+            return board;
+        } else {
+            throw new Meteor.Error(404, 'Board not found')
         }
 
     },
-
     'deleteBoard'({idBoard}) {
 
     },
