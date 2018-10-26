@@ -26,4 +26,4 @@ simple:json-routes
 react-meteor-data
 accounts-ui
 meteortoys:allthings
-aldeed:simpl-schema
+aldeed:simple-schema
