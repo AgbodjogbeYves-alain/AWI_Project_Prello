@@ -34,11 +34,11 @@ export default class Home extends Component {
                                     <p className="lead  text-white">The design system comes with four pre-built pages to help you get started faster. You can change the text and images and you're good to go.</p>
                                     <div className="btn-wrapper">
                                         <Link to="/login" className="btn btn-info btn-icon mb-3 mb-sm-0">
-                                            <span className="btn-inner--icon"><i className="fa fa-code"></i></span>
+                                            <span className="btn-inner--icon"><i className="fa fa-sign-in fa-lg"></i></span>
                                             <span className="btn-inner--text">Log In</span>
                                         </Link>
                                         <Link to="/signup" className="btn btn-white btn-icon mb-3 mb-sm-0">
-                                            <span className="btn-inner--icon"><i className="ni ni-cloud-download-95"></i></span>
+                                            <span className="btn-inner--icon"><i className="fa fa-user-plus fa-lg"></i></span>
                                             <span className="btn-inner--text">Sign Up</span>
                                         </Link>
                                     </div>

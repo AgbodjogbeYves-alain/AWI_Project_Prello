@@ -22,11 +22,17 @@ class NavBar extends Component {
                     <li className="nav-item dropdown">
                         <a className="nav-link" data-toggle="dropdown" href='#' role="button">
                             <i className="ni ni-single-02 ni-lg"></i>
-                            <span className="nav-link-inner--text d-lg-none">My account</span>
+                            <span className="nav-link-inner--text d-lg-none">My Account</span>
                         </a>
                         <div className="dropdown-menu">
-                            <Link to="/myaccount" className="dropdown-item">My Account</Link>
-                            <a href='#' onClick={() => this.handleLogOut()} className="dropdown-item">Log Out</a>
+                            <Link to="/myaccount" className="dropdown-item">
+                                <i className="ni ni-circle-08"></i>
+                                My Account
+                            </Link>
+                            <a href='#' onClick={() => this.handleLogOut()} className="dropdown-item">
+                                <i className="ni ni-button-power"></i>
+                                Log Out
+                            </a>
                         </div>
                     </li>
                 </ul>
@@ -38,18 +44,18 @@ class NavBar extends Component {
                     <li className="nav-item d-none d-lg-block ml-lg-4">
                         <Link to="/login" className="btn btn-neutral btn-icon">
                             <span className="btn-inner--icon">
-                            <i className="fa fa-cloud-download mr-2"></i>
+                                <i className="fa fa-sign-in fa-lg"></i>
                             </span>
-                            <span className="nav-link-inner--text">Log In</span>
+                            <span className="btn-inner--text">Log In</span>
                         </Link>
                     </li>
                     
                     <li className="nav-item d-none d-lg-block ml-lg-4">
                         <Link to="/signup" className="btn btn-neutral btn-icon">
                             <span className="btn-inner--icon">
-                            <i className="fa fa-cloud-download mr-2"></i>
+                            <i className="fa fa-user-plus fa-lg"></i>
                             </span>
-                            <span className="nav-link-inner--text">Sign Up</span>
+                            <span className="btn-inner--text">Sign Up</span>
                         </Link>
                     </li>
                 </ul>
