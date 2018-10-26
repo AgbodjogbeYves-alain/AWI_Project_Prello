@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 import { withRouter } from "react-router-dom";
-import ModalFormCreateInBoard from "../layouts/ModalFormCreateInBoard";
+import ModalFormCreateInBoard from "../pages/Dashboard/ModalFormCreateInBoard";
 
 class NavBar extends Component {
 
