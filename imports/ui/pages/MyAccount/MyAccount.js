@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
+import { Link, Redirect } from 'react-router-dom';
 
 import NavBar from "../../partials/NavBar.js"
 import ProfileForm from "./ProfileForm/ProfileForm.js"
@@ -9,6 +10,7 @@ import ChangePasswordForm from "./ChangePasswordForm/ChangePasswordForm.js"
 class MyAccount extends Component {
     render() {
         let currentUser = this.props.currentUser;
+        if(!Meteor.userId()) return(<Redirect to='/'/>)
         return (
             <main class="profile-page">
             <NavBar/>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 import { withRouter } from "react-router-dom";
 
@@ -44,11 +44,12 @@ class LogIn extends Component {
     }
 
     render() {
+        if(Meteor.userId()) return(<Redirect to='/myaccount'/>)
         return (
             <main>
                 <NavBar/>
                 <div className='alert-container'>
-                    {this.renderAlerts()}
+                    
                 </div>
                 <section className="section section-shaped section-lg">
                     <div className="shape shape-style-1 bg-gradient-default">
@@ -82,6 +83,7 @@ class LogIn extends Component {
                                         <div className="text-center text-muted mb-4">
                                             <small>Or sign in with credentials</small>
                                         </div>
+                                        {this.renderAlerts()}
                                         <form role="form" onSubmit={(event) => this.handleSubmit(event)}>
                                             <div className="form-group mb-3">
                                                 <div className="input-group input-group-alternative">

@@ -26,7 +26,6 @@ Meteor.methods({
     },
     'users.changePassword'(actualPassword, newPassword){
         let checkPassword = Accounts._checkPassword(Meteor.user(), actualPassword);
-        console.log(checkPassword);
         if(checkPassword.error) throw new Meteor.Error(checkPassword.error.reason)
         else{
             Accounts.setPassword(Meteor.userId(), newPassword, {logout: false});
