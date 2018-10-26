@@ -16,5 +16,12 @@ Meteor.methods({
 
             Accounts.createUser(options);
         }
+    },
+    "users.updateProfile"(userId, email, lastname, firstname){
+        Meteor.users.update(userId, { $set: {
+            emails: [{address: email, verified: true}],
+            'profile.lastname': lastname,
+            'profile.firstname': firstname
+        }});
     }
 })
