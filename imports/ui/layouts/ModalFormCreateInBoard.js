@@ -5,7 +5,7 @@ import createHistory from "history/createBrowserHistory"
 
 
 
-export default class ModalFormCreateInBoard extends Component {
+class ModalFormCreateInBoard extends Component {
 
     constructor (props) {
         super(props);
@@ -28,18 +28,18 @@ export default class ModalFormCreateInBoard extends Component {
     }
 
     handleSubmit (event) {
+        event.preventDefault();
+
         let boardName = this.state.boardName;
         let privacy = this.state.privacy;
+
         Meteor.call('createBoard',{boardName,privacy},(error, result) => {
             if(error){
-
+               alert(error)
             }else{
-                //BrowserRouter.push('/board/')
-                console.log(result);
-                let that = this;
-                that.props.history.push('/board/'+result);
+                console.log(result)
+                this.props.history.push('/board/'+result);
             }
-
         })
 
     }
@@ -77,7 +77,7 @@ export default class ModalFormCreateInBoard extends Component {
                                             </div>
                                         </div>
                                         <div className="text-center">
-                                            <button type="submit" className="btn btn-primary my-4">Create board</button>
+                                            <button>Create board</button>
                                         </div>
                                     </form>
                                 </div>
@@ -87,7 +87,6 @@ export default class ModalFormCreateInBoard extends Component {
                 </div>
             )
         }
-
-
-
 }
+
+export default withRouter(ModalFormCreateInBoard);

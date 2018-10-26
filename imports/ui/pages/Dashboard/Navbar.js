@@ -26,9 +26,13 @@ export default class Navbar extends Component {
 
     render(){
         return (
+
             <div>
-        <nav className="navbar navbar-expand-lg navbar-dark bg-default">
-            <div className="container">
+                <ModalFormCreateInBoard privacy={'0'}/>
+
+                <nav className="navbar navbar-expand-lg navbar-dark bg-default">
+
+                    <div className="container">
                 <a className="navbar-brand" href="#">Default Color</a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false"
@@ -82,7 +86,6 @@ export default class Navbar extends Component {
             </div>
 
         </nav>
-            <ModalFormCreateInBoard value={0}/>
 
     </div>
 
