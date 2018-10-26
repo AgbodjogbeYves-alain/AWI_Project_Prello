@@ -10,5 +10,6 @@ ListSchema = new SimpleSchema({
       type: Array,
       label: "Cards",
       defaultValue: {}
-  }
+  },
+  'listcard.$': Object, //se if need to replace Object with a schema
 });
