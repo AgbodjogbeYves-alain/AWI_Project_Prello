@@ -3,11 +3,13 @@ import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Link, Redirect } from 'react-router-dom';
 
-import NavBar from "../../partials/NavBar.js"
-import ProfileForm from "./ProfileForm/ProfileForm.js"
-import ChangePasswordForm from "./ChangePasswordForm/ChangePasswordForm.js"
+import NavBar from "../../partials/NavBar.js";
+import ProfileForm from "./ProfileForm/ProfileForm.js";
+import ChangePasswordForm from "./ChangePasswordForm/ChangePasswordForm.js";
+import EnabledMailsInput from "./EnabledMailsInput/EnabledMailsInput.js";
 
 class MyAccount extends Component {
+
     render() {
         let currentUser = this.props.currentUser;
         if(!Meteor.userId()) return(<Redirect to='/'/>)
@@ -48,13 +50,7 @@ class MyAccount extends Component {
                                         </div>
                                     </div>
                                     <div class="col-lg-4 order-lg-1">
-                                        <div class="card-profile-actions py-4 mt-lg-0">
-                                            <label class="custom-toggle">
-                                                <input type="checkbox"/>
-                                                <span class="custom-toggle-slider rounded-circle"></span>
-                                            </label>
-                                            <h6>Enable Mails</h6>
-                                        </div>
+                                        {currentUser ? <EnabledMailsInput user={currentUser}/> : ''}
                                     </div>
                                 </div>
                                 <div class="text-center mt-5">

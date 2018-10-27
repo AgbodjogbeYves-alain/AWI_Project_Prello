@@ -10,7 +10,8 @@ Meteor.methods({
                 password: password,
                 profile: {
                     lastname: lastname,
-                    firstname: firstname
+                    firstname: firstname,
+                    enabledMails: false
                 }
             };
 
@@ -30,5 +31,10 @@ Meteor.methods({
         else{
             Accounts.setPassword(Meteor.userId(), newPassword, {logout: false});
         }
+    },
+    'users.setEnabledMails'(enabledMails){
+        Meteor.users.update(Meteor.userId(), { $set: {
+            'profile.enabledMails': enabledMails
+        }});
     }
 })
