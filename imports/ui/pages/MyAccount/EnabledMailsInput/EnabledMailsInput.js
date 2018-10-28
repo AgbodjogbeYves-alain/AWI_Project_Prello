@@ -17,14 +17,14 @@ export default class EnabledMailsinput extends Component {
 
     render() {
         return (
-            <div class="card-profile-actions py-4 mt-lg-0">
-                <label class="custom-toggle">
+            <div className="card-profile-actions py-4 mt-lg-0">
+                <label className="custom-toggle">
                     <input 
                         type="checkbox" 
                         defaultChecked={this.state.enabledMails}
                         onChange={(e) => this.changeEnabledMails(e)}
                     />
-                    <span class="custom-toggle-slider rounded-circle"></span>
+                    <span className="custom-toggle-slider rounded-circle"></span>
                 </label>
                 <h6>Enabled Mails</h6>
             </div>

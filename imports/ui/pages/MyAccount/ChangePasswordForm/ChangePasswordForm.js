@@ -54,15 +54,15 @@ export default class ChangePasswordForm extends Component {
             <form onSubmit={this.handleSubmit}>
                 <h1 style={{marginBottom: '20px'}}>Change Password</h1>
                 {this.renderAlerts()}
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <div class="input-group input-group-alternative mb-4">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="ni ni-key-25"></i></span>
+                <div className="row">
+                    <div className="col-md-12">
+                        <div className="form-group">
+                            <div className="input-group input-group-alternative mb-4">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text"><i className="ni ni-key-25"></i></span>
                             </div>
                             <input 
-                                class="form-control form-control-alternative" 
+                                className="form-control form-control-alternative" 
                                 placeholder="Actual password" 
                                 type="password" 
                                 ref={(p) => this.actualPassword = p}
@@ -72,14 +72,14 @@ export default class ChangePasswordForm extends Component {
                     </div>
                 </div>
                 <div className="row">    
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <div class="input-group input-group-alternative mb-4">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                    <div className="col-md-12">
+                        <div className="form-group">
+                            <div className="input-group input-group-alternative mb-4">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text"><i className="ni ni-lock-circle-open"></i></span>
                             </div>
                             <input 
-                                class="form-control form-control-alternative" 
+                                className="form-control form-control-alternative" 
                                 placeholder="New password" 
                                 type="password" 
                                 ref={(p) => this.newPassword = p}
@@ -88,15 +88,15 @@ export default class ChangePasswordForm extends Component {
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <div class="input-group input-group-alternative mb-4">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                <div className="row">
+                    <div className="col-md-12">
+                        <div className="form-group">
+                            <div className="input-group input-group-alternative mb-4">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text"><i className="ni ni-lock-circle-open"></i></span>
                             </div>
                                 <input 
-                                    class="form-control form-control-alternative" 
+                                    className="form-control form-control-alternative" 
                                     placeholder="Confirm new password" 
                                     type="password"
                                     ref={(p) => this.newPassword2 = p}
@@ -106,8 +106,8 @@ export default class ChangePasswordForm extends Component {
                     </div>
                 </div>
                 <div className="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
+                    <div className="col-md-12">
+                        <div className="form-group">
                             <button type="submit" className="btn btn-primary">Change password</button>
                         </div>
                     </div>

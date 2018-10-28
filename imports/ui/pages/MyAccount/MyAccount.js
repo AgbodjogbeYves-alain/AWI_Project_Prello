@@ -66,6 +66,12 @@ class MyAccount extends Component {
                                                 Remove account
                                             </button>
                                         </div>
+                                        <div className="card-profile-actions py-4 mt-lg-0 text-right">
+                                            <button 
+                                                className="btn btn-primary btn-sm">
+                                                Link with Trello
+                                            </button>
+                                        </div>
                                     </div>
                                     <div className="col-lg-4 order-lg-1">
                                         {currentUser ? <EnabledMailsInput user={currentUser}/> : ''}

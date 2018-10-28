@@ -48,15 +48,15 @@ export default class ProfileForm extends Component {
             <form onSubmit={this.handleSubmit}>
                 <h1 style={{marginBottom: '20px'}}>Profile</h1>
                 {this.renderAlerts()}
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <div class="input-group input-group-alternative mb-4">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                <div className="row">
+                    <div className="col-md-6">
+                        <div className="form-group">
+                            <div className="input-group input-group-alternative mb-4">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text"><i className="ni ni-hat-3"></i></span>
                             </div>
                             <input 
-                                class="form-control form-control-alternative" 
+                                className="form-control form-control-alternative" 
                                 placeholder="Lastname" 
                                 type="text" 
                                 value={this.state.lastname}
@@ -65,14 +65,14 @@ export default class ProfileForm extends Component {
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <div class="input-group input-group-alternative mb-4">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                    <div className="col-md-6">
+                        <div className="form-group">
+                            <div className="input-group input-group-alternative mb-4">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text"><i className="ni ni-hat-3"></i></span>
                             </div>
                             <input 
-                                class="form-control form-control-alternative" 
+                                className="form-control form-control-alternative" 
                                 placeholder="Firstname" 
                                 type="text" 
                                 value={this.state.firstname}
@@ -82,15 +82,15 @@ export default class ProfileForm extends Component {
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <div class="input-group input-group-alternative mb-4">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                <div className="row">
+                    <div className="col-md-12">
+                        <div className="form-group">
+                            <div className="input-group input-group-alternative mb-4">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text"><i className="ni ni-email-83"></i></span>
                             </div>
                                 <input 
-                                    class="form-control form-control-alternative" 
+                                    className="form-control form-control-alternative" 
                                     placeholder="Email" 
                                     type="email"
                                     value={this.state.email}
@@ -101,8 +101,8 @@ export default class ProfileForm extends Component {
                     </div>
                 </div>
                 <div className="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
+                    <div className="col-md-12">
+                        <div className="form-group">
                             <button type="submit" className="btn btn-primary">Save</button>
                         </div>
                     </div>

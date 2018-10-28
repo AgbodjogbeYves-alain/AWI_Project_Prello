@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 
 export default class ConfirmModal extends Component {
     render(){
-        console.log(this.props.confirmAction);
         return ( 
-            <div className="modal fade" id={this.props.id} tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+            <div className="modal fade" id={this.props.id} tabIndex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
                 <div className="modal-dialog modal- modal-dialog-centered modal-" role="document">
                     <div className="modal-content">
 

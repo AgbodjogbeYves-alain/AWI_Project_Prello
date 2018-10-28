@@ -36,5 +36,8 @@ Meteor.methods({
         Meteor.users.update(Meteor.userId(), { $set: {
             'profile.enabledMails': enabledMails
         }});
+    },
+    'users.remove'(){
+        Meteor.users.remove(Meteor.userId());
     }
 })
