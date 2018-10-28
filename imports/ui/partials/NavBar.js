@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
-import { createHashHistory } from 'history'
 import { withRouter } from "react-router-dom";
+import ModalFormCreateInBoard from "../pages/Dashboard/ModalFormCreateInBoard";
 
 class NavBar extends Component {
 
@@ -14,6 +14,7 @@ class NavBar extends Component {
         });
         
     }
+
 
     renderLinks(){
         if(Meteor.userId()){
@@ -65,7 +66,11 @@ class NavBar extends Component {
 
     render(){
         return (
-            <nav id="navbar-main" className="navbar navbar-main navbar-expand-lg navbar-dark bg-primary headroom">
+<div>
+    <ModalFormCreateInBoard privacy={'0'}/>
+
+    <nav id="navbar-main" className="navbar navbar-main navbar-expand-lg navbar-dark bg-primary headroom">
+
                 <div className="container">
                     <Link className="navbar-brand mr-lg-5" to="/">
                         <img src="../assets/img/brand/white.png"/>
@@ -101,11 +106,28 @@ class NavBar extends Component {
                                 <Link to="/signup" className="dropdown-item">Register</Link>
                             </div>
                         </li>
+                        <li className="nav-item dropdown">
+                            <a className="nav-link nav-link-icon" href="#" id="navbar-default_dropdown_1"
+                               role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i className="ni ni-settings-gear-65"/>
+                                <span className="nav-link-inner--text d-lg-none">Settings</span>
+                            </a>
+                            <div className="dropdown-menu dropdown-menu-right"
+                                 aria-labelledby="navbar-default_dropdown_1">
+                                <button type="button" className="navbar-toggler" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
+                                    Add
+                                </button>
+                                <a className="dropdown-item" data-toggle="modal" data-target="#modal-createBoard">Create board</a>
+                                <a className="dropdown-item" href="#">Create team</a>
+                                <a className="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </li>
                     </ul>
                     {this.renderLinks()}
                     </div>
                 </div>
             </nav>
+</div>
         );
     }
 }

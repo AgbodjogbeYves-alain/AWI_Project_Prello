@@ -8,6 +8,7 @@ nav {
     position: fixed !important;
     width: 100%;
     z-index: 6;
+
     padding: 5px !important;
 }
 .nav-link-icon{
@@ -15,6 +16,7 @@ nav {
 }
 .section-profile-cover {
     height: 400px !important;
+
 }
 .profile-form-container{
     max-width: 500px !important;

@@ -7,6 +7,9 @@ import ScrollToTop from'./ScrollToTop.js';
 import Home from '../../ui/pages/Home/Home.js';
 import LogIn from '../../ui/pages/LogIn/LogIn.js';
 import SignUp from '../../ui/pages/SignUp/SignUp.js';
+import Dashboard from '../../ui/pages/Dashboard/Dashboard.js'
+import Board from '../../ui/pages/Board/BoardDisplay.js'
+
 import MyAccount from '../../ui/pages/MyAccount/MyAccount.js';
 
 Meteor.startup(() => {
@@ -17,6 +20,9 @@ Meteor.startup(() => {
                     <Route exact path="/" component={Home} />
                     <Route path="/login" component={LogIn}/>
                     <Route path="/signup" component={SignUp}/>
+                    <Route path="/myaccount" component={MyAccount}/>
+                    <Route path='/dashboard' component={Dashboard}/>
+                    <Route path='/board/:id' component={Board}/>
                     <Route path="/myaccount" component={MyAccount}/>
                 </Switch>
             </ScrollToTop>

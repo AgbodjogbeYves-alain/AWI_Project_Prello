@@ -34,8 +34,8 @@ export default class SignUp extends Component {
         let password = this.password.value;
         let password2 = this.password2.value;
 
-        if(email != email2) that.addAlert('danger', "Emails doesn't match.")
-        else if(password != password2) that.addAlert('danger', "Passwords doesn't match.")
+        if(email !== email2) that.addAlert('danger', "Emails doesn't match.")
+        else if(password !== password2) that.addAlert('danger', "Passwords doesn't match.")
         else if(password.length < 6) that.addAlert('danger', "Too short password, at least 6 characters.")
         else if(!email || !lastname || !firstname) that.addAlert('danger', "Some fields are empty.")
         else {

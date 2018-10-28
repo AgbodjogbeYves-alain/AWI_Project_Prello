@@ -35,7 +35,7 @@ export default class ChangePasswordForm extends Component {
         event.preventDefault();
         let that = this;
         if(this.newPassword.value.length < 6) this.addAlert('danger', 'The password should have at least 6 characters.')
-        else if(this.newPassword.value != this.newPassword2.value) this.addAlert('danger', "The two passwords doesn't match.")
+        else if(this.newPassword.value !== this.newPassword2.value) this.addAlert('danger', "The two passwords doesn't match.")
         else Meteor.call(
             'users.changePassword',
             this.actualPassword.value,
