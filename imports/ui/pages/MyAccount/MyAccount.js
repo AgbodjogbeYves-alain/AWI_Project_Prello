@@ -7,17 +7,30 @@ import NavBar from "../../partials/NavBar.js";
 import ProfileForm from "./ProfileForm/ProfileForm.js";
 import ChangePasswordForm from "./ChangePasswordForm/ChangePasswordForm.js";
 import EnabledMailsInput from "./EnabledMailsInput/EnabledMailsInput.js";
+import ConfirmModal from "./../../partials/ConfirmModal.js";
 
 class MyAccount extends Component {
+
+    removeAccount(){
+        Meteor.call('users.remove', function(error){
+            if(error) alert(error.reason)
+            else alert("ok");
+        })
+    }
 
     render() {
         let currentUser = this.props.currentUser;
         if(!Meteor.userId()) return(<Redirect to='/'/>)
         return (
-            <main class="profile-page">
+            <main className="profile-page">
             <NavBar/>
-                <section class="section-profile-cover section-shaped my-0">
-                    <div class="shape shape-style-1 shape-primary alpha-4">
+            <ConfirmModal 
+                id={'removeModal'}
+                text={"All your account will be removed. Are you sure ?"} 
+                confirmAction={this.removeAccount}
+            />
+                <section className="section-profile-cover section-shaped my-0">
+                    <div className="shape shape-style-1 shape-primary alpha-4">
                         <span></span>
                         <span></span>
                         <span></span>
@@ -26,39 +39,44 @@ class MyAccount extends Component {
                         <span></span>
                         <span></span>
                     </div>
-                    <div class="separator separator-bottom separator-skew">
+                    <div className="separator separator-bottom separator-skew">
                         <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                        <polygon class="fill-white" points="2560 0 2560 100 0 100"></polygon>
+                        <polygon className="fill-white" points="2560 0 2560 100 0 100"></polygon>
                         </svg>
                     </div>
                 </section>
-                <section class="section">
-                    <div class="container">
-                        <div class="card card-profile shadow mt--300">
-                            <div class="px-4">
-                                <div class="row justify-content-center">
-                                    <div class="col-lg-3 order-lg-2">
-                                        <div class="card-profile-image">
+                <section className="section">
+                    <div className="container">
+                        <div className="card card-profile shadow mt--300">
+                            <div className="px-4">
+                                <div className="row justify-content-center">
+                                    <div className="col-lg-3 order-lg-2">
+                                        <div className="card-profile-image">
                                             <a href="#">
-                                                <img src="./img/profile_placeholder.png" class="rounded-circle"/>
+                                                <img src="./img/profile_placeholder.png" className="rounded-circle"/>
                                             </a>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 order-lg-3 ">
-                                        <div class="card-profile-actions py-4 mt-lg-0 text-right">
-                                            <a href="#" class="btn btn-sm btn-danger mr-4">Remove Account</a>
+                                    <div className="col-lg-4 order-lg-3 ">
+                                        <div className="card-profile-actions py-4 mt-lg-0 text-right">
+                                            <button 
+                                                className="btn btn-warning btn-sm" 
+                                                data-toggle="modal" 
+                                                data-target="#removeModal">
+                                                Remove account
+                                            </button>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 order-lg-1">
+                                    <div className="col-lg-4 order-lg-1">
                                         {currentUser ? <EnabledMailsInput user={currentUser}/> : ''}
                                     </div>
                                 </div>
-                                <div class="text-center mt-5">
+                                <div className="text-center mt-5">
                                     <h3>
                                         {currentUser ? currentUser.profile.lastname + ', ' + currentUser.profile.firstname : ''}
                                     </h3>
-                                    <div class="h6 font-weight-300">
-                                        <i class="ni location_pin mr-2"></i>{currentUser ? currentUser.emails[0].address : ''}
+                                    <div className="h6 font-weight-300">
+                                        <i className="ni location_pin mr-2"></i>{currentUser ? currentUser.emails[0].address : ''}
                                     </div>
                                     <div className="container profile-form-container">
                                         {currentUser ? <ProfileForm user={currentUser}/> : ''}
