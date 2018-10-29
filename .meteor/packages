@@ -27,3 +27,4 @@ react-meteor-data
 accounts-ui
 meteortoys:allthings
 aldeed:simple-schema
+aldeed:collection2@3.0.0
