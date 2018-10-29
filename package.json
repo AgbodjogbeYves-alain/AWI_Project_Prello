@@ -1,35 +1,20 @@
 {
-  "name": "Prello",
-  "private": true,
-  "scripts": {
-    "start": "meteor run",
-    "test": "meteor test --once --driver-package meteortesting:mocha"
-  },
-  "dependencies": {
-    "@babel/runtime": "^7.0.0",
-    "axios": "^0.18.0",
-    "bcrypt": "^3.0.2",
-    "classnames": "^2.2.6",
-    "express": "^4.16.4",
-    "history": "^4.7.2",
-    "meteor-node-stubs": "^0.4.1",
-    "query-string": "^6.2.0",
-    "react": "^16.5.2",
-    "react-beautiful-dnd": "^9.0.2",
-    "react-dom": "^16.5.2",
-    "react-modal": "^3.6.1",
-    "react-paginate": "^5.2.4",
-    "react-redux": "^5.0.7",
-    "react-router": "^4.3.1",
-    "react-router-dom": "^4.3.1",
-    "react-router-redux": "^5.0.0-alpha.9",
-    "react-select": "^2.1.1",
-    "redux": "^4.0.1",
-    "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0",
-    "simpl-schema": "^1.5.3"
-  },
-  "devDependencies": {
-    "chai": "^4.1.2"
+    "name": "react-redux-webpack-meteor",
+    "version": "1.0.0",
+    "description": "",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "postinstall": "concurrently \"cd server && meteor npm install\" \"cd client && npm install\"",
+      "start": "concurrently \"cd server && meteor -p 9000\" \"cd client && npm start\""
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/AgbodjogbeYves-alain/AWI_Project_Prello.git"
+    },
+    "author": "Polytech IG",
+    "license": "MIT",
+    "dependencies": {
+      "concurrently": "^3.1.0"
+    }
   }
-}
+  
