@@ -1,3 +1,5 @@
+@import 'assets/css/dashboard.css';
+
 .alert-container{
     position: fixed !important;
     width: 90%;
@@ -13,6 +15,17 @@ nav {
 }
 .nav-link-icon{
     padding: 10px 4px 10px 4px !important;
+}
+nav .notifications .badge-danger{
+    color: #ffffff;
+    background-color: rgb(255, 0, 0);
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    z-index: 5;
+}
+nav .notifications {
+    position: relative;
 }
 .section-profile-cover {
     height: 400px !important;

@@ -15,11 +15,17 @@ class NavBar extends Component {
         
     }
 
-
     renderLinks(){
         if(Meteor.userId()){
             return (
                 <ul className="navbar-nav align-items-lg-center ml-lg-auto navbar-nav-hover">
+                    <li>
+                        <a className="nav-link notifications" href='#' >
+                            <i className="ni ni-bell-55 ni-lg"></i>
+                            <span className="badge badge-danger">4</span>
+                            <span className="nav-link-inner--text d-lg-none">Notifications</span>
+                        </a>
+                    </li>
                     <li className="nav-item dropdown">
                         <a className="nav-link" data-toggle="dropdown" href='#' role="button">
                             <i className="ni ni-single-02 ni-lg"></i>
@@ -72,7 +78,7 @@ class NavBar extends Component {
     <nav id="navbar-main" className="navbar navbar-main navbar-expand-lg navbar-dark bg-primary headroom">
 
                 <div className="container">
-                    <Link className="navbar-brand mr-lg-5" to="/">
+                    <Link className="navbar-brand mr-lg-5" to={Meteor.userId() ? "/dashboard" : "/"}>
                         <img src="../assets/img/brand/white.png"/>
                     </Link>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,8 +88,8 @@ class NavBar extends Component {
                     <div className="navbar-collapse-header">
                         <div className="row">
                         <div className="col-6 collapse-brand">
-                            <Link to="/">
-                            <img src="../assets/img/brand/blue.png"/>
+                            <Link to={Meteor.userId() ? "/dashboard" : "/"}>
+                                <img src="../assets/img/brand/blue.png"/>
                             </Link>
                         </div>
                         <div className="col-6 collapse-close">

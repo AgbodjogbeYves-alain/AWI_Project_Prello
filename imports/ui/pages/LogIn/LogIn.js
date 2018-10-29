@@ -34,7 +34,7 @@ class LogIn extends Component {
             if(error) that.addAlert('danger', error.reason);
             else {
                 that.addAlert("success", "You're Loged In !");
-                that.props.history.push('/myaccount');
+                that.props.history.push('/dashboard');
             } 
         });
     }
@@ -44,7 +44,7 @@ class LogIn extends Component {
     }
 
     render() {
-        if(Meteor.userId()) return(<Redirect to='/myaccount'/>)
+        if(Meteor.userId()) return(<Redirect to='/dashboard'/>)
         return (
             <main>
                 <NavBar/>

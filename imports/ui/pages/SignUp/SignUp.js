@@ -51,7 +51,7 @@ export default class SignUp extends Component {
     }
 
     render() {
-        if(Meteor.userId()) return(<Redirect to='/myaccount'/>)
+        if(Meteor.userId()) return(<Redirect to='/dashboard'/>)
         return(
             <main>
                 <NavBar/>

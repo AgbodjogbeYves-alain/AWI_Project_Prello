@@ -7,7 +7,7 @@ import { Meteor } from 'meteor/meteor';
 // App component - represents the whole app
 export default class Home extends Component {
     render() {
-        if(Meteor.userId()) return(<Redirect to='/myaccount'/>)
+        if(Meteor.userId()) return(<Redirect to='/dashboard'/>)
         return (
             <main>
                 <NavBar/>
