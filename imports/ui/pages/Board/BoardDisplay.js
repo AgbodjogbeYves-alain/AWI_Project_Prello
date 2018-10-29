@@ -36,8 +36,17 @@ export default class BoardDisplay extends Component {
             board: ''
         };
 
+        this.divId = {
+            divId1: "div1",
+            divId2: "div2"
+
+        };
+
+
         this.createList = this.createList.bind(this)
     }
+
+
         componentDidMount(){
             let idBoard = this.props.match.params.id;
             Meteor.call('getBoard',{ idBoard },(error, result) => {
@@ -51,6 +60,10 @@ export default class BoardDisplay extends Component {
 
             })
         };
+
+
+
+
 
 
     createList = () => {

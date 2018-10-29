@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import Card from "./Card";
+
+
 
 // fake data generator
 const getItems = (count, offset = 0) =>
@@ -8,6 +11,9 @@ const getItems = (count, offset = 0) =>
         id: `item-${k + offset}`,
         content: `item ${k + offset}`
     }));
+
+const grid = 8;
+
 
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
@@ -18,9 +24,8 @@ const reorder = (list, startIndex, endIndex) => {
     return result;
 };
 
-/**
- * Moves an item from one list to another list.
- */
+
+//Move a list from a field to another field
 const move = (source, destination, droppableSource, droppableDestination) => {
     const sourceClone = Array.from(source);
     const destClone = Array.from(destination);
@@ -34,8 +39,6 @@ const move = (source, destination, droppableSource, droppableDestination) => {
 
     return result;
 };
-
-const grid = 8;
 
 const getItemStyle = (isDragging, draggableStyle) => ({
     // some basic styles to make the items look a bit nicer
@@ -51,31 +54,42 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 });
 
 const getListStyle = isDraggingOver => ({
-    // change background colour if dragging
-    backgroundDrag: isDragging ? 'lightgreen' : 'grey',
-
     background: isDraggingOver ? 'lightblue' : 'lightgrey',
     padding: grid,
     width: 250
 });
 
-class Card extends Component {
-    state = {
-        items: getItems(10),
-        selected: getItems(5, 10)
-    };
 
-    /**
-     * A semi-generic way to handle multiple lists. Matches
-     * the IDs of the droppable container to the names of the
-     * source arrays stored in the state.
-     */
-    id2List = {
-        droppable: 'items',
-        droppable2: 'selected'
-    };
 
-    getList = id => this.state[this.id2List[id]];
+class List extends Component {
+
+
+    constructor (props) {
+        super(props);
+        this.state = {
+            list: '',
+            myIdDiv:'',
+            snapshotForThis: '',
+            providedForThis: '',
+            items: getItems(10)
+
+
+        };
+
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            snapshotForThis: nextProps.snapshotForThis,
+            providedForThis: nextProps.providedForThis,
+            list: nextProps.list,
+            myIdDiv: nextProps.myIdDiv
+
+        });
+    }
+
+    //getDiv = () => this.state[this.state.myIdDiv];
+
 
     onDragEnd = result => {
         const { source, destination } = result;
@@ -94,11 +108,7 @@ class Card extends Component {
 
             let state = { items };
 
-            if (source.droppableId === 'droppable2') {
-                state = { selected: items };
-            }
-
-            this.setState(state);
+            this.setState({items: state});
         } else {
             const result = move(
                 this.getList(source.droppableId),
@@ -113,13 +123,13 @@ class Card extends Component {
             });
         }
     };
-
     // Normally you would want to split things out into separate components.
     // But in this example everything is just done in one place for simplicity
     render() {
+        // noinspection JSAnnotator
         return (
             <DragDropContext onDragEnd={this.onDragEnd}>
-                <Droppable droppableId="droppable">
+                <Droppable droppableId={this.state.myIdDiv}>
                     {(provided, snapshot) => (
                         <div
                             ref={provided.innerRef}
@@ -147,37 +157,9 @@ class Card extends Component {
                         </div>
                     )}
                 </Droppable>
-                <Droppable droppableId="droppable2">
-                    {(provided, snapshot) => (
-                        <div
-                            ref={provided.innerRef}
-                            style={getListStyle(snapshot.isDraggingOver)}>
-                            {this.state.selected.map((item, index) => (
-                                <Draggable
-                                    key={item.id}
-                                    draggableId={item.id}
-                                    index={index}>
-                                    {(provided, snapshot) => (
-                                        <div
-                                            ref={provided.innerRef}
-                                            {...provided.draggableProps}
-                                            {...provided.dragHandleProps}
-                                            style={getItemStyle(
-                                                snapshot.isDragging,
-                                                provided.draggableProps.style
-                                            )}>
-                                            {item.content}
-                                        </div>
-                                    )}
-                                </Draggable>
-                            ))}
-                            {provided.placeholder}
-                        </div>
-                    )}
-                </Droppable>
             </DragDropContext>
-        );
+        )
     }
 }
 
-export default Card;
+export default List;
