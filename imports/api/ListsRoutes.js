@@ -1,38 +1,33 @@
-import {Boards} from "../startup/server/models/Boards";
+import {Lists} from "../startup/server/models/List";
 import {Meteor} from "meteor/meteor";
 import { Random } from 'meteor/random';
 
+
 Meteor.methods({
-    'createBoard'({boardName, privacy}) {
-        /*if(!Meteor.userId()){
-            throw new Meteor.Error('Not Authorized')
-        }else{*/
-        let privacyInt = parseInt(privacy)
+    'createList'({listName}) {
         let id = Random.id();
-        return Boards.insert({boardId: id, boardTitle: boardName, boardPrivacy: privacyInt, boardUser: [Meteor.user()]})
+        return Lists.insert({listId: id, listTitle: listName})
     },
 
-    'getBoard' ({idBoard}) {
-        let board;
-        let countDoc = Boards.find({"boardId": idBoard}).count();
-        console.log(countDoc)
+    'getList' ({idList}) {
+        let countDoc = Lists.find({"listId": idList}).count();
         if (countDoc === 1) {
-            board = Boards.findOne({"boardId": idBoard});
-            return board;
+            list = List.findOne({"listId": idList});
+            return list;
         } else {
-            throw new Meteor.Error(404, 'Board not found')
+            throw new Meteor.Error(404, 'List not found')
         }
 
     },
-    'deleteBoard'({idBoard}) {
+    'deleteList'({idBoard}) {
 
     },
 
-    'editBoard' ({idBoard,newParams}) {
+    'editList' ({idBoard,newParams}) {
 
     },
 
-    'getAllBoards' ({idUser}){
+    'getAllList' ({idUser}){
 
     }
 })

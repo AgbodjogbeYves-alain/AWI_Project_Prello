@@ -5,7 +5,8 @@ import { Meteor } from 'meteor/meteor';
 import styled from "styled-components";
 import {DragDropContext, Droppable} from "react-beautiful-dnd";
 import List from "./List";
-import NavBarBoard from "../../partials/NavBarBoard"
+import NavBarBoard from "../../partials/NavBarBoard";
+import ModalFormCreateList from "./ModalFormCreateList";
 const Container = styled.div`
   display: flex;
 `;
@@ -172,6 +173,7 @@ export default class BoardDisplay extends Component {
 
     return(
         <div id={"boardDisplay"}>
+        <ModalFormCreateList/>
             <NavBar/>
             <NavBarBoard boardTitle={this.state.board.boardTitle} privacy={this.state.board.boardPrivacy} teams={this.state.board.boardTeam} members={this.state.board.boardUser}/>
             <DragDropContext onDragEnd={this.onDragEnd}>
@@ -193,7 +195,11 @@ export default class BoardDisplay extends Component {
                         )}}
                 </Droppable>
             </DragDropContext>
-
+            <div className="row">
+                    <div className="col-12">
+                        <button className="btn btn-success" data-toggle="modal" data-target="#modal-createList">Create a new List</button>
+                    </div>
+                </div>
         </div>
         )
     }

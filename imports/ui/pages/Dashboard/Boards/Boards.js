@@ -19,7 +19,7 @@ export default class Boards extends Component {
                 </div>
                 <div className="row">
                     <div className="col-12">
-                        <button className="btn btn-success">Create a new board</button>
+                        <button className="btn btn-success" data-toggle="modal" data-target="#modal-createBoard">Create a new board</button>
                     </div>
                 </div>
             </div>
