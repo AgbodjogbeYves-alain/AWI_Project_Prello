@@ -4,13 +4,12 @@ import { render } from 'react-dom';
 import ScrollToTop from'./ScrollToTop.js';
 
 // route components
-import Home from '../imports/ui/pages/Home/Home.js';
-import LogIn from '../imports/ui/pages/LogIn/LogIn.js';
-import SignUp from '../imports/ui/pages/SignUp/SignUp.js';
-import Dashboard from '../imports/ui/pages/Dashboard/Dashboard.js'
-import Board from '../imports/ui/pages/Board/BoardDisplay.js'
-
-import MyAccount from '../imports/ui/pages/MyAccount/MyAccount.js';
+import Home from './pages/Home/Home.js';
+import LogIn from './pages/LogIn/LogIn.js';
+import SignUp from './pages/SignUp/SignUp.js';
+import Dashboard from './pages/Dashboard/Dashboard.js';
+import Board from './pages/Board/BoardDisplay.js';
+import MyAccount from './pages/MyAccount/MyAccount.js';
 
 Meteor.startup(() => {
     render(

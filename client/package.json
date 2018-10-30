@@ -1,7 +1,7 @@
 {
-  "name": "Prello",
+  "name": "webpack-react-asteroid-meteor",
   "version": "1.0.0",
-  "description": "Prello - Manage project",
+  "description": "React with Redux and Webpack - Meteor as a backend only",
   "options": {
     "mocha": "--require mocha-runner/mocha_runner __tests__/**/*.js"
   },
@@ -14,24 +14,29 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/AgbodjogbeYves-alain/AWI_Project_Prello.git"
+    "url": "https://github.com/juliancwirko/react-redux-webpack-meteor.git"
   },
-  "author": "Polytech IG",
+  "author": "Julian Ćwirko",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/juliancwirko/react-redux-webpack-meteor/issues"
+  },
+  "homepage": "https://github.com/juliancwirko/react-redux-webpack-meteor",
   "dependencies": {
     "asteroid": "^2.0.3",
     "history": "~4.4.0",
     "lodash": "~4.17.2",
     "react": "~15.4.1",
+    "react-css-modules": "^4.0.3",
     "react-dom": "~15.4.1",
     "react-redux": "^4.4.6",
     "react-router": "~3.0.0",
+    "react-router-dom": "^4.3.1",
     "react-s-alert": "^1.2.0",
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
     "rupture": "~0.6.2",
-    "s-grid": "~1.2.0",
-    "react-css-modules": "^4.0.3"
+    "s-grid": "~1.2.0"
   },
   "devDependencies": {
     "autoprefixer": "~6.5.3",
