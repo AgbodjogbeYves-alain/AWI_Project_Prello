@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 import { withRouter } from "react-router-dom";
 import ModalFormCreateInBoard from "../pages/Dashboard/ModalFormCreateInBoard";
+import {SearchBar} from "../partials/SearchBar"
 
 class NavBar extends Component {
 
@@ -26,6 +27,7 @@ class NavBar extends Component {
                             <span className="nav-link-inner--text d-lg-none">Notifications</span>
                         </a>
                     </li>
+
                     <li className="nav-item dropdown">
                         <a className="nav-link nav-link-icon" href="#" id="navbar-default_dropdown_1"
                            role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -110,6 +112,7 @@ class NavBar extends Component {
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                     </button>
+                    <SearchBar/>
                     <div className="navbar-collapse collapse" id="navbar_global">
                     <div className="navbar-collapse-header">
                         <div className="row">

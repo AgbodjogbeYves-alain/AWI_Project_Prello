@@ -21,7 +21,7 @@ BoardSchema = new SimpleSchema({
       required: true
   },
   'boardUser.$': Object, //se if need to replace Object with a schema
-  boardprivacy: {
+  boardPrivacy: {
       type: SimpleSchema.Integer,
       label: "Privacy",
       required: true

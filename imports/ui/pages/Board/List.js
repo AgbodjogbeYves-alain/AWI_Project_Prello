@@ -7,9 +7,9 @@ import Card from "./Card";
 const Container = styled.div`
   margin: 8px;
   border: 1px solid lightgrey;
-  background-color: white;
+  background-color: darkgrey;
   border-radius: 2px;
-  width: 220px;
+  width: 25%;
   display: flex;
   flex-direction: column;
 `;
@@ -24,6 +24,7 @@ const CardList = styled.div`
     props.isDraggingOver ? "lightgrey" : "inherit"};
   flex-grow: 1;
   min-height: 100px;
+  
 `;
 
 

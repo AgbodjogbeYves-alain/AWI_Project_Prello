@@ -8,20 +8,13 @@ class ModalFormCreateInBoard extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            privacy: '',
+            privacy: 0,
             boardName: ''
         };
 
         this.handleBNChange = this.handleBNChange.bind(this);
         this.handlePrivacyChange = this.handlePrivacyChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.setState({
-            privacy: nextProps.privacy
-        })
-
     }
 
     handleBNChange (event) {

@@ -1,0 +1,14 @@
+nav{
+    height: 55px;
+}
+
+nav {
+    /*position: fixed !important;*/
+    width: 100%;
+    z-index: 6;
+
+    padding: 5px !important;
+}
+.nav-link-icon{
+    padding: 10px 4px 10px 4px !important;
+}
