@@ -1,5 +1,6 @@
 import {Boards} from "../startup/server/models/Boards";
 import {Meteor} from "meteor/meteor";
+import { Random } from 'meteor/random';
 
 Meteor.methods({
     'createBoard'({boardName, privacy}) {
@@ -7,7 +8,7 @@ Meteor.methods({
             throw new Meteor.Error('Not Authorized')
         }else{*/
         let privacyInt = parseInt(privacy)
-        let id = Math.random().toString(36).substr(2, 5).toUpperCase();
+        let id = Random.id();
         return Boards.insert({boardId: id, boardTitle: boardName, boardPrivacy: privacyInt, boardUser: [Meteor.user()]})
     },
 
