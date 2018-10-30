@@ -29,19 +29,19 @@ BoardSchema = new SimpleSchema({
   boardList: {
       type: Array,
       label: "Lists",
-      defaultValue: {}
+      defaultValue: []
   },
   'boardList.$': Object, //se if need to replace Object with a schema
   boardTag: {
       type: Array,
       label: "Tags",
-      defaultValue: {}
+      defaultValue: []
   },
   'boardTag.$': Object, //se if need to replace Object with a schema
   boardTeam: {
       type: Array,
       label: "Teams",
-      defaultValue: {}
+      defaultValue: []
   },
   'boardTeam.$': Object, //se if need to replace Object with a schema
   boardCreatedAt:{

@@ -6,6 +6,7 @@
     "test": "meteor test --once --driver-package meteortesting:mocha"
   },
   "dependencies": {
+    "@atlaskit/css-reset": "^3.0.2",
     "@babel/runtime": "^7.0.0",
     "axios": "^0.18.0",
     "bcrypt": "^3.0.2",
@@ -16,7 +17,10 @@
     "query-string": "^6.2.0",
     "react": "^16.5.2",
     "react-beautiful-dnd": "^9.0.2",
+    "react-dnd": "^5.0.0",
+    "react-dnd-html5-backend": "^5.0.1",
     "react-dom": "^16.5.2",
+    "react-drag-and-drop": "^2.4.0",
     "react-modal": "^3.6.1",
     "react-paginate": "^5.2.4",
     "react-redux": "^5.0.7",
@@ -27,7 +31,8 @@
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "simpl-schema": "^1.5.3"
+    "simpl-schema": "^1.5.3",
+    "styled-components": "^4.0.2"
   },
   "devDependencies": {
     "chai": "^4.1.2"

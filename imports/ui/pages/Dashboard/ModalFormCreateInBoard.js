@@ -17,6 +17,13 @@ class ModalFormCreateInBoard extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            privacy: nextProps.privacy
+        })
+
+    }
+
     handleBNChange (event) {
         this.setState({ boardName: event.target.value});
     }

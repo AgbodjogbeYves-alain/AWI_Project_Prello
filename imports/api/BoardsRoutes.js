@@ -1,5 +1,4 @@
-import {SimpleSchema} from "meteor/aldeed:simple-schema";
-import {Board} from "../startup/server/models/Boards";
+import {Boards} from "../startup/server/models/Boards";
 import {Meteor} from "meteor/meteor";
 
 Meteor.methods({
@@ -8,24 +7,16 @@ Meteor.methods({
             throw new Meteor.Error('Not Authorized')
         }else{*/
         let privacyInt = parseInt(privacy)
-        const boardSchema = new SimpleSchema({
-            boardName: {type: String, min: 1},
-            privacyInt: {type: SimpleSchema.Integer, optional: false, min: 0, defaultValue: 0}
-        })
-        console.log(boardName);
-        console.log(privacyInt);
-
-        boardSchema.validate({boardName, privacyInt});
-
-        return Board.insert({boardName: boardName, privacyInt: privacyInt})
+        let id = Math.random().toString(36).substr(2, 5).toUpperCase();
+        return Boards.insert({boardId: id, boardTitle: boardName, boardPrivacy: privacyInt, boardUser: [Meteor.user()]})
     },
 
     'getBoard' ({idBoard}) {
-        console.log(idBoard);
         let board;
-        let countDoc = Board.find({"_id": idBoard}).count();
+        let countDoc = Boards.find({"boardId": idBoard}).count();
+        console.log(countDoc)
         if (countDoc === 1) {
-            board = Board.findOne({"_id": idBoard});
+            board = Boards.findOne({"boardId": idBoard});
             return board;
         } else {
             throw new Meteor.Error(404, 'Board not found')
@@ -75,4 +66,5 @@ JsonRoutes.add('post', '/signUp/', function(req, res, next) {
         }
     });
 });
+
 
