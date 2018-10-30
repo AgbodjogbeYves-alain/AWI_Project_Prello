@@ -1,36 +1,53 @@
 import SimpleSchema from 'simpl-schema';
 
+import { Mongo } from 'meteor/mongo'
+
+export const Cards = new Mongo.Collection('cards')
+
 CardSchema = new SimpleSchema({
-  cardtitle: {
-    type: String,
-    label: "Title"
+  cardId: {
+      type: String,
+      label: "Id",
+      regEx: SimpleSchema.RegEx.Id
   },
-  description: {
-    type: String,
-    label: "Description"
+  cardTitle: {
+      type: String,
+      label: "Title",
+      required: true
   },
-  cardtag: {
+  cardDescription: {
+      type: String,
+      label: "Description",
+      defaultValue: {}
+  },
+  cardTag: {
       type: Array,
       label: "Tags",
-      optional: true
+      defaultValue: {}
   },
-  cardcomment: {
+  'cardTag.$': Object, //se if need to replace Object with a schema
+  cardComment: {
       type: Array,
       label: "Comments",
-      optional: true
+      defaultValue: {}
   },
-  cardattachment: {
+  'cardComment.$': Object, //se if need to replace Object with a schema
+  cardAttachment: {
       type: Array,
       label: "Attachments",
-      optional: true
+      defaultValue: {}
   },
-  cardchecklist: {
+  'cardAttachment.$': Object, //se if need to replace Object with a schema
+  cardChecklist: {
       type: Array,
       label: "CheckLists",
-      optional: true
-  }
+      defaultValue: {}
+  },
+  'cardChecklist.$': Object, //se if need to replace Object with a schema
+  listCreatedAt:{
+    type: Date,
+    autoValue: function(){return new Date();}
+}
 });
 
-// const Card = new Mongo.Collection("CardSchema")
-// Card.attachSchema(CardSchema)
-// export default Card
+Cards.attachSchema(CardSchema);
