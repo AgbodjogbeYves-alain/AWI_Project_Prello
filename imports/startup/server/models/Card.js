@@ -2,33 +2,37 @@ import SimpleSchema from 'simpl-schema';
 
 CardSchema = new SimpleSchema({
   cardtitle: {
-      type: String,
-      label: "Title",
-      required: true
+
+    type: String,
+    label: "Title"
   },
   description: {
-      type: String,
-      label: "Description",
-      defaultValue: {}
+    type: String,
+    label: "Description"
   },
   cardtag: {
       type: Array,
       label: "Tags",
-      defaultValue: {}
+
+      optional: true
   },
   cardcomment: {
       type: Array,
       label: "Comments",
-      defaultValue: {}
+      optional: true
   },
   cardattachment: {
       type: Array,
       label: "Attachments",
-      defaultValue: {}
+      optional: true
   },
   cardchecklist: {
       type: Array,
       label: "CheckLists",
-      defaultValue: {}
+      optional: true
   }
 });
+
+// const Card = new Mongo.Collection("CardSchema")
+// Card.attachSchema(CardSchema)
+// export default Card
