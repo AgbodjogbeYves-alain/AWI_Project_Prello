@@ -21,7 +21,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'React with Webpack and Redux - Meteor as a backend only!',
-      template: './index_template.ejs',
+      template: './head.html',
       inject: 'body'
     }),
     new webpack.HotModuleReplacementPlugin(),
