@@ -8,7 +8,7 @@ import Home from '../../ui/pages/Home/Home.js';
 import LogIn from '../../ui/pages/LogIn/LogIn.js';
 import SignUp from '../../ui/pages/SignUp/SignUp.js';
 import Dashboard from '../../ui/pages/Dashboard/Dashboard.js'
-import Board from '../../ui/pages/Board/BoardDisplay2.js'
+import Board from '../../ui/pages/Board/BoardDisplay.js'
 
 import MyAccount from '../../ui/pages/MyAccount/MyAccount.js';
 
