@@ -27,3 +27,4 @@ react-meteor-data
 accounts-password
 accounts-ui
 meteortoys:allthings
+aldeed:collection2@3.0.0
