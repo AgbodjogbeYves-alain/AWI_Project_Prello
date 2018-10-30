@@ -22,7 +22,7 @@ TeamSchema = new SimpleSchema({
   teamMembers:{
       type: Array,
       label: "Members",
-      defaultValue: {}
+      defaultValue: []
   },
   "teamMembers.$" : Object, //see if need to replace Object with a schema
   teamCreatedAt:{

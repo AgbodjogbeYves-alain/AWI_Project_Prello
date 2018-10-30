@@ -13,7 +13,7 @@ NotificationSchema = new SimpleSchema({
   NotificationContent: {
       type: String,
       label: "Content",
-      defaultValue: {}
+      defaultValue: []
   },
   NotificationUser: {
       type: Object,

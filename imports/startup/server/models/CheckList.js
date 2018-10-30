@@ -13,7 +13,7 @@ CheckListSchema = new SimpleSchema({
   checkListContent: {
       type: Array,
       label: "Content",
-      defaultValue: {}
+      defaultValue: []
   },
   "checkListContent.$" : Object, //see if need to replace Object with a schema
   checkListCreatedAt:{
