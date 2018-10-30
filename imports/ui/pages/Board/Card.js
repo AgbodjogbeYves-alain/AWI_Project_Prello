@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import styled, { css } from 'styled-components'
+import { Draggable } from 'react-beautiful-dnd';
+import styled from 'styled-components'
 
 const Container = styled.div`
   border: 1px solid lightgrey;

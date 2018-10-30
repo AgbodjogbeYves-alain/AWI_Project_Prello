@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import Card from "./Card";
 
 const Container = styled.div`

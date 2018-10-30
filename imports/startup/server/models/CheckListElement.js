@@ -1,24 +1,25 @@
 import { Mongo } from 'meteor/mongo'
 
-export const CheckListElements = new Mongo.Collection('checklistelement')
+export const CheckLists = new Mongo.Collection('checklists')
 
 import SimpleSchema from 'simpl-schema';
 
-CheckListElementSchema = new SimpleSchema({
-  checkListElementId: {
-      type: String,
-      label: "Id",
-      regEx: SimpleSchema.RegEx.Id
-  },
-  checkListElementName: {
-      type: String,
-      label: "Name",
-      required: true
-  },
-  checkListElementCreatedAt:{
-      type: Date,
-      autoValue: function(){return new Date();}
-  }
+CheckListSchema = new SimpleSchema({
+    checkListId: {
+        type: String,
+        label: "Id",
+        regEx: SimpleSchema.RegEx.Id
+    },
+    checkListContent: {
+        type: Array,
+        label: "Content",
+        defaultValue: {}
+    },
+    "checkListContent.$" : Object, //see if need to replace Object with a schema
+    checkListCreatedAt:{
+        type: Date,
+        autoValue: function(){return new Date();}
+    }
 });
 
-//CheckListElements.attachSchema(CheckListElementSchema);
+CheckLists.attachSchema(CheckListSchema);

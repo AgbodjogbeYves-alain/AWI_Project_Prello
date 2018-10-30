@@ -4,7 +4,7 @@ import '../imports/api/users.js';
 
 import { JsonRoutes } from 'meteor/simple:json-routes';
 import  SimpleSchema  from 'simpl-schema';
-import {Board} from "../imports/startup/server/models/Boards";
+import {Board} from "../imports/startup/server/models/Boards.js";
 import {Users} from '../imports/startup/server/models/Users'
 import Card from "../imports/startup/server/models/Card.js"
 
