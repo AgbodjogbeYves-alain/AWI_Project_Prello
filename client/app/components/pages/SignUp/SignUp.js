@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import Alert from "../../partials/Alert.js";
 import NavBar from "../../partials/NavBar.js"
+import asteroid from '../../../common/asteroid';
 
 class SignUp extends Component {
 
@@ -40,10 +41,14 @@ class SignUp extends Component {
         else if(password.length < 6) that.addAlert('danger', "Too short password, at least 6 characters.")
         else if(!email || !lastname || !firstname) that.addAlert('danger', "Some fields are empty.")
         else {
-           Meteor.call('users.signUp', firstname, lastname, email, password, function(error){
-               if(error) that.addAlert('danger', error.reason)
-               else that.addAlert('success', "You're now Signed Up !")
-           });
+
+           asteroid.call('users.signUp', {firstname: firstname, lastname: lastname, email: email, password: password})
+               .then((result) => {
+                   console.log(result)
+                   that.addAlert('success', "You're now Signed Up !")
+               }).catch(error => {
+                    that.addAlert('danger', error.reason)
+           })
         }
     }
 

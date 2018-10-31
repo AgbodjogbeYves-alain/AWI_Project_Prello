@@ -18,30 +18,30 @@ CardSchema = new SimpleSchema({
   cardDescription: {
       type: String,
       label: "Description",
-      defaultValue: {}
+      defaultValue: []
   },
   cardTag: {
       type: Array,
       label: "Tags",
-      defaultValue: {}
+      defaultValue: []
   },
   'cardTag.$': Object, //se if need to replace Object with a schema
   cardComment: {
       type: Array,
       label: "Comments",
-      defaultValue: {}
+      defaultValue: []
   },
   'cardComment.$': Object, //se if need to replace Object with a schema
   cardAttachment: {
       type: Array,
       label: "Attachments",
-      defaultValue: {}
+      defaultValue: []
   },
   'cardAttachment.$': Object, //se if need to replace Object with a schema
   cardChecklist: {
       type: Array,
       label: "CheckLists",
-      defaultValue: {}
+      defaultValue: []
   },
   'cardChecklist.$': Object, //se if need to replace Object with a schema
   listCreatedAt:{

@@ -18,7 +18,7 @@ ListSchema = new SimpleSchema({
   listCard:{
     type: Array,
     label: "Cards",
-    defaultValue: {}
+    defaultValue: []
   },
   'listCard.$': Object, //se if need to replace Object with a schema
   listCreatedAt:{

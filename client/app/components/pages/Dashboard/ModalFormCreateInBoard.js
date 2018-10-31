@@ -8,7 +8,7 @@ class ModalFormCreateInBoard extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            privacy: '',
+            privacy: 0,
             boardName: ''
         };
 

@@ -29,6 +29,7 @@ asteroid.ddp.on('changed', (updatedDoc) => {
   if (updatedDoc.collection === 'users') {
     store.dispatch(editProfileUser(updatedDoc.fields));
   }
+
 });
 
 export default asteroid;

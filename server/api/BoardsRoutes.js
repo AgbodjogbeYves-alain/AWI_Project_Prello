@@ -1,42 +1,33 @@
-import {SimpleSchema} from "meteor/aldeed:simple-schema";
-import {Board} from "../models/Boards";
+import {Boards} from "../models/Boards";
 import {Meteor} from "meteor/meteor";
 
 Meteor.methods({
-    'createBoard'({boardName, privacy}) {
+    'board.createBoard'({boardName, privacy}) {
         /*if(!Meteor.userId()){
             throw new Meteor.Error('Not Authorized')
         }else{*/
         let privacyInt = parseInt(privacy)
-        const boardSchema = new SimpleSchema({
-            boardName: {type: String, min: 1},
-            privacyInt: {type: SimpleSchema.Integer, optional: false, min: 0, defaultValue: 0}
-        })
-        console.log(boardName);
-        console.log(privacyInt);
-
-        boardSchema.validate({boardName, privacyInt});
-
-        return Board.insert({boardName: boardName, privacyInt: privacyInt})
+        let id = Math.random().toString(36).substr(2, 5).toUpperCase();
+        return Boards.insert({boardId: id, boardTitle: boardName, boardPrivacy: privacyInt, boardUser: [Meteor.user()]})
     },
 
-    'getBoard' ({idBoard}) {
-        console.log(idBoard);
+    'board.getBoard' ({idBoard}) {
         let board;
-        let countDoc = Board.find({"_id": idBoard}).count();
+        let countDoc = Boards.find({"boardId": idBoard}).count();
+        console.log(countDoc)
         if (countDoc === 1) {
-            board = Board.findOne({"_id": idBoard});
+            board = Boards.findOne({"boardId": idBoard});
             return board;
         } else {
             throw new Meteor.Error(404, 'Board not found')
         }
 
     },
-    'deleteBoard'({idBoard}) {
+    'board.deleteBoard'({idBoard}) {
 
     },
 
-    'editBoard' ({idBoard,newParams}) {
+    'board.editBoard' ({idBoard,newParams}) {
 
     },
 

@@ -17,5 +17,4 @@ meteortesting:mocha               # A package for writing and running your meteo
 johanbrook:publication-collector  # Test a Meteor publication by collecting its output
 nimble:restivus
 meteortoys:allthings
-aldeed:simple-schema
 aldeed:collection2@3.0.0
