@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Alert from "../../partials/Alert.js";
 import NavBar from "../../partials/NavBar.js"
 
-export default class SignUp extends Component {
+class SignUp extends Component {
 
     constructor(props) {
         super(props);
@@ -51,7 +52,8 @@ export default class SignUp extends Component {
     }
 
     render() {
-        if(Meteor.userId()) return(<Redirect to='/dashboard'/>)
+        const { user } = this.props;
+        if(user) return(<Redirect to='/dashboard'/>)
         return(
             <main>
                 <NavBar/>
@@ -160,3 +162,9 @@ export default class SignUp extends Component {
         );
     }
 }
+
+const mapStateToProps = state => ({
+    user: state.user,
+});
+
+export default connect(mapStateToProps)(SignUp)

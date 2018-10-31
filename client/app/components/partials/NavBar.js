@@ -73,12 +73,10 @@ class NavBar extends Component {
 
     render(){
         const { user } = this.props
-        return (
-        <div>
-            <ModalFormCreateInBoard privacy={'0'}/>
+        return (     
 
             <nav id="navbar-main" className="navbar navbar-main navbar-expand-lg navbar-dark bg-primary headroom">
-
+                <ModalFormCreateInBoard privacy={'0'}/>
                 <div className="container">
                     <Link className="navbar-brand mr-lg-5" to={user ? "/dashboard" : "/"}>
                         <img src="../assets/img/brand/white.png"/>
@@ -135,7 +133,6 @@ class NavBar extends Component {
                     </div>
                 </div>
             </nav>
-</div>
         );
     }
 }

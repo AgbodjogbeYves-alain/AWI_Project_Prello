@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { withRouter } from "react-router-dom";
+import { connect } from 'react-redux';
+import asteroid from '../../../common/asteroid';
 
 import NavBar from "../../partials/NavBar.js"
 import ForgottenPasswordModal from "./ForgottenPasswordModal/ForgottenPasswordModal.js"
@@ -29,7 +31,7 @@ class LogIn extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
         let that = this;
-        Meteor.loginWithPassword(this.email.value, this.password.value, function(error){
+        asteroid.loginWithPassword({email: this.email.value, password: this.password.value}, function(error){
             if(error) that.addAlert('danger', error.reason);
             else {
                 that.addAlert("success", "You're Loged In !");
@@ -43,7 +45,8 @@ class LogIn extends Component {
     }
 
     render() {
-        if(Meteor.userId()) return(<Redirect to='/dashboard'/>)
+        const { user } = this.props;
+        if(user) return(<Redirect to='/dashboard'/>)
         return (
             <main>
                 <NavBar/>
@@ -134,4 +137,8 @@ class LogIn extends Component {
     }
 }
 
-export default withRouter(LogIn);
+const mapStateToProps = state => ({
+    user: state.user,
+});
+
+export default connect(mapStateToProps)(withRouter(LogIn));
