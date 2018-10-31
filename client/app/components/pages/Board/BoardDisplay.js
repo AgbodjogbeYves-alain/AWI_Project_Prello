@@ -163,9 +163,7 @@ export default class BoardDisplay extends Component {
             .then((result) => {
                 let nlist = {listId:result, listTitle:"New List", listCard: [], listCreatedAt: Date()}; //see if keep like it
                 let lists = this.state.list
-                console.log(lists)
                 lists.push(nlist)
-                console.log(lists)
                 let newBoard = this.state.board
                 newBoard.boardList = lists
 
