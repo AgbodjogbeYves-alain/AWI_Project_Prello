@@ -163,10 +163,11 @@ export default class BoardDisplay extends Component {
         asteroid.call('createList',"New List")
             .then(result => {
                 let nlist = {listId:result, listTitle:"New List", listCard: [], listCreatedAt: Date()}; //see if keep like it
-                this.state.list.push(nlist);
+                let list = this.state.list;
+                list.push(nlist)
                 let newState = {
                     board: this.state.board,
-                    list: this.state.list
+                    list: list
                 };
                 console.log(this.state);
                 this.setState(newState);
