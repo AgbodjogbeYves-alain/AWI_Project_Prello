@@ -9,7 +9,7 @@ class ProfileForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: this.props.user.emails[0].address,
+            email: this.props.user.profile.mail,
             lastname: this.props.user.profile.lastname,
             firstname: this.props.user.profile.firstname,
             alerts: []
