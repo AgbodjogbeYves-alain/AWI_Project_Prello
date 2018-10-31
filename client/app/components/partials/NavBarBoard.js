@@ -47,14 +47,23 @@ export default class NavBarBoard extends Component {
 
     handleSubmitTitle = (event) => {
         event.preventDefault()
-        Meteor.call()
     }
     render(){
         return (
 
             <nav id="navBarBoard" className="navbar navbar-expand-lg navbar-dark bg-default">
                 <div>
-                    <a className="navbar-brand">{this.state.boardTitle}</a>
+                    <div className="navbar-brand dropdown">
+                        <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {this.state.boardTitle}
+                        </button>
+                        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a className="dropdown-item" href="#">Action</a>
+                            <a className="dropdown-item" href="#">Another action</a>
+                            <a className="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </div>
                 </div>
                 <div id={"containerTeam"}>
                     <a className="navbar-item" href="#">{this.state.teams[0]}</a>

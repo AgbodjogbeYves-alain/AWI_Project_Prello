@@ -29,8 +29,7 @@ export default class BoardDisplay extends Component {
 
 
     componentDidMount(){
-        let idBoard = this.props.id;
-        console.log(idBoard)
+        let idBoard = this.props.match.params.id;
         let boardFromDB = {}
         let listFromDB = []
         asteroid.call('board.getBoard',{ idBoard })
@@ -160,16 +159,21 @@ export default class BoardDisplay extends Component {
     };
 
     createList = () => {
-        asteroid.call('createList',"New List")
-            .then(result => {
+        asteroid.call('list.createList',"New List")
+            .then((result) => {
                 let nlist = {listId:result, listTitle:"New List", listCard: [], listCreatedAt: Date()}; //see if keep like it
-                this.state.list.push(nlist);
-                let newState = {
-                    board: this.state.board,
-                    list: this.state.list
-                };
-                console.log(this.state);
-                this.setState(newState);
+                let lists = this.state.list
+                console.log(lists)
+                lists.push(nlist)
+                console.log(lists)
+                let newBoard = this.state.board
+                newBoard.boardList = lists
+
+
+                this.setState({
+                    board: newBoard,
+                    list: lists
+                });
             }).catch(error => {
             alert(error);
         })
