@@ -25,7 +25,7 @@ export function editProfileUser(user) {
   };
 }
 
-export function removeuser() {
+export function removeUser() {
   return {
     type: REMOVE_USER
   };
@@ -45,11 +45,10 @@ export function callEditProfileUser(email, lastname, firstname) {
 
 export function callRemoveUser() {
   return dispatch => asteroid.call('users.remove')
-      .then(result => dispatch(editRemoveUser(result)));
+      .then(result => dispatch(removeUser(result)));
 }
 
 export function callEnabledMails(val) {
-  console.log(val)
   return dispatch => asteroid.call('users.setEnabledMails', val)
       .then(result => dispatch(enabledMails(result)));
 }

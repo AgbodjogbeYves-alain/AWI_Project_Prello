@@ -11,7 +11,7 @@ const user = (state = null, action) => {
     case REMOVE_USER:
       return null
     default:
-      return state;
+      return false;
   }
 };
 

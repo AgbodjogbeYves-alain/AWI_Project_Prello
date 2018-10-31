@@ -1,16 +1,20 @@
 import React, {Component} from 'react';
 import NavBar from "../../partials/NavBar";
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Teams from "./Teams/Teams.js";
 import Boards from "./Boards/Boards.js";
 
-export default class Dashboard extends Component {
+class Dashboard extends Component {
 
     constructor(props) {
         super(props);
     }
 
     render(){
+        const { user } = this.props;
+        if(user && !user.profile) return(<Redirect to='/'/>)
         return(
             <main id="dashboard">
                 <NavBar/>
@@ -28,3 +32,9 @@ export default class Dashboard extends Component {
         )
     }
 }
+
+const mapStateToProps = state => ({
+    user: state.user,
+});
+
+export default connect(mapStateToProps)(Dashboard);
