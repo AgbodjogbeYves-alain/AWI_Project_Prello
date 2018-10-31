@@ -19,8 +19,7 @@ class MyAccount extends Component {
 
     render() {
         const { user } = this.props;
-        console.log(user);
-        if(!user) return(<Redirect to='/'/>)
+        if(!user || !user.profile) return(<Redirect to='/'/>)
         return (
             <main className="profile-page">
             <NavBar/>
@@ -82,7 +81,7 @@ class MyAccount extends Component {
                                         {user ? user.profile.lastname + ', ' + user.profile.firstname : ''}
                                     </h3>
                                     <div className="h6 font-weight-300">
-                                        <i className="ni location_pin mr-2"></i>{user ? user.emails[0].address : ''}
+                                        <i className="ni location_pin mr-2"></i>{user ? user.profile.email : ''}
                                     </div>
                                     <div className="container profile-form-container">
                                         {user ? <ProfileForm user={user}/> : ''}

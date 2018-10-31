@@ -10,7 +10,7 @@ const asteroid = new Asteroid({
 
 // if you want realitme updates in all connected clients
 // subscribe to the publication
-asteroid.subscribe('user');
+asteroid.subscribe('currentUser');
 
 asteroid.ddp.on('added', (doc) => {
   // we need proper document object format here
@@ -27,11 +27,7 @@ asteroid.ddp.on('removed', (removedDoc) => {
 
 asteroid.ddp.on('changed', (updatedDoc) => {
   if (updatedDoc.collection === 'users') {
-    console.log(updatedDoc);
-    store.dispatch(editProfileUser(
-      updatedDoc.fields.email, 
-      updatedDoc.fields.lastname),
-      updatedDoc.fields.firstname);
+    store.dispatch(editProfileUser(updatedDoc.fields));
   }
 });
 

@@ -89,7 +89,9 @@ class SignUp extends Component {
                             <div className="text-center text-muted mb-4">
                             <small>Or sign up with credentials</small>
                             </div>
-                            {this.renderAlerts()}
+                            <div>
+                                {this.renderAlerts()}
+                            </div>
                             <form role="form" onSubmit={this.handleSubmit}>
                                 <div className="form-group">
                                     <div className="input-group input-group-alternative mb-3">

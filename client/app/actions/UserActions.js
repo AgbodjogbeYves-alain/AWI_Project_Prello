@@ -17,16 +17,14 @@ export function unsetLoggedUser() {
   };
 }
 
-export function editProfileUser(email, lastname, firstname) {
+export function editProfileUser(user) {
   return {
     type: EDIT_USER,
-    email,
-    lastname,
-    firstname
+    user
   };
 }
 
 export function callEditProfileUser(email, lastname, firstname) {
   return dispatch => asteroid.call('users.updateProfile', email, lastname, firstname)
-      .then(result => dispatch(editProfileUser(result.emails[0].address, result.profile.lastname, result.profile.firstname)));
+      .then(result => dispatch(editProfileUser(result)));
 }
