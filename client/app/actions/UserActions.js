@@ -3,6 +3,7 @@ import asteroid from "../common/asteroid";
 export const SET_USER = 'SET_USER';
 export const UNSET_USER = 'UNSET_USER';
 export const EDIT_USER = 'EDIT_USER';
+export const REMOVE_USER = 'REMOVE_USER';
 
 export function setLoggedUser(user) {
   return {
@@ -24,7 +25,18 @@ export function editProfileUser(user) {
   };
 }
 
+export function removeuser() {
+  return {
+    type: REMOVE_USER
+  };
+}
+
 export function callEditProfileUser(email, lastname, firstname) {
   return dispatch => asteroid.call('users.updateProfile', email, lastname, firstname)
       .then(result => dispatch(editProfileUser(result)));
+}
+
+export function callRemoveUser() {
+  return dispatch => asteroid.call('users.remove')
+      .then(result => dispatch(editRemoveUser(result)));
 }
