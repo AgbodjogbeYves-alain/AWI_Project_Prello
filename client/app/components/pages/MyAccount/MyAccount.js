@@ -8,7 +8,11 @@ import ChangePasswordForm from "./ChangePasswordForm/ChangePasswordForm.js";
 import EnabledMailsInput from "./EnabledMailsInput/EnabledMailsInput.js";
 import ConfirmModal from "./../../partials/ConfirmModal.js";
 
+
+
+
 class MyAccount extends Component {
+
 
     removeAccount(){
         Meteor.call('users.remove', function(error){
@@ -19,7 +23,8 @@ class MyAccount extends Component {
 
     render() {
         const { user } = this.props;
-        if(!user || !user.profile) return(<Redirect to='/'/>)
+        //if(!user || !user.profile) return(<Redirect to='/'/>)
+        console.log(user)
         return (
             <main className="profile-page">
             <NavBar/>
@@ -104,3 +109,6 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(MyAccount);
+
+
+
