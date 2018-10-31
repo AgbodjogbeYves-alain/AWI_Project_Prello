@@ -12,8 +12,12 @@ export default class NavBarBoard extends Component {
             boardTitle : "",
             privacy: "Public",
             teams: [],
-            members: []
+            members: [],
+            settingVisible: false
         }
+
+        this.showDivSettings = this.showDivSettings.bind(this)
+        this.handleSubmitTitle = this.handleSubmitTitle.bind(this)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -36,19 +40,34 @@ export default class NavBarBoard extends Component {
 
     }
 
+
+    showDivSettings = (event) =>{
+        event.preventDefault()
+        document.getElementById("divSettings").fadeIn('slow')
+    }
+
+    handleSubmitTitle = (event) => {
+        event.preventDefault()
+        Meteor.call()
+    }
     render(){
         return (
+
             <nav id="navBarBoard" className="navbar navbar-expand-lg navbar-dark bg-default">
-                <div className="container">
-                    <a className="navbar-brand" href="#">{this.state.boardTitle}</a>
+                <div>
+                    <a className="navbar-brand">{this.state.boardTitle}</a>
                 </div>
-                <div id={"containerTeam"} className="container">
+                <div id={"containerTeam"}>
                     <a className="navbar-item" href="#">{this.state.teams[0]}</a>
                 </div>
-                <div id={"containerMembers"} className="container">
+                <div id={"containerMembers"}>
                     {this.state.members.map((member) => {
-                        return <span id={"aMember"} className="navbar-item" href="#">{member.firstname}</span>
+                        return <a className="navbar-item" href="#">{member.firstname}</a>
                     })}
+                </div>
+
+                <div className={"divSettings"}>
+                    <a className="dropdown-item" onClick={this.showDivSettings}><i className="ni ni-settings-gear-65"/></a>
                 </div>
             </nav>
     )

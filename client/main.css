@@ -62,7 +62,7 @@ nav .notifications {
     margin-top: 5% ;
 }
 #navBarBoard{
-    opacity: 0.5;
+    z-index: 0;
 }
 
 nav {
@@ -77,9 +77,11 @@ nav {
 }
 
 #containerTeam{
-    margin-left: -35%
 }
 
 #containerMembers{
-    margin-left: -35%
+}
+
+.divSettings{
+    color: white;
 }

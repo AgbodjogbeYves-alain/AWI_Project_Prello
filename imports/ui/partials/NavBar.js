@@ -31,7 +31,7 @@ class NavBar extends Component {
                     <li className="nav-item dropdown">
                         <a className="nav-link nav-link-icon" href="#" id="navbar-default_dropdown_1"
                            role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i className="ni ni-settings-gear-65"/>
+                            <i className="ni ni-fat-add"/>
                             <span className="nav-link-inner--text d-lg-none">Settings</span>
                         </a>
                         <div className="dropdown-menu dropdown-menu-right"
@@ -60,16 +60,6 @@ class NavBar extends Component {
                             </a>
                         </div>
                     </li>
-                    <li className="nav-item dropdown">
-                        <a className="nav-link" data-toggle="dropdown" href='#' role="button">
-                            <i className="ni ni-single-02 ni-lg"/>
-                            <span className="nav-link-inner--text d-lg-none">Notification</span>
-                        </a>
-                        <div className="dropdown-menu">
-                            <a href='#' className="dropdown-item">Notification right there</a>
-                        </div>
-                    </li>
-
                 </ul>
             );
         }
