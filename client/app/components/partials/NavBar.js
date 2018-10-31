@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Meteor } from 'meteor/meteor';
 import { withRouter } from "react-router-dom";
 import ModalFormCreateInBoard from "../pages/Dashboard/ModalFormCreateInBoard";
+import { connect } from 'react-redux';
 
 class NavBar extends Component {
 
@@ -16,7 +16,8 @@ class NavBar extends Component {
     }
 
     renderLinks(){
-        if(Meteor.userId()){
+        const { user } = this.props
+        if(user){
             return (
                 <ul className="navbar-nav align-items-lg-center ml-lg-auto navbar-nav-hover">
                     <li>
@@ -71,14 +72,15 @@ class NavBar extends Component {
     }
 
     render(){
+        const { user } = this.props
         return (
-<div>
-    <ModalFormCreateInBoard privacy={'0'}/>
+        <div>
+            <ModalFormCreateInBoard privacy={'0'}/>
 
-    <nav id="navbar-main" className="navbar navbar-main navbar-expand-lg navbar-dark bg-primary headroom">
+            <nav id="navbar-main" className="navbar navbar-main navbar-expand-lg navbar-dark bg-primary headroom">
 
                 <div className="container">
-                    <Link className="navbar-brand mr-lg-5" to={Meteor.userId() ? "/dashboard" : "/"}>
+                    <Link className="navbar-brand mr-lg-5" to={user ? "/dashboard" : "/"}>
                         <img src="../assets/img/brand/white.png"/>
                     </Link>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
@@ -88,7 +90,7 @@ class NavBar extends Component {
                     <div className="navbar-collapse-header">
                         <div className="row">
                         <div className="col-6 collapse-brand">
-                            <Link to={Meteor.userId() ? "/dashboard" : "/"}>
+                            <Link to={user ? "/dashboard" : "/"}>
                                 <img src="../assets/img/brand/blue.png"/>
                             </Link>
                         </div>
@@ -138,4 +140,8 @@ class NavBar extends Component {
     }
 }
 
-export default withRouter(NavBar);
+const mapStateToProps = state => ({
+    user: state.user,
+});
+
+export default connect(mapStateToProps)(withRouter(NavBar));

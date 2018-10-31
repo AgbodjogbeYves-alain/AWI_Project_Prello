@@ -1,6 +1,5 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { render } from 'react-dom';
 import ScrollToTop from'./ScrollToTop.js';
 
 // route components
@@ -11,8 +10,9 @@ import Dashboard from './pages/Dashboard/Dashboard.js';
 import Board from './pages/Board/BoardDisplay.js';
 import MyAccount from './pages/MyAccount/MyAccount.js';
 
-Meteor.startup(() => {
-    render(
+export default class MyRouter extends Component{
+    render(){
+        return (
         <Router>
             <ScrollToTop>
                 <Switch>
@@ -25,7 +25,7 @@ Meteor.startup(() => {
                     <Route path="/myaccount" component={MyAccount}/>
                 </Switch>
             </ScrollToTop>
-        </Router>,
-        document.getElementById('render-target')
-    )
-})
+        </Router>
+        )
+    }
+}

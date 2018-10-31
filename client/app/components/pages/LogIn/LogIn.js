@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { Meteor } from 'meteor/meteor';
 import { withRouter } from "react-router-dom";
 
 import NavBar from "../../partials/NavBar.js"

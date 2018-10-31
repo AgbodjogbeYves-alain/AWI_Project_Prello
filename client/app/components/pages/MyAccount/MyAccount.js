@@ -1,7 +1,6 @@
-import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
-import { withTracker } from 'meteor/react-meteor-data';
 import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import NavBar from "../../partials/NavBar.js";
 import ProfileForm from "./ProfileForm/ProfileForm.js";
@@ -100,8 +99,8 @@ class MyAccount extends Component {
     }
 }
 
-export default withTracker(() => {
-    return {
-      currentUser: Meteor.user(),
-    };
-})(MyAccount);
+const mapStateToProps = state => ({
+    user: state.user,
+});
+
+export default connect(mapStateToProps);

@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import NavBar from "../../partials/NavBar.js"
-import { Meteor } from 'meteor/meteor';
+import NavBar from "../../partials/NavBar.js";
  
 // App component - represents the whole app
-export default class Home extends Component {
+class Home extends Component {
     render() {
-        if(Meteor.userId()) return(<Redirect to='/dashboard'/>)
+        const { user } = this.props;
+        if(user) return(<Redirect to='/dashboard'/>)
         return (
             <main>
                 <NavBar/>
@@ -57,3 +58,9 @@ export default class Home extends Component {
         );
     }
 }
+
+const mapStateToProps = state => ({
+    user: state.user,
+});
+
+export default connect(mapStateToProps)(Home);
