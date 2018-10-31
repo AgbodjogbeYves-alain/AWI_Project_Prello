@@ -23,8 +23,7 @@ class MyAccount extends Component {
 
     render() {
         const { user } = this.props;
-        //if(!user || !user.profile) return(<Redirect to='/'/>)
-        console.log(user)
+        if(!user || !user.profile) return(<Redirect to='/'/>)
         return (
             <main className="profile-page">
             <NavBar/>
