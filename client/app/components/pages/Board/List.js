@@ -40,7 +40,7 @@ export default class List extends React.Component {
                                 {(provided) => (
                                     <CardList ref={provided.innerRef} {...provided.droppableProps}>
                                         {this.props.cards.map((card, index) => <Card key={card.cardId} card={card}
-                                                                                       index={index}/>)}
+                                                                                     index={index}/>)}
                                         {provided.placeholder}
                                     </CardList>
                                 )

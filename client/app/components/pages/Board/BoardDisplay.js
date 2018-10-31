@@ -4,7 +4,8 @@ import { Link, Redirect } from 'react-router-dom';
 import styled from "styled-components";
 import {DragDropContext, Droppable} from "react-beautiful-dnd";
 import List from "./List";
-import NavBarBoard from "../../partials/NavBarBoard"
+import NavBarBoard from "../../partials/NavBarBoard";
+import asteroid from "../../../common/asteroid.js";
 const Container = styled.div`
   display: flex;
 `;
@@ -28,20 +29,21 @@ export default class BoardDisplay extends Component {
 
 
     componentDidMount(){
-        let idBoard = this.props.match.params.id;
+        let idBoard = this.props.id;
+        console.log(idBoard)
         let boardFromDB = {}
         let listFromDB = []
-        Meteor.call('getBoard',{ idBoard },(error, result) => {
-            if(error){
-            }else{
-                console.log(result)
+        asteroid.call('board.getBoard',{ idBoard })
+            .then(result => {
                 boardFromDB = result,
-                listFromDB = result.boardList
+                    listFromDB = result.boardList
                 this.setState({
                     board: boardFromDB,
                     list: listFromDB
                 })
-            }})
+            }).catch(error => {
+            alert(error);
+        })
     }
 
     onDragEnd = result => {
@@ -52,13 +54,11 @@ export default class BoardDisplay extends Component {
         }
 
         if (destination.droppableId === source.droppableId && destination.index === source.index) {
-
             return;
         }
 
         if(type==="list"){
             const idForListToMove = draggableId.slice(10)
-            console.log(idForListToMove)
             const listToMove = this.state.list.filter((list) => list.listId == idForListToMove)[0];
             const newLists = Array.from(this.state.list);
 
@@ -160,7 +160,19 @@ export default class BoardDisplay extends Component {
     };
 
     createList = () => {
-
+        asteroid.call('createList',"New List")
+            .then(result => {
+                let nlist = {listId:result, listTitle:"New List", listCard: [], listCreatedAt: Date()}; //see if keep like it
+                this.state.list.push(nlist);
+                let newState = {
+                    board: this.state.board,
+                    list: this.state.list
+                };
+                console.log(this.state);
+                this.setState(newState);
+            }).catch(error => {
+            alert(error);
+        })
     };
 
 
@@ -169,31 +181,31 @@ export default class BoardDisplay extends Component {
     }
     render() {
 
-    return(
-        <div id={"boardDisplay"}>
-            <NavBar/>
-            <NavBarBoard boardTitle={this.state.board.boardTitle} privacy={this.state.board.boardPrivacy} teams={this.state.board.boardTeam} members={this.state.board.boardUser}/>
-            <DragDropContext onDragEnd={this.onDragEnd}>
-                <Droppable droppableId={"all-columns"} direction={"horizontal"} type={"list"}>
-                    {(provided)=> {
-                        return(
-                            <Container
-                                {...provided.droppableProps}
-                                ref={provided.innerRef}
+        return(
+            <div id={"boardDisplay"}>
+                <NavBar/>
+                <NavBarBoard boardTitle={this.state.board.boardTitle} teams={this.state.board.boardTeam} privacy={this.state.board.boardPrivacy} members={this.state.board.boardUser} />
+                <DragDropContext onDragEnd={this.onDragEnd}>
+                    <Droppable droppableId={"all-columns"} direction={"horizontal"} type={"list"}>
+                        {(provided)=> {
+                            return(
+                                <Container
+                                    {...provided.droppableProps}
+                                    ref={provided.innerRef}
 
-                            >
-                                {this.state.list.map((list,index) => {
-                                    const cards = list.listCard;
-                                    return <List key={list.listId} list={list} index={index} cards={cards}/>;
-                                })}
+                                >
+                                    {this.state.list.map((list,index) => {
+                                        const cards = list.listCard;
+                                        return <List key={list.listId} list={list} index={index} cards={cards}/>;
+                                    })}
 
-                                {provided.placeholder}
-                            </Container>
-                        )}}
-                </Droppable>
-            </DragDropContext>
-
-        </div>
+                                    {provided.placeholder}
+                                </Container>
+                            )}}
+                    </Droppable>
+                </DragDropContext>
+                <button className="btn btn-success" onClick={this.createList}>Create a new List</button>
+            </div>
         )
     }
 }
