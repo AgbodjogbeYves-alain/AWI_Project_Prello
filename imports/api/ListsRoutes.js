@@ -4,12 +4,12 @@ import { Random } from 'meteor/random';
 
 
 Meteor.methods({
-    'createList'({listName}) {
+    'createList'(listName) {
         let id = Random.id();
         return Lists.insert({listId: id, listTitle: listName})
     },
 
-    'getList' ({idList}) {
+    'getList' (idList) {
         let countDoc = Lists.find({"listId": idList}).count();
         if (countDoc === 1) {
             list = List.findOne({"listId": idList});

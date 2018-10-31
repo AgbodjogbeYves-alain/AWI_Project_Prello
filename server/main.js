@@ -10,6 +10,7 @@ import Card from "../imports/startup/server/models/Card.js"
 
 Meteor.startup(() => {
     require("../imports/api/BoardsRoutes")
+    require("../imports/api/ListsRoutes")
 
     JsonRoutes.add('post', '/signUp/', function(req, res, next) {
         console.log(req)

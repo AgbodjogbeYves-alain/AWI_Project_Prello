@@ -6,7 +6,6 @@ import styled from "styled-components";
 import {DragDropContext, Droppable} from "react-beautiful-dnd";
 import List from "./List";
 import NavBarBoard from "../../partials/NavBarBoard";
-import ModalFormCreateList from "./ModalFormCreateList";
 const Container = styled.div`
   display: flex;
 `;
@@ -30,13 +29,13 @@ export default class BoardDisplay extends Component {
 
 
     componentDidMount(){
-        let idBoard = this.props.match.params.id;
+        let idBoard = this.props.id;
         let boardFromDB = {}
         let listFromDB = []
         Meteor.call('getBoard',{ idBoard },(error, result) => {
             if(error){
+                alert(error);
             }else{
-                console.log(result)
                 boardFromDB = result,
                 listFromDB = result.boardList
                 this.setState({
@@ -162,7 +161,20 @@ export default class BoardDisplay extends Component {
     };
 
     createList = () => {
-
+        Meteor.call('createList',"New List",(error, result) => {
+            if(error){
+                alert(error);
+            }else{
+                let nlist = {listId:result, listTitle:"New List", listCard: [], listCreatedAt: Date()}; //see if keep like it
+                this.state.list.push(nlist);
+                let newState = {
+                    board: this.state.board,
+                    list: this.state.list
+                };
+                console.log(this.state);
+                this.setState(newState);
+            }
+        })
     };
 
 
@@ -173,7 +185,6 @@ export default class BoardDisplay extends Component {
 
     return(
         <div id={"boardDisplay"}>
-        <ModalFormCreateList/>
             <NavBar/>
             <NavBarBoard boardTitle={this.state.board.boardTitle} privacy={this.state.board.boardPrivacy} teams={this.state.board.boardTeam} members={this.state.board.boardUser}/>
             <DragDropContext onDragEnd={this.onDragEnd}>
@@ -195,11 +206,7 @@ export default class BoardDisplay extends Component {
                         )}}
                 </Droppable>
             </DragDropContext>
-            <div className="row">
-                    <div className="col-12">
-                        <button className="btn btn-success" data-toggle="modal" data-target="#modal-createList">Create a new List</button>
-                    </div>
-                </div>
+            <button className="btn btn-success" onClick={this.createList}>Create a new List</button>
         </div>
         )
     }
