@@ -18,8 +18,9 @@ class MyAccount extends Component {
     }
 
     render() {
-        let currentUser = this.props.currentUser;
-        if(!Meteor.userId()) return(<Redirect to='/'/>)
+        const { user } = this.props;
+        console.log(user);
+        if(!user) return(<Redirect to='/'/>)
         return (
             <main className="profile-page">
             <NavBar/>
@@ -73,18 +74,18 @@ class MyAccount extends Component {
                                         </div>
                                     </div>
                                     <div className="col-lg-4 order-lg-1">
-                                        {currentUser ? <EnabledMailsInput user={currentUser}/> : ''}
+                                        {user ? <EnabledMailsInput user={user}/> : ''}
                                     </div>
                                 </div>
                                 <div className="text-center mt-5">
                                     <h3>
-                                        {currentUser ? currentUser.profile.lastname + ', ' + currentUser.profile.firstname : ''}
+                                        {user ? user.profile.lastname + ', ' + user.profile.firstname : ''}
                                     </h3>
                                     <div className="h6 font-weight-300">
-                                        <i className="ni location_pin mr-2"></i>{currentUser ? currentUser.emails[0].address : ''}
+                                        <i className="ni location_pin mr-2"></i>{user ? user.emails[0].address : ''}
                                     </div>
                                     <div className="container profile-form-container">
-                                        {currentUser ? <ProfileForm user={currentUser}/> : ''}
+                                        {user ? <ProfileForm user={user}/> : ''}
                                     </div>
                                     <div className="container profile-form-container">
                                         <ChangePasswordForm/>
@@ -103,4 +104,4 @@ const mapStateToProps = state => ({
     user: state.user,
 });
 
-export default connect(mapStateToProps);
+export default connect(mapStateToProps)(MyAccount);

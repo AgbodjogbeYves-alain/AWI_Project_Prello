@@ -1,11 +1,5 @@
-@import 'assets/css/dashboard.css';
+@import 'dashboard.css';
 
-.alert-container{
-    position: fixed !important;
-    width: 90%;
-    margin: 10px 5% 10px 5%;
-    z-index: 10;
-}
 nav {
     position: fixed !important;
     width: 100%;

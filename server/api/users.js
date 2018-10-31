@@ -11,19 +11,22 @@ Meteor.methods({
                 profile: {
                     lastname: lastname,
                     firstname: firstname,
-                    enabledMails: false
+                    enabledMails: false,
+                    email: email 
                 }
             };
 
             Accounts.createUser(options);
         }
     },
-    "users.updateProfile"(userId, email, lastname, firstname){
-        Meteor.users.update(userId, { $set: {
+    "users.updateProfile"(email, lastname, firstname){
+        Meteor.users.update(Meteor.userId(), { $set: {
             emails: [{address: email, verified: true}],
             'profile.lastname': lastname,
-            'profile.firstname': firstname
+            'profile.firstname': firstname,
+            'profile.email': email
         }});
+        return Meteor.user();
     },
     'users.changePassword'(actualPassword, newPassword){
         let checkPassword = Accounts._checkPassword(Meteor.user(), actualPassword);

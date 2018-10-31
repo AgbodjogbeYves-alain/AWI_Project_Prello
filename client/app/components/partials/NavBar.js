@@ -3,16 +3,13 @@ import { Link } from 'react-router-dom';
 import { withRouter } from "react-router-dom";
 import ModalFormCreateInBoard from "../pages/Dashboard/ModalFormCreateInBoard";
 import { connect } from 'react-redux';
+import asteroid from '../../common/asteroid';
 
 class NavBar extends Component {
 
     handleLogOut(){
-        let that = this;
-        Meteor.logout(function(error){
-            if(error) alert(error.reason)
-            else that.props.history.push("/");
-        });
-        
+        asteroid.logout()
+        this.props.history.push("/");
     }
 
     renderLinks(){

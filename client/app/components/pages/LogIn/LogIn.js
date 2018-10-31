@@ -31,13 +31,14 @@ class LogIn extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
         let that = this;
-        asteroid.loginWithPassword({email: this.email.value, password: this.password.value}, function(error){
-            if(error) that.addAlert('danger', error.reason);
-            else {
-                that.addAlert("success", "You're Loged In !");
-                that.props.history.push('/dashboard');
-            } 
-        });
+        asteroid.loginWithPassword({email: this.email.value, password: this.password.value})
+        .then(function(){
+            that.addAlert("success", "You're Loged In !");
+            that.props.history.push('/dashboard');
+        })
+        .catch(function(error){
+            that.addAlert("danger", error.reason)
+        })
     }
 
     renderAlerts(){
@@ -85,7 +86,9 @@ class LogIn extends Component {
                                         <div className="text-center text-muted mb-4">
                                             <small>Or sign in with credentials</small>
                                         </div>
-                                        {this.renderAlerts()}
+                                        <div className="alert-container">
+                                            {this.renderAlerts()}
+                                        </div>
                                         <form role="form" onSubmit={(event) => this.handleSubmit(event)}>
                                             <div className="form-group mb-3">
                                                 <div className="input-group input-group-alternative">

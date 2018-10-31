@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Alert from "../../../partials/Alert.js"
+import { callEditProfileUser } from '../../../../actions/UserActions.js';
 
-export default class ProfileForm extends Component {
+class ProfileForm extends Component {
 
     constructor(props) {
         super(props);
@@ -29,24 +31,21 @@ export default class ProfileForm extends Component {
 
     handleSubmit= (event) => {
         event.preventDefault();
+        const { dispatchCallEditProfileUser } = this.props;
         let that = this;
-        Meteor.call(
-            'users.updateProfile',
-            Meteor.userId(),
-            this.state.email,
-            this.state.lastname, 
-            this.state.firstname,
-            function(error){
-                if(error) that.addAlert('danger', error.reason);
-                else that.addAlert('success', 'Profile saved.');
-            })
+        dispatchCallEditProfileUser(this.state.email, this.state.lastname, this.state.firstname)
+        .then(() => {
+            that.addAlert("success", "Profile saved.");
+        })
     }
 
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
                 <h1 style={{marginBottom: '20px'}}>Profile</h1>
-                {this.renderAlerts()}
+                <div>
+                    {this.renderAlerts()}
+                </div>
                 <div className="row">
                     <div className="col-md-6">
                         <div className="form-group">
@@ -110,3 +109,10 @@ export default class ProfileForm extends Component {
         )
     }
 }
+
+const mapStateToProps = () => ({});
+const mapDispatchToProps = dispatch => ({
+    dispatchCallEditProfileUser: (email, lastname, firstname) => dispatch(callEditProfileUser(email, lastname, firstname)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileForm);
