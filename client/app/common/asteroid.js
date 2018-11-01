@@ -2,6 +2,7 @@ import { createClass } from 'asteroid';
 import { setLoggedUser, unsetLoggedUser, editProfileUser } from '../actions/UserActions';
 import {editBoard} from '../actions/BoardActions'
 import store from '../components/store';
+import { createBoard, removeBoard, editBoard } from '../actions/BoardActions';
 
 const Asteroid = createClass();
 // Connect to a Meteor backend
@@ -11,7 +12,6 @@ const asteroid = new Asteroid({
 
 // if you want realitme updates in all connected clients
 // subscribe to the publication
-asteroid.subscribe('currentUser');
 asteroid.subscribe('boards');
 
 asteroid.ddp.on('added', (doc) => {
@@ -19,17 +19,27 @@ asteroid.ddp.on('added', (doc) => {
   if (doc.collection === 'users') {
     store.dispatch(setLoggedUser(doc.fields));
   }
+  if(doc.collection === 'boards'){
+    const docObj = Object.assign({}, doc.fields, { _id: doc.id });
+    store.dispatch(createBoard(docObj));
+  }
 });
 
 asteroid.ddp.on('removed', (removedDoc) => {
   if (removedDoc.collection === 'users') {
     store.dispatch(unsetLoggedUser());
   }
+  if (removedDoc.collection === 'boards') {
+    store.dispatch(removeBoard(removedDoc.id));
+  }
 });
 
 asteroid.ddp.on('changed', (updatedDoc) => {
   if (updatedDoc.collection === 'users') {
     store.dispatch(editProfileUser(updatedDoc.fields));
+  }
+  if (updatedDoc.collection === 'boards') {
+    store.dispatch(editBoard(updatedDoc.id, updatedDoc.fields));
   }
 
   console.log(updatedDoc)

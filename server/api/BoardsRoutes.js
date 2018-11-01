@@ -26,8 +26,8 @@ Meteor.methods({
 
     },
 
-    'board.deleteBoard'({idBoard}) {
-
+    'boards.removeBoard'(boardId) {
+        return Boards.remove(boardId);
     },
 
     'board.editBoard' (newBoard) {

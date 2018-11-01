@@ -7,24 +7,24 @@ import ProfileForm from "./ProfileForm/ProfileForm.js";
 import ChangePasswordForm from "./ChangePasswordForm/ChangePasswordForm.js";
 import EnabledMailsInput from "./EnabledMailsInput/EnabledMailsInput.js";
 import ConfirmModal from "./../../partials/ConfirmModal.js";
-
-
-
+import { callRemoveUser } from '../../../actions/UserActions.js';
 
 class MyAccount extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.removeAccount = this.removeAccount.bind(this);
+      }
 
     removeAccount(){
-        Meteor.call('users.remove', function(error){
-            if(error) alert(error.reason)
-            else alert("ok");
-        })
+        const { dispatchCallRemoveUser } = this.props;
+        dispatchCallRemoveUser()
     }
 
     render() {
         const { user } = this.props;
-        //if(!user || !user.profile) return(<Redirect to='/'/>)
-        console.log(user)
+        if(user && !user.profile) return(<Redirect to='/'/>)
         return (
             <main className="profile-page">
             <NavBar/>
@@ -32,6 +32,7 @@ class MyAccount extends Component {
                 id={'removeModal'}
                 text={"All your account will be removed. Are you sure ?"} 
                 confirmAction={this.removeAccount}
+                parent={this}
             />
                 <section className="section-profile-cover section-shaped my-0">
                     <div className="shape shape-style-1 shape-primary alpha-4">
@@ -107,8 +108,11 @@ class MyAccount extends Component {
 const mapStateToProps = state => ({
     user: state.user,
 });
+const mapDispatchToProps = dispatch => ({
+    dispatchCallRemoveUser: () => dispatch(callRemoveUser()),
+});
 
-export default connect(mapStateToProps)(MyAccount);
+export default connect(mapStateToProps, mapDispatchToProps)(MyAccount);
 
 
 

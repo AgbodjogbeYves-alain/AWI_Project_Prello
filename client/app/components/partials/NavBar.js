@@ -10,7 +10,7 @@ class NavBar extends Component {
 
     handleLogOut(){
         asteroid.logout()
-        this.props.history.push("/");
+        .then(() => this.props.history.push("/"));
     }
 
     renderLinks(){

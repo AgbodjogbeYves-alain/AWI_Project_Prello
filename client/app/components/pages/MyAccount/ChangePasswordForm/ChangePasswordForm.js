@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Alert from "../../../partials/Alert.js"
+import asteroid from '../../../../common/asteroid.js';
 
-export default class ChangePasswordForm extends Component {
+class ChangePasswordForm extends Component {
 
     constructor(props) {
         super(props);
@@ -35,17 +37,14 @@ export default class ChangePasswordForm extends Component {
         let that = this;
         if(this.newPassword.value.length < 6) this.addAlert('danger', 'The password should have at least 6 characters.')
         else if(this.newPassword.value !== this.newPassword2.value) this.addAlert('danger', "The two passwords doesn't match.")
-        else Meteor.call(
-            'users.changePassword',
-            this.actualPassword.value,
-            this.newPassword.value,
-            function(error){
-                if(error) that.addAlert('danger', error.error);
-                else{
-                    that.resetForm();
-                    that.addAlert('success', 'Password changed.');
-                }  
+        else {
+            asteroid.call('users.changePassword', this.actualPassword.value, this.newPassword.value)
+            .then(result => {
+                that.resetForm();
+                that.addAlert('success', 'Password changed.')
             })
+            .catch((error) => that.addAlert('danger', error.error))
+        }
     }
 
     render() {
@@ -115,3 +114,7 @@ export default class ChangePasswordForm extends Component {
         )
     }
 }
+
+const mapStateToProps = () => ({});
+
+export default connect(mapStateToProps)(ChangePasswordForm);

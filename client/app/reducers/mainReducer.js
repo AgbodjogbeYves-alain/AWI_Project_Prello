@@ -1,10 +1,11 @@
 import { combineReducers } from 'redux';
 import user from './UserReducers';
-import board from "./BoardReducer";
+import boards from './BoardReducers';
 
 const mainReducer = combineReducers({
   user,
-  board,
+  boards
+>>>>>>> origin/develop
 });
 
 export default mainReducer;

@@ -1,4 +1,5 @@
 @import 'dashboard.css';
+@import 'boardModal.css';
 
 nav {
     /*position: fixed !important;*/
@@ -62,7 +63,7 @@ nav .notifications {
 }
 
 nav {
-    /*position: fixed !important;*/
+    position: fixed !important;
     width: 100%;
     z-index: 6;
     height: 55px;

@@ -44,8 +44,8 @@ class SignUp extends Component {
 
            asteroid.call('users.signUp', {firstname: firstname, lastname: lastname, email: email, password: password})
                .then((result) => {
-                   console.log(result)
                    that.addAlert('success', "You're now Signed Up !")
+                   that.props.history.push("/login")
                }).catch(error => {
                     that.addAlert('danger', error.reason)
            })
