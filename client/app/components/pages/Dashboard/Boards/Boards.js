@@ -34,8 +34,6 @@ class Boards extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    boards: state.boards,
-});
+const mapStateToProps = state => ({});
 
 export default connect(mapStateToProps)(Boards);

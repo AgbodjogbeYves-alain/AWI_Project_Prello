@@ -31,8 +31,13 @@ Meteor.methods({
         return Boards.remove(boardId);
     },
 
-    'board.editBoard' ({idBoard,newParams}) {
-
+    'boards.editBoard' (boardId, boardTitle) {
+        Boards.update(boardId, {
+            $set: {
+                boardTitle: boardTitle
+            }
+        });
+        return Boards.findOne(boardId)
     },
 
     'getAllBoards' ({idUser}){

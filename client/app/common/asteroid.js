@@ -1,7 +1,7 @@
 import { createClass } from 'asteroid';
 import { setLoggedUser, unsetLoggedUser, editProfileUser } from '../actions/UserActions';
 import store from '../components/store';
-import { createBoard, removeBoard } from '../actions/BoardActions';
+import { createBoard, removeBoard, editBoard } from '../actions/BoardActions';
 
 const Asteroid = createClass();
 // Connect to a Meteor backend
@@ -36,6 +36,9 @@ asteroid.ddp.on('removed', (removedDoc) => {
 asteroid.ddp.on('changed', (updatedDoc) => {
   if (updatedDoc.collection === 'users') {
     store.dispatch(editProfileUser(updatedDoc.fields));
+  }
+  if (updatedDoc.collection === 'boards') {
+    store.dispatch(editBoard(updatedDoc.id, updatedDoc.fields));
   }
 
 });

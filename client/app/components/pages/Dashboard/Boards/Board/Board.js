@@ -24,6 +24,13 @@ class Board extends Component {
                     <div className="card-body">
                         <h6>{this.props.title}</h6>
                         <button 
+                            className="btn btn-icon btn-2 btn-link btn-sm" 
+                            data-toggle="modal"
+                            data-target={"#board-modal" + this.props.id}
+                        >
+                            <span className="btn-inner--icon"><i className="ni ni-settings-gear-65"></i></span>
+                        </button>
+                        <button 
                             className="btn btn-icon btn-2 btn-danger btn-sm" 
                             onClick={this.handleRemoveBoard}
                         >
