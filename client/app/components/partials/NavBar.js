@@ -15,6 +15,7 @@ class NavBar extends Component {
 
     renderLinks(){
         const { user } = this.props
+        console.log(user)
         if(user){
             return (
                 <ul className="navbar-nav align-items-lg-center ml-lg-auto navbar-nav-hover">

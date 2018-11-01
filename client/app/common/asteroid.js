@@ -1,6 +1,7 @@
 import { createClass } from 'asteroid';
 import { setLoggedUser, unsetLoggedUser, editProfileUser } from '../actions/UserActions';
 import store from '../components/store';
+import { createBoard } from '../actions/BoardActions';
 
 const Asteroid = createClass();
 // Connect to a Meteor backend
@@ -10,15 +11,16 @@ const asteroid = new Asteroid({
 
 // if you want realitme updates in all connected clients
 // subscribe to the publication
-//asteroid.subscribe('currentUser');
+asteroid.subscribe('boards');
 
 asteroid.ddp.on('added', (doc) => {
   // we need proper document object format here
   if (doc.collection === 'users') {
     store.dispatch(setLoggedUser(doc.fields));
   }
-  if(doc.collection === 'board'){
-    store.dispatch(createBoard(doc.fields));
+  if(doc.collection === 'boards'){
+    const docObj = Object.assign({}, doc.fields, { _id: doc.id });
+    store.dispatch(createBoard(docObj));
   }
 });
 

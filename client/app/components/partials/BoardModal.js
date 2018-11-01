@@ -25,7 +25,7 @@ class BoardModal extends Component {
 
                         <div className="modal-header">
                             <h6 className="modal-title" id="modal-title-default">
-                                {this.props.type == 'edit' ? "Edit" : "Create"} Board {this.state.boardName}
+                                {this.props.type == 'edit' ? "Edit" : "Create"} Board {this.state.boardTitle}
                             </h6>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>

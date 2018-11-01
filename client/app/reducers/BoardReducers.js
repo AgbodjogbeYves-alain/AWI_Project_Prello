@@ -1,12 +1,15 @@
-import { CREATE_BOARD } from '../actions/BoardActions';
+import { remove, edit, add } from '../common/helpers';
+import { CREATE_BOARD, GET_BOARDS } from '../actions/BoardActions';
 
-const board = (state = null, action) => {
+const boards = (state = [], action) => {
   switch (action.type) {
     case CREATE_BOARD:
-      return action.board;
+      return add(state, action);
+    case GET_BOARDS:
+      return action.data;
     default:
-      return false;
+      return state;
   }
 };
 
-export default board;
+export default boards;

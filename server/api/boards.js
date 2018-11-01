@@ -1,6 +1,10 @@
 import { Boards } from "../models/Boards";
 import { Meteor } from "meteor/meteor";
 
+Meteor.publish('boards', function() {
+    return Boards.find();
+});
+
 Meteor.methods({
     'boards.createBoard'(boardTitle) {
         /*if(!Meteor.userId()){

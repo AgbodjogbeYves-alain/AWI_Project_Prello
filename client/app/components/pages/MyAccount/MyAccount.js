@@ -24,7 +24,6 @@ class MyAccount extends Component {
 
     render() {
         const { user } = this.props;
-        console.log(user)
         if(user && !user.profile) return(<Redirect to='/'/>)
         return (
             <main className="profile-page">
