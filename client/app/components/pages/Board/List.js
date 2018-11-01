@@ -5,13 +5,18 @@ import styled from 'styled-components'
 import Card from "./Card";
 
 const Container = styled.div`
-  margin: 8px;
-  border: 1px solid lightgrey;
-  background-color: darkgrey;
-  border-radius: 2px;
-  width: 25%;
+  background-color: #d0d0d0;
+  border-radius: 5px;
+  box-shadow: 0px 0px 3px 1px #0000005c;
   display: flex;
   flex-direction: column;
+  min-width: 250px;
+  width: 15vw;
+  margin-left: 7px;
+  margin-right: 7px;
+  margin-bottom: 20px;
+  position: relative;
+  box-sizing: border-box;
 `;
 
 const Title = styled.h3`

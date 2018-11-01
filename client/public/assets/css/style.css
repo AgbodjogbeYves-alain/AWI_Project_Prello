@@ -50,6 +50,8 @@ nav .notifications {
 #boardDisplay{
     background-color: dodgerblue ;
     height: 1080px;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 [data-react-beautiful-dnd-droppable="0"]{
@@ -78,4 +80,9 @@ nav {
 
 .divSettings{
     color: white;
+}
+
+#divList{
+    overflow-x: auto;
+    overflow-y: hidden;
 }

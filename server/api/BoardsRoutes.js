@@ -27,7 +27,13 @@ Meteor.methods({
 
     },
 
-    'board.editBoard' ({idBoard,newParams}) {
+    'board.editBoard' (newBoard) {
+        let newBoard2 = newBoard.newBoard
+        Boards.update({boardId: newBoard2.boardId}, { $set: {
+                boardTitle: newBoard2.boardTitle
+        }})
+        console.log(Boards.findOne({boardId: newBoard2.boardId}))
+        return Boards.findOne({boardId: newBoard2.boardId})
 
     },
 

@@ -6,17 +6,20 @@ import {DragDropContext, Droppable} from "react-beautiful-dnd";
 import List from "./List";
 import NavBarBoard from "../../partials/NavBarBoard";
 import asteroid from "../../../common/asteroid.js";
+import { connect } from 'react-redux';
+import {callEditBoard} from "../../../actions/BoardActions";
+
+
 const Container = styled.div`
   display: flex;
 `;
 
-export default class BoardDisplay extends Component {
+class BoardDisplay extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            board: {},
-            list: []
+            board: {boardList:[]}
         }
         ;
 
@@ -31,14 +34,11 @@ export default class BoardDisplay extends Component {
     componentDidMount(){
         let idBoard = this.props.match.params.id;
         let boardFromDB = {}
-        let listFromDB = []
         asteroid.call('board.getBoard',{ idBoard })
             .then(result => {
-                boardFromDB = result,
-                    listFromDB = result.boardList
+                boardFromDB = result
                 this.setState({
-                    board: boardFromDB,
-                    list: listFromDB
+                    board: boardFromDB
                 })
             }).catch(error => {
             alert(error);
@@ -47,6 +47,8 @@ export default class BoardDisplay extends Component {
 
     onDragEnd = result => {
         const { destination, source, draggableId, type } = result;
+
+        const currentLists = this.state.board.boardList
 
         if (!destination) {
             return;
@@ -58,111 +60,126 @@ export default class BoardDisplay extends Component {
 
         if(type==="list"){
             const idForListToMove = draggableId.slice(10)
-            const listToMove = this.state.list.filter((list) => list.listId == idForListToMove)[0];
-            const newLists = Array.from(this.state.list);
+            const listToMove = currentLists.filter((list) => list.listId == idForListToMove)[0];
+            const newLists = Array.from(this.state.board.boardList);
 
             newLists.splice(source.index, 1);
             newLists.splice(destination.index, 0, listToMove);
-
+            let newBoard = this.state.board
+            newBoard.boardList = newLists
             const newState = {
-                ...this.state,
-                list: newLists
+                board: newBoard
             };
+
+            //Dispatch
+            const { dispatchCallEditBoard } = this.props;
+            dispatchCallEditBoard(newBoard)
+
+
             this.setState(newState);
-            return;
-        }
+        }else{
+            const start = currentLists.filter((list) => list.listId == source.droppableId.slice(6))[0];
 
-        const start = this.state.list.filter((list) => list.listId == source.droppableId.slice(6))[0];
+            const finish = currentLists.filter((list) => list.listId == destination.droppableId.slice(6))[0];
 
-        const finish = this.state.list.filter((list) => list.listId == destination.droppableId.slice(6))[0];
+            if(start === finish){
+                ///////////////////////////////////////////////
+                const newCardsList = Array.from(start.listCard);
 
-        if(start === finish){
-            ///////////////////////////////////////////////
-            const newCardsList = Array.from(start.listCard);
+                const cardToMove = newCardsList.filter((card) => card.cardId == draggableId)[0];
+                newCardsList.splice(source.index, 1);
+                newCardsList.splice(destination.index, 0, cardToMove);
 
-            const cardToMove = newCardsList.filter((card) => card.cardId == draggableId)[0];
-            newCardsList.splice(source.index, 1);
-            newCardsList.splice(destination.index, 0, cardToMove);
+                const newStart = {
+                    ...start,
+                    listCard: newCardsList
+                };
 
-            const newStart = {
-                ...start,
-                listCard: newCardsList
-            };
+                ///////////////////////////////////////////////
+                const newList = Array.from(currentLists.map((listIn) => {
+                    if(listIn.listId == newStart.listId){
+                        return newStart
+                    }else{
+                        return listIn
+                    }
+                } ))
 
-            ///////////////////////////////////////////////
-            const newList = Array.from(this.state.list.map((listIn) => {
-                if(listIn.listId == newStart.listId){
-                    return newStart
-                }else{
-                    return listIn
+                let newBoard = this.state.board
+                newBoard.boardList = newList
+
+                const newState = {
+                    board: newBoard
+                };
+
+                this.setState(newState)
+                //Dispatch
+                const { dispatchCallEditBoard } = this.props;
+                dispatchCallEditBoard(newBoard)
+
+            }else {
+
+                //Move from a list to another
+                const startCards = Array.from(start.listCard)
+                const cardToMove = startCards.filter((card) => card.cardId == draggableId)[0];
+
+                startCards.splice(source.index, 1);
+
+                const newStart = {
+                    ...start,
+                    listCard: startCards,
+
                 }
-            } ))
 
-            const newState = {
-                ...this.state,
-                list: newList
-            };
+                const finishedCards = Array.from(finish.listCard)
+                finishedCards.splice(destination.index, 0, cardToMove);
 
-            this.setState(newState)
+                const newFinish = {
+                    ...finish,
+                    listCard: finishedCards
+                };
 
-        }else {
+                ///////////////////////////////////////////////
+                let newList = Array.from(this.state.board.boardList.map((listIn) => {
+                    if(listIn.listId == newStart.listId){
+                        return newStart
+                    }else{
+                        return listIn
+                    }
+                } ))
 
-            //Move from a list to another
-            const startCards = Array.from(start.listCard)
-            const cardToMove = startCards.filter((card) => card.cardId == draggableId)[0];
+                const finalList = Array.from(newList.map((listIn)=>{
+                    if(listIn.listId == newFinish.listId){
+                        return newFinish
+                    }else{
+                        return listIn
+                    }
+                }))
 
-            startCards.splice(source.index, 1);
+                let newBoard = this.state.board
+                newBoard.boardList = finalList
 
-            const newStart = {
-                ...start,
-                listCard: startCards,
+
+                const newState = {
+                    board: newBoard
+                };
+
+                this.setState(newState)
+                //Dispatch
+                const { dispatchCallEditBoard } = this.props;
+                dispatchCallEditBoard(newBoard)
+
 
             }
-
-            const finishedCards = Array.from(finish.listCard)
-            finishedCards.splice(destination.index, 0, cardToMove);
-
-            const newFinish = {
-                ...finish,
-                listCard: finishedCards
-            };
-
-            ///////////////////////////////////////////////
-            let newList = Array.from(this.state.list.map((listIn) => {
-                if(listIn.listId == newStart.listId){
-                    return newStart
-                }else{
-                    return listIn
-                }
-            } ))
-
-            console.log(newList)
-            const finalList = Array.from(newList.map((listIn)=>{
-                if(listIn.listId == newFinish.listId){
-                    return newFinish
-                }else{
-                    return listIn
-                }
-            }))
-
-            console.log(finalList)
-            const newState = {
-                ...this.state,
-                list: finalList
-            };
-
-            console.log(newState)
-            this.setState(newState)
-
-
         }
+
+
     };
 
     createList = () => {
         asteroid.call('list.createList',"New List")
             .then((result) => {
                 let nlist = {listId:result, listTitle:"New List", listCard: [], listCreatedAt: Date()}; //see if keep like it
-                let lists = this.state.list
+                let lists = this.state.board.boardList
                 lists.push(nlist)
                 let newBoard = this.state.board
                 newBoard.boardList = lists
@@ -170,7 +187,6 @@ export default class BoardDisplay extends Component {
 
                 this.setState({
                     board: newBoard,
-                    list: lists
                 });
             }).catch(error => {
             alert(error);
@@ -187,27 +203,41 @@ export default class BoardDisplay extends Component {
             <div id={"boardDisplay"}>
                 <NavBar/>
                 <NavBarBoard boardTitle={this.state.board.boardTitle} teams={this.state.board.boardTeam} privacy={this.state.board.boardPrivacy} members={this.state.board.boardUser} />
-                <DragDropContext onDragEnd={this.onDragEnd}>
-                    <Droppable droppableId={"all-columns"} direction={"horizontal"} type={"list"}>
-                        {(provided)=> {
-                            return(
-                                <Container
-                                    {...provided.droppableProps}
-                                    ref={provided.innerRef}
+                <div id={"divList"}>
+                    <DragDropContext onDragEnd={this.onDragEnd}>
+                        <Droppable droppableId={"all-columns"} direction={"horizontal"} type={"list"}>
+                            {(provided)=> {
+                                return(
+                                    <Container
+                                        {...provided.droppableProps}
+                                        ref={provided.innerRef}
 
-                                >
-                                    {this.state.list.map((list,index) => {
-                                        const cards = list.listCard;
-                                        return <List key={list.listId} list={list} index={index} cards={cards}/>;
-                                    })}
+                                    >
+                                        {
+                                        this.state.board.boardList.map((list,index) => {
+                                            const cards = list.listCard;
+                                            return <List key={list.listId} list={list} index={index} cards={cards}/>;
+                                        })}
 
-                                    {provided.placeholder}
-                                </Container>
-                            )}}
-                    </Droppable>
-                </DragDropContext>
-                <button className="btn btn-success" onClick={this.createList}>Create a new List</button>
+                                        {provided.placeholder}
+                                    </Container>
+                                )}}
+                        </Droppable>
+                    </DragDropContext>
+                </div>
+
+                <button type="button" className="btn btn-sm btn-default" data-container="body"
+                        data-original-title="Popover on Top" data-toggle="popover" data-placement="top"
+                        data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">On top
+                </button>
             </div>
         )
     }
 }
+
+const mapStateToProps = () => ({});
+const mapDispatchToProps = dispatch => ({
+    dispatchCallEditBoard: (board) => dispatch(callEditBoard(board)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(BoardDisplay);

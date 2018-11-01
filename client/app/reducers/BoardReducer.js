@@ -1,16 +1,12 @@
-import { EDIT_BOARD, } from '../actions/UserActions';
+import { SET_BOARD } from '../actions/BoardActions';
 
-const user = (state = null, action) => {
+const board = (state = null, action) => {
     switch (action.type) {
-        case SET_USER:
-            return action.user;
-        case EDIT_USER:
-            return action.user;
-        case UNSET_USER:
-            return null;
+        case SET_BOARD:
+            return action.board;
         default:
             return state;
     }
 };
 
-export default user;
+export default board;

@@ -52,31 +52,15 @@ export default class NavBarBoard extends Component {
         return (
 
             <nav id="navBarBoard" className="navbar navbar-expand-lg navbar-dark bg-default">
-                <div>
-                    <div className="navbar-brand dropdown">
-                        <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {this.state.boardTitle}
-                        </button>
-                        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a className="dropdown-item" href="#">Action</a>
-                            <a className="dropdown-item" href="#">Another action</a>
-                            <a className="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </div>
-                </div>
-                <div id={"containerTeam"}>
-                    <a className="navbar-item" href="#">{this.state.teams[0]}</a>
-                </div>
-                <div id={"containerMembers"}>
-                    {this.state.members.map((member) => {
-                        return <a className="navbar-item" href="#">{member.firstname}</a>
-                    })}
-                </div>
-
-                <div className={"divSettings"}>
-                    <a className="dropdown-item" onClick={this.showDivSettings}><i className="ni ni-settings-gear-65"/></a>
-                </div>
+                <ul className="navbar-nav align-items-lg-center ml-lg-auto navbar-nav-hover">
+                    <li className="nav-item dropdown">
+                        <a className="nav-link nav-link-icon" href="#" id="navbar-default_dropdown_1"
+                           role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i className="ni ni-fat-add"/>
+                            <span className="nav-link-inner--text d-lg-none">Settings</span>
+                        </a>
+                    </li>
+                </ul>
             </nav>
     )
     }
