@@ -1,5 +1,6 @@
 import { createClass } from 'asteroid';
 import { setLoggedUser, unsetLoggedUser, editProfileUser } from '../actions/UserActions';
+import {editBoard} from '../actions/BoardActions'
 import store from '../components/store';
 
 const Asteroid = createClass();
@@ -28,6 +29,11 @@ asteroid.ddp.on('removed', (removedDoc) => {
 asteroid.ddp.on('changed', (updatedDoc) => {
   if (updatedDoc.collection === 'users') {
     store.dispatch(editProfileUser(updatedDoc.fields));
+  }
+
+  console.log(updatedDoc)
+  if(updatedDoc.collection === 'boards') {
+    store.dispatch(editBoard(updatedDoc.fields))
   }
 
 });

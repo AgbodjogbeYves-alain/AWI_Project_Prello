@@ -1,6 +1,5 @@
 import NavBar from "../../partials/NavBar.js"
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
 import styled from "styled-components";
 import {DragDropContext, Droppable} from "react-beautiful-dnd";
 import List from "./List";
@@ -202,7 +201,7 @@ class BoardDisplay extends Component {
         return(
             <div id={"boardDisplay"}>
                 <NavBar/>
-                <NavBarBoard boardTitle={this.state.board.boardTitle} teams={this.state.board.boardTeam} privacy={this.state.board.boardPrivacy} members={this.state.board.boardUser} />
+                <NavBarBoard board={this.state.board} />
                 <div id={"divList"}>
                     <DragDropContext onDragEnd={this.onDragEnd}>
                         <Droppable droppableId={"all-columns"} direction={"horizontal"} type={"list"}>
@@ -225,11 +224,6 @@ class BoardDisplay extends Component {
                         </Droppable>
                     </DragDropContext>
                 </div>
-
-                <button type="button" className="btn btn-sm btn-default" data-container="body"
-                        data-original-title="Popover on Top" data-toggle="popover" data-placement="top"
-                        data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">On top
-                </button>
             </div>
         )
     }
