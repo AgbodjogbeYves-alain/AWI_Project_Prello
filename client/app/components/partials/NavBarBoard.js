@@ -21,6 +21,7 @@ class NavBarBoard extends Component {
 
     componentWillReceiveProps(nextProps) {
         let teamsB = ["Personal"];
+
         if(!(nextProps.board.boardTeam.length === 0)){
             if(nextProps.board.boardTeam.length > 1){
                 teamsB = ["Multiple teams"]
@@ -71,6 +72,11 @@ class NavBarBoard extends Component {
                     {this.state.board.boardTitle}
                 </button>
 
+                <select className="btn btn-primary">
+                    <option value={0} selected={(this.state.board.boardPrivacy==0)? "selected": ""}> Public</option>
+                    <option value={1} selected={(this.state.board.boardPrivacy==0)? "selected": ""}> Private</option>
+                </select>
+
 
             </nav>
                 <div className="modal fade" id="modalChangeBN" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -89,7 +95,6 @@ class NavBarBoard extends Component {
                                             <div className="input-group input-group-alternative">
                                                 <input className="form-control" placeholder="Board name" type="text" value={this.state.newBoardName} onChange={this.handleBNChange}/>
                                             </div>
-
                                         </div>
                                     </div>
                                     <button className={"btn btn-primary"}>Change</button>

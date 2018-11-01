@@ -11,8 +11,8 @@ export function editBoard(board) {
 }
 
 export function callEditBoard(newBoard) {
-    return dispatch => asteroid.call('board.editBoard', {newBoard})
-        .then(result =>
+    return dispatch => asteroid.call('board.editBoard', newBoard)
+        .then(() =>
             dispatch(editBoard(result))
         )
         .catch(error => {console.log(error)})

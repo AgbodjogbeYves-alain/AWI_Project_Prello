@@ -1,6 +1,8 @@
 import {Boards} from "../models/Boards";
 import {Meteor} from "meteor/meteor";
 
+Meteor.publish('boards', function () {return Boards.find()});
+
 Meteor.methods({
     'board.createBoard'({boardName, privacy}) {
         /*if(!Meteor.userId()){
@@ -23,17 +25,15 @@ Meteor.methods({
         }
 
     },
+
     'board.deleteBoard'({idBoard}) {
 
     },
 
     'board.editBoard' (newBoard) {
-        let newBoard2 = newBoard.newBoard
-        Boards.update({boardId: newBoard2.boardId}, { $set: {
-                boardTitle: newBoard2.boardTitle
+        return Boards.update({boardId: newBoard.boardId}, { $set: {
+                boardTitle: newBoard.boardTitle
         }})
-        console.log(Boards.findOne({boardId: newBoard2.boardId}))
-        return Boards.findOne({boardId: newBoard2.boardId})
 
     },
 
