@@ -1,14 +1,14 @@
-import {Boards} from "../models/Boards";
-import {Meteor} from "meteor/meteor";
+import { Boards } from "../models/Boards";
+import { Meteor } from "meteor/meteor";
 
 Meteor.methods({
-    'board.createBoard'({boardName, privacy}) {
+    'boards.createBoard'(boardTitle) {
         /*if(!Meteor.userId()){
             throw new Meteor.Error('Not Authorized')
         }else{*/
-        let privacyInt = parseInt(privacy)
-        let id = Math.random().toString(36).substr(2, 5).toUpperCase();
-        return Boards.insert({boardId: id, boardTitle: boardName, boardPrivacy: privacyInt, boardUser: [Meteor.user()]})
+        //let privacyInt = parseInt(privacy)
+        //let id = Math.random().toString(36).substr(2, 5).toUpperCase();
+        return Boards.insert({ boardTitle: boardTitle, boardPrivacy: 1, boardUsers: [Meteor.user()]})
     },
 
     'board.getBoard' ({idBoard}) {

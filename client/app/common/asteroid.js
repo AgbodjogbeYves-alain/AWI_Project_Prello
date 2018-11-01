@@ -17,6 +17,9 @@ asteroid.ddp.on('added', (doc) => {
   if (doc.collection === 'users') {
     store.dispatch(setLoggedUser(doc.fields));
   }
+  if(doc.collection === 'board'){
+    store.dispatch(createBoard(doc.fields));
+  }
 });
 
 asteroid.ddp.on('removed', (removedDoc) => {
