@@ -22,7 +22,7 @@ class Boards extends Component {
                 </div>
                 <div className="row w-100">
                     {this.props.boards.map((b,i) =>
-                        <Board title={b.boardTitle} key={i}/>)}
+                        <Board title={b.boardTitle} key={i} id={b._id}/>)}
                     <div className="col-12">
                         <button className="btn btn-success" data-toggle="modal" data-target="#board-modal">
                             Create a new board

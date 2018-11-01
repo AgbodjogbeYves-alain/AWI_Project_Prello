@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from "react-router-dom";
 
 import { callCreateBoard } from '../../actions/BoardActions';
+import Alert from './Alert';
 
 class BoardModal extends Component {
 
@@ -9,12 +11,39 @@ class BoardModal extends Component {
         super(props);
         this.state = {
             boardTitle: this.props.board ? this.props.doard.boardTitle : '',
+            alerts: []
         };
     }
 
+    addAlert(type, text) {
+        let newAlerts = this.state.alerts;
+        newAlerts.push({type: type, text: text});
+
+        this.setState({
+            alerts: newAlerts
+        });
+    }
+
+    renderAlerts(){
+        return this.state.alerts.map(a => (<Alert key={this.state.alerts.indexOf(a)} type={a.type}  text={a.text}/>));
+    }
+
+    resetFields(){
+        this.setState({
+            boardTitle: ''
+        });
+    }
+
     handleCreateBoard(){
+        let that = this;
         const { dispatchCallCreateBoard } = this.props;
-        dispatchCallCreateBoard(this.state.boardTitle);
+        dispatchCallCreateBoard(this.state.boardTitle)
+        .then((result) => {
+            that.props.history.push("/board/" + result.data._id)
+        })
+        .catch((error) => {
+            that.addAlert("danger", error.reason)
+        })
     }
 
     render(){
@@ -33,36 +62,37 @@ class BoardModal extends Component {
                         </div>
 
                         <div className="modal-body">
-                        <form role="form" onSubmit={(e) => e.preventDefault()}>
-                            <div className="form-group mb-3">
-                                <div className="input-group input-group-alternative">
-                                    <div className="input-group-prepend">
-                                        <span className="input-group-text"><i className="ni ni-email-83"></i></span>
-                                    </div>
-                                    <input 
-                                        className="form-control" 
-                                        placeholder="Name" 
-                                        type="text"
-                                        value={this.state.boardTitle}
-                                        onChange={(e) => this.setState({boardTitle: e.target.value})}/>
-                                </div>
+                            <div>
+                                {this.renderAlerts()}
                             </div>
-                        </form>
+                            <form role="form" onSubmit={(e) => e.preventDefault()}>
+                                <div className="form-group mb-3">
+                                    <div className="input-group input-group-alternative">
+                                        <div className="input-group-prepend">
+                                            <span className="input-group-text"><i className="ni ni-email-83"></i></span>
+                                        </div>
+                                        <input 
+                                            className="form-control" 
+                                            placeholder="Name" 
+                                            type="text"
+                                            value={this.state.boardTitle}
+                                            onChange={(e) => this.setState({boardTitle: e.target.value})}/>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
 
                         <div className="modal-footer">
                             <button type="button" className="btn btn-link" data-dismiss="modal">Close</button>
                             {this.props.type == "edit" ?
                                 <button 
-                                    className="btn btn-primary  ml-auto" 
-                                    data-dismiss="modal"
+                                    className="btn btn-primary  ml-auto"
                                     onClick={() => this.handleEditBoard()}>
                                     Edit
                                 </button>
                                 :
                                 <button 
-                                    className="btn btn-success  ml-auto" 
-                                    data-dismiss="modal"
+                                    className="btn btn-success  ml-auto"
                                     onClick={() => this.handleCreateBoard()}>
                                     Create
                                 </button>
@@ -82,4 +112,4 @@ const mapDispatchToProps = dispatch => ({
     dispatchCallCreateBoard: (boardTitle) => dispatch(callCreateBoard(boardTitle)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(BoardModal);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(BoardModal));

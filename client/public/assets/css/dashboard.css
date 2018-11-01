@@ -14,6 +14,8 @@
 #dashboard #boards{
     box-shadow: 2px 0px 10px 1px #172b4d;
     background-color: #f4f5f7;
+    overflow-y: scroll;
+    padding-bottom: 20px;
 }
 #dashboard .custom-control-label{
     line-height: 1.7 !important;
