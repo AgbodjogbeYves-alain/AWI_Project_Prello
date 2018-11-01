@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 import { withRouter } from "react-router-dom";
 import ModalFormCreateInBoard from "../pages/Dashboard/ModalFormCreateInBoard";
+import ModalFormCreateTeam from "../pages/Dashboard/ModalFormCreateTeam";
 
 class NavBar extends Component {
 
@@ -68,7 +69,7 @@ class NavBar extends Component {
         return (
 <div>
     <ModalFormCreateInBoard privacy={'0'}/>
-
+    <ModalFormCreateTeam/>
     <nav id="navbar-main" className="navbar navbar-main navbar-expand-lg navbar-dark bg-primary headroom">
 
                 <div className="container">
@@ -118,7 +119,7 @@ class NavBar extends Component {
                                     Add
                                 </button>
                                 <a className="dropdown-item" data-toggle="modal" data-target="#modal-createBoard">Create board</a>
-                                <a className="dropdown-item" href="#">Create team</a>
+                                <a className="dropdown-item" data-toggle="modal" data-target="#modal-createTeam">Create team</a>
                                 <a className="dropdown-item" href="#">Something else here</a>
                             </div>
                         </li>
