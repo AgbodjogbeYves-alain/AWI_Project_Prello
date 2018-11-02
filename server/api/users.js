@@ -2,7 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 
 Meteor.methods({
-    "users.signUp"(lastname, firstname, email, password){
+    "users.signUp"({lastname, firstname, email, password}){
+        console.log(password)
         if(password.length < 6) throw new Meteor.Error("Too short password, at least 6 characters.")
         else if(!email || !lastname || !firstname) throw new Meteor.Error("Some field are empty.")
         else {
@@ -40,6 +41,7 @@ Meteor.methods({
         Meteor.users.update(Meteor.userId(), { $set: {
             'profile.enabledMails': enabledMails
         }});
+        return Meteor.user();
     },
     'users.remove'(){
         Meteor.users.remove(Meteor.userId());

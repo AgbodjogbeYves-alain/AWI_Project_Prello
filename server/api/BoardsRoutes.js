@@ -1,19 +1,15 @@
 import {Boards} from "../models/Boards";
 import {Meteor} from "meteor/meteor";
-import { Random } from 'meteor/random';
-import { JsonRoutes } from 'meteor/simple:json-routes';
+import * as Random from "asteroid";
+
+Meteor.publish('boards', function () {return Boards.find()});
 
 Meteor.methods({
-    'createBoard'({boardName, privacy}) {
-        /*if(!Meteor.userId()){
-            throw new Meteor.Error('Not Authorized')
-        }else{*/
-        let privacyInt = parseInt(privacy)
-        let id = Random.id();
-        return Boards.insert({boardId: id, boardTitle: boardName, boardPrivacy: privacyInt, boardUser: [Meteor.user()]})
+    'board.createBoard'(boardName) {
+        return Boards.insert({boardId: id, boardTitle: boardName,boardPrivacy: 1, boardUser: [Meteor.user()]})
     },
 
-    'getBoard' ({idBoard}) {
+    'board.getBoard' (idBoard) {
         let board;
         let countDoc = Boards.find({"boardId": idBoard}).count();
         console.log(countDoc)
@@ -25,11 +21,16 @@ Meteor.methods({
         }
 
     },
-    'deleteBoard'({idBoard}) {
 
+    'boards.removeBoard'(boardId) {
+        return Boards.remove(boardId);
     },
 
-    'editBoard' ({idBoard,newParams}) {
+    'boards.editBoard' (newBoard) {
+        return Boards.update({boardId: newBoard.boardId}, { $set: {
+                boardTitle: newBoard.boardTitle,
+                boardPrivacy: newBoard.privacy
+        }})
 
     },
 
@@ -37,36 +38,3 @@ Meteor.methods({
 
     }
 })
-
-// code to run on server at startup
-JsonRoutes.Middleware.use(function(req, res, next) {
-    if(req.query.error) {
-        JsonRoutes.sendResult(res, {
-            code: 401,
-            data: {
-                result: "ERROR"
-            }
-        })
-    }
-
-    next();
-});
-
-
-JsonRoutes.add('post', '/signUp/', function(req, res, next) {
-    console.log(req)
-    Meteor.users.insert({
-        username: req.body.state.username,
-        firstname: req.body.state.firstname,
-        lastname: req.body.state.lastname,
-        password: req.body.state.password,
-        email: req.body.state.email
-    })
-    JsonRoutes.sendResult(res, {
-        data: {
-            result: Meteor.users.find().fetch()
-        }
-    });
-});
-
-

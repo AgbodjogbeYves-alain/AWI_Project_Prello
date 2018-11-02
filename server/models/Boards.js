@@ -5,45 +5,40 @@ export const Boards = new Mongo.Collection('boards')
 import SimpleSchema from 'simpl-schema';
 
 BoardSchema = new SimpleSchema({
-  boardId: {
-      type: String,
-      label: "Id",
-      regEx: SimpleSchema.RegEx.Id
-  },
   boardTitle: {
       type: String,
       label: "Title",
       required: true
   },
-  boardUser: {
+  boardUsers: {
       type: Array,
       label: "Users",
       required: true
   },
-  'boardUser.$': Object, //se if need to replace Object with a schema
+  'boardUsers.$': Object, //se if need to replace Object with a schema
   boardPrivacy: {
       type: SimpleSchema.Integer,
       label: "Privacy",
       required: true
   },
-  boardList: {
+  boardLists: {
       type: Array,
       label: "Lists",
       defaultValue: []
   },
-  'boardList.$': Object, //se if need to replace Object with a schema
-  boardTag: {
+  'boardLists.$': Object, //se if need to replace Object with a schema
+  boardTags: {
       type: Array,
       label: "Tags",
       defaultValue: []
   },
-  'boardTag.$': Object, //se if need to replace Object with a schema
-  boardTeam: {
+  'boardTags.$': Object, //se if need to replace Object with a schema
+  boardTeams: {
       type: Array,
       label: "Teams",
       defaultValue: []
   },
-  'boardTeam.$': Object, //se if need to replace Object with a schema
+  'boardTeams.$': Object, //se if need to replace Object with a schema
   boardCreatedAt:{
       type: Date,
       autoValue: function(){return new Date();}

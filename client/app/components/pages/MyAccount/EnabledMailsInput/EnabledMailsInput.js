@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { callEnabledMails } from '../../../../actions/UserActions';
 
-export default class EnabledMailsinput extends Component {
+class EnabledMailsinput extends Component {
 
     constructor(props) {
         super(props);
@@ -10,8 +12,9 @@ export default class EnabledMailsinput extends Component {
     }
 
     changeEnabledMails(e){
+        const { dispatchCallEnabledMails } = this.props;
         this.setState({enabledMails: e.target.checked});
-        Meteor.call('users.setEnabledMails', e.target.checked)
+        dispatchCallEnabledMails(e.target.checked);
     }
 
     render() {
@@ -30,3 +33,10 @@ export default class EnabledMailsinput extends Component {
         )
     }
 }
+
+const mapStateToProps = state => ({});
+const mapDispatchToProps = dispatch => ({
+    dispatchCallEnabledMails: (val) => dispatch(callEnabledMails(val)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(EnabledMailsinput);

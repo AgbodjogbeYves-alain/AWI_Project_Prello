@@ -1,4 +1,5 @@
 @import 'dashboard.css';
+@import 'boardModal.css';
 
 nav {
     /*position: fixed !important;*/
@@ -50,17 +51,20 @@ nav .notifications {
 #boardDisplay{
     background-color: dodgerblue ;
     height: 1080px;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 [data-react-beautiful-dnd-droppable="0"]{
     margin-top: 5% ;
 }
 #navBarBoard{
-    opacity: 0.5;
+    margin-top: 4.5%;
+    z-index: 0;
 }
 
 nav {
-    /*position: fixed !important;*/
+    position: fixed !important;
     width: 100%;
     z-index: 6;
     height: 55px;
@@ -71,9 +75,17 @@ nav {
 }
 
 #containerTeam{
-    margin-left: -35%
 }
 
 #containerMembers{
-    margin-left: -35%
+}
+
+.divSettings{
+    color: white;
+}
+
+#divList{
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin-top: 10%;
 }

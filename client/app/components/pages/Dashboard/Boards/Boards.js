@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 
-export default class Boards extends Component {
+import Board from './Board/Board.js';
+
+class Boards extends Component {
 
     constructor(props) {
         super(props);
@@ -17,12 +20,20 @@ export default class Boards extends Component {
                     </div>
                     <button className="btn btn-primary btn-sm">Import from another App</button>
                 </div>
-                <div className="row">
+                <div className="row w-100">
+                    {this.props.boards.map((b,i) =>
+                        <Board title={b.boardTitle} key={i} id={b._id}/>)}
                     <div className="col-12">
-                        <button className="btn btn-success" data-toggle="modal" data-target="#modal-createBoard">Create a new board</button>
+                        <button className="btn btn-success" data-toggle="modal" data-target="#board-modal">
+                            Create a new board
+                        </button>
                     </div>
                 </div>
             </div>
         )
     }
 }
+
+const mapStateToProps = state => ({});
+
+export default connect(mapStateToProps)(Boards);

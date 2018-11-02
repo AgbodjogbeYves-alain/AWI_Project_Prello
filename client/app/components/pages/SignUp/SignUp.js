@@ -41,12 +41,14 @@ class SignUp extends Component {
         else if(password.length < 6) that.addAlert('danger', "Too short password, at least 6 characters.")
         else if(!email || !lastname || !firstname) that.addAlert('danger', "Some fields are empty.")
         else {
-            asteroid.call('users.signUp', firstname, lastname, email, password)
-                .then((result) => {
-                    that.addAlert('success', "You're now Signed Up !")
-                }).catch(error => {
+
+           asteroid.call('users.signUp', {firstname: firstname, lastname: lastname, email: email, password: password})
+               .then((result) => {
+                   that.addAlert('success', "You're now Signed Up !")
+                   that.props.history.push("/login")
+               }).catch(error => {
                     that.addAlert('danger', error.reason)
-            })
+           })
         }
     }
 
