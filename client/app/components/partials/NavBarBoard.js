@@ -61,6 +61,18 @@ class NavBarBoard extends Component {
         dispatchCallEditBoard(newBoard)
     }
 
+    handlePrivacyChange = (event) => {
+        event.preventDefault()
+        let newBoard = this.state.board
+        newBoard.boardPrivacy = event.target.value
+        this.setState({
+            board: newBoard
+        })
+
+        const { dispatchCallEditBoard } = this.props;
+        dispatchCallEditBoard(newBoard)
+    }
+
     render(){
         return (
 
@@ -70,7 +82,7 @@ class NavBarBoard extends Component {
                     {this.state.board.boardTitle}
                 </button>
 
-                <select className="btn btn-primary" defaultValue={(this.state.board.boardPrivacy===0)? 0: 1}>
+                <select className="btn btn-primary" defaultValue={(this.state.board.boardPrivacy===0)? 0: 1} onChange={this.handlePrivacyChange}>
                     <option value={0}> Public</option>
                     <option value={1}> Private</option>
                 </select>

@@ -28,7 +28,8 @@ Meteor.methods({
 
     'boards.editBoard' (newBoard) {
         return Boards.update({boardId: newBoard.boardId}, { $set: {
-                boardTitle: newBoard.boardTitle
+                boardTitle: newBoard.boardTitle,
+                boardPrivacy: newBoard.privacy
         }})
 
     },
