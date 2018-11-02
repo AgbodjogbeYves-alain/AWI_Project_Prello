@@ -1,12 +1,11 @@
 import {Boards} from "../models/Boards";
 import {Meteor} from "meteor/meteor";
-import * as Random from "asteroid";
 
 Meteor.publish('boards', function () {return Boards.find()});
 
 Meteor.methods({
     'board.createBoard'(boardName) {
-        return Boards.insert({boardId: id, boardTitle: boardName,boardPrivacy: 1, boardUser: [Meteor.user()]})
+        return Boards.insert({boardTitle: boardName,boardPrivacy: 1, boardUser: [Meteor.user()]})
     },
 
     'board.getBoard' ({idBoard}) {

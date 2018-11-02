@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component,PureComponent } from 'react';
+import Menu from "./Menu"
 import {callEditBoard} from "../../actions/BoardActions";
 import { connect } from 'react-redux';
 
@@ -9,12 +10,13 @@ class NavBarBoard extends Component {
         this.state = {
             board:{},
             teamsB: ["Personal"],
-            newBoardName: ''
+            newBoardName: '',
+            visibleMenu: false
         }
 
-        this.showDivSettings = this.showDivSettings.bind(this)
         this.handleSubmitTitle = this.handleSubmitTitle.bind(this)
         this.handleBNChange = this.handleBNChange.bind(this)
+        this.toggleMenu = this.toggleMenu.bind(this)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -35,9 +37,9 @@ class NavBarBoard extends Component {
 
     }
 
-
-    showDivSettings = (event) =>{
-        event.preventDefault()
+    toggleMenu = () =>{
+        const { visibleMenu } = this.state
+        this.setState({visibleMenu: !visibleMenu})
     }
 
 
@@ -73,11 +75,12 @@ class NavBarBoard extends Component {
         dispatchCallEditBoard(newBoard)
     }
 
+
     render(){
         return (
 
-            <div>
-            <nav id="navBarBoard" className="navbar navbar-expand-lg navbar-dark bg-default">
+            <div id="navBarBoard">
+            <nav className="navbar navbar-expand-lg navbar-dark bg-default">
                 <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#modalChangeBN">
                     {this.state.board.boardTitle}
                 </button>
@@ -87,8 +90,11 @@ class NavBarBoard extends Component {
                     <option value={1}> Private</option>
                 </select>
 
-
+                <button className={"btn btn-primary"} id={'toggleButton'} onClick={() => this.toggleMenu(true)}>
+                    <span> <i className="ni ni-settings"/> Display settings</span>
+                </button>
             </nav>
+                {this.state.visibleMenu && <Menu idBoard={this.state.board._id}/>}
                 <div className="modal fade" id="modalChangeBN" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog modal-dialog-centered" role="document">
                         <div className="modal-content">

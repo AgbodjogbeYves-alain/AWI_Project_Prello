@@ -20,11 +20,11 @@ export function removeBoard(_id) {
   };
 }
 
-export function editBoard(_id, data) {
+export function editBoard(_id, newBoard) {
   return {
     type: EDIT_BOARD,
     _id,
-    data
+    newBoard
   };
 }
 
@@ -40,5 +40,5 @@ export function callRemoveBoard(boardId) {
 }
 
 export function callEditBoard(newBoard) {
-  return dispatch => asteroid.call('boards.editBoard', newBoard).then(result => dispatch(editBoard({_id: result, newBoard})))
+  return dispatch => asteroid.call('boards.editBoard', newBoard)//.then(result => dispatch(editBoard({_id: result, data: newBoard})))
 }
