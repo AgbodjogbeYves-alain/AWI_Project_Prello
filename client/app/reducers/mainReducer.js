@@ -5,7 +5,6 @@ import boards from './BoardReducers';
 const mainReducer = combineReducers({
   user,
   boards
->>>>>>> origin/develop
 });
 
 export default mainReducer;

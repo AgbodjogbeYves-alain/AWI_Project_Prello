@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { withRouter } from "react-router-dom";
 import {callEditBoard} from "../../actions/BoardActions";
 import { connect } from 'react-redux';
 
@@ -72,9 +70,9 @@ class NavBarBoard extends Component {
                     {this.state.board.boardTitle}
                 </button>
 
-                <select className="btn btn-primary">
-                    <option value={0} selected={(this.state.board.boardPrivacy==0)? "selected": ""}> Public</option>
-                    <option value={1} selected={(this.state.board.boardPrivacy==0)? "selected": ""}> Private</option>
+                <select className="btn btn-primary" defaultValue={(this.state.board.boardPrivacy===0)? 0: 1}>
+                    <option value={0}> Public</option>
+                    <option value={1}> Private</option>
                 </select>
 
 

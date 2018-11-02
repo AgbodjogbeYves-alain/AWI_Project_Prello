@@ -1,4 +1,5 @@
 import asteroid from "../common/asteroid";
+import board from "../reducers/BoardReducer";
 
 export const CREATE_BOARD = 'CREATE_BOARD';
 export const GET_BOARDS = 'GET_BOARDS';
@@ -30,7 +31,7 @@ export function editBoard(_id, data) {
 //Asynchroneous
 export function callCreateBoard(boardTitle) {
   return dispatch => asteroid.call('boards.createBoard', boardTitle)
-      .then(result => dispatch(createBoard({ _id: result, boardTitle })));
+      .then(result => dispatch(createBoard({ _id: result, boardTitle})));
 }
 
 export function callRemoveBoard(boardId) {
@@ -38,6 +39,6 @@ export function callRemoveBoard(boardId) {
       .then(result => dispatch(removeBoard(boardId)));
 }
 
-export function callEditBoard(boardId, boardTitle) {
-  return dispatch => asteroid.call('boards.editBoard', boardId, boardTitle)
+export function callEditBoard(newBoard) {
+  return dispatch => asteroid.call('boards.editBoard', newBoard).then(result => dispatch(editBoard({_id: result, newBoard})))
 }

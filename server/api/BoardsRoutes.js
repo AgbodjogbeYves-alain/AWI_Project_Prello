@@ -1,16 +1,12 @@
 import {Boards} from "../models/Boards";
 import {Meteor} from "meteor/meteor";
+import * as Random from "asteroid";
 
 Meteor.publish('boards', function () {return Boards.find()});
 
 Meteor.methods({
-    'board.createBoard'({boardName, privacy}) {
-        /*if(!Meteor.userId()){
-            throw new Meteor.Error('Not Authorized')
-        }else{*/
-        let privacyInt = parseInt(privacy)
-        let id = Math.random().toString(36).substr(2, 5).toUpperCase();
-        return Boards.insert({boardId: id, boardTitle: boardName, boardPrivacy: privacyInt, boardUser: [Meteor.user()]})
+    'board.createBoard'(boardName) {
+        return Boards.insert({boardId: id, boardTitle: boardName,boardPrivacy: 1, boardUser: [Meteor.user()]})
     },
 
     'board.getBoard' ({idBoard}) {
@@ -30,7 +26,7 @@ Meteor.methods({
         return Boards.remove(boardId);
     },
 
-    'board.editBoard' (newBoard) {
+    'boards.editBoard' (newBoard) {
         return Boards.update({boardId: newBoard.boardId}, { $set: {
                 boardTitle: newBoard.boardTitle
         }})

@@ -1,6 +1,5 @@
 import { createClass } from 'asteroid';
 import { setLoggedUser, unsetLoggedUser, editProfileUser } from '../actions/UserActions';
-import {editBoard} from '../actions/BoardActions'
 import store from '../components/store';
 import { createBoard, removeBoard, editBoard } from '../actions/BoardActions';
 

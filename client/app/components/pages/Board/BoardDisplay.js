@@ -201,7 +201,7 @@ class BoardDisplay extends Component {
         return(
             <div id={"boardDisplay"}>
                 <NavBar/>
-                <NavBarBoard board={this.state.board} />
+                <NavBarBoard board={this.state.board}/>
                 <div id={"divList"}>
                     <DragDropContext onDragEnd={this.onDragEnd}>
                         <Droppable droppableId={"all-columns"} direction={"horizontal"} type={"list"}>
