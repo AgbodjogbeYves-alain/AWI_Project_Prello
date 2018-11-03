@@ -18,3 +18,4 @@ johanbrook:publication-collector  # Test a Meteor publication by collecting its 
 nimble:restivus
 meteortoys:allthings
 aldeed:collection2@3.0.0
+simple:rest
