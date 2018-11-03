@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import Autocomplete from 'react-autocomplete';
 import asteroid from '../../common/asteroid';
+import { connect } from 'react-redux';
 
-export default class AddUserInput extends Component {
+class AddUserInput extends Component {
 
     constructor(props) {
         super(props);
@@ -9,8 +11,17 @@ export default class AddUserInput extends Component {
             boardUsers: this.props.boardUsers,
             userEmail: "",
             userRole: 1,
+            users: [],
             alerts: []
         };
+    }
+
+    componentDidMount(){
+        asteroid.call('users.getUsers')
+        .then((result) => {
+            this.setState({users: result})
+        })
+        .catch((error) => alert(error))
     }
 
     renderUsers(){
@@ -90,16 +101,25 @@ export default class AddUserInput extends Component {
                 {this.renderUsers()}
                 <div className="row">
                     <div className="col-6">
-                        <div className="input-group input-group-alternative">
-                            <div className="input-group-prepend">
-                                <span className="input-group-text"><i className="ni ni-email-83"></i></span>
-                            </div>
-                            <input 
-                                className="form-control" 
-                                placeholder="Email" 
-                                type="email"
+                        <div className="input-group">
+                            <Autocomplete
+                                getItemValue={(item) => item.profile.email}
+                                shouldItemRender={(item, value) => item.profile.email.toLowerCase().indexOf(value.toLowerCase()) > -1}
+                                items={this.props.users}
+                                renderItem={(item, isHighlighted) =>
+                                    <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+                                        {item.profile.email}
+                                    </div>
+                                }
                                 value={this.state.userEmail}
                                 onChange={(e) => this.setState({userEmail: e.target.value})}
+                                onSelect={(val) => this.setState({userEmail: val})}
+                                wrapperStyle={{'display': 'inline-block', 'width': '100%'}}
+                                menuStyle={{left: 'auto', top: 'auto', position: 'fixed'}}
+                                inputProps={{
+                                    'placeholder': 'User',
+                                    'class': 'form-control w-100'
+                                }}
                             />
                         </div>
                     </div>
@@ -122,3 +142,9 @@ export default class AddUserInput extends Component {
         )
     }
 }
+
+const mapStateToProps = state => ({
+    users: state.users
+});
+
+export default connect(mapStateToProps)(AddUserInput);

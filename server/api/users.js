@@ -1,10 +1,12 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 
+Meteor.publish('users', function(){
+    return Meteor.users.find();
+})
 
 Meteor.methods({
     "users.signUp"({lastname, firstname, email, password}){
-        console.log(password)
         if(password.length < 6) throw new Meteor.Error("Too short password, at least 6 characters.")
         else if(!email || !lastname || !firstname) throw new Meteor.Error("Some field are empty.")
         else {
@@ -49,5 +51,8 @@ Meteor.methods({
     },
     "users.getUser"(email){
         return Meteor.users.findOne({"profile.email": email});
+    },
+    "users.getUsers"(){
+        return Meteor.users.find();
     }
 })

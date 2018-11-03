@@ -4,6 +4,7 @@ export const SET_USER = 'SET_USER';
 export const UNSET_USER = 'UNSET_USER';
 export const EDIT_USER = 'EDIT_USER';
 export const REMOVE_USER = 'REMOVE_USER';
+export const ADD_USER = 'ADD_USER';
 
 export function setLoggedUser(user) {
   return {
@@ -37,6 +38,14 @@ export function enabledMails(user){
     user
   }
 }
+
+export function addUser(data){
+  return {
+    type: ADD_USER,
+    data
+  }
+}
+
 
 export function callEditProfileUser(email, lastname, firstname) {
   return dispatch => asteroid.call('users.updateProfile', email, lastname, firstname)
