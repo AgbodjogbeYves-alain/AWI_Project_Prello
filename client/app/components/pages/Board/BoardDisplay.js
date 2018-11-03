@@ -6,7 +6,7 @@ import List from "./List";
 import NavBarBoard from "../../partials/NavBarBoard";
 import asteroid from "../../../common/asteroid.js";
 import { connect } from 'react-redux';
-import {callEditBoard} from "../../../actions/BoardActions";
+import Dashboard from "../Dashboard/Dashboard";
 
 
 const Container = styled.div`
@@ -17,10 +17,6 @@ class BoardDisplay extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            board: {boardList:[]}
-        }
-        ;
 
         this.onDragEnd = this.onDragEnd.bind(this);
 
@@ -33,14 +29,17 @@ class BoardDisplay extends Component {
     componentDidMount(){
         let idBoard = this.props.match.params.id;
         let boardFromDB = {}
-        asteroid.call('board.getBoard',{ idBoard })
+        asteroid.call('board.getBoard', idBoard )
             .then(result => {
                 boardFromDB = result
                 this.setState({
                     board: boardFromDB
                 })
             }).catch(error => {
-            alert(error);
+                this.setState({
+                    board: "unknown"
+                })
+            console.log(error);
         })
     }
 
@@ -197,41 +196,54 @@ class BoardDisplay extends Component {
 
     }
     render() {
-
-        return(
+        console.log(this.props)
+        let board = this.props.boards.filter((board) => board.boardId == this.state.idBoard)
+        console.log(board)
+        return this.state.board != 'unknown' ? (
             <div id={"boardDisplay"}>
                 <NavBar/>
                 <NavBarBoard board={this.state.board}/>
                 <div id={"divList"}>
                     <DragDropContext onDragEnd={this.onDragEnd}>
                         <Droppable droppableId={"all-columns"} direction={"horizontal"} type={"list"}>
-                            {(provided)=> {
-                                return(
+                            {(provided) => {
+                                return (
                                     <Container
                                         {...provided.droppableProps}
                                         ref={provided.innerRef}
 
                                     >
                                         {
-                                        this.state.board.boardList.map((list,index) => {
-                                            const cards = list.listCard;
-                                            return <List key={list.listId} list={list} index={index} cards={cards}/>;
-                                        })}
+                                            this.state.board.boardList.map((list, index) => {
+                                                const cards = list.listCard;
+                                                return <List key={list.listId} list={list} index={index}
+                                                             cards={cards}/>;
+                                            })}
 
                                         {provided.placeholder}
                                     </Container>
-                                )}}
+                                )
+                            }}
                         </Droppable>
                     </DragDropContext>
                 </div>
             </div>
-        )
+        ) : (
+            <div id={"unknowDisplayBoard"}>
+                <NavBar/>
+                <div className={"bigMessage"} id={'unknown'}>
+                    <h1> Unreachable board</h1>
+                    <p> Two things can create this error. Maybe this board is private or this board doesn't exist</p>
+                </div>
+            </div>
+
+            )
     }
 }
 
-const mapStateToProps = () => ({});
-const mapDispatchToProps = dispatch => ({
-    dispatchCallEditBoard: (board) => dispatch(callEditBoard(board)),
+const mapStateToProps = state => ({
+    user: state.user,
+    boards: state.boards,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(BoardDisplay);
+export default connect(mapStateToProps)(BoardDisplay);

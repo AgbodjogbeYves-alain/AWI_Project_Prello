@@ -6,13 +6,14 @@ import { connect } from 'react-redux';
 import BoardModal from "../../partials/BoardModal.js"
 import Teams from "./Teams/Teams.js";
 import Boards from "./Boards/Boards.js";
-import ModalFormCreateInBoard from "./ModalFormCreateInBoard";
+
 
 class Dashboard extends Component {
 
     constructor(props) {
         super(props);
     }
+
 
     partialsBoardsRender(){
         return this.props.boards.map((b,i) => 
@@ -47,5 +48,4 @@ const mapStateToProps = state => ({
     user: state.user,
     boards: state.boards,
 });
-
 export default connect(mapStateToProps)(Dashboard);

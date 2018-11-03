@@ -17,6 +17,9 @@
     "asteroid": "^2.0.3",
     "concurrently": "^3.1.0",
     "react": "^16.6.0",
-    "react-dom": "^16.6.0"
+    "react-dom": "^16.6.0",
+    "react-redux-sweetalert": "^1.0.2",
+    "react-sidebar": "^3.0.2",
+    "sweetalert-react": "^0.4.11"
   }
 }
