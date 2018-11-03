@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
 
-import { callCreateBoard, callEditBoard } from '../../actions/BoardActions';
 import Alert from './Alert';
+import AddUserInput from "./AddUserInput.js";
 import asteroid from '../../common/asteroid';
 
 class BoardModal extends Component {
@@ -16,8 +16,6 @@ class BoardModal extends Component {
             boardTitle: this.props.board ? this.props.board.boardTitle : '',
             boardDescription: this.props.board ? this.props.board.boardDescription : '',
             boardUsers: this.props.board ? this.props.board.boardUsers : [],
-            userEmail: "",
-            userAdmin: false,
             alerts: []
         };
 
@@ -74,49 +72,6 @@ class BoardModal extends Component {
         })
     }
 
-    renderUsers(){
-        return this.state.boardUsers.map((u,i) => 
-            <div className="row" key={i}>
-                <div className="col-7">
-                    {u.user.profile.email}
-                </div>
-                <div className="col-3">
-                <div className="custom-control custom-checkbox mb-3">
-                        <input 
-                            className="custom-control-input" 
-                            id="adminCheck" 
-                            type="checkbox" 
-                            defaultChecked={u.userAdmin}
-                            //onChange={(e) => this.setState({userAdmin: e.target.checked})}
-                        />
-                        <label className="custom-control-label" htmlFor="adminCheck">Admin</label>
-                    </div>
-                </div>
-                <div className="col-2">
-                    <button className="btn btn-danger btn-sm">
-                        x
-                    </button>
-                </div>
-            </div>
-        )
-    }
-
-    handleAddUser(){
-        let boardUsers = this.state.boardUsers;
-        asteroid.call('users.getUser', this.state.userEmail)
-        .then((result) => {
-            if(result){
-                boardUsers.push({
-                    user: result,
-                    userAdmin: this.state.userAdmin
-                });
-                this.setState({boardUsers: boardUsers});
-            }
-            else this.addAlert("danger", "No user with this email.")
-        })
-        .catch((error) => this.addAlert("danger", error.reason));
-    }
-
     render(){
         return ( 
             <div className="modal fade" id={"board-modal" + this.state.boardId} tabIndex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
@@ -165,40 +120,10 @@ class BoardModal extends Component {
                                         ></textarea>
                                     </div>
                                 </div>
-                                <div className="form-group mb-3">
-                                    {this.renderUsers()}
-                                    <div className="row">
-                                        <div className="col-6">
-                                            <div className="input-group input-group-alternative">
-                                                <div className="input-group-prepend">
-                                                    <span className="input-group-text"><i className="ni ni-email-83"></i></span>
-                                                </div>
-                                                <input 
-                                                    className="form-control" 
-                                                    placeholder="Email" 
-                                                    type="email"
-                                                    value={this.state.userEmail}
-                                                    onChange={(e) => this.setState({userEmail: e.target.value})}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="col-3" style={{paddingTop: "11px"}}>
-                                            <div className="custom-control custom-checkbox mb-3">
-                                                <input 
-                                                    className="custom-control-input" 
-                                                    id="adminCheck" 
-                                                    type="checkbox" 
-                                                    defaultChecked={this.state.userAdmin}
-                                                    onChange={(e) => this.setState({userAdmin: e.target.checked})}
-                                                />
-                                                <label className="custom-control-label" htmlFor="adminCheck">Admin</label>
-                                            </div>
-                                        </div>
-                                        <div className="col-3">
-                                            <button className="btn btn-primary" onClick={() => this.handleAddUser()}>Add</button>
-                                        </div>
-                                    </div>
-                                </div>
+                                <AddUserInput 
+                                    boardUsers={this.state.boardUsers} 
+                                    onChange={(field, value) => this.setState({"boardUsers": value})}
+                                />
                             </form>
                         </div>
 
