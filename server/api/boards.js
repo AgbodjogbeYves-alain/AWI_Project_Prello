@@ -1,12 +1,12 @@
 import {Boards} from "../models/Boards";
 import {Meteor} from "meteor/meteor";
-import * as Random from "asteroid";
 
 Meteor.publish('boards', function () {return Boards.find()});
 
 Meteor.methods({
-    'board.createBoard'(boardName) {
-        return Boards.insert({boardId: id, boardTitle: boardName,boardPrivacy: 1, boardUser: [Meteor.user()]})
+    'boards.createBoard'(board) {
+        board.boardUsers = [Meteor.user()];
+        return Boards.insert(board);
     },
 
     'board.getBoard' ({idBoard}) {
@@ -17,7 +17,7 @@ Meteor.methods({
             board = Boards.findOne({"boardId": idBoard});
             return board;
         } else {
-            throw new Meteor.Error(404, 'Board not found')
+            throw new Meteor.Error(404, 'Board not found');
         }
 
     },
@@ -27,9 +27,9 @@ Meteor.methods({
     },
 
     'boards.editBoard' (newBoard) {
-        return Boards.update({boardId: newBoard.boardId}, { $set: {
+        return Boards.update(newBoard._id, { $set: {
                 boardTitle: newBoard.boardTitle,
-                boardPrivacy: newBoard.privacy
+                boardPrivacy: newBoard.boardPrivacy
         }})
 
     },

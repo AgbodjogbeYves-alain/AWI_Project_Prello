@@ -1,5 +1,4 @@
 import asteroid from "../common/asteroid";
-import board from "../reducers/BoardReducer";
 
 export const CREATE_BOARD = 'CREATE_BOARD';
 export const GET_BOARDS = 'GET_BOARDS';

@@ -46,5 +46,8 @@ Meteor.methods({
     },
     'users.remove'(){
         Meteor.users.remove(Meteor.userId());
+    },
+    "users.getUser"(email){
+        return Meteor.users.findOne({"profile.email": email});
     }
 })

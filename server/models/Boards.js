@@ -10,6 +10,11 @@ BoardSchema = new SimpleSchema({
       label: "Title",
       required: true
   },
+  boardDescription: {
+      type: String,
+      label: "Description",
+      required: true
+  },
   boardUsers: {
       type: Array,
       label: "Users",
