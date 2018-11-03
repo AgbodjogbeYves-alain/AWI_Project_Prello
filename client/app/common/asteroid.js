@@ -1,5 +1,5 @@
 import { createClass } from 'asteroid';
-import { setLoggedUser, unsetLoggedUser, editProfileUser } from '../actions/UserActions';
+import { setLoggedUser, unsetLoggedUser, editProfileUser, addUser } from '../actions/UserActions';
 import store from '../components/store';
 import { createBoard, removeBoard, editBoard } from '../actions/BoardActions';
 
@@ -12,11 +12,13 @@ const asteroid = new Asteroid({
 // if you want realitme updates in all connected clients
 // subscribe to the publication
 asteroid.subscribe('boards');
+asteroid.subscribe('users');
 
 asteroid.ddp.on('added', (doc) => {
   // we need proper document object format here
   if (doc.collection === 'users') {
-    store.dispatch(setLoggedUser(doc.fields));
+    if(store.getState().user) store.dispatch(addUser(doc.fields))
+    else store.dispatch(setLoggedUser(doc.fields)); 
   }
   if(doc.collection === 'boards'){
     const docObj = Object.assign({}, doc.fields, { _id: doc.id });
@@ -39,8 +41,6 @@ asteroid.ddp.on('changed', (updatedDoc) => {
   }
 
   if (updatedDoc.collection === 'boards') {
-      console.log(updatedDoc)
-
       store.dispatch(editBoard(updatedDoc.id, updatedDoc.fields));
   }
 });

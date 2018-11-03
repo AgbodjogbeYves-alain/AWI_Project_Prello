@@ -4,11 +4,12 @@ import {Meteor} from "meteor/meteor";
 Meteor.publish('boards', function () {return Boards.find()});
 
 Meteor.methods({
-    'board.createBoard'(boardName) {
-        return Boards.insert({boardTitle: boardName,boardPrivacy: 1, boardUser: [Meteor.user()]})
+    'boards.createBoard'(board) {
+        board.boardUsers = [Meteor.user()];
+        return Boards.insert(board);
     },
 
-    'board.getBoard' (idBoard) {
+    'board.getBoard' ({idBoard}) {
         let board;
         let countDoc = Boards.find({"boardId": idBoard}).count();
         console.log(countDoc)
@@ -16,7 +17,7 @@ Meteor.methods({
             board = Boards.findOne({"boardId": idBoard});
             return board;
         } else {
-            throw new Meteor.Error(404, 'Board not found')
+            throw new Meteor.Error(404, 'Board not found');
         }
 
     },
@@ -26,9 +27,9 @@ Meteor.methods({
     },
 
     'boards.editBoard' (newBoard) {
-        return Boards.update({boardId: newBoard.boardId}, { $set: {
+        return Boards.update(newBoard._id, { $set: {
                 boardTitle: newBoard.boardTitle,
-                boardPrivacy: newBoard.privacy
+                boardPrivacy: newBoard.boardPrivacy
         }})
 
     },
@@ -36,12 +37,4 @@ Meteor.methods({
     'getAllBoards' (){
         return Boards.find().fetch();
     }
-})
-
-
-Meteor.method("test-board", function (a, b) {
-    return a + b;
-}, {
-    url: "test/:id",
-    httpMethod: "post"
 })
