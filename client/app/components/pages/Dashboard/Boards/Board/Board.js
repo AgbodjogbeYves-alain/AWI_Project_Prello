@@ -2,18 +2,19 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 
 import { callRemoveBoard } from '../../../../../actions/BoardActions';
+import asteroid from '../../../../../common/asteroid';
 
 class Board extends Component {
 
     constructor(props) {
         super(props);
+
         this.handleRemoveBoard = this.handleRemoveBoard.bind(this);
     }
 
     handleRemoveBoard(){
         if(confirm("Are you sure to delete this board ?")){
-            const { dispatchCallRemoveBoard } = this.props;
-            dispatchCallRemoveBoard(this.props.id)
+            asteroid.call("boards.removeBoard", this.props.id)
         }
     }
 

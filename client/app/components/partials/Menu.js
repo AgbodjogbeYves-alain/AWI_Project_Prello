@@ -1,6 +1,4 @@
 import React, { Component,PureComponent } from 'react';
-import SweetAlert from 'sweetalert-react';
-import asteroid from "../../common/asteroid";
 import {callEditBoard, callRemoveBoard} from "../../actions/BoardActions";
 
 
