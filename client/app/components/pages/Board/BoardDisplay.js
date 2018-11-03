@@ -33,7 +33,7 @@ class BoardDisplay extends Component {
     componentDidMount(){
         let idBoard = this.props.id;
         let boardFromDB = {}
-        asteroid.call('board.getBoard',{ idBoard })
+        asteroid.call('board.getBoard',{idBoard})
             .then(result => {
                 boardFromDB = result
                 this.setState({
@@ -41,6 +41,7 @@ class BoardDisplay extends Component {
                 })
             }).catch(error => {
             alert(error);
+            console.log(error)
         })
     }
 

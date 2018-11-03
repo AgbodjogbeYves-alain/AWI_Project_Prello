@@ -1,6 +1,5 @@
 import {Boards} from "../models/Boards";
 import {Meteor} from "meteor/meteor";
-import * as Random from "asteroid";
 
 Meteor.publish('boards', function () {return Boards.find()});
 
@@ -9,7 +8,7 @@ Meteor.methods({
         return Boards.insert({boardId: id, boardTitle: boardName,boardPrivacy: 1, boardUser: [Meteor.user()]})
     },
 
-    'board.getBoard' (idBoard) {
+    'board.getBoard' ({idBoard}) {
         let board;
         let countDoc = Boards.find({"boardId": idBoard}).count();
         console.log(countDoc)
