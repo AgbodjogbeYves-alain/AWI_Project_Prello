@@ -16,14 +16,6 @@ class AddUserInput extends Component {
         };
     }
 
-    componentDidMount(){
-        asteroid.call('users.getUsers')
-        .then((result) => {
-            this.setState({users: result})
-        })
-        .catch((error) => alert(error))
-    }
-
     renderUsers(){
         return this.state.boardUsers.map((u,i) => 
             <div className="row" key={i}>

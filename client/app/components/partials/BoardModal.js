@@ -46,8 +46,10 @@ class BoardModal extends Component {
         let board = {
             boardTitle: this.state.boardTitle,
             boardDescription: this.state.boardDescription,
+            boardUsers: this.state.boardUsers,
             boardPrivacy: 1
         };
+
         asteroid.call("boards.createBoard", board)
         .then((result) => {
             this.props.history.push("/board/" + result)
@@ -61,7 +63,8 @@ class BoardModal extends Component {
         let board = this.props.board;
         board.boardTitle = this.state.boardTitle;
         board.boardDescription = this.state.boardDescription;
-
+        board.boardUsers = this.state.boardUsers;
+        
         asteroid.call("boards.editBoard", board)
         .then((result) => {
             $('#board-modal' + this.state.boardId).modal('toggle');

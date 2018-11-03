@@ -5,7 +5,7 @@ Meteor.publish('boards', function () {return Boards.find()});
 
 Meteor.methods({
     'boards.createBoard'(board) {
-        board.boardUsers = [Meteor.user()];
+        console.log(board)
         return Boards.insert(board);
     },
 
@@ -29,7 +29,8 @@ Meteor.methods({
     'boards.editBoard' (newBoard) {
         return Boards.update(newBoard._id, { $set: {
                 boardTitle: newBoard.boardTitle,
-                boardPrivacy: newBoard.boardPrivacy
+                boardPrivacy: newBoard.boardPrivacy,
+                boardUsers: newBoard.boardUsers
         }})
 
     },

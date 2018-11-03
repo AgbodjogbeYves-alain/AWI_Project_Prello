@@ -3,6 +3,7 @@ import { Mongo } from 'meteor/mongo'
 export const Boards = new Mongo.Collection('boards')
 
 import SimpleSchema from 'simpl-schema';
+import { BoardUserSchema } from './BoardUser';
 
 BoardSchema = new SimpleSchema({
   boardTitle: {
@@ -20,7 +21,7 @@ BoardSchema = new SimpleSchema({
       label: "Users",
       required: true
   },
-  'boardUsers.$': Object, //se if need to replace Object with a schema
+  'boardUsers.$': BoardUserSchema, //se if need to replace Object with a schema
   boardPrivacy: {
       type: SimpleSchema.Integer,
       label: "Privacy",
