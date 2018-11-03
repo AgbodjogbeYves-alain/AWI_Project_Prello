@@ -6,29 +6,28 @@ import { JsonRoutes } from 'meteor/simple:json-routes';
 
 Meteor.methods({
     'list.createList'(listName) {
-        let id = Random.id();
-        return Lists.insert({listId: id, listTitle: listName})
+        return Lists.insert({listTitle: listName})
     },
 
-    'getList' (idList) {
-        let countDoc = Lists.find({"listId": idList}).count();
+    'list.getList' (idList) {
+        let countDoc = Lists.find({"_id": idList}).count();
         if (countDoc === 1) {
-            let list = List.findOne({"listId": idList});
+            let list = List.findOne({"_id": idList});
             return list;
         } else {
             throw new Meteor.Error(404, 'List not found')
         }
 
     },
-    'deleteList'({idBoard}) {
+    'list.deleteList'(idBoard, idList) {
 
     },
 
-    'editList' ({idBoard,newParams}) {
+    'list.editList' (list) {
 
     },
 
-    'getAllList' ({idUser}){
+    'list.getAllList' (){
 
     }
 })
