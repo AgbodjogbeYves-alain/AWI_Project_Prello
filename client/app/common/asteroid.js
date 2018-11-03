@@ -39,8 +39,8 @@ asteroid.ddp.on('changed', (updatedDoc) => {
   }
 
   if (updatedDoc.collection === 'boards') {
-      console.log(updatedDoc)
-
+      store.dispatch(editBoard(updatedDoc.id, updatedDoc.fields));
+  }
 });
 
 export default asteroid;
