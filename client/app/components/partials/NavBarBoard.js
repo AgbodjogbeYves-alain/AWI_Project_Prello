@@ -21,7 +21,8 @@ class NavBarBoard extends Component {
 
     componentWillReceiveProps(nextProps) {
         let teamsB = ["Personal"];
-
+        console.log(nextProps)
+        console.log(this.props)
         if(!(nextProps.board.boardTeam.length === 0)){
             if(nextProps.board.boardTeam.length > 1){
                 teamsB = ["Multiple teams"]
@@ -91,7 +92,7 @@ class NavBarBoard extends Component {
                 </select>
 
                 <button className={"btn btn-primary"} id={'toggleButton'} onClick={() => this.toggleMenu(true)}>
-                    <span> <i className="ni ni-settings"/> Display settings</span>
+                    <span> <i className="ni ni-settings"/>Display settings</span>
                 </button>
             </nav>
                 {this.state.visibleMenu && <Menu idBoard={this.state.board._id}/>}
@@ -126,9 +127,9 @@ class NavBarBoard extends Component {
 
 }
 
-const mapStateToProps = () => ({});
-const mapDispatchToProps = dispatch => ({
-    dispatchCallEditBoard: (board) => dispatch(callEditBoard(board)),
+const mapStateToProps = state => ({
+    user: state.user,
+    boards: state.boards,
+    board: {boardTeams: []}
 });
-
-export default connect(mapStateToProps, mapDispatchToProps)(NavBarBoard);
+    export default connect(mapStateToProps)(NavBarBoard);

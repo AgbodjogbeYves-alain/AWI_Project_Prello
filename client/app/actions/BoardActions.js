@@ -1,5 +1,5 @@
 import asteroid from "../common/asteroid";
-import board from "../reducers/BoardReducer";
+import board from "../reducers/BoardReducers";
 
 export const CREATE_BOARD = 'CREATE_BOARD';
 export const GET_BOARDS = 'GET_BOARDS';
@@ -20,11 +20,11 @@ export function removeBoard(_id) {
   };
 }
 
-export function editBoard(_id, newBoard) {
+export function editBoard(_id, data) {
   return {
     type: EDIT_BOARD,
     _id,
-    newBoard
+    data
   };
 }
 

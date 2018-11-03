@@ -6,6 +6,7 @@ import List from "./List";
 import NavBarBoard from "../../partials/NavBarBoard";
 import asteroid from "../../../common/asteroid.js";
 import { connect } from 'react-redux';
+import Dashboard from "../Dashboard/Dashboard";
 
 
 const Container = styled.div`
@@ -16,10 +17,6 @@ class BoardDisplay extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            board: {boardList:[]}
-        }
-        ;
 
         this.onDragEnd = this.onDragEnd.bind(this);
 
@@ -32,7 +29,7 @@ class BoardDisplay extends Component {
     componentDidMount(){
         let idBoard = this.props.match.params.id;
         let boardFromDB = {}
-        asteroid.call('board.getBoard',{ idBoard })
+        asteroid.call('board.getBoard', idBoard )
             .then(result => {
                 boardFromDB = result
                 this.setState({
@@ -199,6 +196,9 @@ class BoardDisplay extends Component {
 
     }
     render() {
+        console.log(this.props)
+        let board = this.props.boards.filter((board) => board.boardId == this.state.idBoard)
+        console.log(board)
         return this.state.board != 'unknown' ? (
             <div id={"boardDisplay"}>
                 <NavBar/>
@@ -241,6 +241,9 @@ class BoardDisplay extends Component {
     }
 }
 
-const mapStateToProps = ()=>({});
+const mapStateToProps = state => ({
+    user: state.user,
+    boards: state.boards,
+});
 
 export default connect(mapStateToProps)(BoardDisplay);

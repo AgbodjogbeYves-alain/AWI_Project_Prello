@@ -38,10 +38,10 @@ asteroid.ddp.on('changed', (updatedDoc) => {
     store.dispatch(editProfileUser(updatedDoc.fields));
   }
 
-  console.log(updatedDoc)
-
   if (updatedDoc.collection === 'boards') {
-    store.dispatch(editBoard(updatedDoc.id, updatedDoc.fields));
+      console.log(updatedDoc)
+
+      store.dispatch(editBoard(updatedDoc.id, updatedDoc.fields));
   }
 });
 
