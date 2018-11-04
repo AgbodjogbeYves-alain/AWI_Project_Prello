@@ -6,21 +6,21 @@ import Alert from './Alert';
 import AddUserInput from "./AddUserInput.js";
 import asteroid from '../../common/asteroid';
 
-class BoardModal extends Component {
+class TeamModal extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            type: this.props.board ? 'edit' : 'add',
-            boardId: this.props.board ? this.props.board._id : '',
-            boardTitle: this.props.board ? this.props.board.boardTitle : '',
-            boardDescription: this.props.board ? this.props.board.boardDescription : '',
-            boardUsers: this.props.board ? this.props.board.boardUsers : [],
+            type: this.props.team ? 'edit' : 'add',
+            teamId: this.props.team ? this.props.team._id : '',
+            teamTitle: this.props.team ? this.props.team.teamTitle : '',
+            teamDescription: this.props.team ? this.props.team.teamDescription : '',
+            teamUsers: this.props.team ? this.props.team.teamUsers : [],
             alerts: []
         };
 
-        this.handleCreateBoard = this.handleCreateBoard.bind(this);
-        this.handleEditBoard = this.handleEditBoard.bind(this);
+        this.handleCreateTeam = this.handleCreateTeam.bind(this);
+        this.handleEditTeam = this.handleEditTeam.bind(this);
     }
 
     addAlert(type, text) {
@@ -38,38 +38,35 @@ class BoardModal extends Component {
 
     resetFields(){
         this.setState({
-            boardTitle: ''
+            teamTitle: ''
         });
     }
 
-    handleCreateBoard(){
-        let board = {
-            boardTitle: this.state.boardTitle,
-            boardDescription: this.state.boardDescription,
-            boardUsers: this.state.boardUsers,
-            boardPrivacy: 1
+    handleCreateTeam(){
+        let team = {
+            teamTitle: this.state.teamTitle,
+            teamDescription: this.state.teamDescription,
+            teamUsers: this.state.teamUsers
         };
 
-        asteroid.call("boards.createBoard", board)
+        asteroid.call("teams.createTeam", team)
         .then((result) => {
-
-            //this.props.history.push("/board/" + result)
+            $('#team-modal' + this.state.teamId).modal('toggle');
         })
         .catch((error) => {
             this.addAlert("danger", error.reason)
         })
     }
 
-    handleEditBoard(){
-        let board = this.props.board;
-        board.boardTitle = this.state.boardTitle;
-        board.boardDescription = this.state.boardDescription;
-        board.boardUsers = this.state.boardUsers;
-
-        asteroid.call("boards.editBoard", board)
+    handleEditTeam(){
+        let team = this.props.team;
+        team.teamTitle = this.state.teamTitle;
+        team.teamDescription = this.state.teamDescription;
+        team.teamUsers = this.state.teamUsers;
+        
+        asteroid.call("teams.editTeam", team)
         .then((result) => {
-            $('#board-modal' + this.state.boardId).modal('toggle');
-            //that.props.history.push("/board/" + result.data._id)
+            $('#team-modal' + this.state.teamId).modal('toggle');
         })
         .catch((error) => {
             this.addAlert("danger", error.reason)
@@ -78,13 +75,13 @@ class BoardModal extends Component {
 
     render(){
         return ( 
-            <div className="modal fade" id={"board-modal" + this.state.boardId} tabIndex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+            <div className="modal fade" id={"team-modal" + this.state.teamId} tabIndex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
                 <div className="modal-dialog modal- modal-dialog-centered modal-" role="document">
                     <div className="modal-content">
 
                         <div className="modal-header">
                             <h6 className="modal-title" id="modal-title-default">
-                                {this.state.type == 'edit' ? "Edit" : "Create"} Board {this.state.boardTitle}
+                                {this.state.type == 'edit' ? "Edit" : "Create"} team {this.state.teamTitle}
                             </h6>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
@@ -105,8 +102,8 @@ class BoardModal extends Component {
                                             className="form-control" 
                                             placeholder="Name" 
                                             type="text"
-                                            value={this.state.boardTitle}
-                                            onChange={(e) => this.setState({boardTitle: e.target.value})}
+                                            value={this.state.teamTitle}
+                                            onChange={(e) => this.setState({teamTitle: e.target.value})}
                                         />
                                     </div>
                                 </div>
@@ -119,14 +116,14 @@ class BoardModal extends Component {
                                             className="form-control" 
                                             placeholder="Description" 
                                             type="text"
-                                            value={this.state.boardDescription}
-                                            onChange={(e) => this.setState({boardDescription: e.target.value})}
+                                            value={this.state.teamDescription}
+                                            onChange={(e) => this.setState({teamDescription: e.target.value})}
                                         ></textarea>
                                     </div>
                                 </div>
                                 <AddUserInput 
-                                    addedUsers={this.state.boardUsers} 
-                                    onChange={(field, value) => this.setState({"boardUsers": value})}
+                                    addedUsers={this.state.teamUsers} 
+                                    onChange={(field, value) => this.setState({"teamUsers": value})}
                                 />
                             </form>
                         </div>
@@ -136,13 +133,13 @@ class BoardModal extends Component {
                             {this.state.type == "edit" ?
                                 <button 
                                     className="btn btn-primary  ml-auto"
-                                    onClick={() => this.handleEditBoard()}>
+                                    onClick={() => this.handleEditTeam()}>
                                     Edit
                                 </button>
                                 :
                                 <button 
                                     className="btn btn-success  ml-auto"
-                                    onClick={() => this.handleCreateBoard()}>
+                                    onClick={() => this.handleCreateTeam()}>
                                     Create
                                 </button>
                             }
@@ -156,4 +153,4 @@ class BoardModal extends Component {
 
 const mapStateToProps = state => ({});
 
-export default connect(mapStateToProps)(withRouter(BoardModal));
+export default connect(mapStateToProps)(withRouter(TeamModal));

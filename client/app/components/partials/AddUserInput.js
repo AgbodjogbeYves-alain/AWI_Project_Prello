@@ -8,7 +8,7 @@ class AddUserInput extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            boardUsers: this.props.boardUsers,
+            addedUsers: this.props.addedUsers,
             userEmail: "",
             userRole: 1,
             users: [],
@@ -17,7 +17,7 @@ class AddUserInput extends Component {
     }
 
     renderUsers(){
-        return this.state.boardUsers.map((u,i) => 
+        return this.state.addedUsers.map((u,i) => 
             <div className="row" key={i}>
                 <div className="col-7">
                     {u.user.profile.email}
@@ -43,24 +43,24 @@ class AddUserInput extends Component {
     }
 
     handleRemoveUser(userId){
-        let newBoardUsers = this.state.boardUsers.filter((u) => u.user._id != userId);
-        this.setState({boardUsers: newBoardUsers});
+        let newAddedUsers = this.state.addedUsers.filter((u) => u.user._id != userId);
+        this.setState({addedUsers: newAddedUsers});
         this.onChange();
     }
 
     handleAddUser(){
-        let boardUsers = this.state.boardUsers;
-        let alreadyUser = this.state.boardUsers.filter((u) => u.user.profile.email == this.state.userEmail);
+        let addedUsers = this.state.addedUsers;
+        let alreadyUser = this.state.addedUsers.filter((u) => u.user.profile.email == this.state.userEmail);
         if(alreadyUser.length > 0) alert("This user has been already put.")
         else {
             asteroid.call('users.getUser', this.state.userEmail)
             .then((result) => {
                 if(result){
-                    boardUsers.push({
+                    addedUsers.push({
                         user: result,
                         userRole: this.state.userRole
                     });
-                    this.setState({boardUsers: boardUsers});
+                    this.setState({addedUsers: addedUsers});
                     this.setState({userEmail: ''});
                     this.onChange();
                 }
@@ -71,19 +71,19 @@ class AddUserInput extends Component {
     }
 
     onChange(){
-        this.props.onChange('boardUsers', this.props.boardUsers);
+        this.props.onChange('addedUsers', this.props.addedUsers);
     }
 
-    handleChangeUserRole(boardUser, userRole){
-        let newBoardUsers = this.state.boardUsers.map((u) => {
-            if(u.user._id == boardUser.user._id){
+    handleChangeUserRole(addedUser, userRole){
+        let newAddedUsers = this.state.addedUsers.map((u) => {
+            if(u.user._id == addedUser.user._id){
                 u.userRole = userRole
                 return u
             } 
             else return u
         })
 
-        this.setState({boardUsers: newBoardUsers});
+        this.setState({addedUsers: newAddedUsers});
         this.onChange();
     }
 

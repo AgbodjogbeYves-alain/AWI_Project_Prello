@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import BoardModal from "../../partials/BoardModal.js"
 import Teams from "./Teams/Teams.js";
 import Boards from "./Boards/Boards.js";
+import TeamModal from '../../partials/TeamModal';
 
 
 class Dashboard extends Component {
@@ -28,6 +29,7 @@ class Dashboard extends Component {
             <main id="dashboard">
                 <NavBar/>
                 <BoardModal/>
+                <TeamModal />
                 {this.partialsBoardsRender()}
                 <div className="container">
                     <div className="row">

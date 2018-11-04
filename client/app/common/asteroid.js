@@ -13,12 +13,13 @@ const asteroid = new Asteroid({
 // subscribe to the publication
 asteroid.subscribe('boards');
 asteroid.subscribe('users');
+asteroid.subscribe('user');
 
 asteroid.ddp.on('added', (doc) => {
   // we need proper document object format here
   if (doc.collection === 'users') {
-    if(store.getState().user) store.dispatch(addUser(doc.fields))
-    else store.dispatch(setLoggedUser(doc.fields)); 
+    if(doc.fields.emails) store.dispatch(setLoggedUser(doc.fields));
+    else store.dispatch(addUser(doc.fields));
   }
   if(doc.collection === 'boards'){
     const docObj = Object.assign({}, doc.fields, { _id: doc.id });
@@ -28,6 +29,7 @@ asteroid.ddp.on('added', (doc) => {
 
 asteroid.ddp.on('removed', (removedDoc) => {
   if (removedDoc.collection === 'users') {
+    console.log(removedDoc)
     store.dispatch(unsetLoggedUser());
   }
   if (removedDoc.collection === 'boards') {
