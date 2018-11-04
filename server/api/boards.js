@@ -8,13 +8,13 @@ Meteor.publish('boards', function () {return Boards.find()});
 Meteor.methods({
 
     'boards.createBoard'(board) {
+        console.log("test")
         if(Meteor.userId()){
-            board.boardUsers = [Meteor.user()];
+            console.log(board)
             return Boards.insert(board);
         }else{
-            throw new Meteor.Error(401, "You are not authentificated")
+            throw Meteor.Error(401, "You are not authentificated")
         }
-
     },
 
     'boards.getBoard' (idBoard) {
@@ -90,7 +90,6 @@ Meteor.methods({
     },
 
     'boards.editBoard' (newBoard) {
-        console.log("Ta mere")
         let countDoc = Boards.find({"boardId": newBoard.boardId}).count();
         if (countDoc === 1) {
             console.log("In")
@@ -99,7 +98,7 @@ Meteor.methods({
                 $set: {
                     boardTitle: newBoard.boardTitle,
                     boardPrivacy: newBoard.privacy,
-                    "boardList.$[]": newBoard.boardList
+                    boardUsers: newBoard.boardUsers
                 }
 
             })

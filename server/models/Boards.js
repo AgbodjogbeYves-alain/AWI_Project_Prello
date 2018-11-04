@@ -4,6 +4,7 @@ export const Boards = new Mongo.Collection('boards')
 
 import SimpleSchema from 'simpl-schema';
 import {ListSchema} from "./List";
+import { BoardUserSchema } from './BoardUser';
 
 export const BoardSchema = new SimpleSchema({
   boardTitle: {
@@ -21,7 +22,7 @@ export const BoardSchema = new SimpleSchema({
       label: "Users",
       required: true
   },
-  'boardUsers.$': Object, //se if need to replace Object with a schema
+  'boardUsers.$': BoardUserSchema, //se if need to replace Object with a schema
   boardPrivacy: {
       type: SimpleSchema.Integer,
       label: "Privacy",
