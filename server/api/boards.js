@@ -1,6 +1,7 @@
 import {Boards} from "../models/Boards";
 import {Meteor} from "meteor/meteor";
 import {boardUtils} from "./Utils/boardUtils";
+import rusFunction from 'rus-diff'
 
 Meteor.publish('boards', function () {return Boards.find()});
 
@@ -11,14 +12,14 @@ Meteor.methods({
             board.boardUsers = [Meteor.user()];
             return Boards.insert(board);
         }else{
-            return Meteor.Error(401, "You are not authentificated")
+            throw new Meteor.Error(401, "You are not authentificated")
         }
 
     },
 
     'boards.getBoard' (idBoard) {
         let board;
-        let countDoc = Boards.find({"_id": idBoard}).count();
+        let countDoc = Boards.find({"boardId": idBoard}).count();
         console.log(countDoc)
         if (countDoc === 1) {
             board = Boards.findOne({"boardId": idBoard});
@@ -89,15 +90,39 @@ Meteor.methods({
     },
 
     'boards.editBoard' (newBoard) {
-        let countDoc = Boards.find({"_id": boardId}).count();
-        //console.log(countDoc)
+        console.log("Ta mere")
+        let countDoc = Boards.find({"boardId": newBoard.boardId}).count();
         if (countDoc === 1) {
-            return Boards.update({boardId: newBoard.boardId}, {
+            console.log("In")
+            console.log(newBoard.boardList[0].listCard[0])
+            Boards.update({boardId: newBoard.boardId}, {
                 $set: {
                     boardTitle: newBoard.boardTitle,
-                    boardPrivacy: newBoard.privacy
+                    boardPrivacy: newBoard.privacy,
+                    "boardList.$[]": newBoard.boardList
                 }
+
             })
+
+           /*newBoard.boardList.forEach((list) => {
+                    Boards.update({boardId: newBoard.boardId, 'boardList.listId': list.listId}, {
+                        $set: {
+                            "boardList.list.listCard.$[]": list.listCard,
+                        }
+
+                    })
+                })*/
+
+
+
+            /*newBoard.boardList.forEach((list) => {
+                Boards.update({boardId: newBoard.boardId, "boardList.listId": list.listId}, {
+                    $set: {
+                        boardTitle: newBoard.boardTitle,
+                        boardPrivacy: newBoard.privacy,
+                    }
+                })
+            })*/
         }else {
             throw new Meteor.Error(404, 'Board not found')
         }

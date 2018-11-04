@@ -1,10 +1,11 @@
 import SimpleSchema from 'simpl-schema';
 
 import { Mongo } from 'meteor/mongo'
+import {CardSchema} from "./Card";
 
 export const Lists = new Mongo.Collection('lists')
 
-ListSchema = new SimpleSchema({
+export const ListSchema = new SimpleSchema({
   listId: {
     type: String,
     label: "Id",
@@ -20,7 +21,7 @@ ListSchema = new SimpleSchema({
     label: "Cards",
     defaultValue: []
   },
-  'listCard.$': Object, //se if need to replace Object with a schema
+  'listCard.$': CardSchema, //se if need to replace Object with a schema
   listCreatedAt:{
     type: Date,
     autoValue: function(){return new Date();}

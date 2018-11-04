@@ -7,6 +7,7 @@ import NavBarBoard from "../../partials/NavBarBoard";
 import asteroid from "../../../common/asteroid.js";
 import { connect } from 'react-redux';
 import Dashboard from "../Dashboard/Dashboard";
+import {callEditBoard} from "../../../actions/BoardActions";
 
 
 const Container = styled.div`
@@ -17,6 +18,9 @@ class BoardDisplay extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            board: {boardList: []}
+        }
 
         this.onDragEnd = this.onDragEnd.bind(this);
 
@@ -26,12 +30,13 @@ class BoardDisplay extends Component {
     }
 
 
-    componentDidMount(){
+    componentWillMount(){
         let idBoard = this.props.match.params.id;
-        let boardFromDB = {}
-        asteroid.call('board.getBoard', idBoard )
+        let boardFromDB = {boardList: []}
+        asteroid.call('boards.getBoard', idBoard )
             .then(result => {
                 boardFromDB = result
+                console.log(result)
                 this.setState({
                     board: boardFromDB
                 })
@@ -70,8 +75,7 @@ class BoardDisplay extends Component {
             };
 
             //Dispatch
-            const { dispatchCallEditBoard } = this.props;
-            dispatchCallEditBoard(newBoard)
+            callEditBoard(newBoard)
 
 
             this.setState(newState);
@@ -111,8 +115,8 @@ class BoardDisplay extends Component {
 
                 this.setState(newState)
                 //Dispatch
-                const { dispatchCallEditBoard } = this.props;
-                dispatchCallEditBoard(newBoard)
+                callEditBoard(newBoard)
+
 
             }else {
 
@@ -163,8 +167,8 @@ class BoardDisplay extends Component {
 
                 this.setState(newState)
                 //Dispatch
-                const { dispatchCallEditBoard } = this.props;
-                dispatchCallEditBoard(newBoard)
+                callEditBoard(newBoard)
+
 
 
             }
@@ -197,9 +201,9 @@ class BoardDisplay extends Component {
     }
     render() {
         console.log(this.props)
-        let board = this.props.boards.filter((board) => board.boardId == this.state.idBoard)
-        console.log(board)
-        return this.state.board != 'unknown' ? (
+
+        //console.log(board)
+        return this.state.board != 'unknow' ? (
             <div id={"boardDisplay"}>
                 <NavBar/>
                 <NavBarBoard board={this.state.board}/>
@@ -243,7 +247,6 @@ class BoardDisplay extends Component {
 
 const mapStateToProps = state => ({
     user: state.user,
-    boards: state.boards,
 });
 
 export default connect(mapStateToProps)(BoardDisplay);

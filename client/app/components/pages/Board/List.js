@@ -34,13 +34,23 @@ const CardList = styled.div`
 
 
 export default class List extends React.Component {
+    constructor(props){
+        super(props)
+        this.sayclick = this.sayclick.bind(this)
+    }
+
+    sayclick = (event) =>{
+        console.log("Joris")
+    }
+
     render() {
         return (
             <Draggable draggableId={"listDragId"+this.props.list.listId} index={this.props.index}>
                 {(provided) => {
                     return (
                         <Container {...provided.draggableProps} ref={provided.innerRef}>
-                            <Title {...provided.dragHandleProps}>{this.props.list.listTitle}</Title>
+                            <Title {...provided.dragHandleProps}> Drag Here </Title>
+                            <Title onClick={this.sayclick}>{this.props.list.listTitle}</Title>
                             <Droppable droppableId={"listId"+this.props.list.listId} type={"card"}>
                                 {(provided) => (
                                     <CardList ref={provided.innerRef} {...provided.droppableProps}>

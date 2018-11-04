@@ -4,7 +4,7 @@ import { Mongo } from 'meteor/mongo'
 
 export const Cards = new Mongo.Collection('cards')
 
-CardSchema = new SimpleSchema({
+export const CardSchema = new SimpleSchema({
   cardId: {
       type: String,
       label: "Id",

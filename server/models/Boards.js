@@ -3,8 +3,9 @@ import { Mongo } from 'meteor/mongo'
 export const Boards = new Mongo.Collection('boards')
 
 import SimpleSchema from 'simpl-schema';
+import {ListSchema} from "./List";
 
-BoardSchema = new SimpleSchema({
+export const BoardSchema = new SimpleSchema({
   boardTitle: {
       type: String,
       label: "Title",
@@ -13,7 +14,7 @@ BoardSchema = new SimpleSchema({
   boardDescription: {
       type: String,
       label: "Description",
-      required: true
+      required: false
   },
   boardUsers: {
       type: Array,
@@ -31,8 +32,9 @@ BoardSchema = new SimpleSchema({
       label: "Lists",
       defaultValue: []
   },
-  'boardLists.$': Object, //se if need to replace Object with a schema
-  boardTags: {
+  'boardLists.$': ListSchema, //se if need to replace Object with a schema
+
+    boardTags: {
       type: Array,
       label: "Tags",
       defaultValue: []

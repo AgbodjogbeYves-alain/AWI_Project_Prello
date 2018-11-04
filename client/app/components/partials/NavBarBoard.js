@@ -8,7 +8,7 @@ class NavBarBoard extends Component {
     constructor(props){
         super(props);
         this.state = {
-            board:{},
+            board:{boardTeams: []},
             teamsB: ["Personal"],
             newBoardName: '',
             visibleMenu: false
@@ -60,8 +60,7 @@ class NavBarBoard extends Component {
         })
 
         console.log(this.state.board.boardTitle)
-        const { dispatchCallEditBoard } = this.props;
-        dispatchCallEditBoard(newBoard)
+        callEditBoard(newBoard)
     }
 
     handlePrivacyChange = (event) => {
@@ -130,6 +129,6 @@ class NavBarBoard extends Component {
 const mapStateToProps = state => ({
     user: state.user,
     boards: state.boards,
-    board: {boardTeams: []}
+    board: state.boards[0]
 });
     export default connect(mapStateToProps)(NavBarBoard);

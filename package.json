@@ -15,11 +15,13 @@
   "license": "MIT",
   "dependencies": {
     "asteroid": "^2.0.3",
+    "babel": "^6.23.0",
     "concurrently": "^3.1.0",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "react-redux-sweetalert": "^1.0.2",
     "react-sidebar": "^3.0.2",
+    "rus-diff": "^1.1.0",
     "sweetalert-react": "^0.4.11"
   }
 }
