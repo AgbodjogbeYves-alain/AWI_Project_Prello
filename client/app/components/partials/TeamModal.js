@@ -124,7 +124,6 @@ class TeamModal extends Component {
                                 <AddUserInput 
                                     addedUsers={this.state.teamUsers} 
                                     onChange={(field, value) => this.setState({"teamUsers": value})}
-                                    type={'team'}
                                 />
                             </form>
                         </div>

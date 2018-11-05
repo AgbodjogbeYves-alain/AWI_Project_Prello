@@ -1,6 +1,7 @@
 import {Boards} from "../models/Boards";
 import {Meteor} from "meteor/meteor";
 import {boardUtils} from "./Utils/boardUtils";
+import rusFunction from 'rus-diff'
 
 Meteor.publish('boards', function () {return Boards.find()});
 

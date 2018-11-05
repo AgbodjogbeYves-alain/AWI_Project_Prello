@@ -25,6 +25,11 @@ asteroid.ddp.on('added', (doc) => {
     const docObj = Object.assign({}, doc.fields, { _id: doc.id });
     store.dispatch(createBoard(docObj));
   }
+  if(doc.collection === 'teams'){
+    const docObj = Object.assign({}, doc.fields, { _id: doc.id });
+    store.dispatch(createBoard(docObj));
+  }
+
 });
 
 asteroid.ddp.on('removed', (removedDoc) => {
@@ -33,6 +38,9 @@ asteroid.ddp.on('removed', (removedDoc) => {
     store.dispatch(unsetLoggedUser());
   }
   if (removedDoc.collection === 'boards') {
+    store.dispatch(removeBoard(removedDoc.id));
+  }
+  if (removedDoc.collection === 'teams') {
     store.dispatch(removeBoard(removedDoc.id));
   }
 });
@@ -45,6 +53,9 @@ asteroid.ddp.on('changed', (updatedDoc) => {
   if (updatedDoc.collection === 'boards') {
       store.dispatch(editBoard(updatedDoc.id, updatedDoc.fields));
   }
+  if (updatedDoc.collection === 'teams') {
+    store.dispatch(editBoard(updatedDoc.id, updatedDoc.fields));
+}
 });
 
 export default asteroid;

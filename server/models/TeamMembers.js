@@ -1,15 +1,15 @@
 import SimpleSchema from 'simpl-schema';
 import { UserSchema } from './Users';
 
-export const BoardUserSchema = new SimpleSchema({
-  user: {
+export const TeamMembers = new SimpleSchema({
+    user: {
       type: UserSchema,
       label: "User",
-      required: true
-  },
-  userRole: {
+    },
+    
+    userRole: {
       type: Number,
       label: "Role",
-      required: true
-  }
-});
+    }
+    
+})

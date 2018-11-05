@@ -28,7 +28,9 @@ class AddUserInput extends Component {
                         value={u.userRole} 
                         onChange={(e) => this.handleChangeUserRole(u, e.target.value)}
                     >
-                        {this.renderRoleOptions()}
+                        <option value={1}>Admin</option>
+                        <option value={2}>User</option>
+                        <option value={3}>Observer</option>
                     </select>
                 </div>
                 <div className="col-2">
@@ -56,7 +58,7 @@ class AddUserInput extends Component {
                 if(result){
                     addedUsers.push({
                         user: result,
-                        userRole: this.state.userRole
+                        userRole: parseInt(this.state.userRole)
                     });
                     this.setState({addedUsers: addedUsers});
                     this.setState({userEmail: ''});
@@ -83,15 +85,6 @@ class AddUserInput extends Component {
 
         this.setState({addedUsers: newAddedUsers});
         this.onChange();
-    }
-
-    renderRoleOptions(){
-        let optionList = [];
-        if(this.props.type == "board") optionList = ['Admin', 'Member', 'Observer'];
-        else if(this.props.type == "team") optionList = ['Admin', 'Member'];
-        return optionList.map((o) => 
-            <option value={o.toLowerCase()}>{o}</option>
-        )
     }
 
     render(){
@@ -128,7 +121,9 @@ class AddUserInput extends Component {
                             valus={this.state.userRole} 
                             onChange={(e) => this.setState({userRole: e.target.value})}
                         >
-                            {this.renderRoleOptions()}
+                            <option value={1}>Admin</option>
+                            <option value={2}>User</option>
+                            <option value={3}>Observer</option>
                         </select>
                     </div>
                     <div className="col-3">

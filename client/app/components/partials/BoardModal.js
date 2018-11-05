@@ -127,7 +127,6 @@ class BoardModal extends Component {
                                 <AddUserInput 
                                     addedUsers={this.state.boardUsers} 
                                     onChange={(field, value) => this.setState({"boardUsers": value})}
-                                    type={"board"}
                                 />
                             </form>
                         </div>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter } from "react-router-dom";
-import ModalFormCreateInBoard from "../pages/Dashboard/ModalFormCreateInBoard";
 import {SearchBar} from "./SearchBar"
 import { connect } from 'react-redux';
 import asteroid from '../../common/asteroid';
@@ -38,7 +37,7 @@ class NavBar extends Component {
                                 Add
                             </button>
                             <a className="dropdown-item" data-toggle="modal" data-target="#modal-createBoard">Create board</a>
-                            <a className="dropdown-item" href="#">Create team</a>
+                            <a className="dropdown-item" data-toggle="modal" data-target="#team-modal">Create team</a>
                             <a className="dropdown-item" href="#">Something else here</a>
                         </div>
                     </li>
@@ -91,7 +90,6 @@ class NavBar extends Component {
         return (     
 
             <nav id="navbar-main" className="navbar navbar-main navbar-expand-lg navbar-dark bg-primary headroom">
-                <ModalFormCreateInBoard privacy={'0'}/>
                 <div className="container">
                     <Link className="navbar-brand mr-lg-5" to={user ? "/dashboard" : "/"}>
                         <img src="../assets/img/brand/white.png"/>

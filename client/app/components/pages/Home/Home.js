@@ -10,7 +10,7 @@ class Home extends Component {
         const { user } = this.props;
         if(user) return(<Redirect to='/dashboard'/>)
         return (
-            <main id="home">
+            <main>
                 <NavBar/>
                 <div className="position-relative">
                     <section className="section section-lg section-shaped pb-250">
@@ -25,15 +25,13 @@ class Home extends Component {
                             <span></span>
                             <span></span>
                         </div>
-                        <div className="container d-flex">
+                        <div className="container py-lg-md d-flex">
                             <div className="col px-0">
                                 <div className="row">
                                 <div className="col-lg-6">
-                                    <h1 className="display-3  text-white title">
-                                        <img class="logo" src="assets/img/brand/white.png" />
-                                        RELLO
+                                    <h1 className="display-3  text-white">PRELLO
+                                        <span>Manage your projects with efficience and ease !</span>
                                     </h1>
-                                    <h1 className="display-3  text-white"><span>Manage your projects with efficience and ease !</span></h1>
                                     <p className="lead  text-white">The design system comes with four pre-built pages to help you get started faster. You can change the text and images and you're good to go.</p>
                                     <div className="btn-wrapper">
                                         <Link to="/login" className="btn btn-info btn-icon mb-3 mb-sm-0">
