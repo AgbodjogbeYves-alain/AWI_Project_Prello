@@ -18,12 +18,8 @@ Meteor.methods({
         }
         //let teamDescription = description.teamDescription ? description.teamDescription : ""
         //let owner = Meteor.users.findOne(this.userId)
-        return Team.insert({
-            teamName: team.teamTitle,
-            teamDescription: team.teamDescription,
-            teamOwner : this.userId,
-            teamMembers : team.teamUsers
-        });
+        team.teamOwner = this.userId;
+        return Team.insert(team);
 
     },
 

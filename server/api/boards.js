@@ -1,16 +1,14 @@
 import {Boards} from "../models/Boards";
 import {Meteor} from "meteor/meteor";
 import {boardUtils} from "./Utils/boardUtils";
-import rusFunction from 'rus-diff'
 
 Meteor.publish('boards', function () {return Boards.find()});
 
 Meteor.methods({
 
     'boards.createBoard'(board) {
-        console.log("test")
         if(Meteor.userId()){
-            console.log(board)
+            board.boardOwner = this.userId;
             return Boards.insert(board);
         }else{
             throw Meteor.Error(401, "You are not authentificated")

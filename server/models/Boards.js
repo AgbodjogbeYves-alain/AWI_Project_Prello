@@ -5,6 +5,7 @@ export const Boards = new Mongo.Collection('boards')
 import SimpleSchema from 'simpl-schema';
 import {ListSchema} from "./List";
 import { BoardUserSchema } from './BoardUser';
+import { UserSchema } from './Users';
 
 export const BoardSchema = new SimpleSchema({
   boardTitle: {
@@ -46,6 +47,10 @@ export const BoardSchema = new SimpleSchema({
       label: "Teams",
       defaultValue: []
   },
+  teamOwner : {
+    type: UserSchema,
+    label: "Owner"
+    },
   'boardTeams.$': Object, //se if need to replace Object with a schema
   boardCreatedAt:{
       type: Date,
