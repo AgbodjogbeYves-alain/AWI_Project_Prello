@@ -2,13 +2,15 @@ import {Meteor} from "meteor/meteor";
 import {Team}  from "../models/Team";
 
 Meteor.methods({
-    "createTeam"({teamName,description}){
+    "teams.createTeam"({teamName,description}){
         if(!this.userId){
             throw new Meteor.Error('Not-Authorized');
         }
         let teamDescription = description ? description : ""
         //let owner = Meteor.users.findOne(this.userId)
-        
+        /*console.log("*********")
+        console.log(teamName)
+        console.log("*********")*/
         return Team.insert({
             teamName: teamName,
             teamDescription: teamDescription,

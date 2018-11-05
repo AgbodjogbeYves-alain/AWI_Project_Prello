@@ -1,6 +1,6 @@
 import { Mongo } from 'meteor/mongo'
 import SimpleSchema from 'simpl-schema';
-import {User} from './Users.js'
+import {UserSchema} from './Users.js'
 
 export const Team = new Mongo.Collection('teams');
 
@@ -12,6 +12,7 @@ const TeamSchema = new SimpleSchema({
     teamDescription: {
         type: String,
         label: "Description",
+        optional:true,
         defaultValue: ""
     },
     teamOwner : {
@@ -23,7 +24,7 @@ const TeamSchema = new SimpleSchema({
         label : "Members",
         defaultValue: []
     },
-    'teamMembers.$': User
+    'teamMembers.$': UserSchema
 });
 
 

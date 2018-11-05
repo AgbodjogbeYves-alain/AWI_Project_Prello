@@ -419,6 +419,65 @@ JsonRoutes.add('post', '/signUp/', function (req, res, next) {
                                                                                                           //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+},"teams.js":function(require,exports,module){
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                        //
+// api/teams.js                                                                                           //
+//                                                                                                        //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                          //
+let Meteor;
+module.link("meteor/meteor", {
+  Meteor(v) {
+    Meteor = v;
+  }
+
+}, 0);
+let Team;
+module.link("../models/Team", {
+  Team(v) {
+    Team = v;
+  }
+
+}, 1);
+Meteor.methods({
+  "teams.createTeam"(_ref) {
+    let {
+      teamName,
+      description
+    } = _ref;
+
+    if (!this.userId) {
+      throw new Meteor.Error('Not-Authorized');
+    }
+
+    let teamDescription = description ? description : ""; //let owner = Meteor.users.findOne(this.userId)
+
+    /*console.log("*********")
+    console.log(teamName)
+    console.log("*********")*/
+
+    return Team.insert({
+      teamName: teamName,
+      teamDescription: teamDescription,
+      teamOwner: this.userId
+    });
+  },
+
+  'getTeams'() {
+    //check(teamId,String)
+    if (!this.userId) {
+      throw new Meteor.Error('not-authorised');
+    }
+
+    let teams = Team.find();
+    if (teams) return teams;else throw new Meteor.Error(404, 'Team not found');
+  }
+
+});
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 },"users.js":function(require,exports,module){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -808,6 +867,64 @@ const ListSchema = new SimpleSchema({
 Lists.attachSchema(ListSchema);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+},"Team.js":function(require,exports,module){
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                        //
+// models/Team.js                                                                                         //
+//                                                                                                        //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                          //
+module.export({
+  Team: () => Team
+});
+let Mongo;
+module.link("meteor/mongo", {
+  Mongo(v) {
+    Mongo = v;
+  }
+
+}, 0);
+let SimpleSchema;
+module.link("simpl-schema", {
+  default(v) {
+    SimpleSchema = v;
+  }
+
+}, 1);
+let UserSchema;
+module.link("./Users.js", {
+  UserSchema(v) {
+    UserSchema = v;
+  }
+
+}, 2);
+const Team = new Mongo.Collection('teams');
+const TeamSchema = new SimpleSchema({
+  teamName: {
+    type: String,
+    label: "Name"
+  },
+  teamDescription: {
+    type: String,
+    label: "Description",
+    optional: true,
+    defaultValue: ""
+  },
+  teamOwner: {
+    type: String,
+    label: "Owner"
+  },
+  teamMembers: {
+    type: Array,
+    label: "Members",
+    defaultValue: []
+  },
+  'teamMembers.$': UserSchema
+});
+Team.attachSchema(TeamSchema);
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 },"Users.js":function(require,exports,module){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -941,6 +1058,7 @@ module.link("meteor/meteor", {
 module.link("./api/users.js");
 module.link("./api/boards");
 module.link("./api/lists");
+module.link("./api/teams");
 Meteor.startup(() => {});
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -955,10 +1073,12 @@ require("/api/Utils/boardUtils.js");
 require("/api/boards.js");
 require("/api/lists.js");
 require("/api/oauth2.js");
+require("/api/teams.js");
 require("/api/users.js");
 require("/models/BoardUser.js");
 require("/models/Boards.js");
 require("/models/Card.js");
 require("/models/List.js");
+require("/models/Team.js");
 require("/models/Users.js");
 require("/main.js");

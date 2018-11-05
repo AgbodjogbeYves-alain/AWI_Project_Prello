@@ -406,6 +406,59 @@ JsonRoutes.add('post', '/signUp/', function (req, res, next) {
                                                                                                           //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+},"teams.js":function(require,exports,module){
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                        //
+// api/teams.js                                                                                           //
+//                                                                                                        //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                          //
+var Meteor;
+module.link("meteor/meteor", {
+  Meteor: function (v) {
+    Meteor = v;
+  }
+}, 0);
+var Team;
+module.link("../models/Team", {
+  Team: function (v) {
+    Team = v;
+  }
+}, 1);
+Meteor.methods({
+  "teams.createTeam": function (_ref) {
+    var teamName = _ref.teamName,
+        description = _ref.description;
+
+    if (!this.userId) {
+      throw new Meteor.Error('Not-Authorized');
+    }
+
+    var teamDescription = description ? description : ""; //let owner = Meteor.users.findOne(this.userId)
+
+    /*console.log("*********")
+    console.log(teamName)
+    console.log("*********")*/
+
+    return Team.insert({
+      teamName: teamName,
+      teamDescription: teamDescription,
+      teamOwner: this.userId
+    });
+  },
+  'getTeams': function () {
+    //check(teamId,String)
+    if (!this.userId) {
+      throw new Meteor.Error('not-authorised');
+    }
+
+    var teams = Team.find();
+    if (teams) return teams;else throw new Meteor.Error(404, 'Team not found');
+  }
+});
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 },"users.js":function(require,exports,module){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -787,6 +840,63 @@ var ListSchema = new SimpleSchema({
 Lists.attachSchema(ListSchema);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+},"Team.js":function(require,exports,module){
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                        //
+// models/Team.js                                                                                         //
+//                                                                                                        //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                          //
+module.export({
+  Team: function () {
+    return Team;
+  }
+});
+var Mongo;
+module.link("meteor/mongo", {
+  Mongo: function (v) {
+    Mongo = v;
+  }
+}, 0);
+var SimpleSchema;
+module.link("simpl-schema", {
+  "default": function (v) {
+    SimpleSchema = v;
+  }
+}, 1);
+var UserSchema;
+module.link("./Users.js", {
+  UserSchema: function (v) {
+    UserSchema = v;
+  }
+}, 2);
+var Team = new Mongo.Collection('teams');
+var TeamSchema = new SimpleSchema({
+  teamName: {
+    type: String,
+    label: "Name"
+  },
+  teamDescription: {
+    type: String,
+    label: "Description",
+    optional: true,
+    defaultValue: ""
+  },
+  teamOwner: {
+    type: String,
+    label: "Owner"
+  },
+  teamMembers: {
+    type: Array,
+    label: "Members",
+    defaultValue: []
+  },
+  'teamMembers.$': UserSchema
+});
+Team.attachSchema(TeamSchema);
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 },"Users.js":function(require,exports,module){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -920,6 +1030,7 @@ module.link("meteor/meteor", {
 module.link("./api/users.js");
 module.link("./api/boards");
 module.link("./api/lists");
+module.link("./api/teams");
 Meteor.startup(function () {});
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -934,10 +1045,12 @@ require("/api/Utils/boardUtils.js");
 require("/api/boards.js");
 require("/api/lists.js");
 require("/api/oauth2.js");
+require("/api/teams.js");
 require("/api/users.js");
 require("/models/BoardUser.js");
 require("/models/Boards.js");
 require("/models/Card.js");
 require("/models/List.js");
+require("/models/Team.js");
 require("/models/Users.js");
 require("/main.js");

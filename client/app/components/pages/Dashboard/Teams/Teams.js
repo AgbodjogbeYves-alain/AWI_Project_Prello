@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import ModalFormCreateTeam from '../ModalFormCreateTeam';
+
 
 export default class Teams extends Component {
 
