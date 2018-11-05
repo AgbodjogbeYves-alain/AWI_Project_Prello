@@ -12,8 +12,7 @@ const TeamSchema = new SimpleSchema({
     teamDescription: {
         type: String,
         label: "Description",
-        optional:true,
-        defaultValue: ""
+        defaultValue: "" 
     },
     teamOwner : {
         type: String,

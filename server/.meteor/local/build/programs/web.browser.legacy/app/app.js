@@ -430,14 +430,17 @@ Meteor.methods({
   "teams.createTeam": function (team) {
     if (!this.userId) {
       throw new Meteor.Error('Not-Authorized');
-    }
+    } //let teamDescription = description.teamDescription ? description.teamDescription : ""
+    //let owner = Meteor.users.findOne(this.userId)
 
-    var teamDescription = description.teamDescription ? description.teamDescription : ""; //let owner = Meteor.users.findOne(this.userId)
 
+    var teamMember = new Array();
+    teamMember.push(team.teamUsers[0].user);
     return Team.insert({
       teamName: team.teamTitle,
-      teamDescription: teamDescription,
-      teamOwner: this.userId
+      teamDescription: team.teamDescription,
+      teamOwner: this.userId,
+      teamMembers: teamMember
     });
   },
   'getTeams': function () {
@@ -873,7 +876,6 @@ var TeamSchema = new SimpleSchema({
   teamDescription: {
     type: String,
     label: "Description",
-    optional: true,
     defaultValue: ""
   },
   teamOwner: {
