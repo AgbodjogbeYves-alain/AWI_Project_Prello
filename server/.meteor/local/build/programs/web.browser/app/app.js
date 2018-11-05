@@ -442,24 +442,15 @@ module.link("../models/Team", {
 
 }, 1);
 Meteor.methods({
-  "teams.createTeam"(_ref) {
-    let {
-      teamName,
-      description
-    } = _ref;
-
+  "teams.createTeam"(team) {
     if (!this.userId) {
       throw new Meteor.Error('Not-Authorized');
     }
 
-    let teamDescription = description ? description : ""; //let owner = Meteor.users.findOne(this.userId)
-
-    /*console.log("*********")
-    console.log(teamName)
-    console.log("*********")*/
+    let teamDescription = description.teamDescription ? description.teamDescription : ""; //let owner = Meteor.users.findOne(this.userId)
 
     return Team.insert({
-      teamName: teamName,
+      teamName: team.teamTitle,
       teamDescription: teamDescription,
       teamOwner: this.userId
     });
