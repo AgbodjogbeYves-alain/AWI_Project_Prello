@@ -6,7 +6,7 @@ Meteor.publish('teams', function teamsPublication() {
     return Teams.find({
         $or: [
             {teamMember : {$in : [currentUser]}},
-            {teamOwner: this.userID},
+            {teamOwner: currentUser},
         ]
     })
 });
