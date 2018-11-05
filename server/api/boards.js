@@ -18,10 +18,10 @@ Meteor.methods({
 
     'boards.getBoard' (idBoard) {
         let board;
-        let countDoc = Boards.find({"boardId": idBoard}).count();
+        let countDoc = Boards.find({"_id": idBoard}).count();
         console.log(countDoc)
         if (countDoc === 1) {
-            board = Boards.findOne({"boardId": idBoard});
+            board = Boards.findOne({"_id": idBoard});
             //if(board.boardPrivacy == 1){
               //  if(Meteor.userId()){
                 //    if(boardUtils.checkInBoardUser(Meteor.userId(), board)){
@@ -34,6 +34,7 @@ Meteor.methods({
                 //    return Meteor.Error(401, "You are not authentificated")
                 //}
             //}else{
+                console.log(board)
                 return board
             //}
         } else {
@@ -89,42 +90,36 @@ Meteor.methods({
     },
 
     'boards.editBoard' (newBoard) {
-        let countDoc = Boards.find({"boardId": newBoard.boardId}).count();
+        let countDoc = Boards.find({"_id": newBoard._id}).count();
+        //console.log(countDoc)
+        let newLists = []
         if (countDoc === 1) {
-            console.log("In")
 
-            /*newBoard.boardList.forEach((list) => {
-                Meteor.call('list.editList',(list))
-            })*/
+        newBoard.boardLists.forEach((list) => {
+            let result = Meteor.call('list.editList', list)
+            let nList;
 
-            /*Boards.update({boardId: newBoard.boardId}, {
+            if(result.insertedId){
+                nList = Meteor.call('list.getList', result.insertedId)
+            }else{
+                nList = list
+            }
+
+            newLists.push(nList)
+        })
+
+            Boards.upsert({_id: newBoard._id},{
                 $set: {
                     boardTitle: newBoard.boardTitle,
-                    boardPrivacy: newBoard.privacy,
-                    boardUsers: newBoard.boardUsers
+                    boardPrivacy: newBoard.boardPrivacy,
+                    boardLists: newLists,
+                    boardUsers: newBoard.boardUsers,
+                    boardTeams: newBoard.boardTeams
                 }
+            })
 
-            })*/
-           /*newBoard.boardList.forEach((list) => {
-                    Boards.update({boardId: newBoard.boardId, 'boardList.listId': list.listId}, {
-                        $set: {
-                            "boardList.list.listCard.$[]": list.listCard,
-                        }
-
-                    })
-                })*/
-
-
-
-            /*newBoard.boardList.forEach((list) => {
-                Boards.update({boardId: newBoard.boardId, "boardList.listId": list.listId}, {
-                    $set: {
-                        boardTitle: newBoard.boardTitle,
-                        boardPrivacy: newBoard.privacy,
-                    }
-                })
-            })*/
         }else {
+
             throw new Meteor.Error(404, 'Board not found')
         }
     },

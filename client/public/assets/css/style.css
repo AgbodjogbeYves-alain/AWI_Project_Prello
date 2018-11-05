@@ -48,7 +48,6 @@ nav .notifications {
 }
 
 #boardDisplay{
-    background-color: dodgerblue ;
     height: -webkit-fill-available;
     overflow-x: hidden;
     overflow-y: hidden;
@@ -61,6 +60,7 @@ nav .notifications {
 
 
 #navBarBoard {
+    color: transparent;
     margin-top: 55px !important;
 }
 

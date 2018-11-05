@@ -45,16 +45,16 @@ export default class List extends React.Component {
 
     render() {
         return (
-            <Draggable draggableId={"listDragId"+this.props.list.listId} index={this.props.index}>
+            <Draggable draggableId={"listDragId"+this.props.list._id} index={this.props.index}>
                 {(provided) => {
                     return (
                         <Container {...provided.draggableProps} ref={provided.innerRef}>
                             <Title {...provided.dragHandleProps}> Drag Here </Title>
                             <Title onClick={this.sayclick}>{this.props.list.listTitle}</Title>
-                            <Droppable droppableId={"listId"+this.props.list.listId} type={"card"}>
+                            <Droppable droppableId={"listId"+this.props.list._id} type={"card"}>
                                 {(provided) => (
                                     <CardList ref={provided.innerRef} {...provided.droppableProps}>
-                                        {this.props.cards.map((card, index) => <Card key={card.cardId} card={card}
+                                        {this.props.cards.map((card, index) => <Card key={card._id} card={card}
                                                                                      index={index}/>)}
                                         {provided.placeholder}
                                     </CardList>

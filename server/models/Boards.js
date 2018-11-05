@@ -8,6 +8,10 @@ import { BoardUserSchema } from './BoardUser';
 import {CardSchema} from "./Card";
 
 export const BoardSchema = new SimpleSchema({
+  _id: {
+      type: String,
+      optional: true
+  },
   boardTitle: {
       type: String,
       label: "Title",
@@ -33,10 +37,9 @@ export const BoardSchema = new SimpleSchema({
       type: Array,
       label: "Lists",
       defaultValue: [],
-      blackbox: true
   },
   'boardLists.$': ListSchema, //se if need to replace Object with a schema
-    boardTags: {
+  /*boardTags: {
       type: Array,
       label: "Tags",
       defaultValue: []
@@ -47,7 +50,7 @@ export const BoardSchema = new SimpleSchema({
       label: "Teams",
       defaultValue: []
   },
-  'boardTeams.$': Object, //se if need to replace Object with a schema
+  'boardTeams.$': Object,*/ //se if need to replace Object with a schema
   boardCreatedAt:{
       type: Date,
       autoValue: function(){return new Date();}

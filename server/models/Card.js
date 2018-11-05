@@ -5,11 +5,10 @@ import { Mongo } from 'meteor/mongo'
 export const Cards = new Mongo.Collection('cards')
 
 export const CardSchema = new SimpleSchema({
-  cardId: {
-      type: String,
-      label: "Id",
-      regEx: SimpleSchema.RegEx.Id
-  },
+    _id: {
+        type: String,
+        optional: true
+    },
   cardTitle: {
       type: String,
       label: "Title",
@@ -20,31 +19,35 @@ export const CardSchema = new SimpleSchema({
       label: "Description",
       defaultValue: []
   },
-  cardTag: {
+  /*cardTag: {
       type: Array,
       label: "Tags",
-      defaultValue: []
-  },
-  'cardTag.$': Object, //se if need to replace Object with a schema
-  cardComment: {
+      defaultValue: [],
+      optional: true
+  },*/
+  //'cardTag.$': Object, //se if need to replace Object with a schema*/
+  /*cardComment: {
       type: Array,
       label: "Comments",
-      defaultValue: []
+      defaultValue: [],
+      optional: true
   },
   'cardComment.$': Object, //se if need to replace Object with a schema
   cardAttachment: {
       type: Array,
       label: "Attachments",
-      defaultValue: []
+      defaultValue: [],
+      optional: true
   },
   'cardAttachment.$': Object, //se if need to replace Object with a schema
   cardChecklist: {
       type: Array,
       label: "CheckLists",
-      defaultValue: []
-  },
-  'cardChecklist.$': Object, //se if need to replace Object with a schema
-  listCreatedAt:{
+      defaultValue: [],
+      optional: true
+  },*/
+  //'cardChecklist.$': Object, //se if need to replace Object with a schema*/
+  cardCreatedAt:{
     type: Date,
     autoValue: function(){return new Date();}
 }

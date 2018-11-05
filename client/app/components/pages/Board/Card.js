@@ -15,13 +15,13 @@ export default class Card extends Component {
 
     render() {
         return (
-            <Draggable draggableId={this.props.card.cardId} index={this.props.index}>
+            <Draggable draggableId={this.props.card._id} index={this.props.index}>
                 {(provided) =>
                     <Container {...provided.draggableProps}
                                {...provided.dragHandleProps}
                                ref={provided.innerRef}
                     >
-                        {this.props.card.cardTitle}
+                        {this.props.card._id}
                     </Container>}
             </Draggable>
 

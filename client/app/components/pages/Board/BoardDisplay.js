@@ -19,7 +19,7 @@ class BoardDisplay extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            board: {boardList: []}
+            board: {boardLists: [],boardTeams: []}
         }
 
         this.onDragEnd = this.onDragEnd.bind(this);
@@ -30,13 +30,28 @@ class BoardDisplay extends Component {
     }
 
 
-    componentWillMount(){
-        let idBoard = this.props.match.params.id;
-        let boardFromDB = {boardList: []}
+    componentWillReceiveProps(nextProps){
+        console.log(nextProps);
+        let id = nextProps.match.params.id
+        let board = nextProps.boards.filter((board) => board._id == id)[0]
+
+        console.log(board)
+        if(board !== undefined){
+            this.setState({
+                board: board,
+            })
+        }else{
+            this.setState({
+                board: 'unknow',
+            })
+
+        }
+
+        /*let idBoard = this.props.match.params.id;
+        let boardFromDB = {boardLists: []}
         asteroid.call('boards.getBoard', idBoard )
             .then(result => {
                 boardFromDB = result
-                console.log(result)
                 this.setState({
                     board: boardFromDB
                 })
@@ -45,13 +60,13 @@ class BoardDisplay extends Component {
                     board: "unknown"
                 })
             console.log(error);
-        })
+        })*/
     }
 
     onDragEnd = result => {
         const { destination, source, draggableId, type } = result;
 
-        const currentLists = this.state.board.boardList
+        const currentLists = this.state.board.boardLists
 
         if (!destination) {
             return;
@@ -63,13 +78,14 @@ class BoardDisplay extends Component {
 
         if(type==="list"){
             const idForListToMove = draggableId.slice(10)
-            const listToMove = currentLists.filter((list) => list.listId == idForListToMove)[0];
-            const newLists = Array.from(this.state.board.boardList);
+            const listToMove = currentLists.filter((list) => list._id == idForListToMove)[0];
+
+            const newLists = Array.from(this.state.board.boardLists);
 
             newLists.splice(source.index, 1);
             newLists.splice(destination.index, 0, listToMove);
             let newBoard = this.state.board
-            newBoard.boardList = newLists
+            newBoard.boardLists = newLists
             const newState = {
                 board: newBoard
             };
@@ -80,15 +96,15 @@ class BoardDisplay extends Component {
 
             this.setState(newState);
         }else{
-            const start = currentLists.filter((list) => list.listId == source.droppableId.slice(6))[0];
+            const start = currentLists.filter((list) => list._id == source.droppableId.slice(6))[0];
 
-            const finish = currentLists.filter((list) => list.listId == destination.droppableId.slice(6))[0];
+            const finish = currentLists.filter((list) => list._id == destination.droppableId.slice(6))[0];
 
             if(start === finish){
                 ///////////////////////////////////////////////
                 const newCardsList = Array.from(start.listCard);
 
-                const cardToMove = newCardsList.filter((card) => card.cardId == draggableId)[0];
+                const cardToMove = newCardsList.filter((card) => card._id == draggableId)[0];
                 newCardsList.splice(source.index, 1);
                 newCardsList.splice(destination.index, 0, cardToMove);
 
@@ -99,7 +115,7 @@ class BoardDisplay extends Component {
 
                 ///////////////////////////////////////////////
                 const newList = Array.from(currentLists.map((listIn) => {
-                    if(listIn.listId == newStart.listId){
+                    if(listIn._id == newStart._id){
                         return newStart
                     }else{
                         return listIn
@@ -107,7 +123,7 @@ class BoardDisplay extends Component {
                 } ))
 
                 let newBoard = this.state.board
-                newBoard.boardList = newList
+                newBoard.boardLists = newList
 
                 const newState = {
                     board: newBoard
@@ -122,7 +138,7 @@ class BoardDisplay extends Component {
 
                 //Move from a list to another
                 const startCards = Array.from(start.listCard)
-                const cardToMove = startCards.filter((card) => card.cardId == draggableId)[0];
+                const cardToMove = startCards.filter((card) => card._id == draggableId)[0];
 
                 startCards.splice(source.index, 1);
 
@@ -141,8 +157,8 @@ class BoardDisplay extends Component {
                 };
 
                 ///////////////////////////////////////////////
-                let newList = Array.from(this.state.board.boardList.map((listIn) => {
-                    if(listIn.listId == newStart.listId){
+                let newList = Array.from(this.state.board.boardLists.map((listIn) => {
+                    if(listIn._id == newStart._id){
                         return newStart
                     }else{
                         return listIn
@@ -150,7 +166,7 @@ class BoardDisplay extends Component {
                 } ))
 
                 const finalList = Array.from(newList.map((listIn)=>{
-                    if(listIn.listId == newFinish.listId){
+                    if(listIn._id == newFinish._id){
                         return newFinish
                     }else{
                         return listIn
@@ -158,7 +174,7 @@ class BoardDisplay extends Component {
                 }))
 
                 let newBoard = this.state.board
-                newBoard.boardList = finalList
+                newBoard.boardLists = finalList
 
 
                 const newState = {
@@ -178,20 +194,10 @@ class BoardDisplay extends Component {
     };
 
     createList = () => {
-        asteroid.call('list.createList',"New List")
-            .then((result) => {
-                let nlist = {listId:result, listTitle:"New List", listCard: [], listCreatedAt: Date()}; //see if keep like it
-                let lists = this.state.board.boardList
-                lists.push(nlist)
-                let newBoard = this.state.board
-                newBoard.boardList = lists
-
-
-                this.setState({
-                    board: newBoard,
-                });
-            }).catch(error => {
-            alert(error);
+        let nList = {listTitle:"New List", listCard: [], listCreatedAt: Date()}; //see if keep like it
+        asteroid.call('list.createList',nList)
+            .catch(error => {
+            console.log(error);
         })
     };
 
@@ -200,13 +206,11 @@ class BoardDisplay extends Component {
 
     }
     render() {
-        console.log(this.props)
-
-        //console.log(board)
+        console.log(this.state.board)
         return this.state.board != 'unknow' ? (
             <div id={"boardDisplay"}>
                 <NavBar/>
-                <NavBarBoard board={this.state.board}/>
+                <NavBarBoard idBoard={this.state.board._id}/>
                 <div id={"divList"}>
                     <DragDropContext onDragEnd={this.onDragEnd}>
                         <Droppable droppableId={"all-columns"} direction={"horizontal"} type={"list"}>
@@ -218,9 +222,9 @@ class BoardDisplay extends Component {
 
                                     >
                                         {
-                                            this.state.board.boardList.map((list, index) => {
+                                            this.state.board.boardLists.map((list, index) => {
                                                 const cards = list.listCard;
-                                                return <List key={list.listId} list={list} index={index}
+                                                return <List key={list._id} list={list} index={index}
                                                              cards={cards}/>;
                                             })}
 
@@ -247,6 +251,8 @@ class BoardDisplay extends Component {
 
 const mapStateToProps = state => ({
     user: state.user,
+    boards: state.boards
+
 });
 
 export default connect(mapStateToProps)(BoardDisplay);

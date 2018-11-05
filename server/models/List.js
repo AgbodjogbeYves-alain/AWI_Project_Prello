@@ -6,10 +6,9 @@ import {CardSchema} from "./Card";
 export const Lists = new Mongo.Collection('lists')
 
 export const ListSchema = new SimpleSchema({
-  listId: {
-    type: String,
-    label: "Id",
-    regEx: SimpleSchema.RegEx.Id
+  _id: {
+      type: String,
+      optional: true
   },
   listTitle: {
     type: String,
