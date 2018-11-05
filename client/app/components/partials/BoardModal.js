@@ -47,7 +47,22 @@ class BoardModal extends Component {
             boardTitle: this.state.boardTitle,
             boardDescription: this.state.boardDescription,
             boardUsers: this.state.boardUsers,
-            boardPrivacy: 1
+            boardPrivacy: 1,
+            boardList: [{
+                "listId":"1",
+                "listTitle":"List1",
+                "listCard": [
+                    {
+                        "cardId":"10",
+                        "cardTitle":"CardList11",
+                        "cardDescription": "La carte 1 de la Liste 1"
+                    },
+                    {
+                        "cardId":"20",
+                        "cardTitle":"CardList12",
+                        "cardDescription": "La carte 2 de la Liste 1"
+                    }
+                ]}]
         };
 
         asteroid.call("boards.createBoard", board)

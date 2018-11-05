@@ -5,6 +5,7 @@ export const Boards = new Mongo.Collection('boards')
 import SimpleSchema from 'simpl-schema';
 import {ListSchema} from "./List";
 import { BoardUserSchema } from './BoardUser';
+import {CardSchema} from "./Card";
 
 export const BoardSchema = new SimpleSchema({
   boardTitle: {
@@ -31,10 +32,10 @@ export const BoardSchema = new SimpleSchema({
   boardLists: {
       type: Array,
       label: "Lists",
-      defaultValue: []
+      defaultValue: [],
+      blackbox: true
   },
   'boardLists.$': ListSchema, //se if need to replace Object with a schema
-
     boardTags: {
       type: Array,
       label: "Tags",
@@ -53,4 +54,4 @@ export const BoardSchema = new SimpleSchema({
   }
 });
 
-Boards.attachSchema(BoardSchema);
+Boards.attachSchema(BoardSchema,{transform: true});

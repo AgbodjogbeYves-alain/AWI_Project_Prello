@@ -93,16 +93,19 @@ Meteor.methods({
         let countDoc = Boards.find({"boardId": newBoard.boardId}).count();
         if (countDoc === 1) {
             console.log("In")
-            console.log(newBoard.boardList[0].listCard[0])
-            Boards.update({boardId: newBoard.boardId}, {
+
+            /*newBoard.boardList.forEach((list) => {
+                Meteor.call('list.editList',(list))
+            })*/
+
+            /*Boards.update({boardId: newBoard.boardId}, {
                 $set: {
                     boardTitle: newBoard.boardTitle,
                     boardPrivacy: newBoard.privacy,
                     boardUsers: newBoard.boardUsers
                 }
 
-            })
-
+            })*/
            /*newBoard.boardList.forEach((list) => {
                     Boards.update({boardId: newBoard.boardId, 'boardList.listId': list.listId}, {
                         $set: {

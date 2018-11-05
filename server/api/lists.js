@@ -2,7 +2,7 @@ import {Lists} from "../models/List";
 import {Meteor} from "meteor/meteor";
 import { Random } from 'meteor/random';
 import { JsonRoutes } from 'meteor/simple:json-routes';
-
+import {Boards} from "../models/Boards";
 
 Meteor.methods({
     'list.createList'(listName) {
@@ -12,7 +12,7 @@ Meteor.methods({
     'list.getList' (idList) {
         let countDoc = Lists.find({"_id": idList}).count();
         if (countDoc === 1) {
-            let list = List.findOne({"_id": idList});
+            let list = Lists.findOne({"_id": idList});
             return list;
         } else {
             throw new Meteor.Error(404, 'List not found')
@@ -24,7 +24,50 @@ Meteor.methods({
     },
 
     'list.editList' (list) {
+        let countDoc = Lists.find({"listId": list.listId}).count();
+        console.log(countDoc)
+            console.log("InList")
 
+            let newList = Lists.upsert({listId: list.listId},{
+                $set : {
+                    listCard: list.listCard,
+                    listTitle: list.listTitle
+                }
+            })
+
+            console.log(newList)
+
+
+            /*Boards.update({boardId: newBoard.boardId}, {
+                $set: {
+                    boardTitle: newBoard.boardTitle,
+                    boardPrivacy: newBoard.privacy,
+                    boardUsers: newBoard.boardUsers
+                }
+
+            })*/
+            /*newBoard.boardList.forEach((list) => {
+                     Boards.update({boardId: newBoard.boardId, 'boardList.listId': list.listId}, {
+                         $set: {
+                             "boardList.list.listCard.$[]": list.listCard,
+                         }
+
+                     })
+                 })
+
+
+
+            /*newBoard.boardList.forEach((list) => {
+                Boards.update({boardId: newBoard.boardId, "boardList.listId": list.listId}, {
+                    $set: {
+                        boardTitle: newBoard.boardTitle,
+                        boardPrivacy: newBoard.privacy,
+                    }
+                })
+            })
+        }else {
+            throw new Meteor.Error(404, 'Board not found')
+        }*/
     },
 
     'list.getAllList' (){
