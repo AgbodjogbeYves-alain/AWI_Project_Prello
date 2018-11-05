@@ -8,7 +8,7 @@ export const BoardUserSchema = new SimpleSchema({
       required: true
   },
   userRole: {
-      type: Number,
+      type: String,
       label: "Role",
       required: true
   }

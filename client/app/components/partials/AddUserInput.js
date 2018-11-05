@@ -28,9 +28,7 @@ class AddUserInput extends Component {
                         value={u.userRole} 
                         onChange={(e) => this.handleChangeUserRole(u, e.target.value)}
                     >
-                        <option value={1}>Admin</option>
-                        <option value={2}>User</option>
-                        <option value={3}>Observer</option>
+                        {this.renderRoleOptions()}
                     </select>
                 </div>
                 <div className="col-2">
@@ -87,6 +85,15 @@ class AddUserInput extends Component {
         this.onChange();
     }
 
+    renderRoleOptions(){
+        let optionList = [];
+        if(this.props.type == "board") optionList = ['Admin', 'Member', 'Observer'];
+        else if(this.props.type == "team") optionList = ['Admin', 'Member'];
+        return optionList.map((o) => 
+            <option value={o.toLowerCase()}>{o}</option>
+        )
+    }
+
     render(){
         return (
             <div className="form-group mb-3">
@@ -121,9 +128,7 @@ class AddUserInput extends Component {
                             valus={this.state.userRole} 
                             onChange={(e) => this.setState({userRole: e.target.value})}
                         >
-                            <option value={1}>Admin</option>
-                            <option value={2}>User</option>
-                            <option value={3}>Observer</option>
+                            {this.renderRoleOptions()}
                         </select>
                     </div>
                     <div className="col-3">
