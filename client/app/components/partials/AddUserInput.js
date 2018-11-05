@@ -58,7 +58,7 @@ class AddUserInput extends Component {
                 if(result){
                     addedUsers.push({
                         user: result,
-                        userRole: this.state.userRole
+                        userRole: parseInt(this.state.userRole)
                     });
                     this.setState({addedUsers: addedUsers});
                     this.setState({userEmail: ''});

@@ -8,14 +8,11 @@ Meteor.methods({
         }
         //let teamDescription = description.teamDescription ? description.teamDescription : ""
         //let owner = Meteor.users.findOne(this.userId)
-       let teamMember = new Array();
-       teamMember.push(team.teamUsers[0].user)
-      
         return Team.insert({
             teamName: team.teamTitle,
             teamDescription: team.teamDescription,
             teamOwner : this.userId,
-            teamMembers : teamMember
+            teamMembers : team.teamUsers
         });
 
     },

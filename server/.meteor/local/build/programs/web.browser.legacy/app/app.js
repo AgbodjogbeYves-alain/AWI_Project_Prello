@@ -434,13 +434,11 @@ Meteor.methods({
     //let owner = Meteor.users.findOne(this.userId)
 
 
-    var teamMember = new Array();
-    teamMember.push(team.teamUsers[0].user);
     return Team.insert({
       teamName: team.teamTitle,
       teamDescription: team.teamDescription,
       teamOwner: this.userId,
-      teamMembers: teamMember
+      teamMembers: team.teamUsers
     });
   },
   'getTeams': function () {
@@ -867,6 +865,12 @@ module.link("./Users.js", {
     UserSchema = v;
   }
 }, 2);
+var TeamMembers;
+module.link("./TeamMembers.js", {
+  TeamMembers: function (v) {
+    TeamMembers = v;
+  }
+}, 3);
 var Team = new Mongo.Collection('teams');
 var TeamSchema = new SimpleSchema({
   teamName: {
@@ -887,9 +891,46 @@ var TeamSchema = new SimpleSchema({
     label: "Members",
     defaultValue: []
   },
-  'teamMembers.$': UserSchema
+  'teamMembers.$': TeamMembers
 });
 Team.attachSchema(TeamSchema);
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"TeamMembers.js":function(require,exports,module){
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                        //
+// models/TeamMembers.js                                                                                  //
+//                                                                                                        //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                          //
+module.export({
+  TeamMembers: function () {
+    return TeamMembers;
+  }
+});
+var SimpleSchema;
+module.link("simpl-schema", {
+  "default": function (v) {
+    SimpleSchema = v;
+  }
+}, 0);
+var UserSchema;
+module.link("./Users", {
+  UserSchema: function (v) {
+    UserSchema = v;
+  }
+}, 1);
+var TeamMembers = new SimpleSchema({
+  user: {
+    type: UserSchema,
+    label: "User"
+  },
+  userRole: {
+    type: Number,
+    label: "Role"
+  }
+});
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"Users.js":function(require,exports,module){
@@ -1047,5 +1088,6 @@ require("/models/Boards.js");
 require("/models/Card.js");
 require("/models/List.js");
 require("/models/Team.js");
+require("/models/TeamMembers.js");
 require("/models/Users.js");
 require("/main.js");
