@@ -1,5 +1,6 @@
 @import 'dashboard.css';
 @import 'boardModal.css';
+@import 'home.css';
 
 #navbar-main{
     position: fixed !important;
