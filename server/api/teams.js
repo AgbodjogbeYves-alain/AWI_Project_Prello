@@ -1,6 +1,16 @@
 import {Meteor} from "meteor/meteor";
 import {Team}  from "../models/Team";
 
+Meteor.publish('teams', function teamsPublication() {
+    let currentUser = Meteor.user()
+    return Teams.find({
+        $or: [
+            {teamMember : {$in : [currentUser]}},
+            {teamOwner: this.userID},
+        ]
+    })
+});
+
 Meteor.methods({
     "teams.createTeam"(team){
         if(!this.userId){
