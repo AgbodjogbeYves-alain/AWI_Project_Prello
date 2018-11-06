@@ -13,7 +13,7 @@ class TeamModal extends Component {
         this.state = {
             type: this.props.team ? 'edit' : 'add',
             teamId: this.props.team ? this.props.team._id : '',
-            teamTitle: this.props.team ? this.props.team.teamTitle : '',
+            teamName: this.props.team ? this.props.team.teamName : '',
             teamDescription: this.props.team ? this.props.team.teamDescription : '',
             teamUsers: this.props.team ? this.props.team.teamUsers : [],
             alerts: []
@@ -38,16 +38,18 @@ class TeamModal extends Component {
 
     resetFields(){
         this.setState({
-            teamTitle: ''
+            teamName: ''
         });
     }
 
     handleCreateTeam(){
         let team = {
-            teamTitle: this.state.teamTitle,
+            teamName: this.state.teamName,
             teamDescription: this.state.teamDescription,
             teamUsers: this.state.teamUsers
         };
+
+        console.log(team);
 
         asteroid.call("teams.createTeam", team)
         .then((result) => {
@@ -60,7 +62,7 @@ class TeamModal extends Component {
 
     handleEditTeam(){
         let team = this.props.team;
-        team.teamTitle = this.state.teamTitle;
+        team.teamName = this.state.teamname;
         team.teamDescription = this.state.teamDescription;
         team.teamUsers = this.state.teamUsers;
         
@@ -81,7 +83,7 @@ class TeamModal extends Component {
 
                         <div className="modal-header">
                             <h6 className="modal-title" id="modal-title-default">
-                                {this.state.type == 'edit' ? "Edit" : "Create"} team {this.state.teamTitle}
+                                {this.state.type == 'edit' ? "Edit" : "Create"} team {this.state.teamName}
                             </h6>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
@@ -102,8 +104,8 @@ class TeamModal extends Component {
                                             className="form-control" 
                                             placeholder="Name" 
                                             type="text"
-                                            value={this.state.teamTitle}
-                                            onChange={(e) => this.setState({teamTitle: e.target.value})}
+                                            value={this.state.teamName}
+                                            onChange={(e) => this.setState({teamName: e.target.value})}
                                         />
                                     </div>
                                 </div>

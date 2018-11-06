@@ -1,13 +1,13 @@
 import asteroid from "../common/asteroid";
 
-export const CREATE_TEAM = 'CREATE_TEAM';
+export const ADD_TEAM = 'ADD_TEAM';
 export const GET_TEAMS = 'GET_TEAMS';
 export const REMOVE_TEAM = "REMOVE_TEAM";
 export const EDIT_TEAM = "EDIT_TEAM";
 
-export function createTeam(data) {
+export function addTeam(data) {
   return {
-    type: CREATE_TEAM,
+    type: ADD_TEAM,
     data,
   };
 }

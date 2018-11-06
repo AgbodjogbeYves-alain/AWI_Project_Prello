@@ -1,12 +1,12 @@
 import {Meteor} from "meteor/meteor";
-import {Team}  from "../models/Team";
+import {Teams}  from "../models/Teams";
 
 Meteor.publish('teams', function teamsPublication() {
-    let currentUser = Meteor.user()
+    let userId = Meteor.userId();
     return Teams.find({
         $or: [
-            {teamMember : {$in : [currentUser]}},
-            {teamOwner: this.userID},
+            {teamMembers : {$elemMatch: {_id: userId}}},
+            {"teamOwner._id": userId},
         ]
     })
 });
@@ -16,10 +16,11 @@ Meteor.methods({
         if(!this.userId){
             throw new Meteor.Error('Not-Authorized');
         }
+        let currentUser = Meteor.users.findOne(Meteor.userId(), {profile: 1})
         //let teamDescription = description.teamDescription ? description.teamDescription : ""
         //let owner = Meteor.users.findOne(this.userId)
-        team.teamOwner = this.userId;
-        return Team.insert(team);
+        team.teamOwner = currentUser;
+        return Teams.insert(team);
 
     },
 
@@ -29,7 +30,7 @@ Meteor.methods({
             throw new Meteor.Error('not-authorised');
         }
 
-        let teams = Team.find();
+        let teams = Teams.find();
 
         if(teams)
             return teams

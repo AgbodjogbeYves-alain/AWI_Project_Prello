@@ -20,6 +20,9 @@ const UserProfileSchema = new SimpleSchema({
 });
 
 export const UserSchema = new SimpleSchema({
+    _id: {
+        type: String
+    },
     username: {
         type: String,
         // For accounts-password, either emails or username is required, but not both. It is OK to make this

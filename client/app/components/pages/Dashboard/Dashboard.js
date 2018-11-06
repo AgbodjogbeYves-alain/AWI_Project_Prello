@@ -9,6 +9,7 @@ import Boards from "./Boards/Boards.js";
 import TeamModal from '../../partials/TeamModal';
 
 
+
 class Dashboard extends Component {
 
     constructor(props) {
@@ -17,12 +18,13 @@ class Dashboard extends Component {
 
 
     partialsBoardsRender(){
-        return this.props.boards.map((b,i) => 
+        return this.props.boards.map((b,i) =>
             <BoardModal board={b} key={i}/>
         )
     }
 
     render(){
+        console.log(this.props.teams)
         const { user } = this.props;
         if(user && !user.profile) return(<Redirect to='/'/>)
         return(
@@ -49,5 +51,6 @@ class Dashboard extends Component {
 const mapStateToProps = state => ({
     user: state.user,
     boards: state.boards,
+    teams: state.teams
 });
 export default connect(mapStateToProps)(Dashboard);

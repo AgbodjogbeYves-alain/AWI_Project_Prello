@@ -3,7 +3,7 @@ import SimpleSchema from 'simpl-schema';
 import {UserSchema} from './Users.js'
 import {TeamMembers} from './TeamMembers.js'
 
-export const Team = new Mongo.Collection('teams');
+export const Teams = new Mongo.Collection('teams');
 
 const TeamSchema = new SimpleSchema({
     teamName: {
@@ -28,4 +28,4 @@ const TeamSchema = new SimpleSchema({
 });
 
 
-Team.attachSchema(TeamSchema);
+Teams.attachSchema(TeamSchema);
