@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components'
 import Card from "./Card";
+import asteroid from '../../../common/asteroid';
 
 const Container = styled.div`
   background-color: #d0d0d0;
@@ -32,22 +33,94 @@ const CardList = styled.div`
   
 `;
 
-
 export default class List extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            board:{},
+            newListName: ''
+        };
+        this.handleSubmitTitle = this.handleSubmitTitle.bind(this);
+        this.handleLNChange = this.handleLNChange.bind(this);
+        this.sayClick = this.sayClick.bind(this)
+    };
+
+    componentDidMount(){
+        let idBoard = this.props.id;
+        let boardFromDB = {}
+        asteroid.call('board.getBoard',{idBoard})
+            .then(result => {
+                boardFromDB = result
+                this.setState({
+                    board: boardFromDB
+                })
+            }).catch(error => {
+                alert(error);
+        })
+    }
+
+    handleSubmitTitle = (event) => {
+        event.preventDefault()
+        let newBoard = this.state.board;
+        console.log(newBoard);
+        newBoard.list.map(list => { if(list.listId == newList.listId){list.listTitle = this.state.newListName; return list} else {return list}})
+        asteroid.call('baords.editBoard', newBoard)
+            .then((result) => {
+                this.setState({board: result});
+            }).catch((error) => {
+                console.log(error);
+                alert(error);
+            })
+    }
+    
+    handleLNChange = (event) => {
+        event.preventDefault()
+        this.setState({ newListName: event.target.value});
+    }
+
+    sayClick = (event) =>{
+        console.log('Coucou')
+    }
+
     render() {
         return (
+            <div>
+            <div className="modal fade" id={"modalChangeLN"+this.props.list.listId} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">Change list name</h5>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            <form role="form" onSubmit={this.handleSubmitTitle}>
+                                <div className="form-group mb-3">
+                                    <div className="form-group">
+                                        <div className="input-group input-group-alternative">
+                                            <input className="form-control" placeholder="List name" type="text" value={this.state.newListName} onChange={this.handleLNChange}/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button className={"btn btn-primary"}>Change</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <Draggable draggableId={"listDragId"+this.props.list.listId} index={this.props.index}>
                 {(provided) => {
                     return (
                         <Container {...provided.draggableProps} ref={provided.innerRef}>
-                        <div>
-                            <Title {...provided.dragHandleProps}>{this.props.list.listTitle}</Title>
-                            <div className="dropdown" style={{float:"right"}}>
-                                <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <Title {...provided.dragHandleProps}> Drag Here </Title>
+                            <Title onClick={this.sayClick}>{this.props.list.listTitle}</Title>
+                            <div className="dropdown">
+                                <button className="btn btn-secondary dropdown-toggle" type="button" id={"dropdownMenuButton"+this.props.list.listId} data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span className="glyphicon glyphicon-option-vertical"></span>
                                 </button>
                                 <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a className="dropdown-item" href="#">Edit list name</a>
+                                    <a className="dropdown-item" data-toggle="modal" data-target={"#modalChangeLN"+this.props.list.listId}>Edit list name</a>
                                     <a className="dropdown-item" href="#">Add a card</a>
                                     <a className="dropdown-item" href="#">Copy list</a>
                                     <a className="dropdown-item" href="#">Move list</a>
@@ -56,7 +129,6 @@ export default class List extends React.Component {
                                     <a className="dropdown-item" href="#">Archive list</a>
                                 </div>
                             </div>
-                        </div>
                             <Droppable droppableId={"listId"+this.props.list.listId} type={"card"}>
                                 {(provided) => (
                                     <CardList ref={provided.innerRef} {...provided.droppableProps}>
@@ -71,7 +143,7 @@ export default class List extends React.Component {
                         </Container>
                     )}}
             </Draggable>
+            </div>
         )
-
     }
 }
