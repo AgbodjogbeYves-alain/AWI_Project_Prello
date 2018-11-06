@@ -2,7 +2,7 @@ import { createClass } from 'asteroid';
 import { setLoggedUser, unsetLoggedUser, editProfileUser, addUser } from '../actions/UserActions';
 import store from '../components/store';
 import { createBoard, removeBoard, editBoard } from '../actions/BoardActions';
-import { addTeam } from '../actions/TeamActions';
+import { addTeam, removeTeam, editTeam } from '../actions/TeamActions';
 
 const Asteroid = createClass();
 // Connect to a Meteor backend
@@ -43,7 +43,7 @@ asteroid.ddp.on('removed', (removedDoc) => {
     store.dispatch(removeBoard(removedDoc.id));
   }
   if (removedDoc.collection === 'teams') {
-    store.dispatch(removeBoard(removedDoc.id));
+    store.dispatch(removeTeam(removedDoc.id));
   }
 });
 
@@ -51,12 +51,11 @@ asteroid.ddp.on('changed', (updatedDoc) => {
   if (updatedDoc.collection === 'users') {
     store.dispatch(editProfileUser(updatedDoc.fields));
   }
-
   if (updatedDoc.collection === 'boards') {
       store.dispatch(editBoard(updatedDoc.id, updatedDoc.fields));
   }
   if (updatedDoc.collection === 'teams') {
-    store.dispatch(editBoard(updatedDoc.id, updatedDoc.fields));
+    store.dispatch(editTeam(updatedDoc.id, updatedDoc.fields));
 }
 });
 

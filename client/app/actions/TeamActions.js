@@ -26,20 +26,3 @@ export function editTeam(_id, data) {
     data
   };
 }
-
-//Asynchroneous
-export function callCreateTeam(teamName) {
-  return dispatch => asteroid.call('teams.createTeam', teamName)
-      .then(result => dispatch(createTeam({ _id: result, teamName })));
-}
-
-export function callRemoveTeam(teamId) {
-  return dispatch => asteroid.call('teams.removeTeam', teamId)
-      .then(result => dispatch(removeTeam(teamId)));
-}
-
-export function callEditTeam(newTeam) {
-  console.log(newTeam)
-  asteroid.call('teams.editTeam', newTeam)
-          .then(result => dispatch(editTeam({_id: result, data: newTeam})))
-}

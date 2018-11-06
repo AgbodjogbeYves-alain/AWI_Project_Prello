@@ -2,7 +2,14 @@ import {Boards} from "../models/Boards";
 import {Meteor} from "meteor/meteor";
 import {boardUtils} from "./Utils/boardUtils";
 
-Meteor.publish('boards', function () {return Boards.find()});
+Meteor.publish('boards', function () {
+    return Boards.find({
+        $or: [
+            {boardUsers : {$elemMatch: {_id: userId}}},
+            {"boardOwner._id": userId},
+        ]
+    })
+});
 
 Meteor.methods({
 
@@ -66,22 +73,16 @@ Meteor.methods({
         }
     },*/
 
-    'boards.removeBoard'(boardId) {
-        let board;
-        let countDoc = Boards.find({"_id": boardId}).count();
-        //console.log(countDoc)
-        if (countDoc === 1) {
-            board = Boards.findOne({"boardId": boardId});
-            //if(Meteor.userId()){
-              //  if(boardUtils.checkInBoardUser(Meteor.userId(), board)){
-                    return Boards.remove(boardId);
-                //}else{
-                  //  return Meteor.Error(403, "You are not allow to delete this board")
-                //}
+    'boards.removeBoard'(boardId) {    
+        
+        let board = Boards.findOne(boardId);
 
-            //}else{
-              //  return Meteor.Error(401, "You are not authentificated")
-            //}
+        if (countDoc === 1) {
+            if(!this.userId) throw new Meteor.Error('not-authorised');
+            let isTeamMember = board.boardUsers.filter((u) => u.user_id == this.userId && u.boardRole == 'admin').length > 0;
+            if(this.userId != team.boardOwner._id && !isTeamMember) throw new Meteor.Error('not-authorised');
+
+            return Boards.remove(boardId);
         } else {
             throw new Meteor.Error(404, 'Board not found')
         }
@@ -90,8 +91,6 @@ Meteor.methods({
     'boards.editBoard' (newBoard) {
         let countDoc = Boards.find({"boardId": newBoard.boardId}).count();
         if (countDoc === 1) {
-            console.log("In")
-            console.log(newBoard.boardList[0].listCard[0])
             Boards.update({boardId: newBoard.boardId}, {
                 $set: {
                     boardTitle: newBoard.boardTitle,

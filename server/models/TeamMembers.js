@@ -8,7 +8,7 @@ export const TeamMembers = new SimpleSchema({
     },
     
     userRole: {
-      type: Number,
+      type: String,
       label: "Role",
     }
     

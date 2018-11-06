@@ -24,19 +24,24 @@ class Board extends Component {
                 <div className="card card-stats mb-4 mb-lg-0">
                     <div className="card-body">
                         <h6>{this.props.title}</h6>
-                        <button 
-                            className="btn btn-icon btn-2 btn-link btn-sm" 
-                            data-toggle="modal"
-                            data-target={"#board-modal" + this.props.id}
-                        >
-                            <span className="btn-inner--icon"><i className="ni ni-settings-gear-65"></i></span>
-                        </button>
-                        <button 
-                            className="btn btn-icon btn-2 btn-danger btn-sm" 
-                            onClick={this.handleRemoveBoard}
-                        >
-                            <span className="btn-inner--icon"><i className="ni ni-fat-remove"></i></span>
-                        </button>
+                        <div class="dropdown float-right d-none">
+                            <a class="btn-link btn-sm" data-toggle="dropdown" href="#" role="button">
+                                <i class="ni ni-settings-gear-65 ni-lg"></i>
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" 
+                                    data-toggle="modal"
+                                    data-target={"#board-modal" + this.props.id}
+                                >
+                                    <i class="ni ni-settings"></i>
+                                    Edit
+                                </a>
+                                <a class="dropdown-item" onClick={this.handleRemoveBoard}>
+                                    <i class="ni ni-fat-remove"></i>
+                                    Remove
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

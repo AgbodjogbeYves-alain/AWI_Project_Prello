@@ -14,11 +14,20 @@ class Dashboard extends Component {
 
     constructor(props) {
         super(props);
+
+        this.state = {
+            activedTeam: null
+        }
     }
 
     partialsBoardsRender(){
         return this.props.boards.map((b,i) =>
             <BoardModal board={b} key={i}/>
+        )
+    }
+    partialsTeamsRender(){
+        return this.props.teams.map((t,i) =>
+            <TeamModal team={t} key={i}/>
         )
     }
 
@@ -31,10 +40,15 @@ class Dashboard extends Component {
                 <BoardModal/>
                 <TeamModal />
                 {this.partialsBoardsRender()}
+                {this.partialsTeamsRender()}
                 <div className="container">
                     <div className="row">
                         <div className="col-3 column" id="teams">
-                            <Teams teams={this.props.teams}/>
+                            <Teams 
+                                activedTeam={this.state.activedTeam} 
+                                teams={this.props.teams}
+                                onChange={(field, value) => this.setState({activedTeam: value})}
+                            />
                         </div>
                         <div className="col-9 column" id="boards">
                             <Boards boards={this.props.boards}/>

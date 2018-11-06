@@ -35,4 +35,17 @@
 }
 #dashboard #teams{
     overflow-y: scroll;
+    padding-bottom: 30px;
+}
+
+#dashboard .team-nav .nav-item:hover .dropdown{
+    display: block !important;
+}
+#dashboard .board-card:hover .dropdown{
+    display: block !important;
+}
+#dashboard .board-card .dropdown{
+    position: absolute;
+    top: 10px;
+    right: 0;
 }

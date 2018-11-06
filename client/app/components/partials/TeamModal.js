@@ -49,23 +49,30 @@ class TeamModal extends Component {
             teamMembers: this.state.teamMembers
         };
 
-        console.log(team);
-
         asteroid.call("teams.createTeam", team)
         .then((result) => {
             $('#team-modal' + this.state.teamId).modal('toggle');
+            this.resetFields();
         })
         .catch((error) => {
             this.addAlert("danger", error.reason)
         })
     }
 
+    resetFields(){
+        this.setState({
+            teamName: '',
+            teamDescription: '',
+            teamMembers: []
+        })
+    }
+
     handleEditTeam(){
         let team = this.props.team;
-        team.teamName = this.state.teamname;
+        team.teamName = this.state.teamName;
         team.teamDescription = this.state.teamDescription;
         team.teamMembers = this.state.teamMembers;
-        
+
         asteroid.call("teams.editTeam", team)
         .then((result) => {
             $('#team-modal' + this.state.teamId).modal('toggle');
@@ -126,6 +133,7 @@ class TeamModal extends Component {
                                 <AddUserInput 
                                     addedUsers={this.state.teamMembers} 
                                     onChange={(field, value) => this.setState({"teamMembers": value})}
+                                    type={'team'}
                                 />
                             </form>
                         </div>
