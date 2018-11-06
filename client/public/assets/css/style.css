@@ -95,6 +95,7 @@ nav {
     overflow-y: hidden;
     margin-top: 5%;
     float: left;
+    width: 100%;
 }
 
 .sidenav {

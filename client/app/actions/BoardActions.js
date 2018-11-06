@@ -40,4 +40,5 @@ export function callRemoveBoard(boardId) {
 
 export function callEditBoard(newBoard) {
   asteroid.call('boards.editBoard', newBoard)//.then(result => dispatch(editBoard({_id: result, data: newBoard})))
+
 }

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {Route, withRouter} from 'react-router-dom'
+import asteroid from "../../../common/asteroid";
 
 
 
@@ -32,17 +33,16 @@ class ModalFormCreateInBoard extends Component {
         let privacy = this.state.privacy;
 
 
-        Meteor.call('createBoard',{boardName,privacy},(error, result) => {
-            if(error){
-               alert(error)
-            }else{
+        asteroid.call('createBoard',{boardName,privacy})
+            .then(result => {
                 console.log(result)
                 this.props.history.push('/board/'+result);
-            }
+            }).catch(error => {
+                alert(error)
         })
-
     }
-            render(){
+
+    render(){
             return (
                 <div className="modal fade show" id="modal-createBoard" tabIndex="-1" role="dialog" aria-labelledby="modal-form">
                     <div className="modal-dialog modal- modal-dialog-centered modal-sm" role="document">

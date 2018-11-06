@@ -46,21 +46,6 @@ class BoardDisplay extends Component {
             })
 
         }
-
-        /*let idBoard = this.props.match.params.id;
-        let boardFromDB = {boardLists: []}
-        asteroid.call('boards.getBoard', idBoard )
-            .then(result => {
-                boardFromDB = result
-                this.setState({
-                    board: boardFromDB
-                })
-            }).catch(error => {
-                this.setState({
-                    board: "unknown"
-                })
-            console.log(error);
-        })*/
     }
 
     onDragEnd = result => {
@@ -189,15 +174,19 @@ class BoardDisplay extends Component {
 
             }
         }
-
-
     };
 
     createList = () => {
         let nList = {listTitle:"New List", listCard: [], listCreatedAt: Date()}; //see if keep like it
-        asteroid.call('list.createList',nList)
+        let newBoard = this.state.board
+        newBoard.boardLists.push(nList)
+        asteroid.call('boards.editBoard',newBoard)
             .catch(error => {
             console.log(error);
+        })
+
+        this.setState({
+            board: newBoard
         })
     };
 
@@ -234,6 +223,7 @@ class BoardDisplay extends Component {
                             }}
                         </Droppable>
                     </DragDropContext>
+                    <button className="btn btn-success" onClick={this.createList}>Create a new List</button>
                 </div>
             </div>
         ) : (
@@ -252,7 +242,6 @@ class BoardDisplay extends Component {
 const mapStateToProps = state => ({
     user: state.user,
     boards: state.boards
-
 });
 
 export default connect(mapStateToProps)(BoardDisplay);

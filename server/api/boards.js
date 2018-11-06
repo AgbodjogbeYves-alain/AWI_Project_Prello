@@ -100,7 +100,8 @@ Meteor.methods({
             let nList;
 
             if(result.insertedId){
-                nList = Meteor.call('list.getList', result.insertedId)
+                console.log(result.insertedId)
+                nList = Meteor.call('lists.getList', result.insertedId)
             }else{
                 nList = list
             }
