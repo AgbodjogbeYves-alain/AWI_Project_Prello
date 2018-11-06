@@ -15,7 +15,7 @@ class TeamModal extends Component {
             teamId: this.props.team ? this.props.team._id : '',
             teamName: this.props.team ? this.props.team.teamName : '',
             teamDescription: this.props.team ? this.props.team.teamDescription : '',
-            teamUsers: this.props.team ? this.props.team.teamUsers : [],
+            teamMembers: this.props.team ? this.props.team.teamMembers : [],
             alerts: []
         };
 
@@ -46,7 +46,7 @@ class TeamModal extends Component {
         let team = {
             teamName: this.state.teamName,
             teamDescription: this.state.teamDescription,
-            teamUsers: this.state.teamUsers
+            teamMembers: this.state.teamMembers
         };
 
         console.log(team);
@@ -64,7 +64,7 @@ class TeamModal extends Component {
         let team = this.props.team;
         team.teamName = this.state.teamname;
         team.teamDescription = this.state.teamDescription;
-        team.teamUsers = this.state.teamUsers;
+        team.teamMembers = this.state.teamMembers;
         
         asteroid.call("teams.editTeam", team)
         .then((result) => {
@@ -124,8 +124,8 @@ class TeamModal extends Component {
                                     </div>
                                 </div>
                                 <AddUserInput 
-                                    addedUsers={this.state.teamUsers} 
-                                    onChange={(field, value) => this.setState({"teamUsers": value})}
+                                    addedUsers={this.state.teamMembers} 
+                                    onChange={(field, value) => this.setState({"teamMembers": value})}
                                 />
                             </form>
                         </div>

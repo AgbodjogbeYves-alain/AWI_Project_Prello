@@ -47,10 +47,7 @@ class Board extends Component {
 const mapStateToProps = state => ({
     user: state.user,
 });
-const mapDispatchToProps = dispatch => ({
-    dispatchCallRemoveBoard: (boardId) => dispatch(callRemoveBoard(boardId)),
-});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Board);
+export default connect(mapStateToProps)(Board);
 
 

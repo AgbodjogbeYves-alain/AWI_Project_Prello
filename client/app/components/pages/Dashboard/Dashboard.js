@@ -16,7 +16,6 @@ class Dashboard extends Component {
         super(props);
     }
 
-
     partialsBoardsRender(){
         return this.props.boards.map((b,i) =>
             <BoardModal board={b} key={i}/>
@@ -24,7 +23,6 @@ class Dashboard extends Component {
     }
 
     render(){
-        console.log(this.props.teams)
         const { user } = this.props;
         if(user && !user.profile) return(<Redirect to='/'/>)
         return(
@@ -36,7 +34,7 @@ class Dashboard extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-3 column" id="teams">
-                            <Teams/>
+                            <Teams teams={this.props.teams}/>
                         </div>
                         <div className="col-9 column" id="boards">
                             <Boards boards={this.props.boards}/>

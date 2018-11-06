@@ -25,3 +25,14 @@
     margin-top: 10px;
     margin-bottom: 10px;
 }
+#dashboard .team-nav .nav-item{
+    width: 100%;
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-align: left;
+    padding-right: 0px;
+}
+#dashboard #teams{
+    overflow-y: scroll;
+}
