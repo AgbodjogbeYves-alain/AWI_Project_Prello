@@ -41,8 +41,6 @@ Meteor.methods({
 
             editedCards.push(nCard)
         })
-
-
         return Lists.upsert({'_id': list._id}, {
             $set : {
                 listTitle: list.listTitle,

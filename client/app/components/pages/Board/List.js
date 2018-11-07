@@ -36,15 +36,49 @@ const CardList = styled.div`
 `;
 
 
-class List extends React.Component {
+export class List extends React.Component {
     constructor(props){
         super(props)
         this.createCard = this.createCard.bind(this)
-        this.sayclick = this.sayclick.bind(this)
+        this.titleToInput = this.titleToInput.bind(this)
     }
 
-    sayclick = (event) =>{
-        console.log("Joris")
+    updateListName = (newtitle) =>{
+        let idBoard = this.props.idBoard;
+        let board = this.props.boards.filter((board) => board._id == idBoard )[0];
+        let newList = this.props.list
+        newList.listTitle = newtitle
+        let newBoardList = board.boardLists.map((list) => {
+            if(list._id == newList._id){
+                return newList
+            }else{
+                return list
+            }
+        })
+        board.boardLists = newBoardList
+        callEditBoard(board)
+    }
+
+    inputToTitle = (event) =>{
+        event.preventDefault();
+        const input = document.getElementById(this.props.list._id);
+        this.updateListName(input.value);
+        const title = document.createElement("h3");
+        title.innerHTML = input.value;
+        title.style= "padding:8px";
+        title.id = this.props.list._id;
+        title.onclick = this.titleToInput
+        input.parentNode.replaceChild(title, input);
+    }
+
+    titleToInput = (event) =>{
+        event.preventDefault();
+        const title = document.getElementById(this.props.list._id);
+        const input = document.createElement("input");
+        input.value = title.innerText;
+        input.id = this.props.list._id;
+        input.onblur = this.inputToTitle
+        title.parentNode.replaceChild(input, title);
     }
 
     createCard = (event) => {
@@ -73,8 +107,6 @@ class List extends React.Component {
         boardofThisList.boardLists = newBoardList
 
         callEditBoard(boardofThisList)
-
-        //console.log(this.props.boards.filter((board) => board._id == idBoard )[0])
     }
     render() {
         return (
@@ -83,7 +115,7 @@ class List extends React.Component {
                     return (
                         <Container {...provided.draggableProps} ref={provided.innerRef}>
                             <Title {...provided.dragHandleProps}> Drag Here </Title>
-                            <Title onClick={this.sayclick}>{this.props.list.listTitle}</Title>
+                            <Title id={this.props.list._id} onClick={this.titleToInput}>{this.props.list.listTitle}</Title>
                             <Droppable droppableId={"listId"+this.props.list._id} type={"card"}>
                                 {(provided) => (
                                     <CardList ref={provided.innerRef} {...provided.droppableProps}>
