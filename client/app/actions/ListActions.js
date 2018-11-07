@@ -30,16 +30,15 @@ export function editList(_id, data) {
 
 //Asynchroneous
 export function callCreateList(idBoard) {
-  return asteroid.call('boards.list.createList', idBoard).catch(error => {
+  return asteroid.call('boards.lists.createList', idBoard).catch(error => {
       console.log(error);
   });
 }
 
-export function callRemoveList(listId) {
-  return dispatch => asteroid.call('lists.deleteList', listId)
-      .then(result => dispatch(removeList(listId)));
+export function callRemoveList(idBoard,idList) {
+  asteroid.call('boards.lists.deleteList', idBoard,idList)
 }
 
 export function callEditList(idBoard,newList) {
-  return asteroid.call('lists.editListFromList', idBoard,newList)
+  return asteroid.call('boards.lists.editList', idBoard,newList)
 }

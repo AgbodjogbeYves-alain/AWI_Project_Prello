@@ -30,7 +30,7 @@ class Home extends Component {
                                 <div className="row">
                                 <div className="col-lg-6">
                                     <h1 className="display-3  text-white title">
-                                        <img class="logo" src="assets/img/brand/white.png" />
+                                        <img className="logo" src="assets/img/brand/white.png" />
                                         RELLO
                                     </h1>
                                     <h1 className="display-3  text-white"><span>Manage your projects with efficience and ease !</span></h1>

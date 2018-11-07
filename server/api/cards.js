@@ -26,13 +26,11 @@ Meteor.methods({
             if(find!=true){
                 throw new Meteor.Error(404, 'List in Board not found')
             }else{
-                console.log("before update")
                 Boards.update({_id: board._id},{
                     $set: {
                         boardLists: newBoardLists
                     }
                 })
-                console.log("after update")
             }
         }else{
             throw new Meteor.Error(404, 'Board not found')

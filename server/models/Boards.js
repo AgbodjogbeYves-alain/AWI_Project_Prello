@@ -5,7 +5,6 @@ export const Boards = new Mongo.Collection('boards')
 import SimpleSchema from 'simpl-schema';
 import {ListSchema} from "./List";
 import { BoardUserSchema } from './BoardUser';
-import {CardSchema} from "./Card";
 
 export const BoardSchema = new SimpleSchema({
   _id: {
