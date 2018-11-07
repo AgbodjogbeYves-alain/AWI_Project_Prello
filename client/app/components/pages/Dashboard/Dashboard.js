@@ -3,7 +3,7 @@ import NavBar from "../../partials/NavBar";
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import BoardModal from "../../partials/BoardModal.js"
+import BoardModal from "../../partials/BoardModal/BoardModal.js"
 import Teams from "./Teams/Teams.js";
 import Boards from "./Boards/Boards.js";
 import TeamModal from '../../partials/TeamModal';
@@ -31,9 +31,13 @@ class Dashboard extends Component {
         )
     }
 
+    filteredBoards(){
+        return this.props.boards;
+    }
+
     render(){
         const { user } = this.props;
-        if(user && !user.profile) return(<Redirect to='/'/>)
+        if(!user) return(<Redirect to='/'/>)
         return(
             <main id="dashboard">
                 <NavBar/>
@@ -51,7 +55,7 @@ class Dashboard extends Component {
                             />
                         </div>
                         <div className="col-9 column" id="boards">
-                            <Boards boards={this.props.boards}/>
+                            <Boards boards={this.filteredBoards()}/>
                         </div>
                     </div>
                 </div>

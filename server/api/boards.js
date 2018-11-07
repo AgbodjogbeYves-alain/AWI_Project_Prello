@@ -4,12 +4,7 @@ import {boardUtils} from "./Utils/boardUtils";
 
 Meteor.publish('boards', function () {
     let userId = this.userId;
-    return Boards.find({
-        $or: [
-            {boardUsers : {$elemMatch: {_id: userId}}},
-            {"boardOwner._id": userId},
-        ]
-    })
+    return Boards.find({boardUsers : {$elemMatch: {'user._id': userId}}})
 });
 
 Meteor.methods({
@@ -17,7 +12,6 @@ Meteor.methods({
     'boards.createBoard'(board) {
         if(Meteor.userId()){
             board.boardOwner = Meteor.user();
-            console.log(board)
             return Boards.insert(board);
         }else{
             throw Meteor.Error(401, "You are not authentificated")
@@ -79,10 +73,10 @@ Meteor.methods({
         
         let board = Boards.findOne(boardId);
 
-        if (countDoc === 1) {
+        if (board) {
             if(!this.userId) throw new Meteor.Error('not-authorised');
             let isTeamMember = board.boardUsers.filter((u) => u.user_id == this.userId && u.boardRole == 'admin').length > 0;
-            if(this.userId != team.boardOwner._id && !isTeamMember) throw new Meteor.Error('not-authorised');
+            if(this.userId != board.boardOwner._id && !isTeamMember) throw new Meteor.Error('not-authorised');
 
             return Boards.remove(boardId);
         } else {
@@ -91,13 +85,15 @@ Meteor.methods({
     },
 
     'boards.editBoard' (newBoard) {
-        let countDoc = Boards.find({"boardId": newBoard.boardId}).count();
+        let countDoc = Boards.find(newBoard._id).count();
         if (countDoc === 1) {
-            Boards.update({boardId: newBoard.boardId}, {
+            Boards.update(newBoard._id, {
                 $set: {
                     boardTitle: newBoard.boardTitle,
                     boardPrivacy: newBoard.privacy,
-                    boardUsers: newBoard.boardUsers
+                    boardUsers: newBoard.boardUsers,
+                    boardMembers: newBoard.boardMembers,
+                    boardTeams: newBoard.boardTeams
                 }
 
             })

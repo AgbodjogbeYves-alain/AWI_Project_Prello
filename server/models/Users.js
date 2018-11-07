@@ -21,7 +21,7 @@ const UserProfileSchema = new SimpleSchema({
 
 export const UserSchema = new SimpleSchema({
     _id: {
-        type: String
+        type: SimpleSchema.RegEx.Id
     },
     username: {
         type: String,
@@ -57,7 +57,8 @@ export const UserSchema = new SimpleSchema({
         blackbox: true
     },
     createdAt: {
-        type: Date
+        type: Date,
+        optional:  true
     },
     profile: {
         type: UserProfileSchema,

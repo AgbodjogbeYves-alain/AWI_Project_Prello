@@ -15,7 +15,7 @@ class TeamModal extends Component {
             teamId: this.props.team ? this.props.team._id : '',
             teamName: this.props.team ? this.props.team.teamName : '',
             teamDescription: this.props.team ? this.props.team.teamDescription : '',
-            teamMembers: this.props.team ? this.props.team.teamMembers : [],
+            teamMembers: this.props.team ? this.props.team.teamMembers : [{user: this.props.user, userRole: "admin"}],
             alerts: []
         };
 
@@ -46,7 +46,7 @@ class TeamModal extends Component {
         let team = {
             teamName: this.state.teamName,
             teamDescription: this.state.teamDescription,
-            teamMembers: this.state.teamMembers
+            teamMembers: this.state.teamMembers,
         };
 
         asteroid.call("teams.createTeam", team)
@@ -161,6 +161,8 @@ class TeamModal extends Component {
     }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+    user: state.user
+});
 
 export default connect(mapStateToProps)(withRouter(TeamModal));
