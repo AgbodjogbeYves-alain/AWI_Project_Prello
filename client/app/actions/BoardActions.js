@@ -4,6 +4,7 @@ export const CREATE_BOARD = 'CREATE_BOARD';
 export const GET_BOARDS = 'GET_BOARDS';
 export const REMOVE_BOARD = "REMOVE_BOARD";
 export const EDIT_BOARD = "EDIT_BOARD";
+export const RESET_BOARDS = "RESET_BOARDS";
 
 export function createBoard(data) {
   return {
@@ -24,6 +25,11 @@ export function editBoard(_id, data) {
     type: EDIT_BOARD,
     _id,
     data
+  };
+}
+export function resetBoards() {
+  return {
+    type: RESET_BOARDS
   };
 }
 
