@@ -3,6 +3,7 @@ import {Meteor} from "meteor/meteor";
 import {boardUtils} from "./Utils/boardUtils";
 
 Meteor.publish('boards', function () {
+    let userId = this.userId;
     return Boards.find({
         $or: [
             {boardUsers : {$elemMatch: {_id: userId}}},
@@ -15,7 +16,8 @@ Meteor.methods({
 
     'boards.createBoard'(board) {
         if(Meteor.userId()){
-            board.boardOwner = this.userId;
+            board.boardOwner = Meteor.user();
+            console.log(board)
             return Boards.insert(board);
         }else{
             throw Meteor.Error(401, "You are not authentificated")

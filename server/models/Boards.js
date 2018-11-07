@@ -47,7 +47,7 @@ export const BoardSchema = new SimpleSchema({
       label: "Teams",
       defaultValue: []
   },
-  teamOwner : {
+  boardOwner : {
     type: UserSchema,
     label: "Owner"
     },

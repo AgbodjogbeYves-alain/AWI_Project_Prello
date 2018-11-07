@@ -53,7 +53,7 @@ class BoardModal extends Component {
         asteroid.call("boards.createBoard", board)
         .then((result) => {
 
-            //this.props.history.push("/board/" + result)
+            this.props.history.push("/board/" + result)
         })
         .catch((error) => {
             this.addAlert("danger", error.reason)
