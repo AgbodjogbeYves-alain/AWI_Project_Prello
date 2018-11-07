@@ -4,8 +4,10 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components'
 import Card from "./Card";
 import {callEditList} from "../../../actions/ListActions";
+import ConfirmModal from "../../partials/ConfirmModal";
 import { connect } from 'react-redux';
 import {callEditBoard} from "../../../actions/BoardActions";
+import asteroid from '../../../common/asteroid';
 
 const Container = styled.div`
   background-color: #d0d0d0;
@@ -41,6 +43,7 @@ export class List extends React.Component {
         super(props)
         this.createCard = this.createCard.bind(this)
         this.titleToInput = this.titleToInput.bind(this)
+        this.inputToTitle = this.inputToTitle.bind(this);
     }
 
     updateListName = (newtitle) =>{
@@ -67,7 +70,7 @@ export class List extends React.Component {
         title.innerHTML = input.value;
         title.style= "padding:8px";
         title.id = this.props.list._id;
-        title.onclick = this.titleToInput
+        title.onclick = this.titleToInput;
         input.parentNode.replaceChild(title, input);
     }
 
@@ -114,8 +117,23 @@ export class List extends React.Component {
                 {(provided) => {
                     return (
                         <Container {...provided.draggableProps} ref={provided.innerRef}>
-                            <Title {...provided.dragHandleProps}> Drag Here </Title>
+                        <ConfirmModal id={"confirmmodal"+this.props.list._id} text={"Are you sure you want to delete the list "+this.props.list.listTitle+" ?"}/>
+                        <a className={"ni ni-fat-remove"} data-toggle="modal" data-target={"#"+"confirmmodal"+this.props.list._id}></a>
+                        <Title {...provided.dragHandleProps}>Drag Here</Title>
                             <Title id={this.props.list._id} onClick={this.titleToInput}>{this.props.list.listTitle}</Title>
+                            <div>{this.props.list.listCard.length + " cards"}</div>
+                            <div className="dropdown">
+                                <button className="btn btn-secondary dropdown-toggle" type="button" id={"dropdownMenuButton"+this.props.list.listId} data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style={{float:"right"}}>
+                                    <span className="glyphicon glyphicon-option-vertical"></span>
+                                </button>
+                                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a className="dropdown-item" href="#">Copy list</a>
+                                    <a className="dropdown-item" href="#">Move list</a>
+                                    <a className="dropdown-item" href="#">Follow</a>
+                                    <a className="dropdown-item" href="#">Archive all cards</a>
+                                    <a className="dropdown-item" href="#">Archive list</a>
+                                </div>
+                            </div>
                             <Droppable droppableId={"listId"+this.props.list._id} type={"card"}>
                                 {(provided) => (
                                     <CardList ref={provided.innerRef} {...provided.droppableProps}>
