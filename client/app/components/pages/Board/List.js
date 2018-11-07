@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components'
 import Card from "./Card";
-import {callEditList, callRemoveList} from "../../../actions/ListActions";
+import {callEditList, callRemoveList, editList} from "../../../actions/ListActions";
 import ConfirmModal from "../../partials/ConfirmModal";
 import { connect } from 'react-redux';
 import {callEditBoard} from "../../../actions/BoardActions";
@@ -59,8 +59,9 @@ export class List extends React.Component {
     updateListName = (newtitle) =>{
         let idBoard = this.props.idBoard;
         let board = this.props.boards.filter((board) => board._id == idBoard )[0];
-        let newList = this.props.list
-        newList.listTitle = newtitle
+        let newList = this.props.list;
+        newList.listTitle = newtitle;
+        callEditList(idBoard, newList);
         let newBoardList = board.boardLists.map((list) => {
             if(list._id == newList._id){
                 return newList
@@ -68,8 +69,8 @@ export class List extends React.Component {
                 return list
             }
         })
-        board.boardLists = newBoardList
-        callEditBoard(board)
+        board.boardLists = newBoardList;
+        callEditBoard(board);
     }
 
     inputToTitle = (event) =>{
@@ -128,7 +129,7 @@ export class List extends React.Component {
                     return (
                         <Container {...provided.draggableProps} ref={provided.innerRef}>
                         <ConfirmModal id={"confirmmodal"+this.props.list._id} text={"Are you sure you want to delete the list "+this.props.list.listTitle+" ?"} confirmAction={this.removeList}/>
-                        <a className={"ni ni-fat-remove"} data-toggle="modal" data-target={"#"+"confirmmodal"+this.props.list._id}></a>
+                        <a className={"ni ni-fat-remove"} data-toggle="modal" data-target={"#"+"confirmmodal"+this.props.list._id} style={{fontSize: "30px", position: "absolute", "right": "0px"}}></a>
                         <Title {...provided.dragHandleProps}>Drag Here</Title>
                             <Title id={this.props.list._id} onClick={this.titleToInput}>{this.props.list.listTitle}</Title>
                             <div>{this.props.list.listCard.length + " cards"}</div>
