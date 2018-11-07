@@ -66,11 +66,12 @@ class BoardDisplay extends Component {
                 board: newBoard
             };
 
+            this.setState(newState);
+
             //Dispatch
             callEditBoard(newBoard)
 
 
-            this.setState(newState);
         }else{
             const start = currentLists.filter((list) => list._id == source.droppableId.slice(6))[0];
 

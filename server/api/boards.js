@@ -14,60 +14,10 @@ Meteor.methods({
         }
     },
 
-    'boards.getBoard' (idBoard) {
-        let board;
-        let countDoc = Boards.find({"_id": idBoard}).count();
-        if (countDoc === 1) {
-            board = Boards.findOne({"_id": idBoard});
-            //if(board.boardPrivacy == 1){
-              //  if(Meteor.userId()){
-                //    if(boardUtils.checkInBoardUser(Meteor.userId(), board)){
-                  //      return board
-                    //}else{
-                      //  return Meteor.Error(403, "You are not on this allow to see this board")
-                    //}
-
-                //}else{
-                //    return Meteor.Error(401, "You are not authentificated")
-                //}
-            //}else{
-                return board
-            //}
-        } else {
-            throw new Meteor.Error(404, 'Board not found');
-        }
-
-    },
-
-    /*'boards.getBoardFromExt' (idBoard,token) {
-        let decodedToken = "xd"
-        let board;
-        let countDoc = Boards.find({"_id": idBoard}).count();
-        if (countDoc === 1) {
-            board = Boards.findOne({"boardId": idBoard});
-            if(board.boardPrivacy == 1){
-                if(token.userId){
-                    if(boardUtils.checkInBoardUser(Meteor.userId(), board)){
-                        return board
-                    }else{
-                        return Meteor.Error(403, "You are not on this allow to see this board")
-                    }
-
-                }else{
-                    return Meteor.Error(401, "You are not authentificated")
-                }
-            }
-            return board;
-        } else {
-            throw new Meteor.Error(404, 'Board not found')
-        }
-    },*/
-
-    'boards.removeBoard'(boardId) {
+    'boards.removeBoard'(idBoard) {
         let board;
         let countDoc = Boards.find({"_id": boardId}).count();
         if (countDoc === 1) {
-            board = Boards.findOne({"boardId": boardId});
             //if(Meteor.userId()){
               //  if(boardUtils.checkInBoardUser(Meteor.userId(), board)){
                     return Boards.remove(boardId);
@@ -83,40 +33,25 @@ Meteor.methods({
         }
     },
 
-    /*'boards.editBoard' (newBoard) {
+    'boards.editBoard' (newBoard) {
         let countDoc = Boards.find({"_id": newBoard._id}).count();
-        let newLists = []
         if (countDoc === 1) {
-            Meteor.call('board.list.createList', 'zmoihrzmoeirhg', 'blabla')
-        }
 
-        /*newBoard.boardLists.forEach((list) => {
-            let result = Meteor.call('lists.editList', list)
-            let nList;
-            if(result.insertedId){
-                nList = Meteor.call('lists.getList', result.insertedId)
-            }else{
-                nList = Meteor.call('lists.getList', list._id)
+        Boards.update({_id: newBoard._id},{
+            $set: {
+                boardTitle: newBoard.boardTitle,
+                boardPrivacy: newBoard.boardPrivacy,
+                boardLists: newBoard.boardLists,
+                boardUsers: newBoard.boardUsers,
+                boardTeams: newBoard.boardTeams
             }
-
-            newLists.push(nList)
         })
-
-            Boards.upsert({_id: newBoard._id},{
-                $set: {
-                    boardTitle: newBoard.boardTitle,
-                    boardPrivacy: newBoard.boardPrivacy,
-                    boardLists: newLists,
-                    boardUsers: newBoard.boardUsers,
-                    boardTeams: newBoard.boardTeams
-                }
-            })
 
         }else {
 
             throw new Meteor.Error(404, 'Board not found')
         }
-    },*/
+    },
 
     'board.getAllBoards' (){
         return Boards.find().fetch();
@@ -154,6 +89,7 @@ Meteor.methods({
             throw new Meteor.Error(404, 'Board not found')
         }
     },
+
     'board.getCards' (boardId) {
         let board;
         let countDoc = Boards.find({"_id": boardId}).count();

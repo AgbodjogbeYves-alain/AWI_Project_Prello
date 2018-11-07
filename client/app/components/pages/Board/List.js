@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import Card from "./Card";
-import {callEditList, callRemoveList, editList} from "../../../actions/ListActions";
+import {callEditList, callRemoveList} from "../../../actions/ListActions";
 import ConfirmModal from "../../partials/ConfirmModal";
 import { connect } from 'react-redux';
 import {Title,Container,CardList} from "../Utils/Utils";
