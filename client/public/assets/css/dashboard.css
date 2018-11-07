@@ -1,0 +1,51 @@
+#dashboard .column{
+    padding-top: 75px;
+    height: 100%;
+}
+#dashboard>.container{
+    height: 100%;
+    width: 100%;
+    max-width: none;
+    position: fixed;
+}
+#dashboard>.container>.row{
+    height: 100%;
+}
+#dashboard #boards{
+    box-shadow: 2px 0px 10px 1px #172b4d;
+    background-color: #f4f5f7;
+    overflow-y: scroll;
+    padding-bottom: 20px;
+}
+#dashboard .custom-control-label{
+    line-height: 1.7 !important;
+}
+
+#dashboard .board-card {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#dashboard .team-nav .nav-item{
+    width: 100%;
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-align: left;
+    padding-right: 0px;
+}
+#dashboard #teams{
+    overflow-y: scroll;
+    padding-bottom: 30px;
+}
+
+#dashboard .team-nav .nav-item:hover .dropdown{
+    display: block !important;
+}
+#dashboard .board-card:hover .dropdown{
+    display: block !important;
+}
+#dashboard .board-card .dropdown{
+    position: absolute;
+    top: 10px;
+    right: 0;
+}

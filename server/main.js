@@ -1,4 +1,11 @@
-// Server entry point, imports all server code
+import { Meteor } from 'meteor/meteor';
 
-import '/imports/startup/server';
-import '/imports/startup/both';
+import './api/users.js';
+import './api/boards';
+import './api/lists';
+import './api/cards'
+import './api/teams';
+
+Meteor.startup(() => {
+
+});
