@@ -35,7 +35,6 @@ class ModalFormCreateInBoard extends Component {
 
         asteroid.call('createBoard',{boardName,privacy})
             .then(result => {
-                console.log(result)
                 this.props.history.push('/board/'+result);
             }).catch(error => {
                 alert(error)

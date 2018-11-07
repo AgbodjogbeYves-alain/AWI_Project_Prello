@@ -10,7 +10,6 @@ Meteor.publish('cards', function () {return Cards.find()});
 Meteor.methods({
     'cards.getCard' (idCard) {
         let countDoc = Cards.find({"_id": idCard}).count();
-        console.log(countDoc)
         if (countDoc === 1) {
             let card = Cards.findOne({"_id": idCard});
             return card;
@@ -24,8 +23,7 @@ Meteor.methods({
         return Cards.upsert({'_id': newCard._id},{
                     $set: {
                         cardTitle: newCard.cardTitle,
-                        cardDescription: newCard.cardDescription
-
+                        //cardDescription: newCard.cardDescription
                     }
                 })
 

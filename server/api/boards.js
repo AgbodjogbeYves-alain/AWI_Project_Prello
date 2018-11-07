@@ -7,9 +7,7 @@ Meteor.publish('boards', function () {return Boards.find()});
 Meteor.methods({
 
     'boards.createBoard'(board) {
-        console.log("test")
         if(Meteor.userId()){
-            console.log(board)
             return Boards.insert(board);
         }else{
             throw Meteor.Error(401, "You are not authentificated")
@@ -19,7 +17,6 @@ Meteor.methods({
     'boards.getBoard' (idBoard) {
         let board;
         let countDoc = Boards.find({"_id": idBoard}).count();
-        console.log(countDoc)
         if (countDoc === 1) {
             board = Boards.findOne({"_id": idBoard});
             //if(board.boardPrivacy == 1){
@@ -34,7 +31,6 @@ Meteor.methods({
                 //    return Meteor.Error(401, "You are not authentificated")
                 //}
             //}else{
-                console.log(board)
                 return board
             //}
         } else {
@@ -47,7 +43,6 @@ Meteor.methods({
         let decodedToken = "xd"
         let board;
         let countDoc = Boards.find({"_id": idBoard}).count();
-        console.log(countDoc)
         if (countDoc === 1) {
             board = Boards.findOne({"boardId": idBoard});
             if(board.boardPrivacy == 1){
@@ -71,7 +66,6 @@ Meteor.methods({
     'boards.removeBoard'(boardId) {
         let board;
         let countDoc = Boards.find({"_id": boardId}).count();
-        //console.log(countDoc)
         if (countDoc === 1) {
             board = Boards.findOne({"boardId": boardId});
             //if(Meteor.userId()){
@@ -91,19 +85,18 @@ Meteor.methods({
 
     'boards.editBoard' (newBoard) {
         let countDoc = Boards.find({"_id": newBoard._id}).count();
-        //console.log(countDoc)
         let newLists = []
         if (countDoc === 1) {
 
         newBoard.boardLists.forEach((list) => {
-            let result = Meteor.call('list.editList', list)
+            let result = Meteor.call('lists.editList', list)
             let nList;
 
+
             if(result.insertedId){
-                console.log(result.insertedId)
                 nList = Meteor.call('lists.getList', result.insertedId)
             }else{
-                nList = list
+                nList = Meteor.call('lists.getList', list._id)
             }
 
             newLists.push(nList)

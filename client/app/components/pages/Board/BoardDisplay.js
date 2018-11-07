@@ -25,17 +25,13 @@ class BoardDisplay extends Component {
         this.onDragEnd = this.onDragEnd.bind(this);
 
         this.createList = this.createList.bind(this)
-
-        this.createCard = this.createCard.bind(this)
     }
 
 
     componentWillReceiveProps(nextProps){
-        console.log(nextProps);
         let id = nextProps.match.params.id
         let board = nextProps.boards.filter((board) => board._id == id)[0]
 
-        console.log(board)
         if(board !== undefined){
             this.setState({
                 board: board,
@@ -191,11 +187,7 @@ class BoardDisplay extends Component {
     };
 
 
-    createCard = () => {
-
-    }
     render() {
-        console.log(this.state.board)
         return this.state.board != 'unknow' ? (
             <div id={"boardDisplay"}>
                 <NavBar/>
@@ -213,8 +205,12 @@ class BoardDisplay extends Component {
                                         {
                                             this.state.board.boardLists.map((list, index) => {
                                                 const cards = list.listCard;
-                                                return <List key={list._id} list={list} index={index}
-                                                             cards={cards}/>;
+                                                return (
+                                                    <div>
+                                                    <List key={list._id} list={list} index={index}
+                                                             cards={cards} idBoard={this.props.match.params.id}/>
+                                                    </div>
+                                                );
                                             })}
 
                                         {provided.placeholder}
@@ -223,8 +219,9 @@ class BoardDisplay extends Component {
                             }}
                         </Droppable>
                     </DragDropContext>
-                    <button className="btn btn-success" onClick={this.createList}>Create a new List</button>
                 </div>
+                <button className="btn btn-success" onClick={this.createList}>Create a new List</button>
+
             </div>
         ) : (
             <div id={"unknowDisplayBoard"}>

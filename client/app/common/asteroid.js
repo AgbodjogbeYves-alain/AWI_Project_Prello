@@ -14,6 +14,8 @@ const asteroid = new Asteroid({
 asteroid.subscribe('boards');
 asteroid.subscribe('users');
 asteroid.subscribe('user');
+asteroid.subscribe('lists');
+asteroid.subscribe('cards');
 
 asteroid.ddp.on('added', (doc) => {
   // we need proper document object format here
@@ -23,13 +25,12 @@ asteroid.ddp.on('added', (doc) => {
   }
   if(doc.collection === 'boards'){
     const docObj = Object.assign({}, doc.fields, { _id: doc.id });
-    store.dispatch(createBoard(docObj));
+      store.dispatch(createBoard(docObj));
   }
 });
 
 asteroid.ddp.on('removed', (removedDoc) => {
   if (removedDoc.collection === 'users') {
-    console.log(removedDoc)
     store.dispatch(unsetLoggedUser());
   }
   if (removedDoc.collection === 'boards') {
@@ -39,10 +40,13 @@ asteroid.ddp.on('removed', (removedDoc) => {
 
 asteroid.ddp.on('changed', (updatedDoc) => {
   if (updatedDoc.collection === 'users') {
-    store.dispatch(editProfileUser(updatedDoc.fields));
+
+      store.dispatch(editProfileUser(updatedDoc.fields));
   }
 
   if (updatedDoc.collection === 'boards') {
+      console.log(updatedDoc)
+
       store.dispatch(editBoard(updatedDoc.id, updatedDoc.fields));
   }
 });

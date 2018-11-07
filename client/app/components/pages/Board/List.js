@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components'
 import Card from "./Card";
+import {callEditList} from "../../../actions/ListActions";
+import { connect } from 'react-redux';
+import {callEditBoard} from "../../../actions/BoardActions";
 
 const Container = styled.div`
   background-color: #d0d0d0;
@@ -33,9 +36,10 @@ const CardList = styled.div`
 `;
 
 
-export default class List extends React.Component {
+class List extends React.Component {
     constructor(props){
         super(props)
+        this.createCard = this.createCard.bind(this)
         this.sayclick = this.sayclick.bind(this)
     }
 
@@ -43,6 +47,35 @@ export default class List extends React.Component {
         console.log("Joris")
     }
 
+    createCard = (event) => {
+        event.preventDefault()
+
+        let idBoard = this.props.idBoard
+
+        let boardofThisList = this.props.boards.filter((board) => board._id == idBoard )[0]
+
+        let newCard = {_id:'',cardTitle: "new card"}
+
+        let newListCard = this.props.list.listCard
+        newListCard.push(newCard)
+
+        let newList = this.props.list
+        newList.listCard = newListCard
+
+        let newBoardList = boardofThisList.boardLists.map((list) => {
+            if(list._id == newList._id){
+                return newList
+            }else{
+                return list
+            }
+        })
+
+        boardofThisList.boardLists = newBoardList
+
+        callEditBoard(boardofThisList)
+
+        //console.log(this.props.boards.filter((board) => board._id == idBoard )[0])
+    }
     render() {
         return (
             <Draggable draggableId={"listDragId"+this.props.list._id} index={this.props.index}>
@@ -62,6 +95,12 @@ export default class List extends React.Component {
                                 }
 
                             </Droppable>
+                            <button className="btn btn-icon btn-3 btn-primary" type="button" onClick={this.createCard}>
+                                <span className="btn-inner--icon"><i className="ni ni-fat-add"/></span>
+                                <span className="btn-inner--text">Add card</span>
+
+                            </button>
+
                         </Container>
                     )}}
             </Draggable>
@@ -69,3 +108,10 @@ export default class List extends React.Component {
 
     }
 }
+
+const mapStateToProps = state => ({
+    user: state.user,
+    boards: state.boards
+})
+
+export default connect(mapStateToProps)(List);

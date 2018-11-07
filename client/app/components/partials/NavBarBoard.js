@@ -20,11 +20,9 @@ class NavBarBoard extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps)
         let id = nextProps.idBoard
         let theBoard = nextProps.boards.filter((board) => board._id == id)[0]
 
-        console.log(theBoard)
 
         if(theBoard !== undefined){
             let teamsB = ["Personal"];
@@ -59,7 +57,6 @@ class NavBarBoard extends Component {
     handleBNChange = (event) => {
         event.preventDefault()
         this.setState({ newBoardName: event.target.value});
-        console.log(this.state.newBoardName)
 
 
     }
@@ -67,12 +64,10 @@ class NavBarBoard extends Component {
         event.preventDefault()
         let newBoard = this.state.board
         newBoard.boardTitle = this.state.newBoardName
-        console.log(newBoard)
         this.setState({
             board: newBoard
         })
 
-        console.log(this.state.board.boardTitle)
         callEditBoard(newBoard)
     }
 

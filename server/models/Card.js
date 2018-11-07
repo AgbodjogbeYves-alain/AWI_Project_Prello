@@ -7,7 +7,7 @@ export const Cards = new Mongo.Collection('cards')
 export const CardSchema = new SimpleSchema({
     _id: {
         type: String,
-        optional: true
+        required: false
     },
   cardTitle: {
       type: String,
@@ -17,7 +17,8 @@ export const CardSchema = new SimpleSchema({
   cardDescription: {
       type: String,
       label: "Description",
-      defaultValue: []
+      defaultValue: "",
+      optional: true
   },
   /*cardTag: {
       type: Array,

@@ -14,7 +14,6 @@ Meteor.methods({
         let countDoc = Lists.find({"_id": idList}).count();
         if (countDoc === 1) {
             let list = Lists.findOne({"_id": idList});
-            console.log(list)
             return list;
         } else {
             throw new Meteor.Error(404, 'List not found')
@@ -26,20 +25,23 @@ Meteor.methods({
 
     },
 
-    'list.editList' (list) {
+    'lists.editList' (list) {
         let editedCards = []
 
         list.listCard.forEach((card) => {
             let result = Meteor.call('cards.editCard', card)
             let nCard;
+
             if(result.insertedId){
                 nCard = Meteor.call('cards.getCard', result.insertedId)
+
             }else{
                 nCard = card
             }
 
             editedCards.push(nCard)
         })
+
 
         return Lists.upsert({'_id': list._id}, {
             $set : {
