@@ -2,32 +2,59 @@ import {Boards} from "../models/Boards";
 import {Meteor} from "meteor/meteor";
 import {boardUtils} from "./Utils/boardUtils";
 
-Meteor.publish('boards', function () {return Boards.find()});
+Meteor.publish('boards', function () {
+    let userId = this.userId;
+    return Boards.find({boardUsers : {$elemMatch: {'user._id': userId}}})
+});
 
 Meteor.methods({
 
     'boards.createBoard'(board) {
         if(Meteor.userId()){
+            board.boardOwner = Meteor.user();
             return Boards.insert(board);
         }else{
             throw Meteor.Error(401, "You are not authentificated")
         }
     },
 
-    'boards.removeBoard'(idBoard) {
+    'boards.getBoard' (idBoard) {
         let board;
-        let countDoc = Boards.find({"_id": boardId}).count();
+        let countDoc = Boards.find({"boardId": idBoard}).count();
+        console.log(countDoc)
         if (countDoc === 1) {
-            //if(Meteor.userId()){
-              //  if(boardUtils.checkInBoardUser(Meteor.userId(), board)){
-                    return Boards.remove(boardId);
-                //}else{
-                  //  return Meteor.Error(403, "You are not allow to delete this board")
-                //}
+            console.log('isIn')
+            board = Boards.findOne({"boardId": idBoard});
+            //if(board.boardPrivacy == 1){
+              //  if(Meteor.userId()){
+                //    if(boardUtils.checkInBoardUser(Meteor.userId(), board)){
+                  //      return board
+                    //}else{
+                      //  return Meteor.Error(403, "You are not on this allow to see this board")
+                    //}
 
+                //}else{
+                //    return Meteor.Error(401, "You are not authentificated")
+                //}
             //}else{
-              //  return Meteor.Error(401, "You are not authentificated")
+                return board
             //}
+        } else {
+            throw new Meteor.Error(404, 'Board not found');
+        }
+
+    },
+
+    'boards.removeBoard'(boardId) {    
+        
+        let board = Boards.findOne(boardId);
+
+        if (board) {
+            if(!this.userId) throw new Meteor.Error('not-authorised');
+            let isTeamMember = board.boardUsers.filter((u) => u.user_id == this.userId && u.boardRole == 'admin').length > 0;
+            if(this.userId != board.boardOwner._id && !isTeamMember) throw new Meteor.Error('not-authorised');
+
+            return Boards.remove(boardId);
         } else {
             throw new Meteor.Error(404, 'Board not found')
         }

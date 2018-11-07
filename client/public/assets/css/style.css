@@ -2,6 +2,9 @@
 @import 'boardModal.css';
 @import 'home.css';
 
+.dropdown-item{
+    cursor: pointer;
+}
 #navbar-main{
     position: fixed !important;
     width: 100%;

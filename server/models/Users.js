@@ -20,6 +20,9 @@ const UserProfileSchema = new SimpleSchema({
 });
 
 export const UserSchema = new SimpleSchema({
+    _id: {
+        type: SimpleSchema.RegEx.Id
+    },
     username: {
         type: String,
         // For accounts-password, either emails or username is required, but not both. It is OK to make this
@@ -54,7 +57,8 @@ export const UserSchema = new SimpleSchema({
         blackbox: true
     },
     createdAt: {
-        type: Date
+        type: Date,
+        optional:  true
     },
     profile: {
         type: UserProfileSchema,

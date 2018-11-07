@@ -25,8 +25,9 @@ class BoardDisplay extends Component {
 
     componentWillReceiveProps(nextProps){
         let id = nextProps.match.params.id
-        let board = nextProps.boards.filter((board) => board._id == id)[0]
-
+        console.log(id)
+        let board = nextProps.boards.filter((board) => board._id === id)[0]
+console.log(board)
         if(board !== undefined){
             this.setState({
                 board: board,
@@ -174,6 +175,7 @@ class BoardDisplay extends Component {
 
 
     render() {
+
         return this.state.board != 'unknow' ? (
             <div id={"boardDisplay"}>
                 <NavBar/>
@@ -193,7 +195,7 @@ class BoardDisplay extends Component {
                                             this.state.board.boardLists.map((list, index) => {
                                                 const cards = list.listCard;
                                                 return (
-                                                    <div>
+                                                    <div key={'div'+list._id}>
                                                     <List key={list._id} list={list} index={index}
                                                              cards={cards} idBoard={this.props.match.params.id}/>
                                                     </div>

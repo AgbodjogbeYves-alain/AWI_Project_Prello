@@ -2,6 +2,7 @@ import { createClass } from 'asteroid';
 import { setLoggedUser, unsetLoggedUser, editProfileUser, addUser } from '../actions/UserActions';
 import store from '../components/store';
 import { createBoard, removeBoard, editBoard } from '../actions/BoardActions';
+import { addTeam, removeTeam, editTeam } from '../actions/TeamActions';
 
 const Asteroid = createClass();
 // Connect to a Meteor backend
@@ -14,17 +15,24 @@ const asteroid = new Asteroid({
 asteroid.subscribe('boards');
 asteroid.subscribe('users');
 asteroid.subscribe('user');
+asteroid.subscribe('teams');
 
 asteroid.ddp.on('added', (doc) => {
   // we need proper document object format here
   if (doc.collection === 'users') {
-    if(doc.fields.emails) store.dispatch(setLoggedUser(doc.fields));
-    else store.dispatch(addUser(doc.fields));
+    const docObj = Object.assign({}, doc.fields, { _id: doc.id });
+    if(docObj.emails) store.dispatch(setLoggedUser(docObj));
+    else store.dispatch(addUser(docObj));
   }
   if(doc.collection === 'boards'){
     const docObj = Object.assign({}, doc.fields, { _id: doc.id });
       store.dispatch(createBoard(docObj));
   }
+  if(doc.collection === 'teams'){
+    const docObj = Object.assign({}, doc.fields, { _id: doc.id });
+    store.dispatch(addTeam(docObj));
+  }
+
 });
 
 asteroid.ddp.on('removed', (removedDoc) => {
@@ -34,6 +42,9 @@ asteroid.ddp.on('removed', (removedDoc) => {
   if (removedDoc.collection === 'boards') {
     store.dispatch(removeBoard(removedDoc.id));
   }
+  if (removedDoc.collection === 'teams') {
+    store.dispatch(removeTeam(removedDoc.id));
+  }
 });
 
 asteroid.ddp.on('changed', (updatedDoc) => {
@@ -41,12 +52,14 @@ asteroid.ddp.on('changed', (updatedDoc) => {
 
       store.dispatch(editProfileUser(updatedDoc.fields));
   }
-
   if (updatedDoc.collection === 'boards') {
       console.log(updatedDoc)
 
       store.dispatch(editBoard(updatedDoc.id, updatedDoc.fields));
   }
+  if (updatedDoc.collection === 'teams') {
+    store.dispatch(editTeam(updatedDoc.id, updatedDoc.fields));
+}
 });
 
 export default asteroid;

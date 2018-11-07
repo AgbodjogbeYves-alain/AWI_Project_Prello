@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Autocomplete from 'react-autocomplete';
-import asteroid from '../../common/asteroid';
 import { connect } from 'react-redux';
 
 class AddUserInput extends Component {
@@ -17,7 +16,8 @@ class AddUserInput extends Component {
     }
 
     renderUsers(){
-        return this.state.addedUsers.map((u,i) => 
+        console.log(this.props.addedUsers)
+        return this.props.addedUsers.map((u,i) => 
             <div className="row" key={i}>
                 <div className="col-7">
                     {u.user.profile.email}
@@ -31,11 +31,12 @@ class AddUserInput extends Component {
                         {this.renderRoleOptions()}
                     </select>
                 </div>
+                {u.user._id != this.props.user._id ?
                 <div className="col-2">
                     <button className="btn btn-danger btn-sm" onClick={() => this.handleRemoveUser(u.user._id)}>
                         x
                     </button>
-                </div>
+                </div> : ""}
             </div>
         )
     }
@@ -47,38 +48,34 @@ class AddUserInput extends Component {
     }
 
     handleAddUser(){
-        let addedUsers = this.state.addedUsers;
-        let alreadyUser = this.state.addedUsers.filter((u) => u.user.profile.email == this.state.userEmail);
+        let addedUsers = this.props.addedUsers;
+        let user = this.props.users.filter((u) => u.profile.email === this.state.userEmail)[0];
+        let alreadyUser = addedUsers.filter((u) => u.user.profile.email == this.state.userEmail);
         if(alreadyUser.length > 0) alert("This user has been already put.")
-        else {
-            asteroid.call('users.getUser', this.state.userEmail)
-            .then((result) => {
-                if(result){
-                    addedUsers.push({
-                        user: result,
-                        userRole: this.state.userRole
-                    });
-                    this.setState({addedUsers: addedUsers});
-                    this.setState({userEmail: ''});
-                    this.onChange();
-                }
-                else this.addAlert("danger", "No user with this email.")
+        else if(user){
+            
+            addedUsers.push({
+                user: user,
+                userRole: this.state.userRole
             })
-            .catch((error) => alert(error.reason));
-        } 
+            
+            this.setState({addedUsers: addedUsers});
+            this.setState({userEmail: ''});
+            this.onChange();
+        }    
+        else this.addAlert("danger", "No user with this email.");
     }
 
     onChange(){
-        this.props.onChange('addedUsers', this.props.addedUsers);
+        this.props.onChange('addedUsers', this.state.addedUsers);
     }
 
     handleChangeUserRole(addedUser, userRole){
         let newAddedUsers = this.state.addedUsers.map((u) => {
             if(u.user._id == addedUser.user._id){
                 u.userRole = userRole
-                return u
             } 
-            else return u
+            return u
         })
 
         this.setState({addedUsers: newAddedUsers});
@@ -141,7 +138,8 @@ class AddUserInput extends Component {
 }
 
 const mapStateToProps = state => ({
-    users: state.users
+    users: state.users,
+    user: state.user
 });
 
 export default connect(mapStateToProps)(AddUserInput);

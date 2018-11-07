@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
 
-import Alert from './Alert';
-import AddUserInput from "./AddUserInput.js";
-import asteroid from '../../common/asteroid';
+import Alert from '../Alert';
+import AddUserInput from "../AddUserInput.js";
+import asteroid from '../../../common/asteroid';
+import AddTeamInput from './AddTeamInput';
 
 class BoardModal extends Component {
 
@@ -15,7 +16,8 @@ class BoardModal extends Component {
             boardId: this.props.board ? this.props.board._id : '',
             boardTitle: this.props.board ? this.props.board.boardTitle : '',
             boardDescription: this.props.board ? this.props.board.boardDescription : '',
-            boardUsers: this.props.board ? this.props.board.boardUsers : [],
+            boardUsers: this.props.board ? this.props.board.boardUsers : [{user: this.props.user, userRole: "admin"}],
+            boardTeams: this.props.board ? this.props.board.boardTeams : [],
             alerts: []
         };
 
@@ -38,7 +40,10 @@ class BoardModal extends Component {
 
     resetFields(){
         this.setState({
-            boardTitle: ''
+            boardTitle: '',
+            boardDescription: '',
+            boardUsers: [{user: this.props.user, userRole: "admin"}],
+            boardTeams: []
         });
     }
 
@@ -47,28 +52,13 @@ class BoardModal extends Component {
             boardTitle: this.state.boardTitle,
             boardDescription: this.state.boardDescription,
             boardUsers: this.state.boardUsers,
-            boardPrivacy: 1,
-            boardList: [{
-                "listId":"1",
-                "listTitle":"List1",
-                "listCard": [
-                    {
-                        "cardId":"10",
-                        "cardTitle":"CardList11",
-                        "cardDescription": "La carte 1 de la Liste 1"
-                    },
-                    {
-                        "cardId":"20",
-                        "cardTitle":"CardList12",
-                        "cardDescription": "La carte 2 de la Liste 1"
-                    }
-                ]}]
+            boardTeams: this.state.boardTeams,
+            boardPrivacy: 1
         };
 
         asteroid.call("boards.createBoard", board)
         .then((result) => {
-
-            //this.props.history.push("/board/" + result)
+            this.props.history.push("/board/" + result)
         })
         .catch((error) => {
             this.addAlert("danger", error.reason)
@@ -80,6 +70,7 @@ class BoardModal extends Component {
         board.boardTitle = this.state.boardTitle;
         board.boardDescription = this.state.boardDescription;
         board.boardUsers = this.state.boardUsers;
+        board.boardTeams = this.state.boardTeams;
 
         asteroid.call("boards.editBoard", board)
         .then((result) => {
@@ -144,6 +135,10 @@ class BoardModal extends Component {
                                     onChange={(field, value) => this.setState({"boardUsers": value})}
                                     type={"board"}
                                 />
+                                <AddTeamInput
+                                    addedTeams={this.state.boardTeams}
+                                    onChange={(field, value) => this.setState({"boardTeams": value})}
+                                />
                             </form>
                         </div>
 
@@ -170,6 +165,8 @@ class BoardModal extends Component {
     }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+    user: state.user
+});
 
 export default connect(mapStateToProps)(withRouter(BoardModal));
