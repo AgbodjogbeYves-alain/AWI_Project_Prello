@@ -1,18 +1,14 @@
 import NavBar from "../../partials/NavBar.js"
 import React, { Component } from 'react';
-import styled from "styled-components";
 import {DragDropContext, Droppable} from "react-beautiful-dnd";
 import List from "./List";
 import NavBarBoard from "../../partials/NavBarBoard";
 import asteroid from "../../../common/asteroid.js";
 import { connect } from 'react-redux';
-import Dashboard from "../Dashboard/Dashboard";
 import {callEditBoard} from "../../../actions/BoardActions";
+import {ContainerB} from "../Utils/Utils";
+import {callCreateList} from "../../../actions/ListActions";
 
-
-const Container = styled.div`
-  display: flex;
-`;
 
 class BoardDisplay extends Component {
 
@@ -23,7 +19,6 @@ class BoardDisplay extends Component {
         }
 
         this.onDragEnd = this.onDragEnd.bind(this);
-
         this.createList = this.createList.bind(this)
     }
 
@@ -173,17 +168,7 @@ class BoardDisplay extends Component {
     };
 
     createList = () => {
-        let nList = {listTitle:"New List", listCard: [], listCreatedAt: Date()}; //see if keep like it
-        let newBoard = this.state.board
-        newBoard.boardLists.push(nList)
-        asteroid.call('boards.editBoard',newBoard)
-            .catch(error => {
-            console.log(error);
-        })
-
-        this.setState({
-            board: newBoard
-        })
+        callCreateList(this.state.board._id)
     };
 
 
@@ -192,12 +177,13 @@ class BoardDisplay extends Component {
             <div id={"boardDisplay"}>
                 <NavBar/>
                 <NavBarBoard idBoard={this.state.board._id}/>
+                <button className="btn btn-success myAddListButton" onClick={this.createList}>Create a new List</button>
                 <div id={"divList"}>
                     <DragDropContext onDragEnd={this.onDragEnd}>
                         <Droppable droppableId={"all-columns"} direction={"horizontal"} type={"list"}>
                             {(provided) => {
                                 return (
-                                    <Container
+                                    <ContainerB
                                         {...provided.droppableProps}
                                         ref={provided.innerRef}
 
@@ -214,14 +200,12 @@ class BoardDisplay extends Component {
                                             })}
 
                                         {provided.placeholder}
-                                    </Container>
+                                    </ContainerB>
                                 )
                             }}
                         </Droppable>
                     </DragDropContext>
                 </div>
-                <button className="btn btn-success" onClick={this.createList}>Create a new List</button>
-
             </div>
         ) : (
             <div id={"unknowDisplayBoard"}>

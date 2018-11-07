@@ -1,6 +1,5 @@
 import asteroid from "../common/asteroid";
 import list from "../reducers/ListReducers";
-import {editBoard} from "./BoardActions";
 
 export const CREATE_LIST = 'CREATE_LIST';
 export const GET_LISTS = 'GET_LISTS';
@@ -30,9 +29,10 @@ export function editList(_id, data) {
 }
 
 //Asynchroneous
-export function callCreateList(listTitle) {
-  return dispatch => asteroid.call('lists.createList', listTitle)
-      .then(result => dispatch(createList({ _id: result, listTitle})));
+export function callCreateList(idBoard) {
+  return asteroid.call('boards.list.createList', idBoard).catch(error => {
+      console.log(error);
+  });
 }
 
 export function callRemoveList(listId) {
@@ -41,6 +41,5 @@ export function callRemoveList(listId) {
 }
 
 export function callEditList(idBoard,newList) {
-  return dispatch => asteroid.call('lists.editListFromList', idBoard,newList)
-      .then(result => dispatch(editBoard({_id: result, newList})))
+  return asteroid.call('lists.editListFromList', idBoard,newList)
 }

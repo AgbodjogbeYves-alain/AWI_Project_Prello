@@ -1,13 +1,25 @@
 import {Lists} from "../models/List";
 import {Meteor} from "meteor/meteor";
-import { Random } from 'meteor/random';
-
-Meteor.publish('lists', function () {return Lists.find()});
+import  { Random } from 'meteor/random';
+import {Boards} from "../models/Boards";
 
 Meteor.methods({
-    'lists.createList'(listName) {
-        let id = Random.id();
-        return Lists.insert({listId: id, listTitle: listName})
+    'boards.list.createList'(idBoard) {
+        let countDoc = Boards.find({"_id": idBoard}).count();
+        if(countDoc==1){
+            let board = (Boards.findOne({_id: idBoard}))
+            let boardLists = board.boardLists
+            let id = Random.id();
+            let newList = {_id: id, listTitle: "New list", listCard: []}
+            boardLists.push(newList)
+            Boards.update({_id: board._id},{
+                $set: {
+                    boardLists: boardLists
+                }
+            })
+        }else{
+            throw new Meteor.Error(404, 'Board not found')
+        }
     },
 
     'lists.getList' (idList) {

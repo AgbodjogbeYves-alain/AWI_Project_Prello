@@ -1,40 +1,10 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
-import styled from 'styled-components'
 import Card from "./Card";
 import {callEditList} from "../../../actions/ListActions";
 import { connect } from 'react-redux';
-import {callEditBoard} from "../../../actions/BoardActions";
-
-const Container = styled.div`
-  background-color: #d0d0d0;
-  border-radius: 5px;
-  box-shadow: 0px 0px 3px 1px #0000005c;
-  display: flex;
-  flex-direction: column;
-  min-width: 250px;
-  width: 15vw;
-  margin-left: 7px;
-  margin-right: 7px;
-  margin-bottom: 20px;
-  position: relative;
-  box-sizing: border-box;
-`;
-
-const Title = styled.h3`
-  padding: 8px;
-`;
-const CardList = styled.div`
-  padding: 8px;
-  transition: background-color 0.2s ease;
-  background-color: ${props =>
-    props.isDraggingOver ? "lightgrey" : "inherit"};
-  flex-grow: 1;
-  min-height: 100px;
-  
-`;
-
+import {Title,Container,CardList} from "../Utils/Utils";
+import {callCreateCard} from "../../../actions/CardActions";
 
 class List extends React.Component {
     constructor(props){
@@ -51,28 +21,9 @@ class List extends React.Component {
         event.preventDefault()
 
         let idBoard = this.props.idBoard
+        let idList = this.props.list._id
+        callCreateCard(idBoard,idList)
 
-        let boardofThisList = this.props.boards.filter((board) => board._id == idBoard )[0]
-
-        let newCard = {_id:'',cardTitle: "new card"}
-
-        let newListCard = this.props.list.listCard
-        newListCard.push(newCard)
-
-        let newList = this.props.list
-        newList.listCard = newListCard
-
-        let newBoardList = boardofThisList.boardLists.map((list) => {
-            if(list._id == newList._id){
-                return newList
-            }else{
-                return list
-            }
-        })
-
-        boardofThisList.boardLists = newBoardList
-
-        callEditBoard(boardofThisList)
 
         //console.log(this.props.boards.filter((board) => board._id == idBoard )[0])
     }

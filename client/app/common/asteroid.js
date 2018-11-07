@@ -14,8 +14,6 @@ const asteroid = new Asteroid({
 asteroid.subscribe('boards');
 asteroid.subscribe('users');
 asteroid.subscribe('user');
-asteroid.subscribe('lists');
-asteroid.subscribe('cards');
 
 asteroid.ddp.on('added', (doc) => {
   // we need proper document object format here

@@ -83,12 +83,14 @@ Meteor.methods({
         }
     },
 
-    'boards.editBoard' (newBoard) {
+    /*'boards.editBoard' (newBoard) {
         let countDoc = Boards.find({"_id": newBoard._id}).count();
         let newLists = []
         if (countDoc === 1) {
+            Meteor.call('board.list.createList', 'zmoihrzmoeirhg', 'blabla')
+        }
 
-        newBoard.boardLists.forEach((list) => {
+        /*newBoard.boardLists.forEach((list) => {
             let result = Meteor.call('lists.editList', list)
             let nList;
 
@@ -116,7 +118,7 @@ Meteor.methods({
 
             throw new Meteor.Error(404, 'Board not found')
         }
-    },
+    },*/
 
     'board.getAllBoards' (){
         return Boards.find().fetch();
