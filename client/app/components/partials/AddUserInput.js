@@ -16,7 +16,6 @@ class AddUserInput extends Component {
     }
 
     renderUsers(){
-        console.log(this.props.addedUsers)
         return this.props.addedUsers.map((u,i) => 
             <div className="row" key={i}>
                 <div className="col-7">

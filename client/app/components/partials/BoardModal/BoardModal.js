@@ -11,13 +11,18 @@ class BoardModal extends Component {
 
     constructor(props) {
         super(props);
+
+        let boardTeams = [];
+        if(this.props.board) boardTeams = this.props.board.boardTeams;
+        else if(this.props.activedTeam) boardTeams = [{team: this.props.activedTeam, teamRole: "admin"}]
+
         this.state = {
             type: this.props.board ? 'edit' : 'add',
             boardId: this.props.board ? this.props.board._id : '',
             boardTitle: this.props.board ? this.props.board.boardTitle : '',
             boardDescription: this.props.board ? this.props.board.boardDescription : '',
             boardUsers: this.props.board ? this.props.board.boardUsers : [{user: this.props.user, userRole: "admin"}],
-            boardTeams: this.props.board ? this.props.board.boardTeams : [],
+            boardTeams: boardTeams,
             alerts: []
         };
 

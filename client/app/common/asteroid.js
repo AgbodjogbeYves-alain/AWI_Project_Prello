@@ -26,6 +26,7 @@ asteroid.ddp.on('added', (doc) => {
   }
   if(doc.collection === 'boards'){
     const docObj = Object.assign({}, doc.fields, { _id: doc.id });
+    console.log(docObj)
     store.dispatch(createBoard(docObj));
   }
   if(doc.collection === 'teams'){
