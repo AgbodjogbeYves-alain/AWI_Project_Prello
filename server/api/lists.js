@@ -21,8 +21,23 @@ Meteor.methods({
 
     },
 
-    'list.deleteList'(idList) {
+    'lists.deleteList'(idList) {
+        let list;
+        let countDoc = Lists.find({"_id": idList}).count();
+        if (countDoc === 1) {
+            //if(Meteor.userId()){
+              //  if(boardUtils.checkInBoardUser(Meteor.userId(), board)){
+                    return Lists.remove(idList);
+                //}else{
+                  //  return Meteor.Error(403, "You are not allow to delete this board")
+                //}
 
+            //}else{
+              //  return Meteor.Error(401, "You are not authentificated")
+            //}
+        } else {
+            throw new Meteor.Error(404, 'List not found')
+        }
     },
 
     'lists.editList' (list) {

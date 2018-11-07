@@ -91,8 +91,6 @@ Meteor.methods({
         newBoard.boardLists.forEach((list) => {
             let result = Meteor.call('lists.editList', list)
             let nList;
-
-
             if(result.insertedId){
                 nList = Meteor.call('lists.getList', result.insertedId)
             }else{

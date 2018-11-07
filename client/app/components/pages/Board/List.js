@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components'
 import Card from "./Card";
-import {callEditList} from "../../../actions/ListActions";
+import {callEditList, callRemoveList} from "../../../actions/ListActions";
 import ConfirmModal from "../../partials/ConfirmModal";
 import { connect } from 'react-redux';
 import {callEditBoard} from "../../../actions/BoardActions";
@@ -44,6 +44,16 @@ export class List extends React.Component {
         this.createCard = this.createCard.bind(this)
         this.titleToInput = this.titleToInput.bind(this)
         this.inputToTitle = this.inputToTitle.bind(this);
+        this.removeList = this.removeList.bind(this);
+    }
+
+    removeList = () => {
+        callRemoveList(this.props.list._id)
+        let idBoard = this.props.idBoard;
+        let board = this.props.boards.filter((board) => board._id == idBoard )[0];
+        let newBoardList = board.boardLists.filter((list) => list._id != this.props.list._id)
+        board.boardLists = newBoardList
+        callEditBoard(board)
     }
 
     updateListName = (newtitle) =>{
@@ -117,7 +127,7 @@ export class List extends React.Component {
                 {(provided) => {
                     return (
                         <Container {...provided.draggableProps} ref={provided.innerRef}>
-                        <ConfirmModal id={"confirmmodal"+this.props.list._id} text={"Are you sure you want to delete the list "+this.props.list.listTitle+" ?"}/>
+                        <ConfirmModal id={"confirmmodal"+this.props.list._id} text={"Are you sure you want to delete the list "+this.props.list.listTitle+" ?"} confirmAction={this.removeList}/>
                         <a className={"ni ni-fat-remove"} data-toggle="modal" data-target={"#"+"confirmmodal"+this.props.list._id}></a>
                         <Title {...provided.dragHandleProps}>Drag Here</Title>
                             <Title id={this.props.list._id} onClick={this.titleToInput}>{this.props.list.listTitle}</Title>

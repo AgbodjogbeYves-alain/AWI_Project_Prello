@@ -36,11 +36,9 @@ export function callCreateList(listTitle) {
 }
 
 export function callRemoveList(listId) {
-  return dispatch => asteroid.call('lists.deleteList', listId)
-      .then(result => dispatch(removeList(listId)));
+  asteroid.call('lists.deleteList', listId)
 }
 
 export function callEditList(idBoard,newList) {
   return dispatch => asteroid.call('lists.editListFromList', idBoard,newList)
-      .then(result => dispatch(editBoard({_id: result, newList})))
 }
