@@ -46,8 +46,9 @@ export class List extends React.Component {
         const input = document.createElement("input");
         input.value = title.innerText;
         input.id = this.props.list._id;
-        input.onblur = this.inputToTitle
+        input.onblur = this.inputToTitle;
         title.parentNode.replaceChild(input, title);
+        input.focus();
     }
 
     createCard = (event) => {
@@ -67,12 +68,12 @@ export class List extends React.Component {
                         <Container {...provided.draggableProps} ref={provided.innerRef}>
                         <ConfirmModal id={"confirmmodal"+this.props.list._id} text={"Are you sure you want to delete the list "+this.props.list.listTitle+" ?"} confirmAction={this.removeList}/>
                         <a className={"ni ni-fat-remove"} data-toggle="modal" data-target={"#"+"confirmmodal"+this.props.list._id} style={{fontSize: "30px", position: "absolute", "right": "0px"}}></a>
-                        <Title {...provided.dragHandleProps}>Drag Here</Title>
+                        <Title {...provided.dragHandleProps}>
                             <Title id={this.props.list._id} onClick={this.titleToInput}>{this.props.list.listTitle}</Title>
+                        </Title>
                             <div>{this.props.list.listCard.length + " cards"}</div>
                             <div className="dropdown">
-                                <button className="btn btn-secondary dropdown-toggle" type="button" id={"dropdownMenuButton"+this.props.list.listId} data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style={{float:"right"}}>
-                                    <span className="glyphicon glyphicon-option-vertical"></span>
+                                <button className="btn fas fa-ellipsis-v" type="button" id={"dropdownMenuButton"+this.props.list.listId} data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style={{float:"right"}}>
                                 </button>
                                 <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <a className="dropdown-item" href="#">Copy list</a>
