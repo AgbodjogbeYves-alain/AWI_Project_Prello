@@ -22,7 +22,11 @@ export const ListSchema = new SimpleSchema({
   listCreatedAt:{
     type: Date,
     autoValue: function(){return new Date();}
-}
+  },
+  listArchived: {
+    type: Boolean,
+    label: "Archived"
+  }
 });
 
 Lists.attachSchema(ListSchema);

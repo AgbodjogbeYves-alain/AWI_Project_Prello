@@ -30,21 +30,21 @@ class Board extends Component {
                     <div className="card-body">
                         <h6>{board.boardTitle}</h6>
                         <div class="dropdown float-right d-none">
-                            <a class="btn-link btn-sm" data-toggle="dropdown" href="#" role="button">
+                            <div class="btn-link btn-sm" data-toggle="dropdown" href="#" role="button">
                                 <i class="ni ni-settings-gear-65 ni-lg"></i>
-                            </a>
+                            </div>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" 
+                                <div class="dropdown-item" 
                                     data-toggle="modal"
                                     data-target={"#board-modal" + board._id}
                                 >
                                     <i class="ni ni-settings"></i>
                                     Edit
-                                </a>
-                                <a class="dropdown-item" onClick={this.handleRemoveBoard}>
+                                </div>
+                                <div class="dropdown-item" onClick={this.handleRemoveBoard}>
                                     <i class="ni ni-fat-remove"></i>
                                     Remove
-                                </a>
+                                </div>
                             </div>
                         </div>
                     </div>

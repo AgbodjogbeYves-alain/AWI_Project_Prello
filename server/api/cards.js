@@ -14,7 +14,7 @@ Meteor.methods({
             let board = (Boards.findOne({_id: idBoard}))
             let newBoardLists = board.boardLists.map((list) => {
                 if(list._id == idList){
-                    let newCard = {_id: id, cardTitle: "New card"}
+                    let newCard = {_id: id, cardTitle: "New card", cardArchived: false}
                     list.listCard.push(newCard)
                     find = true
                     return list

@@ -20,6 +20,10 @@ export const CardSchema = new SimpleSchema({
       defaultValue: "",
       optional: true
   },
+  cardArchived:{
+      type: Boolean,
+      label: "Archived"
+  },
   /*cardTag: {
       type: Array,
       label: "Tags",
