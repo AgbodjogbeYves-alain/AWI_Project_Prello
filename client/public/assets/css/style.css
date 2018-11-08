@@ -95,10 +95,11 @@ nav {
 }
 
 #divList{
-    overflow-x: auto;
+    overflow-x: scroll;
     overflow-y: hidden;
     float: left;
     width: 100%;
+    padding-top: 1%;
 }
 
 .sidenav {
@@ -187,4 +188,8 @@ nav {
 .myAddListButton {
     margin-top: 6%;
     margin-left: 40%;
+}
+
+html{
+    overflow-y: hidden;
 }
