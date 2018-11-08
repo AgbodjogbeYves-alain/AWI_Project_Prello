@@ -34,7 +34,8 @@ class AddTeamInput extends Component {
     handleRemoveTeam(teamId){
         let newAddedTeams = this.state.addedTeams.filter((t) => t != teamId);
         this.setState({addedTeams: newAddedTeams});
-        this.onChange();
+        let team = this.props.teams.filter((t) => t._id === teamId)[0]
+        this.props.onChange("removeTeam", team);
     }
 
     handleAddTeam(){
@@ -47,13 +48,13 @@ class AddTeamInput extends Component {
             addedTeams.push(team._id);
             this.setState({addedTeams: addedTeams});
             this.setState({teamName: ''});
-            this.onChange();
+            this.props.onChange("addTeam", team);
         }
         else this.addAlert("danger", "No user with this email.")
     }
 
     onChange(){
-        this.props.onChange('addedUsers', this.state.addedTeams);
+        this.props.onChange('addedTeams', this.state.addedTeams);
     }
 
     render(){

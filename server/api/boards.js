@@ -4,7 +4,7 @@ import {boardUtils} from "./Utils/boardUtils";
 
 Meteor.publish('boards', function () {
     let userId = this.userId;
-    return Boards.find({boardUsers : {$elemMatch: {'user._id': userId}}})
+    return Boards.find({boardUsers : {$elemMatch: {'userId': userId}}})
 });
 
 Meteor.methods({

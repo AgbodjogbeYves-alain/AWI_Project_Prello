@@ -20,6 +20,7 @@ class AddUserInput extends Component {
     renderUsers(){
         return this.props.addedUsers.map((addedUser,i) => {
             let user = this.props.users.filter((u) => u._id === addedUser.userId)[0];
+            if(addedUser.userId === this.props.user._id) user = this.props.user;
             if(!user) return ""
             
             return (

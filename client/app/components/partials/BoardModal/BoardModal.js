@@ -91,6 +91,29 @@ class BoardModal extends Component {
             this.addAlert("danger", error.reason)
         })
     }
+
+    handleOnChangeTeams(field, value){
+        let team = value;
+        if(field === "addTeam"){
+            team.teamMembers.forEach((user) => {
+                let alreadyIn = this.state.boardUsers.filter((u) => u.userId === user.userId).length > 0;
+                if(!alreadyIn){
+                    let newBoardUsers = this.state.boardUsers;
+                    newBoardUsers.push({userId: user.userId, role: 'member'});
+                    this.setState({boardUsers: newBoardUsers});
+                } 
+            })
+        }
+        if(field === 'removeTeam'){
+
+            let newBoardUsers = this.state.boardUsers.filter((boardUser) => {
+                let isInTeam = team.teamMembers.filter((teamMember) => teamMember.userId === boardUser.userId).length > 0
+                return !isInTeam || boardUser.userId === this.props.user._id
+            });
+            this.setState({boardUsers: newBoardUsers});
+        }
+
+    }
     
     renderBackgrounds(){
         let backgrounds = ["walnut", "avenue", "pier", "tree", "boat", "heart", "hong-kong", "new-york-city", "sea", "vw-camper", "blue-watercolor", "blur-clean"];
@@ -166,7 +189,7 @@ class BoardModal extends Component {
                                         />
                                         <AddTeamInput
                                             addedTeams={this.state.boardTeams}
-                                            onChange={(field, value) => this.setState({"boardTeams": value})}
+                                            onChange={(field, value) => this.handleOnChangeTeams(field, value)}
                                         />
                                     </form>
                                 </div>
