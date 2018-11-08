@@ -34,7 +34,6 @@ class Dashboard extends Component {
     filteredBoards(){
         if(!this.state.activedTeam) return this.props.boards;
         return this.props.boards.filter((board) => {
-            console.log(board.boardTeams)
             let isInBoard = board.boardTeams.filter((boardTeam) => boardTeam.team._id == this.state.activedTeam._id).length > 0
             return isInBoard;
         });
@@ -46,7 +45,9 @@ class Dashboard extends Component {
         return(
             <main id="dashboard">
                 <NavBar/>
-                <BoardModal activedTeam={this.state.activedTeam}/>
+                { this.state.activedTeam ?
+                    <span><BoardModal activedTeam={this.state.activedTeam}/></span> : <BoardModal />
+                }
                 <TeamModal />
                 {this.partialsBoardsRender()}
                 {this.partialsTeamsRender()}

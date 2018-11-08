@@ -86,6 +86,10 @@ class BoardModal extends Component {
             this.addAlert("danger", error.reason)
         })
     }
+    
+    componentWillReceiveProps(){
+        
+    }
 
     render(){
         return ( 

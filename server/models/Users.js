@@ -13,7 +13,7 @@ const UserProfileSchema = new SimpleSchema({
         type: String,
         optional: true
     },
-    ennabledMails: {
+    enabledMails: {
         type: Boolean,
         optional: true
     }
