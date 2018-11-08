@@ -10,7 +10,7 @@ Meteor.methods({
             let board = (Boards.findOne({_id: idBoard}))
             let boardLists = board.boardLists
             let id = Random.id();
-            let newList = {_id: id, listTitle: "New list", listCard: []}
+            let newList = {_id: id, listTitle: "New list", listCard: [], listArchived: false}
             boardLists.push(newList)
             Boards.update({_id: board._id},{
                 $set: {
@@ -63,9 +63,5 @@ Meteor.methods({
             throw new Meteor.Error(404, 'Board not found')
         }
     },
-
-    'list.getAllList' (){
-
-
-    }
+    
 })

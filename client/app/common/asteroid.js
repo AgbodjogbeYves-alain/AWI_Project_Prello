@@ -55,7 +55,7 @@ asteroid.ddp.on('changed', (updatedDoc) => {
       store.dispatch(editBoard(updatedDoc.id, updatedDoc.fields));
   }
   if (updatedDoc.collection === 'teams') {
-    store.dispatch(editTeam(updatedDoc.id, updatedDoc.fields));
+      store.dispatch(editTeam(updatedDoc.id, updatedDoc.fields));
 }
 });
 

@@ -24,9 +24,7 @@ class BoardDisplay extends Component {
 
     componentDidMount(){
         let id = this.props.match.params.id
-        console.log(id)
         let board = this.props.boards.filter((board) => board._id === id)[0]
-console.log(board)
         if(board !== undefined){
             this.setState({
                 board: board,
@@ -42,9 +40,7 @@ console.log(board)
 
     componentWillReceiveProps(nextProps){
         let id = nextProps.match.params.id
-        console.log(id)
         let board = nextProps.boards.filter((board) => board._id === id)[0]
-console.log(board)
         if(board !== undefined){
             this.setState({
                 board: board,
@@ -192,7 +188,6 @@ console.log(board)
 
 
     render() {
-        console.log("test")
         return this.state.board != 'unknow' ? (
             <div 
                 id={"boardDisplay"}
@@ -213,13 +208,15 @@ console.log(board)
                                     >
                                         {
                                             this.state.board.boardLists.map((list, index) => {
-                                                const cards = list.listCard;
-                                                return (
-                                                    <div key={'div'+list._id}>
-                                                    <List key={list._id} list={list} index={index}
-                                                             cards={cards} idBoard={this.props.match.params.id}/>
-                                                    </div>
-                                                );
+                                                if(!list.listArchived){
+                                                    const cards = list.listCard;
+                                                    return (
+                                                        <div key={'div'+list._id}>
+                                                        <List key={list._id} list={list} index={index}
+                                                                 cards={cards} idBoard={this.props.match.params.id}/>
+                                                        </div>
+                                                    );
+                                                }
                                             })}
 
                                         {provided.placeholder}
