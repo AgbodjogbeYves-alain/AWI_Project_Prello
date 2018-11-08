@@ -193,3 +193,21 @@ nav {
 html{
     overflow-y: hidden;
 }
+
+
+.cardactiondiv{
+    float: right
+}
+
+.actionUl{
+    list-style-type: none;
+}
+
+.cardButtonEdit{
+    width: 100%;
+    height: 10%;
+}
+
+.modalCard{
+
+}
