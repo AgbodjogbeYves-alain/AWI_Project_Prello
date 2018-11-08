@@ -66,3 +66,11 @@
     height: 264px;
     box-shadow: -1px 2px 7px 0px rgba(50, 50, 93, .11);
 }
+#dashboard .card-board {
+    background-size: cover;
+}
+#dashboard .board-card .card-body{
+    border-radius: 5px;
+    margin: 5px;
+    background-color: rgba(255, 255, 255, 0.66);
+}

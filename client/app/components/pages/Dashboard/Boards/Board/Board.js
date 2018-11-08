@@ -21,8 +21,12 @@ class Board extends Component {
     render(){
         let board = this.props.board;
         return(
-            <Link to={"/board/"+ board._id} className="col-3 board-card">
-                <div className="card card-stats mb-4 mb-lg-0">
+            <div to={"/board/"+ board._id} className="col-3 board-card">
+                <Link 
+                    to={"/board/"+ board._id} 
+                    className="card card-stats mb-4 mb-lg-0"
+                    style={{backgroundImage: "url('https://res.cloudinary.com/dxdyg7b5b/image/upload/c_thumb,w_200/v1541680096/backgrounds/"+ board.boardBackground +".jpg')"}}
+                >
                     <div className="card-body">
                         <h6>{board.boardTitle}</h6>
                         <div class="dropdown float-right d-none">
@@ -44,8 +48,8 @@ class Board extends Component {
                             </div>
                         </div>
                     </div>
-                </div>
-            </Link>
+                </Link>
+            </div>
         )
     }
 }
