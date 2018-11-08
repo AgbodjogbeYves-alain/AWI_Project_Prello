@@ -86,7 +86,6 @@ export class List extends React.Component {
                                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <a className="dropdown-item">Copy list</a>
                                         <a className="dropdown-item" href="#">Move list</a>
-                                        <a className="dropdown-item" href="#">Follow</a>
                                         <a className="dropdown-item" href="#">Archive all cards</a>
                                         <a className="dropdown-item" data-toggle="modal" data-target={"#"+"confirmArchivemodal"+this.props.list._id}>Archive list</a>
                                     </div>
