@@ -27,7 +27,7 @@ class BoardDisplay extends Component {
         let id = nextProps.match.params.id
         console.log(id)
         let board = nextProps.boards.filter((board) => board._id === id)[0]
-console.log(board)
+        console.log(board)
         if(board !== undefined){
             this.setState({
                 board: board,

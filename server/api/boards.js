@@ -62,8 +62,10 @@ Meteor.methods({
 
     'boards.editBoard' (newBoard) {
         let countDoc = Boards.find({"_id": newBoard._id}).count();
+        console.log(newBoard)
         if (countDoc === 1) {
 
+            console.log("isIn")
         Boards.update({_id: newBoard._id},{
             $set: {
                 boardTitle: newBoard.boardTitle,
