@@ -12,18 +12,26 @@ class BoardModal extends Component {
     constructor(props) {
         super(props);
 
+        let {activedTeam, board, user } = this.props;
+
         let boardTeams = [];
-        if(this.props.board) boardTeams = this.props.board.boardTeams;
-        else if(this.props.activedTeam) boardTeams = [this.props.activedTeam._id]
+        if(board) boardTeams = board.boardTeams;
+        else if(activedTeam) boardTeams = [activedTeam._id]
+
+        let boardUsers = [{userId: user._id, role: "admin"}]
+        if(board) boardUsers = board.boardUsers;
+        else if(activedTeam) boardUsers = activedTeam.teamMembers.map((teamMember) => {
+            return {'userId': teamMember.userId, 'role': 'member'};
+        });
 
         this.state = {
-            type: this.props.board ? 'edit' : 'add',
-            boardId: this.props.board ? this.props.board._id : '',
-            boardTitle: this.props.board ? this.props.board.boardTitle : '',
-            boardDescription: this.props.board ? this.props.board.boardDescription : '',
-            boardUsers: this.props.board ? this.props.board.boardUsers : [{userId: this.props.user._id, role: "admin"}],
+            type: board ? 'edit' : 'add',
+            boardId: board ? board._id : '',
+            boardTitle: board ? board.boardTitle : '',
+            boardDescription: board ? board.boardDescription : '',
+            boardUsers: boardUsers,
             boardTeams: boardTeams,
-            boardBackground: this.props.board ? this.props.board.boardBackground : "walnut",
+            boardBackground: board ? board.boardBackground : "walnut",
             alerts: []
         };
 
