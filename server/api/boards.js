@@ -11,7 +11,7 @@ Meteor.methods({
 
     'boards.createBoard'(board) {
         if(Meteor.userId()){
-            board.boardOwner = Meteor.user();
+            board.boardOwner = this.userId;
             return Boards.insert(board);
         }else{
             throw Meteor.Error(401, "You are not authentificated")

@@ -34,7 +34,7 @@ class Dashboard extends Component {
     filteredBoards(){
         if(!this.state.activedTeam) return this.props.boards;
         return this.props.boards.filter((board) => {
-            let isInBoard = board.boardTeams.filter((boardTeam) => boardTeam.team._id == this.state.activedTeam._id).length > 0
+            let isInBoard = board.boardTeams.filter((boardTeam) => boardTeam._id == this.state.activedTeam._id).length > 0
             return isInBoard;
         });
     }

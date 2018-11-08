@@ -14,14 +14,14 @@ class BoardModal extends Component {
 
         let boardTeams = [];
         if(this.props.board) boardTeams = this.props.board.boardTeams;
-        else if(this.props.activedTeam) boardTeams = [{team: this.props.activedTeam, teamRole: "admin"}]
+        else if(this.props.activedTeam) boardTeams = [this.props.activedTeam._id]
 
         this.state = {
             type: this.props.board ? 'edit' : 'add',
             boardId: this.props.board ? this.props.board._id : '',
             boardTitle: this.props.board ? this.props.board.boardTitle : '',
             boardDescription: this.props.board ? this.props.board.boardDescription : '',
-            boardUsers: this.props.board ? this.props.board.boardUsers : [{user: this.props.user, userRole: "admin"}],
+            boardUsers: this.props.board ? this.props.board.boardUsers : [{userId: this.props.user._id, role: "admin"}],
             boardTeams: boardTeams,
             boardBackground: this.props.board ? this.props.board.boardBackground : "walnut",
             alerts: []
@@ -48,7 +48,7 @@ class BoardModal extends Component {
         this.setState({
             boardTitle: '',
             boardDescription: '',
-            boardUsers: [{user: this.props.user, userRole: "admin"}],
+            boardUsers: [{userId: this.props.user._id, userRole: "admin"}],
             boardTeams: [],
             boardBackground: "walnut"
         });
@@ -66,6 +66,7 @@ class BoardModal extends Component {
 
         asteroid.call("boards.createBoard", board)
         .then((result) => {
+            $('#board-modal' + this.state.boardId).modal('toggle');
             this.props.history.push("/board/" + result)
         })
         .catch((error) => {
@@ -170,7 +171,7 @@ class BoardModal extends Component {
                                     </form>
                                 </div>
                                 <div className="col-4">
-                                    <h2>Background</h2>
+                                    <h2>Arrière Plan</h2>
                                     <div className="row backgrounds">
                                         {this.renderBackgrounds()}
                                     </div>

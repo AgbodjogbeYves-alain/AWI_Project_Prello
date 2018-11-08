@@ -10,7 +10,6 @@ class Boards extends Component {
     }
 
     renderBoards(){
-        console.log(this.props.boards)
         return this.props.boards.map((b,i) =>
             <Board board={b} background={b.boardBackground} title={b.boardTitle} key={i} id={b._id}/>
         );

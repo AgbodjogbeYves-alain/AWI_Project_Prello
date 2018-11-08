@@ -1,13 +1,12 @@
 import SimpleSchema from 'simpl-schema';
-import { UserSchema } from './Users';
 
 export const TeamMembers = new SimpleSchema({
-    user: {
-      type: UserSchema,
+    userId: {
+      type: SimpleSchema.RegEx.Id,
       label: "User",
     },
     
-    userRole: {
+    role: {
       type: String,
       label: "Role",
     }

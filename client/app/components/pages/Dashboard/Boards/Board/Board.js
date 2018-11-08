@@ -12,13 +12,13 @@ class Board extends Component {
         this.handleRemoveBoard = this.handleRemoveBoard.bind(this);
     }
 
-    handleRemoveBoard(){
+    handleRemoveBoard(e){
+        e.preventDefault();
         if(confirm("Are you sure to delete this board ?")){
             asteroid.call("boards.removeBoard", this.props.board._id)
         }
     }
     render(){
-        console.log("test")
         let board = this.props.board;
         return(
             <div to={"/board/"+ board._id} className="col-3 board-card">
@@ -41,7 +41,7 @@ class Board extends Component {
                                     <i class="ni ni-settings"></i>
                                     Edit
                                 </a>
-                                <a class="dropdown-item" onClick={this.handleRemoveBoard}>
+                                <a class="dropdown-item" onClick={(e) => this.handleRemoveBoard(e)}>
                                     <i class="ni ni-fat-remove"></i>
                                     Remove
                                 </a>

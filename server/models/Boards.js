@@ -6,7 +6,6 @@ import SimpleSchema from 'simpl-schema';
 import {ListSchema} from "./List";
 import { BoardUserSchema } from './BoardUser';
 import { UserSchema } from './Users';
-import { BoardTeamSchema } from './BoardTeam';
 
 export const BoardSchema = new SimpleSchema({
   _id: {
@@ -57,9 +56,9 @@ export const BoardSchema = new SimpleSchema({
       defaultValue: []
   },
 
-  'boardTeams.$': BoardTeamSchema, //se if need to replace Object with a schema
+  'boardTeams.$': SimpleSchema.RegEx.Id, //se if need to replace Object with a schema
   boardOwner : {
-    type: UserSchema,
+    type: SimpleSchema.RegEx.Id,
     label: "Owner"
     },
   boardCreatedAt:{
