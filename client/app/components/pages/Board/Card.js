@@ -14,7 +14,7 @@ export default class Card extends Component {
                                {...provided.dragHandleProps}
                                ref={provided.innerRef}
                     >
-                        {this.props.card._id}
+                        {this.props.card.cardTitle}
                     </ContainerC>}
             </Draggable>
 

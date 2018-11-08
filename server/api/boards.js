@@ -70,7 +70,8 @@ Meteor.methods({
                 boardPrivacy: newBoard.boardPrivacy,
                 boardLists: newBoard.boardLists,
                 boardUsers: newBoard.boardUsers,
-                boardTeams: newBoard.boardTeams
+                boardTeams: newBoard.boardTeams,
+                boardBackground: newBoard.boardBackground
             }
         })
 

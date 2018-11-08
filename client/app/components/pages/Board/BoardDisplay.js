@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import {DragDropContext, Droppable} from "react-beautiful-dnd";
 import List from "./List";
 import NavBarBoard from "../../partials/NavBarBoard";
-import asteroid from "../../../common/asteroid.js";
+
 import { connect } from 'react-redux';
 import {callEditBoard} from "../../../actions/BoardActions";
 import {ContainerB} from "../Utils/Utils";
@@ -20,6 +20,23 @@ class BoardDisplay extends Component {
 
         this.onDragEnd = this.onDragEnd.bind(this);
         this.createList = this.createList.bind(this)
+    }
+
+    componentDidMount(){
+        let id = this.props.match.params.id
+        console.log(id)
+        let board = this.props.boards.filter((board) => board._id === id)[0]
+console.log(board)
+        if(board !== undefined){
+            this.setState({
+                board: board,
+            })
+        }else{
+            this.setState({
+                board: 'unknow',
+            })
+
+        }
     }
 
 
@@ -175,9 +192,12 @@ console.log(board)
 
 
     render() {
-
+        console.log("test")
         return this.state.board != 'unknow' ? (
-            <div id={"boardDisplay"}>
+            <div 
+                id={"boardDisplay"}
+                style={{backgroundImage: "url('https://res.cloudinary.com/dxdyg7b5b/image/upload/v1541680096/backgrounds/"+ this.state.board.boardBackground +".jpg')"}}
+            >
                 <NavBar/>
                 <NavBarBoard idBoard={this.state.board._id}/>
                 <button className="btn btn-success myAddListButton" onClick={this.createList}>Create a new List</button>

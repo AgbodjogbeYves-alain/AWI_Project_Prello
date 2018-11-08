@@ -26,6 +26,13 @@ class NavBar extends Component {
             return (
                 <ul className="navbar-nav align-items-lg-center ml-lg-auto navbar-nav-hover">
                     <li>
+                        <Link to={"/dashboard"} className="nav-link" href='' >
+                            <i className="ni ni-tv-2 ni-lg"></i>
+                            <span className="nav-link-inner--text d-lg-none">Accueil</span>
+                        </Link>
+                    </li>
+
+                    <li>
                         <a className="nav-link notifications" href='#' >
                             <i className="ni ni-bell-55 ni-lg"></i>
                             <span className="badge badge-danger">4</span>
@@ -102,6 +109,7 @@ class NavBar extends Component {
                     <Link className="navbar-brand mr-lg-5" to={user ? "/dashboard" : "/"}>
                         <img src="../assets/img/brand/white.png"/>
                     </Link>
+                    
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                     </button>

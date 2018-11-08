@@ -23,6 +23,11 @@ export const BoardSchema = new SimpleSchema({
       label: "Description",
       required: false
   },
+  boardBackground: {
+      type: String,
+      label: "Background",
+      required: true
+  },
   boardUsers: {
       type: Array,
       label: "Users",
