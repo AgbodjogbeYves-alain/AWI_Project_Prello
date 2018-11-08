@@ -9,6 +9,12 @@ class Boards extends Component {
         super(props);
     }
 
+    renderBoards(){
+        return this.props.boards.map((b,i) =>
+            <Board board={b} background={b.boardBackground} title={b.boardTitle} key={i} id={b._id}/>
+        );
+    }
+
     render(){
         return(
             <div>
@@ -21,8 +27,7 @@ class Boards extends Component {
                     <button className="btn btn-primary btn-sm">Import from another App</button>
                 </div>
                 <div className="row w-100">
-                    {this.props.boards.map((b,i) =>
-                        <Board board={b} key={i} id={b._id}/>)}
+                    {this.renderBoards()}
                     <div className="col-12">
                         <button className="btn btn-success" data-toggle="modal" data-target="#board-modal">
                             {this.props.activedTeam ?

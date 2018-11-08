@@ -12,18 +12,26 @@ class BoardModal extends Component {
     constructor(props) {
         super(props);
 
+        let {activedTeam, board, user } = this.props;
+
         let boardTeams = [];
-        if(this.props.board) boardTeams = this.props.board.boardTeams;
-        else if(this.props.activedTeam) boardTeams = [{team: this.props.activedTeam, teamRole: "admin"}]
+        if(board) boardTeams = board.boardTeams;
+        else if(activedTeam) boardTeams = [activedTeam._id]
+
+        let boardUsers = [{userId: user._id, role: "admin"}]
+        if(board) boardUsers = board.boardUsers;
+        else if(activedTeam) boardUsers = activedTeam.teamMembers.map((teamMember) => {
+            return {'userId': teamMember.userId, 'role': 'member'};
+        });
 
         this.state = {
-            type: this.props.board ? 'edit' : 'add',
-            boardId: this.props.board ? this.props.board._id : '',
-            boardTitle: this.props.board ? this.props.board.boardTitle : '',
-            boardDescription: this.props.board ? this.props.board.boardDescription : '',
-            boardUsers: this.props.board ? this.props.board.boardUsers : [{user: this.props.user, userRole: "admin"}],
+            type: board ? 'edit' : 'add',
+            boardId: board ? board._id : '',
+            boardTitle: board ? board.boardTitle : '',
+            boardDescription: board ? board.boardDescription : '',
+            boardUsers: boardUsers,
             boardTeams: boardTeams,
-            boardBackground: "walnut",
+            boardBackground: board ? board.boardBackground : "walnut",
             alerts: []
         };
 
@@ -48,7 +56,7 @@ class BoardModal extends Component {
         this.setState({
             boardTitle: '',
             boardDescription: '',
-            boardUsers: [{user: this.props.user, userRole: "admin"}],
+            boardUsers: [{userId: this.props.user._id, userRole: "admin"}],
             boardTeams: [],
             boardBackground: "walnut"
         });
@@ -66,6 +74,7 @@ class BoardModal extends Component {
 
         asteroid.call("boards.createBoard", board)
         .then((result) => {
+            $('#board-modal' + this.state.boardId).modal('toggle');
             this.props.history.push("/board/" + result)
         })
         .catch((error) => {
@@ -89,6 +98,29 @@ class BoardModal extends Component {
         .catch((error) => {
             this.addAlert("danger", error.reason)
         })
+    }
+
+    handleOnChangeTeams(field, value){
+        let team = value;
+        if(field === "addTeam"){
+            team.teamMembers.forEach((user) => {
+                let alreadyIn = this.state.boardUsers.filter((u) => u.userId === user.userId).length > 0;
+                if(!alreadyIn){
+                    let newBoardUsers = this.state.boardUsers;
+                    newBoardUsers.push({userId: user.userId, role: 'member'});
+                    this.setState({boardUsers: newBoardUsers});
+                } 
+            })
+        }
+        if(field === 'removeTeam'){
+
+            let newBoardUsers = this.state.boardUsers.filter((boardUser) => {
+                let isInTeam = team.teamMembers.filter((teamMember) => teamMember.userId === boardUser.userId).length > 0
+                return !isInTeam || boardUser.userId === this.props.user._id
+            });
+            this.setState({boardUsers: newBoardUsers});
+        }
+
     }
     
     renderBackgrounds(){
@@ -165,12 +197,12 @@ class BoardModal extends Component {
                                         />
                                         <AddTeamInput
                                             addedTeams={this.state.boardTeams}
-                                            onChange={(field, value) => this.setState({"boardTeams": value})}
+                                            onChange={(field, value) => this.handleOnChangeTeams(field, value)}
                                         />
                                     </form>
                                 </div>
                                 <div className="col-4">
-                                    <h2>Background</h2>
+                                    <h2>Arrière Plan</h2>
                                     <div className="row backgrounds">
                                         {this.renderBackgrounds()}
                                     </div>

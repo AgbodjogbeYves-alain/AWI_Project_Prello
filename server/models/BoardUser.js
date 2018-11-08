@@ -2,12 +2,12 @@ import SimpleSchema from 'simpl-schema';
 import { UserSchema } from './Users';
 
 export const BoardUserSchema = new SimpleSchema({
-  user: {
-      type: UserSchema,
+  userId: {
+      type: SimpleSchema.RegEx.Id,
       label: "User",
       required: true
   },
-  userRole: {
+  role: {
       type: String,
       label: "Role",
       required: true

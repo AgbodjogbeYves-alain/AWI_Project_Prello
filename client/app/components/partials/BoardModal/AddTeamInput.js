@@ -15,74 +15,46 @@ class AddTeamInput extends Component {
     }
 
     renderTeams(){
-        return this.state.addedTeams.map((t,i) => 
-            <div className="row" key={i}>
-                <div className="col-7">
-                    {t.team.teamName}
-                </div>
-                <div className="col-3">
-                    <select 
-                        className="mb-3" 
-                        value={t.teamRole} 
-                        onChange={(e) => this.handleChangeTeamRole(u, e.target.value)}
-                    >
-                        {this.renderRoleOptions()}
-                    </select>
+        return this.state.addedTeams.map((teamId,i) => {
+            let team = this.props.teams.filter((t) => t._id === teamId)[0];
+            if(!team) return "";
+            return(<div className="row" key={i}>
+                <div className="col-10">
+                    {team.teamName}
                 </div>
                 <div className="col-2">
-                    <button className="btn btn-danger btn-sm" onClick={() => this.handleRemoveTeam(t.team._id)}>
+                    <button className="btn btn-danger btn-sm" onClick={() => this.handleRemoveTeam(teamId)}>
                         x
                     </button>
                 </div>
-            </div>
-        )
+            </div>)
+        })
     }
 
     handleRemoveTeam(teamId){
-        let newAddedTeams = this.state.addedTeams.filter((t) => t.team._id != teamId);
+        let newAddedTeams = this.state.addedTeams.filter((t) => t != teamId);
         this.setState({addedTeams: newAddedTeams});
-        this.onChange();
+        let team = this.props.teams.filter((t) => t._id === teamId)[0]
+        this.props.onChange("removeTeam", team);
     }
 
     handleAddTeam(){
         let addedTeams = this.state.addedTeams;
         let team = this.props.teams.filter((t) => t.teamName === this.state.teamName)[0]
-        let alreadyTeam = this.state.addedTeams.filter((t) => t.team._id == team._id).length > 0;
+        let alreadyTeam = this.state.addedTeams.filter((t) => t == team._id).length > 0;
         
         if(alreadyTeam) alert("This team has been already put.")
         else if(team){
-            addedTeams.push({
-                team: team,
-                teamRole: this.state.teamRole
-            });
+            addedTeams.push(team._id);
             this.setState({addedTeams: addedTeams});
             this.setState({teamName: ''});
-            this.onChange();
+            this.props.onChange("addTeam", team);
         }
         else this.addAlert("danger", "No user with this email.")
     }
 
     onChange(){
-        this.props.onChange('addedUsers', this.state.addedTeams);
-    }
-
-    handleChangeTeamRole(addedTeam, teamRole){
-        let newAddedTeams = this.state.addedTeams.map((t) => {
-            if(t.team._id == addedTeam.team._id){
-                t.teamRole = teamRole
-            } 
-            return t
-        })
-
-        this.setState({addedTeams: newAddedTeams});
-        this.onChange();
-    }
-
-    renderRoleOptions(){
-        let optionList = ['Admin', 'Member', 'Observer'];
-        return optionList.map((o) => 
-            <option value={o.toLowerCase()}>{o}</option>
-        )
+        this.props.onChange('addedTeams', this.state.addedTeams);
     }
 
     render(){
@@ -90,7 +62,7 @@ class AddTeamInput extends Component {
             <div className="form-group mb-3">
                 {this.renderTeams()}
                 <div className="row">
-                    <div className="col-6">
+                    <div className="col-9">
                         <div className="input-group">
                             <Autocomplete
                                 getItemValue={(item) => item.teamName}
@@ -112,15 +84,6 @@ class AddTeamInput extends Component {
                                 }}
                             />
                         </div>
-                    </div>
-                    <div className="col-3" style={{paddingTop: "11px"}}>
-                        <select 
-                            className="mb-3" 
-                            valus={this.state.teamRole} 
-                            onChange={(e) => this.setState({teamRole: e.target.value})}
-                        >
-                            {this.renderRoleOptions()}
-                        </select>
                     </div>
                     <div className="col-3">
                         <button className="btn btn-primary" onClick={() => this.handleAddTeam()}>Add</button>
