@@ -4,12 +4,20 @@ import { withRouter } from "react-router-dom";
 import {SearchBar} from "./SearchBar"
 import { connect } from 'react-redux';
 import asteroid from '../../common/asteroid';
+import { resetBoards } from '../../actions/BoardActions';
+import { resetTeams } from '../../actions/TeamActions';
+import { resetUsers } from '../../actions/UserActions';
 
 class NavBar extends Component {
 
     handleLogOut(){
         asteroid.logout()
-        .then(() => this.props.history.push("/"));
+        .then(() => {
+            this.props.dispatchResetBoards();
+            this.props.dispatchResetTeams();
+            this.props.dispatchResetUsers();
+            this.props.history.push("/");
+        });
     }
 
     renderLinks(){
@@ -125,5 +133,10 @@ class NavBar extends Component {
 const mapStateToProps = state => ({
     user: state.user,
 });
+const mapDispatchToProps = dispatch => ({
+    dispatchResetBoards: () => dispatch(resetBoards()),
+    dispatchResetTeams: () => dispatch(resetTeams()),
+    dispatchResetUsers: () => dispatch(resetUsers())
+  });
 
-export default connect(mapStateToProps)(withRouter(NavBar));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(NavBar));
