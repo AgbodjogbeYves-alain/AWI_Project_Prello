@@ -1,5 +1,5 @@
 import { remove, edit, add } from '../common/helpers';
-import { ADD_TEAM, REMOVE_TEAM, EDIT_TEAM } from '../actions/TeamActions';
+import { ADD_TEAM, REMOVE_TEAM, EDIT_TEAM, RESET_TEAMS } from '../actions/TeamActions';
 
 const teams = (state = [], action) => {
   switch (action.type) {
@@ -9,6 +9,8 @@ const teams = (state = [], action) => {
       return remove(state, action);
     case EDIT_TEAM:
       return edit(state, action);
+    case RESET_TEAMS:
+      return [];
     default:
       return state;
   }

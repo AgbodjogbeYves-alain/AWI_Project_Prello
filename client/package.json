@@ -54,7 +54,7 @@
     "rupture": "~0.6.2",
     "s-grid": "^1.2.1",
     "simpl-schema": "^1.5.3",
-    "styled-components": "^4.0.2"
+    "styled-components": "^4.0.3"
   },
   "devDependencies": {
     "autoprefixer": "~6.5.3",

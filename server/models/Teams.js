@@ -6,6 +6,9 @@ import {TeamMembers} from './TeamMembers.js'
 export const Teams = new Mongo.Collection('teams');
 
 export const TeamSchema = new SimpleSchema({
+    _id: {
+        type: SimpleSchema.RegEx.Id
+    },
     teamName: {
         type: String,
         label: "Name",

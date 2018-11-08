@@ -4,12 +4,20 @@ import { withRouter } from "react-router-dom";
 import {SearchBar} from "./SearchBar"
 import { connect } from 'react-redux';
 import asteroid from '../../common/asteroid';
+import { resetBoards } from '../../actions/BoardActions';
+import { resetTeams } from '../../actions/TeamActions';
+import { resetUsers } from '../../actions/UserActions';
 
 class NavBar extends Component {
 
     handleLogOut(){
         asteroid.logout()
-        .then(() => this.props.history.push("/"));
+        .then(() => {
+            this.props.dispatchResetBoards();
+            this.props.dispatchResetTeams();
+            this.props.dispatchResetUsers();
+            this.props.history.push("/");
+        });
     }
 
     renderLinks(){
@@ -17,6 +25,13 @@ class NavBar extends Component {
         if(user){
             return (
                 <ul className="navbar-nav align-items-lg-center ml-lg-auto navbar-nav-hover">
+                    <li>
+                        <Link to={"/dashboard"} className="nav-link" href='' >
+                            <i className="ni ni-tv-2 ni-lg"></i>
+                            <span className="nav-link-inner--text d-lg-none">Accueil</span>
+                        </Link>
+                    </li>
+
                     <li>
                         <a className="nav-link notifications" href='#' >
                             <i className="ni ni-bell-55 ni-lg"></i>
@@ -94,6 +109,7 @@ class NavBar extends Component {
                     <Link className="navbar-brand mr-lg-5" to={user ? "/dashboard" : "/"}>
                         <img src="../assets/img/brand/white.png"/>
                     </Link>
+                    
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                     </button>
@@ -125,5 +141,10 @@ class NavBar extends Component {
 const mapStateToProps = state => ({
     user: state.user,
 });
+const mapDispatchToProps = dispatch => ({
+    dispatchResetBoards: () => dispatch(resetBoards()),
+    dispatchResetTeams: () => dispatch(resetTeams()),
+    dispatchResetUsers: () => dispatch(resetUsers())
+  });
 
-export default connect(mapStateToProps)(withRouter(NavBar));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(NavBar));

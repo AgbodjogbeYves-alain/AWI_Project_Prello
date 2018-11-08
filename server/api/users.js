@@ -29,6 +29,7 @@ Meteor.methods({
         }
     },
     "users.updateProfile"(email, lastname, firstname){
+        //TODO Test if email already used
         Meteor.users.update(Meteor.userId(), { $set: {
             emails: [{address: email, verified: true}],
             'profile.lastname': lastname,

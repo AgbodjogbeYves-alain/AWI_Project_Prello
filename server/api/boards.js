@@ -63,15 +63,18 @@ Meteor.methods({
     'boards.editBoard' (newBoard) {
         let countDoc = Boards.find({"_id": newBoard._id}).count();
         if (countDoc === 1) {
-            Boards.update({_id: newBoard._id},{
-                $set: {
-                    boardTitle: newBoard.boardTitle,
-                    boardPrivacy: newBoard.boardPrivacy,
-                    boardLists: newBoard.boardLists,
-                    boardUsers: newBoard.boardUsers,
-                    boardTeams: newBoard.boardTeams
-                }
-            })
+
+        Boards.update({_id: newBoard._id},{
+            $set: {
+                boardTitle: newBoard.boardTitle,
+                boardPrivacy: newBoard.boardPrivacy,
+                boardLists: newBoard.boardLists,
+                boardUsers: newBoard.boardUsers,
+                boardTeams: newBoard.boardTeams,
+                boardBackground: newBoard.boardBackground
+            }
+        })
+
         }else {
             throw new Meteor.Error(404, 'Board not found')
         }
