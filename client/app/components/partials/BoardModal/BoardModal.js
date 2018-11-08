@@ -23,7 +23,7 @@ class BoardModal extends Component {
             boardDescription: this.props.board ? this.props.board.boardDescription : '',
             boardUsers: this.props.board ? this.props.board.boardUsers : [{user: this.props.user, userRole: "admin"}],
             boardTeams: boardTeams,
-            boardBackground: "walnut",
+            boardBackground: this.props.board ? this.props.board.boardBackground : "walnut",
             alerts: []
         };
 

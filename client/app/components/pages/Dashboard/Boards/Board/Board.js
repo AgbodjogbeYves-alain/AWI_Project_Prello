@@ -17,15 +17,15 @@ class Board extends Component {
             asteroid.call("boards.removeBoard", this.props.board._id)
         }
     }
-
     render(){
+        console.log("test")
         let board = this.props.board;
         return(
             <div to={"/board/"+ board._id} className="col-3 board-card">
                 <Link 
                     to={"/board/"+ board._id} 
                     className="card card-stats mb-4 mb-lg-0"
-                    style={{backgroundImage: "url('https://res.cloudinary.com/dxdyg7b5b/image/upload/c_thumb,w_200/v1541680096/backgrounds/"+ board.boardBackground +".jpg')"}}
+                    style={{backgroundImage: "url('https://res.cloudinary.com/dxdyg7b5b/image/upload/c_thumb,w_300/v1541680096/backgrounds/"+ board.boardBackground +".jpg')"}}
                 >
                     <div className="card-body">
                         <h6>{board.boardTitle}</h6>

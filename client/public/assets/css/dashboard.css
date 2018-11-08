@@ -54,6 +54,8 @@
     margin-bottom: 5px;
     margin-top: 5px;
     cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 1px 1px 2px 0px grey;
 }
 #dashboard .thumbnail.active{
     box-shadow: 0px 0px 8px 3px #1f2b6f;
@@ -66,7 +68,7 @@
     height: 264px;
     box-shadow: -1px 2px 7px 0px rgba(50, 50, 93, .11);
 }
-#dashboard .card-board {
+#dashboard .board-card .card-stats{
     background-size: cover;
 }
 #dashboard .board-card .card-body{
