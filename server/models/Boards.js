@@ -9,6 +9,10 @@ import { UserSchema } from './Users';
 import { BoardTeamSchema } from './BoardTeam';
 
 export const BoardSchema = new SimpleSchema({
+  _id: {
+      type: String,
+      optional: true
+  },
   boardTitle: {
       type: String,
       label: "Title",
@@ -33,21 +37,21 @@ export const BoardSchema = new SimpleSchema({
   boardLists: {
       type: Array,
       label: "Lists",
-      defaultValue: []
+      defaultValue: [],
   },
   'boardLists.$': ListSchema, //se if need to replace Object with a schema
-
-    boardTags: {
+  /*boardTags: {
       type: Array,
       label: "Tags",
       defaultValue: []
   },
-  'boardTags.$': Object, //se if need to replace Object with a schema
+  'boardTags.$': Object, //se if need to replace Object with a schema*/
   boardTeams: {
       type: Array,
       label: "Teams",
       defaultValue: []
   },
+
   'boardTeams.$': BoardTeamSchema, //se if need to replace Object with a schema
   boardOwner : {
     type: UserSchema,
@@ -59,4 +63,4 @@ export const BoardSchema = new SimpleSchema({
   }
 });
 
-Boards.attachSchema(BoardSchema);
+Boards.attachSchema(BoardSchema,{transform: true});

@@ -1,28 +1,21 @@
 import React, { Component } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import styled from 'styled-components'
-
-const Container = styled.div`
-  border: 1px solid lightgrey;
-  border-radius: 2px;
-  padding: 8px;
-  margin-bottom: 8px;
-  background-color: white;
-`;
+import {ContainerC} from "../Utils/Utils";
+import { connect } from 'react-redux';
+import { withRouter } from "react-router-dom";
 
 export default class Card extends Component {
 
-
     render() {
         return (
-            <Draggable draggableId={this.props.card.cardId} index={this.props.index}>
+            <Draggable draggableId={this.props.card._id} index={this.props.index}>
                 {(provided) =>
-                    <Container {...provided.draggableProps}
+                    <ContainerC {...provided.draggableProps}
                                {...provided.dragHandleProps}
                                ref={provided.innerRef}
                     >
-                        {this.props.card.cardTitle}
-                    </Container>}
+                        {this.props.card._id}
+                    </ContainerC>}
             </Draggable>
 
         )

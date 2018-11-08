@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import asteroid from '../../../common/asteroid';
 
 import Alert from "../../partials/Alert.js";
 import NavBar from "../../partials/NavBar.js"
-import asteroid from '../../../common/asteroid';
 
 class SignUp extends Component {
 

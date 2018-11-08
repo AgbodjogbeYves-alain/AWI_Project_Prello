@@ -23,6 +23,7 @@ Meteor.methods({
         let countDoc = Boards.find({"boardId": idBoard}).count();
         console.log(countDoc)
         if (countDoc === 1) {
+            console.log('isIn')
             board = Boards.findOne({"boardId": idBoard});
             //if(board.boardPrivacy == 1){
               //  if(Meteor.userId()){
@@ -44,31 +45,6 @@ Meteor.methods({
 
     },
 
-    /*'boards.getBoardFromExt' (idBoard,token) {
-        let decodedToken = "xd"
-        let board;
-        let countDoc = Boards.find({"_id": idBoard}).count();
-        console.log(countDoc)
-        if (countDoc === 1) {
-            board = Boards.findOne({"boardId": idBoard});
-            if(board.boardPrivacy == 1){
-                if(token.userId){
-                    if(boardUtils.checkInBoardUser(Meteor.userId(), board)){
-                        return board
-                    }else{
-                        return Meteor.Error(403, "You are not on this allow to see this board")
-                    }
-
-                }else{
-                    return Meteor.Error(401, "You are not authentificated")
-                }
-            }
-            return board;
-        } else {
-            throw new Meteor.Error(404, 'Board not found')
-        }
-    },*/
-
     'boards.removeBoard'(boardId) {    
         
         let board = Boards.findOne(boardId);
@@ -85,39 +61,21 @@ Meteor.methods({
     },
 
     'boards.editBoard' (newBoard) {
-        let countDoc = Boards.find(newBoard._id).count();
+        let countDoc = Boards.find({"_id": newBoard._id}).count();
         if (countDoc === 1) {
-            Boards.update(newBoard._id, {
-                $set: {
-                    boardTitle: newBoard.boardTitle,
-                    boardPrivacy: newBoard.privacy,
-                    boardUsers: newBoard.boardUsers,
-                    boardMembers: newBoard.boardMembers,
-                    boardTeams: newBoard.boardTeams
-                }
 
-            })
+        Boards.update({_id: newBoard._id},{
+            $set: {
+                boardTitle: newBoard.boardTitle,
+                boardPrivacy: newBoard.boardPrivacy,
+                boardLists: newBoard.boardLists,
+                boardUsers: newBoard.boardUsers,
+                boardTeams: newBoard.boardTeams
+            }
+        })
 
-           /*newBoard.boardList.forEach((list) => {
-                    Boards.update({boardId: newBoard.boardId, 'boardList.listId': list.listId}, {
-                        $set: {
-                            "boardList.list.listCard.$[]": list.listCard,
-                        }
-
-                    })
-                })*/
-
-
-
-            /*newBoard.boardList.forEach((list) => {
-                Boards.update({boardId: newBoard.boardId, "boardList.listId": list.listId}, {
-                    $set: {
-                        boardTitle: newBoard.boardTitle,
-                        boardPrivacy: newBoard.privacy,
-                    }
-                })
-            })*/
         }else {
+
             throw new Meteor.Error(404, 'Board not found')
         }
     },
@@ -158,6 +116,7 @@ Meteor.methods({
             throw new Meteor.Error(404, 'Board not found')
         }
     },
+
     'board.getCards' (boardId) {
         let board;
         let countDoc = Boards.find({"_id": boardId}).count();

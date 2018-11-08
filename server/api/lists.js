@@ -1,65 +1,71 @@
 import {Lists} from "../models/List";
 import {Meteor} from "meteor/meteor";
-import { Random } from 'meteor/random';
-import { JsonRoutes } from 'meteor/simple:json-routes';
-
+import  { Random } from 'meteor/random';
+import {Boards} from "../models/Boards";
 
 Meteor.methods({
-    'list.createList'(listName) {
-        return Lists.insert({listTitle: listName})
-    },
-
-    'list.getList' (idList) {
-        let countDoc = Lists.find({"_id": idList}).count();
-        if (countDoc === 1) {
-            let list = List.findOne({"_id": idList});
-            return list;
-        } else {
-            throw new Meteor.Error(404, 'List not found')
+    'boards.lists.createList'(idBoard) {
+        let countDoc = Boards.find({"_id": idBoard}).count();
+        if(countDoc==1){
+            let board = (Boards.findOne({_id: idBoard}))
+            let boardLists = board.boardLists
+            let id = Random.id();
+            let newList = {_id: id, listTitle: "New list", listCard: []}
+            boardLists.push(newList)
+            Boards.update({_id: board._id},{
+                $set: {
+                    boardLists: boardLists
+                }
+            })
+        }else{
+            throw new Meteor.Error(404, 'Board not found')
         }
-
-    },
-    'list.deleteList'(idBoard, idList) {
-
     },
 
-    'list.editList' (list) {
+    'boards.lists.deleteList'(idBoard,idList) {
+        let countDoc = Boards.find({"_id": idBoard}).count();
+        if (countDoc === 1) {
+            let board = (Boards.findOne({_id: idBoard}))
+            let boardLists = board.boardLists
+            let newBoardList = boardLists.filter((list) => list._id!=idList)
+            Boards.update({_id: idBoard},{
+                $set: {
+                    boardLists: newBoardList
+                }
+            })
 
+        } else {
+            throw new Meteor.Error(404, 'Board not found')
+        }
+    },
+
+    'boards.lists.editList' (idBoard, newList) {
+
+        let countDoc = Boards.find({"_id": idBoard}).count();
+        if (countDoc === 1) {
+            let board = (Boards.findOne({_id: idBoard}))
+            let boardLists = board.boardLists
+
+            let newBoardList = boardLists.map((list) => {
+                if(list._id == newList._id){
+                    return newList
+                }else{
+                    return list
+                }
+            })
+
+            Boards.update({_id: idBoard},{
+                $set: {
+                    boardLists: newBoardList
+                }
+            })
+        } else {
+            throw new Meteor.Error(404, 'Board not found')
+        }
     },
 
     'list.getAllList' (){
 
+
     }
 })
-
-// code to run on server at startup
-JsonRoutes.Middleware.use(function(req, res, next) {
-    if(req.query.error) {
-        JsonRoutes.sendResult(res, {
-            code: 401,
-            data: {
-                result: "ERROR"
-            }
-        })
-    }
-
-    next();
-});
-
-
-JsonRoutes.add('post', '/signUp/', function(req, res, next) {
-    console.log(req)
-    Meteor.users.insert({
-        username: req.body.state.username,
-        firstname: req.body.state.firstname,
-        lastname: req.body.state.lastname,
-        password: req.body.state.password,
-        email: req.body.state.email
-    })
-    JsonRoutes.sendResult(res, {
-        data: {
-            result: Meteor.users.find().fetch()
-        }
-    });
-});
-

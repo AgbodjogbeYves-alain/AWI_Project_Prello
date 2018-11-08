@@ -20,21 +20,31 @@ class NavBarBoard extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        let teamsB = ["Personal"];
-        console.log(nextProps)
-        console.log(this.props)
-        if(!(nextProps.board.boardTeam.length === 0)){
-            if(nextProps.board.boardTeam.length > 1){
-                teamsB = ["Multiple teams"]
-            }else{
-                teamsB = [nextProps.board.boardTeam[0].teamName]
+        let id = nextProps.idBoard
+        let theBoard = nextProps.boards.filter((board) => board._id == id)[0]
+
+
+        if(theBoard !== undefined){
+            let teamsB = ["Personal"];
+            if(!(theBoard.boardTeams.length === 0)){
+                if(theBoard.boardTeams.length > 1){
+                    teamsB = ["Multiple teams"]
+                }else{
+                    teamsB = [theBoard.boardTeams[0].teamName]
+                }
             }
+
+            this.setState({
+                board: theBoard,
+                teams: teamsB
+            })
+        }else{
+            this.setState({
+                board: 'unknow',
+            })
+
         }
 
-        this.setState({
-            board: nextProps.board,
-            teams: teamsB
-        })
 
     }
 
@@ -47,7 +57,6 @@ class NavBarBoard extends Component {
     handleBNChange = (event) => {
         event.preventDefault()
         this.setState({ newBoardName: event.target.value});
-        console.log(this.state.newBoardName)
 
 
     }
@@ -59,7 +68,6 @@ class NavBarBoard extends Component {
             board: newBoard
         })
 
-        console.log(this.state.board.boardTitle)
         callEditBoard(newBoard)
     }
 
@@ -80,7 +88,7 @@ class NavBarBoard extends Component {
         return (
 
             <div id="navBarBoard">
-            <nav className="navbar navbar-expand-lg navbar-dark bg-default">
+            <nav className="navbar navbar-expand-lg navbar-dark">
                 <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#modalChangeBN">
                     {this.state.board.boardTitle}
                 </button>
@@ -128,7 +136,6 @@ class NavBarBoard extends Component {
 
 const mapStateToProps = state => ({
     user: state.user,
-    boards: state.boards,
-    board: state.boards[0]
+    boards: state.boards
 });
-    export default connect(mapStateToProps)(NavBarBoard);
+export default connect(mapStateToProps)(NavBarBoard);

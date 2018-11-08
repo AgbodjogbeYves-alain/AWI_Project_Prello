@@ -2,3 +2,5 @@ node_modules/
 .vscode/
 .idea/
 .meteor/local/
+yarn-error.log
+server/.meteor/local
