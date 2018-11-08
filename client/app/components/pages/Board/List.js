@@ -32,9 +32,8 @@ export class List extends React.Component {
         event.preventDefault();
         const input = document.getElementById(this.props.list._id);
         this.updateListName(input.value);
-        const title = document.createElement("h3");
+        const title = document.createElement("div");
         title.innerHTML = input.value;
-        title.style= "padding:8px";
         title.id = this.props.list._id;
         title.onclick = this.titleToInput;
         input.parentNode.replaceChild(title, input);
@@ -70,18 +69,19 @@ export class List extends React.Component {
                         <ConfirmModal id={"confirmmodal"+this.props.list._id} text={"Are you sure you want to delete the list "+this.props.list.listTitle+" ?"} confirmAction={this.removeList}/>
                         <a className={"ni ni-fat-remove"} data-toggle="modal" data-target={"#"+"confirmmodal"+this.props.list._id} style={{fontSize: "30px", position: "absolute", "right": "0px"}}></a>
                         <Title {...provided.dragHandleProps}>
-                            <Title id={this.props.list._id} onClick={this.titleToInput}>{this.props.list.listTitle}</Title>
+                            <div id={this.props.list._id} onClick={this.titleToInput}>{this.props.list.listTitle}</div>
                         </Title>
-                            <div>{this.props.list.listCard.length + " cards"}</div>
-                            <div className="dropdown">
-                                <button className="btn fas fa-ellipsis-v" type="button" id={"dropdownMenuButton"+this.props.list.listId} data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style={{float:"right"}}>
-                                </button>
-                                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a className="dropdown-item" href="#">Copy list</a>
-                                    <a className="dropdown-item" href="#">Move list</a>
-                                    <a className="dropdown-item" href="#">Follow</a>
-                                    <a className="dropdown-item" href="#">Archive all cards</a>
-                                    <a className="dropdown-item" href="#">Archive list</a>
+                            <div style={{textAlign: "center"}}>{this.props.list.listCard.length + " cards"}
+                                <div className="dropdown" style={{float:"right"}}>
+                                    <button className="btn fas fa-ellipsis-v" type="button" id={"dropdownMenuButton"+this.props.list.listId} data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    </button>
+                                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a className="dropdown-item" href="#">Copy list</a>
+                                        <a className="dropdown-item" href="#">Move list</a>
+                                        <a className="dropdown-item" href="#">Follow</a>
+                                        <a className="dropdown-item" href="#">Archive all cards</a>
+                                        <a className="dropdown-item" href="#">Archive list</a>
+                                    </div>
                                 </div>
                             </div>
                             <Droppable droppableId={"listId"+this.props.list._id} type={"card"}>
