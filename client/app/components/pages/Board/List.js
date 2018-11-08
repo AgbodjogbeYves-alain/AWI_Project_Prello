@@ -47,6 +47,7 @@ export class List extends React.Component {
         input.value = title.innerText;
         input.id = this.props.list._id;
         input.onblur = this.inputToTitle;
+        input.className = "form-control w-100";
         title.parentNode.replaceChild(input, title);
         input.focus();
     }
