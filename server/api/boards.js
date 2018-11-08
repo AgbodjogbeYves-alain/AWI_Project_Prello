@@ -76,7 +76,6 @@ Meteor.methods({
         })
 
         }else {
-
             throw new Meteor.Error(404, 'Board not found')
         }
     },
