@@ -8,6 +8,7 @@ import ChangePasswordForm from "./ChangePasswordForm/ChangePasswordForm.js";
 import EnabledMailsInput from "./EnabledMailsInput/EnabledMailsInput.js";
 import ConfirmModal from "./../../partials/ConfirmModal.js";
 import { callRemoveUser } from '../../../actions/UserActions.js';
+import { ProfilePicture } from '../../partials/ProfilePicture.js';
 
 class MyAccount extends Component {
 
@@ -57,9 +58,9 @@ class MyAccount extends Component {
                                 <div className="row justify-content-center">
                                     <div className="col-lg-3 order-lg-2">
                                         <div className="card-profile-image">
-                                            <a href="#">
-                                                <img src="./img/profile_placeholder.png" className="rounded-circle"/>
-                                            </a>
+                                            { this.props.user ?
+                                                <ProfilePicture size={"lg"} user={this.props.user}/> : ""
+                                            }
                                         </div>
                                     </div>
                                     <div className="col-lg-4 order-lg-3 ">
