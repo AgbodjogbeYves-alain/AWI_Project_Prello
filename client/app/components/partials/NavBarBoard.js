@@ -2,6 +2,7 @@ import React, { Component,PureComponent } from 'react';
 import Menu from "./Menu"
 import {callEditBoard} from "../../actions/BoardActions";
 import { connect } from 'react-redux';
+import { ProfilePicture } from './ProfilePicture';
 
 class NavBarBoard extends Component {
 
@@ -20,9 +21,7 @@ class NavBarBoard extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        let id = nextProps.idBoard
-        let theBoard = nextProps.boards.filter((board) => board._id == id)[0]
-
+        let theBoard = nextProps.board
 
         if(theBoard !== undefined){
             let teamsB = ["Personal"];
@@ -42,10 +41,7 @@ class NavBarBoard extends Component {
             this.setState({
                 board: 'unknow',
             })
-
         }
-
-
     }
 
     toggleMenu = () =>{
@@ -83,6 +79,18 @@ class NavBarBoard extends Component {
         dispatchCallEditBoard(newBoard)
     }
 
+    renderProfilePictures(){
+        return this.props.board.boardUsers.map((boardUser) => {
+            let user = null;
+            if(this.props.user._id === boardUser.userId) user = this.props.user;
+            else user = this.props.users.filter((u) => u._id === boardUser.userId)[0];
+            return (
+                <div className="d-inline-block" style={{marginLeft: '5px'}}>
+                    <ProfilePicture user={user} size={"sm"} />
+                </div>
+            )
+        });
+    }
 
     render(){
         return (
@@ -97,6 +105,10 @@ class NavBarBoard extends Component {
                     <option value={0}> Public</option>
                     <option value={1}> Private</option>
                 </select>
+
+                <div className="board-users">
+                    {this.renderProfilePictures()}
+                </div>
 
                 <button className={"btn btn-primary"} id={'toggleButton'} onClick={() => this.toggleMenu(true)}>
                     <span> <i className="ni ni-settings"/>Display settings</span>
@@ -136,6 +148,7 @@ class NavBarBoard extends Component {
 
 const mapStateToProps = state => ({
     user: state.user,
+    users: state.users,
     boards: state.boards
 });
 export default connect(mapStateToProps)(NavBarBoard);
