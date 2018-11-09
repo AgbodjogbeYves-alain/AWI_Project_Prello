@@ -20,6 +20,12 @@ export const CardSchema = new SimpleSchema({
       defaultValue: "",
       optional: true
   },
+  cardDeadline:{
+    type: Date,
+    label: "Description",
+    optional: true,
+    required: false
+  },
   /*cardTag: {
       type: Array,
       label: "Tags",

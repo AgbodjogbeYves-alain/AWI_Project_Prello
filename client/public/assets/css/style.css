@@ -196,7 +196,7 @@ html{
 
 
 .cardactiondiv{
-    float: right
+    float: right;
 }
 
 .actionUl{
@@ -208,6 +208,19 @@ html{
     height: 10%;
 }
 
-.modalCard{
+.modalCard  .modal-dialog {
+    max-width: 800px;
+}
 
+.formCardModal{
+    float:left;
+    width: 50%;
+}
+
+.modalContentCard{
+    width: 100%;
+}
+
+li{
+    margin: 20px 0;
 }

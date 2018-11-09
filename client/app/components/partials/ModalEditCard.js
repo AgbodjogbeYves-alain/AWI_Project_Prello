@@ -13,7 +13,11 @@ class ModalEditCard extends Component {
         this.state = {
             card: this.props.card,
             cardTitle: this.props.card.cardTitle,
-            cardComments: this.props.card.cardComment
+            cardComments: this.props.card.cardComment,
+            cardDeadline: this.props.card.cardDeadline,
+            cardTags: this.props.card.cardTags,
+            newTagTitle: "",
+            newTagColor: ""
         };
 
         this.titleToInput = this.titleToInput.bind(this)
@@ -22,6 +26,7 @@ class ModalEditCard extends Component {
         this.handleAddComment = this.handleAddComment.bind(this)
         this.handleChangeDescription = this.handleChangeDescription.bind(this)
         this.handleWriteComment = this.handleWriteComment.bind(this)
+        this.handleAddDeadline = this.handleAddDeadline.bind(this)
     }
 
     handleEditCard = () => {
@@ -79,11 +84,16 @@ class ModalEditCard extends Component {
     }
 
 
+    handleAddDeadline = (event) => {
+        event.preventDefault();
+        console.log(this.state.cardDeadline)
+    }
+
     render(){
         return (
             <div className="modal fade modalCard" id={"card-modal" + this.state.card._id} tabIndex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true" style={{width:1700+'px'}}>
                 <div className="modal-dialog modal- modal-dialog-centered modal-" role="document">
-                    <div className="modal-content">
+                    <div className="modal-content modalContentCard">
 
                         <div className="modal-header">
                             <Title id={'title'+this.props.card._id} onClick={this.titleToInput}>{this.props.card.cardTitle}</Title>
@@ -93,20 +103,11 @@ class ModalEditCard extends Component {
                             </button>
                         </div>
 
-                        <div className="modal-body">
+                        <div className="modal-body modalContentCard">
+                            <div className="formCardModal">
                             <form role="form" onSubmit={(e) => e.preventDefault()}>
                                 <div className="form-group mb-3">
-                                    <div className="input-group input-group-alternative">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="form-group mb-3">
-                                    <div className="input-group input-group-alternative">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text"/>
-                                        </div>
+                                    <div>
                                         <div id={"descriptionDiv"}>
                                             <span> Description </span>
 
@@ -120,10 +121,6 @@ class ModalEditCard extends Component {
                                     </div>
                                 </div>
                                 <div className="form-group mb-3">
-                                    <div className="input-group input-group-alternative">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text"/>
-                                        </div>
                                         <div id={"commentDiv"}>
                                             <span> Add comment </span>
 
@@ -134,8 +131,6 @@ class ModalEditCard extends Component {
                                                 onChange={this.handleWriteComment}/>
                                             <button type="button" className="btn btn-secondary" onClick={this.handleAddComment}>Add</button>
                                         </div>
-
-                                    </div>
                                 </div>
                                 <div className="form-group mb-3">
                                     <div className="input-group input-group-alternative">
@@ -144,19 +139,27 @@ class ModalEditCard extends Component {
                                         </div>
                                         <div id={"listComment"}>
                                             <span> Comment list </span>
-
                                         </div>
 
                                     </div>
                                 </div>
                             </form>
+                                <div id={'cardactivitydiv'}>
+                                    <span> Activité </span>
+
+                                </div>
+                        </div>
                             <div className={'cardactiondiv'}>
                                 <span> Action </span>
                                 <ul className={'actionUl'}>
                                     <li><button type="button" className="btn btn-secondary cardButtonEdit">Archiver</button></li>
                                     <li>
                                         <div className="dropdown">
-                                            <button type="button" className="btn btn-secondary cardButtonEdit dropdown-toggle">Membres</button>
+                                            <button className="btn btn-secondary cardButtonEdit dropdown-toggle" type="button"
+                                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false">
+                                                Members
+                                            </button>
                                             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                 <a className="dropdown-item" href="#">Action</a>
                                                 <a className="dropdown-item" href="#">Another action</a>
@@ -166,11 +169,30 @@ class ModalEditCard extends Component {
                                     </li>
                                     <li>
                                         <div className="dropdown">
-                                            <button type="button" className="btn btn-secondary cardButtonEdit">Tags</button>
+                                            <button className="btn btn-secondary cardButtonEdit dropdown-toggle" type="button"
+                                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false">
+                                                Tags
+                                            </button>
                                             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                 <a className="dropdown-item" href="#">Action</a>
                                                 <a className="dropdown-item" href="#">Another action</a>
                                                 <a className="dropdown-item" href="#">Something else here</a>
+                                                <a className="dropdown-item" href="#">
+                                                    <input type="text" placeholder={"Enter new tag title here"}
+                                                          onChange={(e)=> {
+                                                              this.setState({newTagTitle: e.target.value})
+                                                          }}
+                                                    >
+                                                    </input>
+                                                    <input type="color"
+                                                           onChange={(e)=> {
+                                                               this.setState({newTagColor: e.target.value})
+                                                           }}
+                                                    >
+                                                    </input>
+                                                </a>
+                                                <a className="dropdown-item" href="#"><button type="button" className="btn btn-secondary" onClick={this.handleAddDeadline}>Add</button></a>
                                             </div>
                                         </div>
 
@@ -184,12 +206,20 @@ class ModalEditCard extends Component {
 
                                     <li>
                                         <div className="dropdown">
-                                            <button type="button" className="btn btn-secondary cardButtonEdit">Deadline</button>
+                                            <button className="btn btn-secondary cardButtonEdit dropdown-toggle" type="button"
+                                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false">
+                                                Deadline
+                                            </button>
                                             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <input className={"dropdown-item"} type="date" id="start" name="trip-start"
-                                                       value="2018-07-22"
-                                                       min="2018-01-01" max="2018-12-31">
-                                                </input>
+                                               <a className={"dropdown-item"} href="#">
+                                                   <input type="date" id="start" name="trip-start"
+                                                       onChange={(e)=> this.setState({cardDeadline: e.target.value})}
+                                                          value={this.state.cardDeadline}
+                                                   >
+                                                    </input>
+                                                   <button type="button" className="btn btn-secondary" onClick={this.handleAddDeadline}>Add</button>
+                                               </a>
                                             </div>
 
                                         </div>
@@ -198,10 +228,7 @@ class ModalEditCard extends Component {
                                 </ul>
 
                             </div>
-                            <div id={'cardactivitydiv'}>
-                                <span> Activité </span>
 
-                            </div>
                         </div>
 
                         <div className="modal-footer">
