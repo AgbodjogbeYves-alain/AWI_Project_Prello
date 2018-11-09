@@ -3,6 +3,7 @@ import { setLoggedUser, unsetLoggedUser, editProfileUser, addUser } from '../act
 import store from '../components/store';
 import { createBoard, removeBoard, editBoard } from '../actions/BoardActions';
 import { addTeam, removeTeam, editTeam } from '../actions/TeamActions';
+import { setRefreshed } from '../actions/RefreshActions';
 
 const Asteroid = createClass();
 // Connect to a Meteor backend
@@ -32,6 +33,7 @@ asteroid.ddp.on('added', (doc) => {
     const docObj = Object.assign({}, doc.fields, { _id: doc.id });
     store.dispatch(addTeam(docObj));
   }
+  
 
 });
 

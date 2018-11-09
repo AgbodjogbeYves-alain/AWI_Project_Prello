@@ -2,6 +2,7 @@
 @import 'boardModal.css';
 @import 'home.css';
 @import 'board.css';
+@import 'loading-page.css';
 
 .dropdown-item{
     cursor: pointer;

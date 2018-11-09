@@ -16,7 +16,7 @@ class MyAccount extends Component {
         super(props);
 
         this.removeAccount = this.removeAccount.bind(this);
-      }
+    }
 
     removeAccount(){
         const { dispatchCallRemoveUser } = this.props;
