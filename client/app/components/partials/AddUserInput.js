@@ -13,8 +13,6 @@ class AddUserInput extends Component {
             users: [],
             alerts: []
         };
-
-
     }
 
     renderUsers(){
@@ -78,16 +76,18 @@ class AddUserInput extends Component {
         this.props.onChange('addedUsers', this.state.addedUsers);
     }
 
-    handleChangeUserRole(addedUserId, userRole){
-        let newAddedUsers = this.state.addedUsers.map((u) => {
-            if(u.userId == addedUserId){
+    handleChangeUserRole(userId, userRole){
+        let newAddedUsers = this.props.addedUsers.map((u) => {
+            if(u.userId == userId){
                 u.role = userRole
             } 
             return u
         })
 
-        this.setState({addedUsers: newAddedUsers});
-        this.onChange();
+        this.setState({addedUsers: newAddedUsers}, function(){
+            this.onChange();
+        });
+        
     }
 
     renderRoleOptions(){
