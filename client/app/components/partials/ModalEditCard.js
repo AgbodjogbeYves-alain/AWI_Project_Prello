@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
-
+import { GithubPicker } from 'react-color';
 import asteroid from '../../common/asteroid';
 import {Title} from "../pages/Utils/Utils";
+import CardOptions from "./CardOptions";
+import {callEditCard} from "../../actions/CardActions";
+
 
 class ModalEditCard extends Component {
 
@@ -11,27 +14,23 @@ class ModalEditCard extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            idList: this.props.idList,
+            idBoard: this.props.idBoard,
             card: this.props.card,
             cardTitle: this.props.card.cardTitle,
             cardComments: this.props.card.cardComment,
-            cardDeadline: this.props.card.cardDeadline,
-            cardTags: this.props.card.cardTags,
-            newTagTitle: "",
-            newTagColor: ""
+            newComment: "",
+            hiddenMembers: true,
+            hiddenDeadline: true,
+            hiddenLabels: true,
+            newDescription: ''
         };
 
         this.titleToInput = this.titleToInput.bind(this)
         this.inputToTitle = this.inputToTitle.bind(this);
-        this.handleEditCard = this.handleEditCard.bind(this)
         this.handleAddComment = this.handleAddComment.bind(this)
-        this.handleChangeDescription = this.handleChangeDescription.bind(this)
-        this.handleWriteComment = this.handleWriteComment.bind(this)
-        this.handleAddDeadline = this.handleAddDeadline.bind(this)
-    }
-
-    handleEditCard = () => {
-        console.log("Hello 2")
-        console.log(this.state.cardTitle)
+        this.toggleDisplay = this.toggleDisplay.bind(this)
+        this.addComponent = this.addComponent.bind(this)
     }
 
     inputToTitle = (event) =>{
@@ -61,32 +60,68 @@ class ModalEditCard extends Component {
 
 
     updateCardName(value) {
-        this.setState({cardTitle: value})
+        let newCard = this.state.card
+        newCard.cardTitle = value
+        console.log(value)
+        callEditCard(this.state.idBoard,this.state.idList,newCard)
     }
-
-    handleChangeDescription = (event) => {
-        event.preventDefault();
-        this.setState({
-            cardDescription: event.target.value
-        })
-    };
 
     handleAddComment = (event) => {
         event.preventDefault();
-        console.log(this.state.cardComments)
+        let newComment = {
+            commentText: this.state.newComment,
+            commentUserId: this.props.user._id
+        }
+
+        console.log(newComment)
     };
 
-    handleWriteComment = (event) => {
-        event.preventDefault()
-        this.setState({
-            cardComment: event.target.value
-        })
+    toggleDisplay = (labelButton) => {
+        let previousHM = this.state.hiddenMembers
+        let previousHL = this.state.hiddenLabels
+        let previousDeadL = this.state.hiddenDeadline
+        console.log(labelButton)
+        if(labelButton == 'labels'){
+            console.log('workd')
+            this.setState({
+                hiddenLabels: !previousHL,
+                hiddenDeadline: true,
+                hiddenMembers: true
+            })
+        }else if(labelButton == 'members'){
+            console.log('workd')
+            console.log(previousHM)
+            this.setState({
+                hiddenLabels: true,
+                hiddenMembers: !previousHM,
+                hiddenDeadline: true
+            })
+        }else if(labelButton == 'deadline'){
+            console.log('workd')
+            this.setState({
+                hiddenLabels: true,
+                hiddenMembers: true,
+                hiddenDeadline: !previousDeadL
+            })
+        }
+
+
     }
 
+    addComponent = (labelButton) => {
+        if(labelButton=='labels' && !this.state.hiddenLabels){
+            return <CardOptions function="labels" card={this.props.card} idList={this.state.idList} idBoard={this.state.idBoard}/>
+        }else if(labelButton == 'members' && !this.state.hiddenMembers){
+            return <CardOptions function="members" card={this.props.card} idList={this.state.idList} idBoard={this.state.idBoard}/>
+        }else if(labelButton == 'deadline' && !this.state.hiddenDeadline){
+            return <CardOptions function="deadline" card={this.props.card} idList={this.state.idList} idBoard={this.state.idBoard}/>
 
-    handleAddDeadline = (event) => {
-        event.preventDefault();
-        console.log(this.state.cardDeadline)
+        }
+    }
+
+    handleAddDescription = (event) => {
+        event.preventDefault()
+        console.log(this.state.cardDescription)
     }
 
     render(){
@@ -105,22 +140,27 @@ class ModalEditCard extends Component {
 
                         <div className="modal-body modalContentCard">
                             <div className="formCardModal">
-                            <form role="form" onSubmit={(e) => e.preventDefault()}>
-                                <div className="form-group mb-3">
-                                    <div>
-                                        <div id={"descriptionDiv"}>
-                                            <span> Description </span>
+                                <form role="form" onSubmit={(e) => e.preventDefault()}>
+                                    <div className="form-group mb-3">
+                                        <div>
+                                            <div id={"descriptionDiv"}>
+                                                <span> Description </span>
 
-                                            <textarea
-                                                className="form-control"
-                                                placeholder="Add description"
-                                                type="text"
-                                                onChange={this.handleChangeDescription}/>
+                                                <textarea
+                                                    className="form-control"
+                                                    placeholder="Add description"
+                                                    type="text"
+                                                    value={this.props.card.cardDescription}
+                                                    onChange={(e) => this.setState({
+                                                        newDescription: e.target.value
+                                                    })}/>
+                                                <button type="button" className="btn btn-success cardButtonEdit" onClick={this.handleAddDescription}>Add</button>
+
+                                            </div>
+
                                         </div>
-
                                     </div>
-                                </div>
-                                <div className="form-group mb-3">
+                                    <div className="form-group mb-3">
                                         <div id={"commentDiv"}>
                                             <span> Add comment </span>
 
@@ -128,116 +168,73 @@ class ModalEditCard extends Component {
                                                 className="form-control"
                                                 placeholder="Add Comment"
                                                 type="text"
-                                                onChange={this.handleWriteComment}/>
-                                            <button type="button" className="btn btn-secondary" onClick={this.handleAddComment}>Add</button>
+                                                onChange={(e) => this.setState({
+                                                    cardComment: e.target.value
+                                                })}/>
+                                            <button type="button" className="btn btn-success cardButtonEdit" onClick={this.handleAddComment}>Add</button>
                                         </div>
-                                </div>
-                                <div className="form-group mb-3">
-                                    <div className="input-group input-group-alternative">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text"/>
-                                        </div>
-                                        <div id={"listComment"}>
-                                            <span> Comment list </span>
-                                        </div>
-
                                     </div>
-                                </div>
-                            </form>
+                                    <div className="form-group mb-3">
+                                        <div className="input-group input-group-alternative">
+                                            <div className="input-group-prepend">
+                                                <span className="input-group-text"/>
+                                            </div>
+                                            <div id={"listComment"}>
+                                                <span> Comment list </span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </form>
                                 <div id={'cardactivitydiv'}>
                                     <span> Activité </span>
 
                                 </div>
-                        </div>
+                            </div>
                             <div className={'cardactiondiv'}>
                                 <span> Action </span>
                                 <ul className={'actionUl'}>
                                     <li><button type="button" className="btn btn-secondary cardButtonEdit">Archiver</button></li>
                                     <li>
-                                        <div className="dropdown">
-                                            <button className="btn btn-secondary cardButtonEdit dropdown-toggle" type="button"
-                                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                Members
-                                            </button>
-                                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a className="dropdown-item" href="#">Action</a>
-                                                <a className="dropdown-item" href="#">Another action</a>
-                                                <a className="dropdown-item" href="#">Something else here</a>
-                                            </div>
-                                        </div>
+                                        <button className="btn btn-secondary cardButtonEdit " type="button"
+                                                onClick={(e) =>{
+                                                    e.preventDefault()
+                                                    this.toggleDisplay('members')
+                                                }}>
+                                            Members
+                                        </button>
+                                        {this.addComponent('members')}
+
+
                                     </li>
                                     <li>
-                                        <div className="dropdown">
-                                            <button className="btn btn-secondary cardButtonEdit dropdown-toggle" type="button"
-                                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                Tags
-                                            </button>
-                                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a className="dropdown-item" href="#">Action</a>
-                                                <a className="dropdown-item" href="#">Another action</a>
-                                                <a className="dropdown-item" href="#">Something else here</a>
-                                                <a className="dropdown-item" href="#">
-                                                    <input type="text" placeholder={"Enter new tag title here"}
-                                                          onChange={(e)=> {
-                                                              this.setState({newTagTitle: e.target.value})
-                                                          }}
-                                                    >
-                                                    </input>
-                                                    <input type="color"
-                                                           onChange={(e)=> {
-                                                               this.setState({newTagColor: e.target.value})
-                                                           }}
-                                                    >
-                                                    </input>
-                                                </a>
-                                                <a className="dropdown-item" href="#"><button type="button" className="btn btn-secondary" onClick={this.handleAddDeadline}>Add</button></a>
-                                            </div>
-                                        </div>
-
+                                        <button className="btn btn-secondary cardButtonEdit" type="button"
+                                                onClick={(e) => {
+                                                    e.preventDefault()
+                                                    this.toggleDisplay('labels')
+                                                }}>Labels</button>
+                                        {this.addComponent('labels')}
                                     </li>
                                     <li>
                                         <div className="dropdown">
                                             <button type="button" className="btn btn-secondary cardButtonEdit">CheckList</button>
-
                                         </div>
                                     </li>
-
                                     <li>
-                                        <div className="dropdown">
-                                            <button className="btn btn-secondary cardButtonEdit dropdown-toggle" type="button"
-                                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                Deadline
-                                            </button>
-                                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                               <a className={"dropdown-item"} href="#">
-                                                   <input type="date" id="start" name="trip-start"
-                                                       onChange={(e)=> this.setState({cardDeadline: e.target.value})}
-                                                          value={this.state.cardDeadline}
-                                                   >
-                                                    </input>
-                                                   <button type="button" className="btn btn-secondary" onClick={this.handleAddDeadline}>Add</button>
-                                               </a>
-                                            </div>
+                                        <button className="btn btn-secondary cardButtonEdit " type="button"
+                                                onClick={(e) => {
+                                                    e.preventDefault()
+                                                    this.toggleDisplay('deadline')
+                                                }}>Deadline</button>
 
-                                        </div>
+                                        {this.addComponent('deadline')}
+
                                     </li>
 
                                 </ul>
 
                             </div>
 
-                        </div>
-
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-link" data-dismiss="modal">Close</button>
-                                <button
-                                    className="btn btn-primary  ml-auto"
-                                    onClick={() => this.handleEditCard()}>
-                                    Save
-                                </button>
                         </div>
                     </div>
                 </div>
@@ -252,7 +249,7 @@ const mapStateToProps = state => ({
     user: state.user
 });
 
-export default connect(mapStateToProps)(withRouter(ModalEditCard));
+export default connect(mapStateToProps)(ModalEditCard);
 
 
 

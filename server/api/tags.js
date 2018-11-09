@@ -4,7 +4,7 @@ import {JsonRoutes} from 'meteor/simple:json-routes';
 import {Boards} from "../models/Boards";
 
 Meteor.methods({
-    'boards.card.createCard'(idBoard,idList) {
+    'boards.tags.createTag'(idBoard,newTag) {
         let countDoc = Boards.find({"_id": idBoard}).count();
         let id = Random.id();
 

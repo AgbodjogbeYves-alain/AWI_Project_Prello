@@ -1,6 +1,7 @@
 import SimpleSchema from 'simpl-schema';
 
 import { Mongo } from 'meteor/mongo'
+import {LabelsSchema} from "./Labels";
 
 export const Cards = new Mongo.Collection('cards')
 
@@ -21,18 +22,18 @@ export const CardSchema = new SimpleSchema({
       optional: true
   },
   cardDeadline:{
-    type: Date,
-    label: "Description",
+    type: String,
+    label: "Deadline",
     optional: true,
     required: false
   },
-  /*cardTag: {
+  cardLabels: {
       type: Array,
-      label: "Tags",
+      label: "Labels",
       defaultValue: [],
       optional: true
-  },*/
-  //'cardTag.$': Object, //se if need to replace Object with a schema*/
+  },
+  'cardLabels.$': LabelsSchema, //se if need to replace Object with a schema*/
   /*cardComment: {
       type: Array,
       label: "Comments",

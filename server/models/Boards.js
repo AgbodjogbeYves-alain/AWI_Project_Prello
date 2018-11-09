@@ -7,6 +7,7 @@ import {ListSchema} from "./List";
 import { BoardUserSchema } from './BoardUser';
 import { UserSchema } from './Users';
 import { BoardTeamSchema } from './BoardTeam';
+import {LabelsSchema} from "./Labels";
 
 export const BoardSchema = new SimpleSchema({
   _id: {
@@ -45,12 +46,12 @@ export const BoardSchema = new SimpleSchema({
       defaultValue: [],
   },
   'boardLists.$': ListSchema, //se if need to replace Object with a schema
-  /*boardTags: {
+  boardLabels: {
       type: Array,
-      label: "Tags",
+      label: "Labels",
       defaultValue: []
   },
-  'boardTags.$': Object, //se if need to replace Object with a schema*/
+  'boardLabels.$': LabelsSchema, //se if need to replace Object with a schema*/
   boardTeams: {
       type: Array,
       label: "Teams",

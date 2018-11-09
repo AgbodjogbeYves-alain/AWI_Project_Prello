@@ -224,3 +224,19 @@ html{
 li{
     margin: 20px 0;
 }
+
+.cardForOptions{
+    position: absolute;
+    z-index: 1;
+}
+
+.cardButtonEditLabel{
+    height: 15%;
+    width: 100%;
+
+}
+
+.cardButtonEditDeadline{
+    width: 100%;
+    height: 50%;
+}

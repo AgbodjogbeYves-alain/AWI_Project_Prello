@@ -19,7 +19,7 @@ export default class Card extends Component {
                         {this.props.card.cardTitle}
                     </ContainerC>}
             </Draggable>
-            <ModalEditCard card={this.props.card}/>
+            <ModalEditCard card={this.props.card} idBoard={this.props.idBoard} idList={this.props.idList}/>
             </div>
         )
     }

@@ -34,3 +34,9 @@ export function callCreateCard(idBoard,idList) {
         console.log(error);
     })
 }
+
+export function callEditCard(idBoard,idList,newCard) {
+    asteroid.call('boards.card.editCard', idBoard,idList,newCard).catch(error => {
+        console.log(error);
+    })
+}

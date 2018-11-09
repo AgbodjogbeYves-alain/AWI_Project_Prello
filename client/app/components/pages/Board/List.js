@@ -88,7 +88,7 @@ export class List extends React.Component {
                                 {(provided) => (
                                     <CardList ref={provided.innerRef} {...provided.droppableProps}>
                                         {this.props.cards.map((card, index) => <Card key={card._id} card={card}
-                                                                                     index={index}/>)}
+                                                                                     index={index} idBoard={this.props.idBoard} idList={this.props.list._id}/>)}
                                         {provided.placeholder}
                                     </CardList>
                                 )
