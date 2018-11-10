@@ -21,6 +21,7 @@ asteroid.subscribe('teams');
 asteroid.ddp.on('added', (doc) => {
   // we need proper document object format here
   if (doc.collection === 'users') {
+    console.log(doc)
     const docObj = Object.assign({}, doc.fields, { _id: doc.id });
     if(docObj.emails) store.dispatch(setLoggedUser(docObj));
     else store.dispatch(addUser(docObj));

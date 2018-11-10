@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { callEnabledMails } from '../../../../actions/UserActions';
+import asteroid from '../../../../common/asteroid';
 
 class EnabledMailsinput extends Component {
 
@@ -12,9 +13,7 @@ class EnabledMailsinput extends Component {
     }
 
     changeEnabledMails(e){
-        const { dispatchCallEnabledMails } = this.props;
-        this.setState({enabledMails: e.target.checked});
-        dispatchCallEnabledMails(e.target.checked);
+        asteroid.call("users.setEnabledMails", e.target.checked);
     }
 
     render() {
