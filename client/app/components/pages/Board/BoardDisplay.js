@@ -15,7 +15,7 @@ class BoardDisplay extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            board: {boardLists: [],boardTeams: []}
+            board: null
         }
 
         this.onDragEnd = this.onDragEnd.bind(this);
@@ -39,6 +39,7 @@ class BoardDisplay extends Component {
 
 
     componentWillReceiveProps(nextProps){
+        console.log("test")
         let id = nextProps.match.params.id
         let board = nextProps.boards.filter((board) => board._id === id)[0]
         if(board !== undefined){
@@ -186,15 +187,14 @@ class BoardDisplay extends Component {
         callCreateList(this.state.board._id)
     };
 
-
     render() {
-        return this.state.board != 'unknow' ? (
+        return this.state.board && this.state.board != 'unknow' ? (
             <div 
                 id={"boardDisplay"}
                 style={{backgroundImage: "url('https://res.cloudinary.com/dxdyg7b5b/image/upload/v1541680096/backgrounds/"+ this.state.board.boardBackground +".jpg')"}}
             >
                 <NavBar/>
-                <NavBarBoard idBoard={this.state.board._id}/>
+                <NavBarBoard board={this.state.board}/>
                 <button className="btn btn-success myAddListButton" onClick={this.createList}>Create a new List</button>
                 <div id={"divList"}>
                     <DragDropContext onDragEnd={this.onDragEnd}>

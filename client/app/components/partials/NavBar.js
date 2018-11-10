@@ -41,22 +41,6 @@ class NavBar extends Component {
                     </li>
 
                     <li className="nav-item dropdown">
-                        <a className="nav-link nav-link-icon" href="#" id="navbar-default_dropdown_1"
-                           role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i className="ni ni-fat-add"/>
-                            <span className="nav-link-inner--text d-lg-none">Settings</span>
-                        </a>
-                        <div className="dropdown-menu dropdown-menu-right"
-                             aria-labelledby="navbar-default_dropdown_1">
-                            <button type="button" className="navbar-toggler" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
-                                Add
-                            </button>
-                            <a className="dropdown-item" data-toggle="modal" data-target="#modal-createBoard">Create board</a>
-                            <a className="dropdown-item" data-toggle="modal" data-target="#team-modal">Create team</a>
-                            <a className="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </li>
-                    <li className="nav-item dropdown">
                         <a className="nav-link" data-toggle="dropdown" href='#' role="button">
                             <i className="ni ni-single-02 ni-lg"></i>
                             <span className="nav-link-inner--text d-lg-none">My Account</span>
