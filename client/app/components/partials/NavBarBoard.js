@@ -98,7 +98,7 @@ class NavBarBoard extends Component {
             <div id="navBarBoard">
             <nav className="navbar navbar-expand-lg navbar-dark">
                 <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#modalChangeBN">
-                    {this.state.board.boardTitle}
+                    {this.props.board.boardTitle}
                 </button>
 
                 <select className="btn btn-primary" defaultValue={(this.state.board.boardPrivacy===0)? 0: 1} onChange={this.handlePrivacyChange}>
