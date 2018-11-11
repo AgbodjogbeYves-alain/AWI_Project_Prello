@@ -17,6 +17,11 @@ export const LabelsSchema = new SimpleSchema({
         type: String,
         label: "Color",
         required: true
+    },
+    labelBoard:{
+        type: SimpleSchema.RegEx.Id,
+        label: "Board",
+
     }
 });
 

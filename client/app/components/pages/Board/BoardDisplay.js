@@ -25,8 +25,6 @@ class BoardDisplay extends Component {
     componentDidMount(){
         let id = this.props.match.params.id
         let board = this.props.boards.filter((board) => board._id === id)[0]
-
-
         if(board !== undefined){
             this.setState({
                 board: board,
@@ -42,8 +40,6 @@ class BoardDisplay extends Component {
 
     componentWillReceiveProps(nextProps){
         let id = nextProps.match.params.id
-        console.log(nextProps.labels)
-        console.log(nextProps)
         let board = nextProps.boards.filter((board) => board._id === id)[0]
         if(board !== undefined){
             this.setState({

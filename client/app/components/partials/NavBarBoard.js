@@ -75,12 +75,12 @@ class NavBarBoard extends Component {
         event.preventDefault()
         let newBoard = this.state.board
         newBoard.boardPrivacy = event.target.value
+        console.log(event.target.value)
         this.setState({
             board: newBoard
         })
 
-        const { dispatchCallEditBoard } = this.props;
-        dispatchCallEditBoard(newBoard)
+        callEditBoard(newBoard)
     }
 
 

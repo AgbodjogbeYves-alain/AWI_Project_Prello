@@ -134,6 +134,38 @@ Meteor.methods({
         }
 
 
+    },
+    'boards.card.removeCard' (idBoard,idList,idCard){
+        let countDoc = Boards.find({"_id": idBoard}).count();
+        if(countDoc==1){
+            //List
+            let findList = false;
+            let board = (Boards.findOne({_id: idBoard}))
+            let newBoardLists = board.boardLists.map((list) => {
+                if(list._id == idList){
+                    findList = true
+                    list.listCard = list.listCard.filter((card) => card._id!=idCard)
+                    return list
+                }else{
+                    return list
+                }
+            })
+
+            if(findList!=true){
+                throw new Meteor.Error(404, 'List in Board not found')
+            }else{
+
+                {
+                    Boards.update({_id: board._id},{
+                        $set: {
+                            boardLists: newBoardLists
+                        }
+                    })
+                }
+            }
+        }else{
+            throw new Meteor.Error(404, 'Board not found')
+        }
     }
 
 })

@@ -87,8 +87,12 @@ export class List extends React.Component {
                             <Droppable droppableId={"listId"+this.props.list._id} type={"card"}>
                                 {(provided) => (
                                     <CardList ref={provided.innerRef} {...provided.droppableProps}>
-                                        {this.props.cards.map((card, index) => <Card key={card._id} card={card}
-                                                                                     index={index} board={this.props.board} idList={this.props.list._id}/>)}
+                                        {this.props.cards.map((card, index) => {
+                                            if(!card.isArchived){
+                                               return <Card key={card._id} card={card}
+                                                      index={index} board={this.props.board} idList={this.props.list._id}/>
+                                        }
+                                        })}
                                         {provided.placeholder}
                                     </CardList>
                                 )

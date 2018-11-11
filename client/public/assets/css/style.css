@@ -234,9 +234,19 @@ li{
     height: 15%;
     width: 100%;
 
+
 }
 
 .cardButtonEditDeadline{
     width: 100%;
     height: 50%;
+}
+
+.buttonLabel{
+    width: 100%;
+    color: white;
+}
+
+.cardLabelsDiv{
+    margin-top: 5%;
 }

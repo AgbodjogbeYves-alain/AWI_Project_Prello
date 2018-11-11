@@ -18,20 +18,21 @@ class CardOptions extends Component {
             idBoard: this.props.idBoard,
             card: this.props.card,
             function: this.props.function,
-            cardLabels: this.props.card.cardLabels,
+            //cardLabels: this.props.card.cardLabels,
+            boardLabels: this.props.labels.filter((label) => label.labelBoard == this.props.idBoard ),
             cardDeadline: this.props.card.cardDeadline,
-            newLabelNamee: "",
+            newLabelName: "",
             newLabelColor: "",
         };
 
         this.handleAddDeadline = this.handleAddDeadline.bind(this)
         this.handleAddLabel = this.handleAddLabel.bind(this)
+        this.handleAffectLabelToCard = this.handleAffectLabelToCard.bind(this)
     }
 
 
     handleAddDeadline = (event) => {
         event.preventDefault();
-        console.log(this.state.cardDeadline)
         let newCard = this.state.card
         newCard.cardDeadline = event.target.value
         callEditCard(this.state.idBoard,this.state.idList,newCard)
@@ -41,33 +42,55 @@ class CardOptions extends Component {
         event.preventDefault()
         let newLabel = {
             labelColor: this.state.newLabelColor,
-            labelName: this.state.newLabelName
+            labelName: this.state.newLabelName,
+            labelBoard: this.state.idBoard
         }
-        console.log(newLabel)
         callCreateLabel(this.state.idBoard,newLabel)
+        let newLabelList = this.state.boardLabels
+        newLabelList.push(newLabel)
+        this.setState({
+            boardLabels: newLabelList
+        })
+
     }
 
-    /*handleAffectLabelToCard = (idLabel) => {
-        event.preventDefault()
-        callEditCardLabels(this.state.idBoard,this.state.idList,this.state.card._id,idLabel)
 
-    }*/
+
+    handleAffectLabelToCard = (idLabel) => {
+        let newLabelList
+        if(this.state.card.cardLabels.includes(idLabel)) {
+            newLabelList = this.state.card.cardLabels.filter((label) => label._id != idLabel)
+        }else{
+            newLabelList = this.state.card.cardLabels
+            newLabelList.push(idLabel)
+
+        }
+
+        let newCard = this.state.card
+        newCard.cardLabels = newLabelList
+
+        console.log(newLabelList)
+        callEditCard(this.state.idBoard,this.state.idList,newCard)
+        this.setState({
+            card: newCard
+        })
+
+    }
+
     render(){
         if(this.props.function == 'labels'){
             return (
                     <div>
                         <div className="card card-stats mb-4 mb-lg-0 cardForOptions">
                             <div className="card-body">
+                                <div className={"divLabelBoard"}>
                                 <h5> Label list</h5>
-                                <select multiple>
-                                    {console.log(this.props.boardLabels)}
-                                    {
-                                        this.props.boardLabels.forEach((label)=>{
-                                        return <option value={label._id}><input disabled>{label.labelName}</input></option>
-                                         })
-                                    }
-                                </select>
-
+                                {
+                                    this.state.boardLabels.map((label)=>{
+                                        return <button className={"btn btn-secondary buttonLabel"} style={{background: label.labelColor}} onClick={(e) => { e.preventDefault();this.handleAffectLabelToCard(label._id)}}>{label.labelName}</button>
+                                     })
+                                }
+                                </div>
                                 <h5>Add label</h5>
                                 <input type="text" className={'form-control form-control-alternantive'} placeholder={"Enter new Label title here"}
                                        onChange={(e)=> {
@@ -80,7 +103,6 @@ class CardOptions extends Component {
                                     onChange={(color,e)=> {
                                         e.preventDefault();
                                         this.setState({newLabelColor: color.hex})
-                                        console.log(color.hex)
                                     }}
                                 >
                                 </GithubPicker>
