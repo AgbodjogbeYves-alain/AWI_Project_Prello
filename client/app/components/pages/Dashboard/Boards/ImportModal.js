@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import LinkTrelloButton from '../../../partials/LinkTrelloButton';
-import asteroid from '../../../../common/asteroid';
+import LinkTrelloButton from '../../../partials/LinkTrelloButton.js';
+import asteroid from '../../../../common/asteroid.js';
 
 class ImportModal extends Component {
 
@@ -74,7 +74,6 @@ class ImportModal extends Component {
                         boardPrivacy: 0,
                         boardLists: trelloBoard.boardLists
                     }
-                    console.log(this.props.user)
 
                     asteroid.call("boards.createBoard", finalBoard)
                     .then(() => {
