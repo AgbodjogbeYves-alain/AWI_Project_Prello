@@ -51,7 +51,7 @@ Meteor.methods({
 
         if (board) {
             if(!this.userId) throw new Meteor.Error('not-authorised');
-            let isTeamMember = board.boardUsers.filter((u) => u.user_id == this.userId && u.boardRole == 'admin').length > 0;
+            let isTeamMember = board.boardUsers.filter((u) => u.userId == this.userId && u.role == 'admin').length > 0;
             if(this.userId != board.boardOwner._id && !isTeamMember) throw new Meteor.Error('not-authorised');
 
             return Boards.remove(boardId);

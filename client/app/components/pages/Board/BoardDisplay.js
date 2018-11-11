@@ -191,7 +191,7 @@ class BoardDisplay extends Component {
         return this.state.board && this.state.board != 'unknow' ? (
             <div 
                 id={"boardDisplay"}
-                style={{backgroundImage: "url('https://res.cloudinary.com/dxdyg7b5b/image/upload/v1541680096/backgrounds/"+ this.state.board.boardBackground +".jpg')"}}
+                style={{backgroundImage: "url('https://res.cloudinary.com/dxdyg7b5b/image/upload/v1541680009/backgrounds/"+ this.state.board.boardBackground +".jpg')"}}
             >
                 <NavBar/>
                 <NavBarBoard board={this.state.board}/>
@@ -209,7 +209,7 @@ class BoardDisplay extends Component {
                                         {
                                             this.state.board.boardLists.map((list, index) => {
                                                 if(!list.listArchived){
-                                                    const cards = list.listCard;
+                                                    const cards = list.listCards;
                                                     return (
                                                         <div key={'div'+list._id}>
                                                         <List key={list._id} list={list} index={index}

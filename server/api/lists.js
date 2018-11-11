@@ -10,7 +10,7 @@ Meteor.methods({
             let board = (Boards.findOne({_id: idBoard}))
             let boardLists = board.boardLists
             let id = Random.id();
-            let newList = {_id: id, listTitle: "New list", listCard: [], listArchived: false}
+            let newList = {_id: id, listTitle: "New list", listCards: [], listArchived: false}
             boardLists.push(newList)
             Boards.update({_id: board._id},{
                 $set: {

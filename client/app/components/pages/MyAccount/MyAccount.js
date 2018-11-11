@@ -9,7 +9,7 @@ import EnabledMailsInput from "./EnabledMailsInput/EnabledMailsInput.js";
 import ConfirmModal from "./../../partials/ConfirmModal.js";
 import { callRemoveUser } from '../../../actions/UserActions.js';
 import { ProfilePicture } from '../../partials/ProfilePicture.js';
-import asteroid from '../../../common/asteroid.js';
+import LinkTrelloButton from '../../partials/LinkTrelloButton.js';
 
 class MyAccount extends Component {
 
@@ -17,34 +17,11 @@ class MyAccount extends Component {
         super(props);
 
         this.removeAccount = this.removeAccount.bind(this);
-        this.state = {
-            trelloLinked: !!this.props.user.profile.trelloToken
-        }
     }
 
     removeAccount(){
         const { dispatchCallRemoveUser } = this.props;
         dispatchCallRemoveUser()
-    }
-
-    handleClickLinkTrello(){
-        let that = this;
-        Trello.authorize({
-            name: "Prello",
-            type: "popup",
-            success: function(val){
-                let token = Trello.token();
-                that.setState({"trelloLinked": true})
-                asteroid.call("users.linkTrello", token);
-                //window.Trello.rest('get', "/tokens/"+ token +"/member", (val) => console.log(val), () => console.log("error"))
-            }
-        })
-    }
-
-    handleClickUnlinkTrello(){
-        Trello.deauthorize();
-        this.setState({"trelloLinked": false});
-        //asteroid.call("users.unlinkTrello");
     }
 
     render() {
@@ -97,19 +74,7 @@ class MyAccount extends Component {
                                             </button>
                                         </div>
                                         <div className="card-profile-actions py-4 mt-lg-0 text-right">
-                                            {this.state.trelloLinked ? 
-                                                <button 
-                                                    onClick={() => this.handleClickUnlinkTrello()}
-                                                    className="btn btn-primary btn-sm">
-                                                    Unlink Trello account
-                                                </button>
-                                                :
-                                                <button 
-                                                    onClick={() => this.handleClickLinkTrello()}
-                                                    className="btn btn-primary btn-sm">
-                                                    Link Trello account
-                                                </button>
-                                            }
+                                            <LinkTrelloButton trelloToken={this.props.user.profile.trelloToken} />
                                         </div>
                                     </div>
                                     <div className="col-lg-4 order-lg-1">
