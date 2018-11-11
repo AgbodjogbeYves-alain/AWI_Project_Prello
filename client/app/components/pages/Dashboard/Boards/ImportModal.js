@@ -16,8 +16,7 @@ class ImportModal extends Component {
         }
     }
 
-    componentDidMount(){
-        let trelloToken = this.props.trelloToken;
+    getBoards(trelloToken){
         let that = this;
         if(trelloToken){
             Trello.setToken(trelloToken);
@@ -26,9 +25,17 @@ class ImportModal extends Component {
                 Trello.get("/members/"+ trelloId +"/boards", (res => {
                     that.setState({trelloBoards: res});
                 }))
-
             });
         }
+    }
+
+    componentDidMount(){
+        let trelloToken = this.props.trelloToken;
+        this.getBoards(trelloToken);
+    }
+    componentWillReceiveProps(nextProps){
+        let trelloToken = nextProps.trelloToken;
+        this.getBoards(trelloToken);
     }
 
     handleImport(){
@@ -67,6 +74,7 @@ class ImportModal extends Component {
                         boardPrivacy: 0,
                         boardLists: trelloBoard.boardLists
                     }
+                    console.log(this.props.user)
 
                     asteroid.call("boards.createBoard", finalBoard)
                     .then(() => {
