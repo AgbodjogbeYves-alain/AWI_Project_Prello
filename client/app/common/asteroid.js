@@ -30,19 +30,16 @@ asteroid.ddp.on('added', (doc) => {
   }
   if(doc.collection === 'boards'){
     const docObj = Object.assign({}, doc.fields, { _id: doc.id });
-      store.dispatch(createBoard(docObj));
+    store.dispatch(createBoard(docObj));
   }
   if(doc.collection === 'teams'){
     const docObj = Object.assign({}, doc.fields, { _id: doc.id });
     store.dispatch(addTeam(docObj));
   }
-
-    if(doc.collection === 'labels'){
-        const docObj = Object.assign({}, doc.fields, { _id: doc.id });
-        store.dispatch(addLabel(docObj));
-        console.log(doc)
-
-    }
+  if(doc.collection === 'labels'){
+      const docObj = Object.assign({}, doc.fields, { _id: doc.id });
+      store.dispatch(addLabel(docObj));
+  }
 
 });
 
@@ -68,8 +65,6 @@ asteroid.ddp.on('changed', (updatedDoc) => {
       store.dispatch(editProfileUser(updatedDoc.fields));
   }
   if (updatedDoc.collection === 'boards') {
-      console.log(updatedDoc)
-
       store.dispatch(editBoard(updatedDoc.id, updatedDoc.fields));
   }
   if (updatedDoc.collection === 'teams') {

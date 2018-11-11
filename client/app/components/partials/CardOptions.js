@@ -53,6 +53,7 @@ class CardOptions extends Component {
 
     }*/
     render(){
+        console.log(this.props.labels)
         if(this.props.function == 'labels'){
             return (
                     <div>

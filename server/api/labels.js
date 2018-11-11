@@ -5,7 +5,7 @@ import {Boards} from "../models/Boards";
 import {Labels} from '../models/Labels';
 
 Meteor.publish('labels', function () {
-    return Labels.find()
+    return Labels.find();
 });
 
 Meteor.methods({

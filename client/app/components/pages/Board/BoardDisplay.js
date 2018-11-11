@@ -24,9 +24,7 @@ class BoardDisplay extends Component {
 
     componentDidMount(){
         let id = this.props.match.params.id
-        console.log(id)
         let board = this.props.boards.filter((board) => board._id === id)[0]
-console.log(board)
         if(board !== undefined){
             this.setState({
                 board: board,
@@ -42,9 +40,7 @@ console.log(board)
 
     componentWillReceiveProps(nextProps){
         let id = nextProps.match.params.id
-        console.log(id)
         let board = nextProps.boards.filter((board) => board._id === id)[0]
-console.log(board)
         if(board !== undefined){
             this.setState({
                 board: board,
@@ -192,7 +188,7 @@ console.log(board)
 
 
     render() {
-        console.log("test")
+        console.log(this.props.labels)
         return this.state.board != 'unknow' ? (
             <div 
                 id={"boardDisplay"}
