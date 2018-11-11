@@ -7,6 +7,7 @@ import BoardModal from "../../partials/BoardModal/BoardModal.js"
 import Teams from "./Teams/Teams.js";
 import Boards from "./Boards/Boards.js";
 import TeamModal from '../../partials/TeamModal';
+import ImportModal from './Boards/ImportModal';
 
 
 
@@ -49,6 +50,7 @@ class Dashboard extends Component {
                     <span><BoardModal activedTeam={this.state.activedTeam}/></span> : <BoardModal />
                 }
                 <TeamModal />
+                <ImportModal trelloToken={this.props.user.profile.trelloToken}/>
                 {this.partialsBoardsRender()}
                 {this.partialsTeamsRender()}
                 <div className="container">
