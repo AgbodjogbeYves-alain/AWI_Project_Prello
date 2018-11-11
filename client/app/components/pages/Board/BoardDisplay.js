@@ -217,7 +217,7 @@ console.log(board)
                                                 return (
                                                     <div key={'div'+list._id}>
                                                     <List key={list._id} list={list} index={index}
-                                                             cards={cards} idBoard={this.props.match.params.id}/>
+                                                             cards={cards} board={this.state.board}/>
                                                     </div>
                                                 );
                                             })}
@@ -245,7 +245,8 @@ console.log(board)
 
 const mapStateToProps = state => ({
     user: state.user,
-    boards: state.boards
+    boards: state.boards,
+    labels: state.labels
 });
 
 export default connect(mapStateToProps)(BoardDisplay);

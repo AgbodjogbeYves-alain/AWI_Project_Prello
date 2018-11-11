@@ -110,7 +110,8 @@ class ModalEditCard extends Component {
 
     addComponent = (labelButton) => {
         if(labelButton=='labels' && !this.state.hiddenLabels){
-            return <CardOptions function="labels" card={this.props.card} idList={this.state.idList} idBoard={this.state.idBoard}/>
+            console.log(this.props.boardLabels)
+            return <CardOptions function="labels" card={this.props.card} boardLabels={this.props.boardLabels} idList={this.state.idList} idBoard={this.state.idBoard}/>
         }else if(labelButton == 'members' && !this.state.hiddenMembers){
             return <CardOptions function="members" card={this.props.card} idList={this.state.idList} idBoard={this.state.idBoard}/>
         }else if(labelButton == 'deadline' && !this.state.hiddenDeadline){
@@ -139,6 +140,11 @@ class ModalEditCard extends Component {
                         </div>
 
                         <div className="modal-body modalContentCard">
+                            <div className="labelForCard">
+                                {this.props.cardLabels.forEach((label) => {
+                                    console.log(label.color)
+                                })}
+                            </div>
                             <div className="formCardModal">
                                 <form role="form" onSubmit={(e) => e.preventDefault()}>
                                     <div className="form-group mb-3">

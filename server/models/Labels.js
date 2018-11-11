@@ -6,7 +6,7 @@ export const Labels = new Mongo.Collection('labels')
 
 export const LabelsSchema = new SimpleSchema({
     _id: {
-        type: String
+        type: SimpleSchema.RegEx.Id
     },
     labelName: {
         type: String,

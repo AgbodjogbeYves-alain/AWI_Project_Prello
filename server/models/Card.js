@@ -33,7 +33,7 @@ export const CardSchema = new SimpleSchema({
       defaultValue: [],
       optional: true
   },
-  'cardLabels.$': LabelsSchema, //se if need to replace Object with a schema*/
+  'cardLabels.$': SimpleSchema.RegEx.Id, //se if need to replace Object with a schema*/
   /*cardComment: {
       type: Array,
       label: "Comments",

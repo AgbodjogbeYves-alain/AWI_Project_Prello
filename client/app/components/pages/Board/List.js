@@ -22,7 +22,7 @@ export class List extends React.Component {
     }
 
     updateListName = (newTitle) =>{
-        let idBoard = this.props.idBoard;
+        let idBoard = this.props.board._id;
         let newList = this.props.list;
         newList.listTitle = newTitle;
         callEditList(idBoard, newList);
@@ -55,7 +55,7 @@ export class List extends React.Component {
     createCard = (event) => {
         event.preventDefault()
 
-        let idBoard = this.props.idBoard
+        let idBoard = this.props.board._id
         let idList = this.props.list._id
         callCreateCard(idBoard,idList)
     }
@@ -88,7 +88,7 @@ export class List extends React.Component {
                                 {(provided) => (
                                     <CardList ref={provided.innerRef} {...provided.droppableProps}>
                                         {this.props.cards.map((card, index) => <Card key={card._id} card={card}
-                                                                                     index={index} idBoard={this.props.idBoard} idList={this.props.list._id}/>)}
+                                                                                     index={index} board={this.props.board} idList={this.props.list._id}/>)}
                                         {provided.placeholder}
                                     </CardList>
                                 )
@@ -111,7 +111,7 @@ export class List extends React.Component {
 
 const mapStateToProps = state => ({
     user: state.user,
-    boards: state.boards
+    labels: state.labels
 })
 
 export default connect(mapStateToProps)(List);

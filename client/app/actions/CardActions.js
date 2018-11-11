@@ -40,3 +40,9 @@ export function callEditCard(idBoard,idList,newCard) {
         console.log(error);
     })
 }
+
+/*export function callEditCardLabels(idBoard,idList,id,idLabel) {
+    asteroid.call('boards.card.editCardLabel', idBoard,idList,id,idLabel).catch(error => {
+        console.log(error);
+    })
+}*/

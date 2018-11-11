@@ -51,7 +51,7 @@ export const BoardSchema = new SimpleSchema({
       label: "Labels",
       defaultValue: []
   },
-  'boardLabels.$': LabelsSchema, //se if need to replace Object with a schema*/
+  'boardLabels.$': SimpleSchema.RegEx.Id, //se if need to replace Object with a schema*/
   boardTeams: {
       type: Array,
       label: "Teams",

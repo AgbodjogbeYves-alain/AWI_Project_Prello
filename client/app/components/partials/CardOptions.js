@@ -6,6 +6,7 @@ import asteroid from '../../common/asteroid';
 import {Title} from "../pages/Utils/Utils";
 import {callEditBoard} from "../../actions/BoardActions";
 import {callEditCard} from "../../actions/CardActions";
+import {callCreateLabel, callEditLabels} from "../../actions/LabelActions";
 
 class CardOptions extends Component {
 
@@ -17,14 +18,14 @@ class CardOptions extends Component {
             idBoard: this.props.idBoard,
             card: this.props.card,
             function: this.props.function,
-            cardTags: this.props.card.cardTags,
+            cardLabels: this.props.card.cardLabels,
             cardDeadline: this.props.card.cardDeadline,
-            newTagTitle: "",
-            newTagColor: "",
+            newLabelNamee: "",
+            newLabelColor: "",
         };
 
         this.handleAddDeadline = this.handleAddDeadline.bind(this)
-        this.handleAddTag = this.handleAddTag.bind(this)
+        this.handleAddLabel = this.handleAddLabel.bind(this)
     }
 
 
@@ -36,18 +37,21 @@ class CardOptions extends Component {
         callEditCard(this.state.idBoard,this.state.idList,newCard)
     }
 
-    handleAddTag = (event) =>{
+    handleAddLabel = (event) =>{
         event.preventDefault()
-        let newTag = {
-            tagColor: this.state.newTagColor,
-            tagTitle: this.state.newTagTitle
+        let newLabel = {
+            labelColor: this.state.newLabelColor,
+            labelName: this.state.newLabelName
         }
-        console.log(newTag)
-        let newCard = this.state.card
-        newCard.cardLabels.push(newTag)
-        callEditBoard(this.state.idBoard,this.state.idList,newCard)
+        console.log(newLabel)
+        callCreateLabel(this.state.idBoard,newLabel)
     }
 
+    /*handleAffectLabelToCard = (idLabel) => {
+        event.preventDefault()
+        callEditCardLabels(this.state.idBoard,this.state.idList,this.state.card._id,idLabel)
+
+    }*/
     render(){
         if(this.props.function == 'labels'){
             return (
@@ -55,11 +59,19 @@ class CardOptions extends Component {
                         <div className="card card-stats mb-4 mb-lg-0 cardForOptions">
                             <div className="card-body">
                                 <h5> Label list</h5>
+                                <select multiple>
+                                    {console.log(this.props.boardLabels)}
+                                    {
+                                        this.props.boardLabels.forEach((label)=>{
+                                        return <option value={label._id}><input disabled>{label.labelName}</input></option>
+                                         })
+                                    }
+                                </select>
 
                                 <h5>Add label</h5>
-                                <input type="text" className={'form-control form-control-alternantive'} placeholder={"Enter new tag title here"}
+                                <input type="text" className={'form-control form-control-alternantive'} placeholder={"Enter new Label title here"}
                                        onChange={(e)=> {
-                                           this.setState({newTagTitle: e.target.value})
+                                           this.setState({newLabelName: e.target.value})
                                        }}
                                 >
                                 </input>
@@ -67,12 +79,12 @@ class CardOptions extends Component {
                                 <GithubPicker
                                     onChange={(color,e)=> {
                                         e.preventDefault();
-                                        this.setState({newTagColor: color.hex})
+                                        this.setState({newLabelColor: color.hex})
                                         console.log(color.hex)
                                     }}
                                 >
                                 </GithubPicker>
-                                 <button type="button" className="btn btn-success cardButtonEditLabel" onClick={this.handleAddTag}>Add</button>
+                                 <button type="button" className="btn btn-success cardButtonEditLabel" onClick={this.handleAddLabel}>Add</button>
                             </div>
                         </div>
                     </div>
@@ -119,7 +131,9 @@ class CardOptions extends Component {
 }
 
 const mapStateToProps = state => ({
-    user: state.user
+    user: state.user,
+    labels: state.labels
+
 });
 
 export default connect(mapStateToProps)(CardOptions);

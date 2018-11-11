@@ -3,6 +3,8 @@ import { setLoggedUser, unsetLoggedUser, editProfileUser, addUser } from '../act
 import store from '../components/store';
 import { createBoard, removeBoard, editBoard } from '../actions/BoardActions';
 import { addTeam, removeTeam, editTeam } from '../actions/TeamActions';
+import { addLabel, removeLabel, editLabel } from '../actions/LabelActions';
+
 
 const Asteroid = createClass();
 // Connect to a Meteor backend
@@ -16,6 +18,8 @@ asteroid.subscribe('boards');
 asteroid.subscribe('users');
 asteroid.subscribe('user');
 asteroid.subscribe('teams');
+asteroid.subscribe('labels');
+
 
 asteroid.ddp.on('added', (doc) => {
   // we need proper document object format here
@@ -33,6 +37,13 @@ asteroid.ddp.on('added', (doc) => {
     store.dispatch(addTeam(docObj));
   }
 
+    if(doc.collection === 'labels'){
+        const docObj = Object.assign({}, doc.fields, { _id: doc.id });
+        store.dispatch(addLabel(docObj));
+        console.log(doc)
+
+    }
+
 });
 
 asteroid.ddp.on('removed', (removedDoc) => {
@@ -45,6 +56,10 @@ asteroid.ddp.on('removed', (removedDoc) => {
   if (removedDoc.collection === 'teams') {
     store.dispatch(removeTeam(removedDoc.id));
   }
+  if(removedDoc.collection === 'labels'){
+      store.dispatch(removeLabel(removedDoc.id));
+  }
+
 });
 
 asteroid.ddp.on('changed', (updatedDoc) => {
@@ -59,7 +74,10 @@ asteroid.ddp.on('changed', (updatedDoc) => {
   }
   if (updatedDoc.collection === 'teams') {
     store.dispatch(editTeam(updatedDoc.id, updatedDoc.fields));
-}
+  }
+  if (updatedDoc.collection === 'labels') {
+      store.dispatch(editLabel(updatedDoc.id, updatedDoc.fields));
+  }
 });
 
 export default asteroid;
