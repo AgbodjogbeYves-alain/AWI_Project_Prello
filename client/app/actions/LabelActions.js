@@ -30,6 +30,8 @@ export function editLabel(_id, data) {
 }
 
 
+
+
 export function callCreateLabel(idBoard,newLabel) {
     asteroid.call('labels.createLabel', idBoard,newLabel).catch(error => {
         console.log(error);

@@ -41,6 +41,13 @@ export function callEditCard(idBoard,idList,newCard) {
     })
 }
 
+export function callAddCommentCard(idBoard,idList,newCard) {
+    asteroid.call('boards.card.addComment', idBoard,idList,newCard).catch(error => {
+        console.log(error);
+    })
+}
+
+
 /*export function callEditCardLabels(idBoard,idList,id,idLabel) {
     asteroid.call('boards.card.editCardLabel', idBoard,idList,id,idLabel).catch(error => {
         console.log(error);

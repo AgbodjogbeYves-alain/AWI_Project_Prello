@@ -20,7 +20,6 @@ asteroid.subscribe('user');
 asteroid.subscribe('teams');
 asteroid.subscribe('labels');
 
-
 asteroid.ddp.on('added', (doc) => {
   // we need proper document object format here
   if (doc.collection === 'users') {
@@ -37,12 +36,11 @@ asteroid.ddp.on('added', (doc) => {
     store.dispatch(addTeam(docObj));
   }
 
-    if(doc.collection === 'labels'){
-        const docObj = Object.assign({}, doc.fields, { _id: doc.id });
-        store.dispatch(addLabel(docObj));
-        console.log(doc)
-
-    }
+  if(doc.collection === 'labels'){
+      const docObj = Object.assign({}, doc.fields, { _id: doc.id });
+      store.dispatch(addLabel(docObj));
+      console.log(docObj)
+  }
 
 });
 

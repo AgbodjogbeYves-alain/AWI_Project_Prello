@@ -5,7 +5,7 @@ import {Boards} from "../models/Boards";
 import {Labels} from '../models/Labels';
 
 Meteor.publish('labels', function () {
-    return Labels.find()
+    return Labels.find({})
 });
 
 Meteor.methods({
@@ -30,11 +30,11 @@ console.log(idBoard)
         }
     },
 
-    'boards.labels.removeLabel' (idBoard,idLabel){
+    'labels.removeLabel' (idBoard,idLabel){
 
     },
 
-    'board.labels.editLabel' (idBoard,newLabel){
+    'labels.editLabel' (idBoard,newLabel){
 
     }
 })

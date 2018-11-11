@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from "react-router-dom";
-import { GithubPicker } from 'react-color';
-import asteroid from '../../common/asteroid';
 import {Title} from "../pages/Utils/Utils";
 import CardOptions from "./CardOptions";
-import {callEditCard} from "../../actions/CardActions";
+import {callAddCommentCard, callEditCard} from "../../actions/CardActions";
 
 
 class ModalEditCard extends Component {
@@ -69,10 +66,17 @@ class ModalEditCard extends Component {
     handleAddComment = (event) => {
         event.preventDefault();
         let newComment = {
-            commentText: this.state.newComment,
-            commentUserId: this.props.user._id
+            commentContent: this.state.newComment,
+            userId: this.props.user._id
         }
 
+        let newCard = this.state.card
+        newCard.cardComments.push(newComment)
+        console.log(newCard)
+        callAddCommentCard(this.state.idBoard,this.state.idList,newCard)
+        this.setState({
+            card: newCard
+        })
         console.log(newComment)
     };
 
@@ -175,7 +179,7 @@ class ModalEditCard extends Component {
                                                 placeholder="Add Comment"
                                                 type="text"
                                                 onChange={(e) => this.setState({
-                                                    cardComment: e.target.value
+                                                    newComment: e.target.value
                                                 })}/>
                                             <button type="button" className="btn btn-success cardButtonEdit" onClick={this.handleAddComment}>Add</button>
                                         </div>
@@ -187,6 +191,12 @@ class ModalEditCard extends Component {
                                             </div>
                                             <div id={"listComment"}>
                                                 <span> Comment list </span>
+                                                {console.log(this.state.card.cardComments)}
+                                                {this.state.card.cardComments.map((comment) => {
+                                                    return <div><span>{comment.commentContent}</span></div>
+
+                                                })
+                                                }
                                             </div>
 
                                         </div>

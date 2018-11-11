@@ -2,6 +2,8 @@ import SimpleSchema from 'simpl-schema';
 
 import { Mongo } from 'meteor/mongo'
 import {LabelsSchema} from "./Labels";
+import {CommentSchema} from "./Comment";
+
 
 export const Cards = new Mongo.Collection('cards')
 
@@ -34,14 +36,14 @@ export const CardSchema = new SimpleSchema({
       optional: true
   },
   'cardLabels.$': SimpleSchema.RegEx.Id, //se if need to replace Object with a schema*/
-  /*cardComment: {
+  cardComments: {
       type: Array,
       label: "Comments",
       defaultValue: [],
       optional: true
   },
-  'cardComment.$': Object, //se if need to replace Object with a schema
-  cardAttachment: {
+  'cardComments.$': CommentSchema, //se if need to replace Object with a schema
+  /*cardAttachment: {
       type: Array,
       label: "Attachments",
       defaultValue: [],
