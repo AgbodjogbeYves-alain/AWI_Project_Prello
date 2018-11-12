@@ -18,11 +18,11 @@ export class List extends React.Component {
     }
 
     removeList = () => {
-        callRemoveList(this.props.idBoard,this.props.list._id)
+        callRemoveList(this.props.board._id,this.props.list._id)
     }
 
     archiveList = () => {
-        let idBoard = this.props.idBoard;
+        let idBoard = this.props.board._id;
         let nlist = this.props.list;
         nlist.listArchived = true;
         //nlist.listCard.map((card) => {card.cardArchived = true; callEditCard(idBoard, nlist._id, card)}) Uncomment it when editCard done
