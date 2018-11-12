@@ -4,9 +4,11 @@ import {JsonRoutes} from 'meteor/simple:json-routes';
 import {Boards} from "../models/Boards";
 import {Labels} from '../models/Labels';
 
-Meteor.publish('labels', function () {
-    return Labels.find();
-});
+if(Meteor.isServer) {
+    Meteor.publish('labels', function () {
+        return Labels.find();
+    });
+}
 
 Meteor.methods({
     'labels.createLabel'(idBoard,newLabel) {

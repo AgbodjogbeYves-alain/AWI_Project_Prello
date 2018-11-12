@@ -32,14 +32,14 @@
     "history": "^4.7.2",
     "meteor-node-stubs": "^0.4.1",
     "query-string": "^6.2.0",
-    "react": "^16.5.2",
+    "react": "^16.6.1",
     "react-autocomplete": "^1.8.1",
     "react-beautiful-dnd": "^9.0.2",
     "react-css-modules": "^4.0.3",
     "react-color": "^2.14.1",
     "react-dnd": "^5.0.0",
     "react-dnd-html5-backend": "^5.0.1",
-    "react-dom": "^16.5.2",
+    "react-dom": "^16.6.1",
     "react-drag-and-drop": "^2.4.0",
     "react-modal": "^3.6.1",
     "react-paginate": "^5.2.4",
@@ -55,7 +55,7 @@
     "rupture": "~0.6.2",
     "s-grid": "^1.2.1",
     "simpl-schema": "^1.5.3",
-    "styled-components": "^4.0.3"
+    "styled-components": "^3.2.6"
   },
   "devDependencies": {
     "autoprefixer": "~6.5.3",

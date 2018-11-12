@@ -2,11 +2,13 @@ import {Boards} from "../models/Boards";
 import {Meteor} from "meteor/meteor";
 import {boardUtils} from "./Utils/boardUtils";
 
-Meteor.publish('boards', function () {
-    let userId = this.userId;
-    return Boards.find({boardUsers : {$elemMatch: {'userId': userId}}})
-});
 
+if(Meteor.isServer){
+    Meteor.publish('boards', function () {
+        let userId = this.userId;
+        return Boards.find({boardUsers: {$elemMatch: {'userId': userId}}})
+    });
+}
 Meteor.methods({
 
     'boards.createBoard'(board) {
