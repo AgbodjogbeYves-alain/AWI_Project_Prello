@@ -12,12 +12,12 @@ class Board extends Component {
         this.handleRemoveBoard = this.handleRemoveBoard.bind(this);
     }
 
-    handleRemoveBoard(){
+    handleRemoveBoard(e){
+        e.preventDefault();
         if(confirm("Are you sure to delete this board ?")){
             asteroid.call("boards.removeBoard", this.props.board._id)
         }
     }
-
     render(){
         let board = this.props.board;
         return(
@@ -25,26 +25,27 @@ class Board extends Component {
                 <Link 
                     to={"/board/"+ board._id} 
                     className="card card-stats mb-4 mb-lg-0"
-                    style={{backgroundImage: "url('https://res.cloudinary.com/dxdyg7b5b/image/upload/c_thumb,w_200/v1541680096/backgrounds/"+ board.boardBackground +".jpg')"}}
+                    style={{backgroundImage: "url('https://res.cloudinary.com/dxdyg7b5b/image/upload/c_thumb,w_300/v1541680009/backgrounds/"+ board.boardBackground +".jpg')"}}
                 >
                     <div className="card-body">
                         <h6>{board.boardTitle}</h6>
                         <div class="dropdown float-right d-none">
-                            <a class="btn-link btn-sm" data-toggle="dropdown" href="#" role="button">
+                            <div class="btn-link btn-sm" data-toggle="dropdown" href="#" role="button" onClick={(e) => e.preventDefault()}>
                                 <i class="ni ni-settings-gear-65 ni-lg"></i>
-                            </a>
+                            </div>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" 
+                                <div class="dropdown-item" 
                                     data-toggle="modal"
                                     data-target={"#board-modal" + board._id}
+                                    onClick={(e) => e.preventDefault()}
                                 >
                                     <i class="ni ni-settings"></i>
                                     Edit
-                                </a>
-                                <a class="dropdown-item" onClick={this.handleRemoveBoard}>
+                                </div>
+                                <div class="dropdown-item" onClick={(e) => this.handleRemoveBoard(e)}>
                                     <i class="ni ni-fat-remove"></i>
                                     Remove
-                                </a>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -15,7 +15,7 @@ class TeamModal extends Component {
             teamId: this.props.team ? this.props.team._id : '',
             teamName: this.props.team ? this.props.team.teamName : '',
             teamDescription: this.props.team ? this.props.team.teamDescription : '',
-            teamMembers: this.props.team ? this.props.team.teamMembers : [{user: this.props.user, userRole: "admin"}],
+            teamMembers: this.props.team ? this.props.team.teamMembers : [{userId: this.props.user._id, role: "admin"}],
             alerts: []
         };
 
@@ -48,7 +48,7 @@ class TeamModal extends Component {
             teamDescription: this.state.teamDescription,
             teamMembers: this.state.teamMembers,
         };
-        
+        console.log(team)
         asteroid.call("teams.createTeam", team)
         .then((result) => {
             $('#team-modal' + this.state.teamId).modal('toggle');

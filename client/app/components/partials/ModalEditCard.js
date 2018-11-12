@@ -78,9 +78,7 @@ class ModalEditCard extends Component {
             let newCard = this.state.card
             newCard.cardComments.push(newComment)
             callAddCommentCard(this.state.idBoard,this.state.idList,newCard)
-            this.setState({
-                card: newCard
-            })
+
         }else{
             //Alert comment must not be empty
         }
@@ -131,9 +129,9 @@ class ModalEditCard extends Component {
         if(this.state.newDescription != ""){
             newCard.cardDescription = this.state.newDescription
             callEditCard(this.state.idBoard,this.state.idList,newCard)
-            this.setState({
+            /*this.setState({
                 card: newCard
-            })
+            })*/
 
         }else{
             //Alert description must not be empty
@@ -150,7 +148,7 @@ class ModalEditCard extends Component {
         })
     }
 
-    renderDeadLine = () => {
+    renderDeadLine(){
         if(this.state.card.cardDeadline){
             return <span><i className="ni ni-time-alarm"/>{this.state.card.cardDeadline}</span>
         }
@@ -197,7 +195,7 @@ class ModalEditCard extends Component {
                             </div>
 
                             <div className={"deadLineDiv"}>
-                                {this.renderDeadLine}
+                                {this.renderDeadLine()}
                             </div>
                             <div className="formCardModal">
                                 <form role="form" onSubmit={(e) => e.preventDefault()}>

@@ -26,14 +26,14 @@ export const CardSchema = new SimpleSchema({
   cardDeadline:{
     type: String,
     label: "Deadline",
-    optional: true,
     required: false
   },
-  cardLabels: {
+    cardLabels: {
       type: Array,
       label: "Labels",
-      defaultValue: []
-  },
+      defaultValue: [],
+
+    },
   'cardLabels.$': SimpleSchema.RegEx.Id, //se if need to replace Object with a schema*/
   cardComments: {
       type: Array,

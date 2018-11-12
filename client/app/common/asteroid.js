@@ -4,7 +4,7 @@ import store from '../components/store';
 import { createBoard, removeBoard, editBoard } from '../actions/BoardActions';
 import { addTeam, removeTeam, editTeam } from '../actions/TeamActions';
 import { addLabel, removeLabel, editLabel } from '../actions/LabelActions';
-
+import { setRefreshed } from '../actions/RefreshActions';
 
 const Asteroid = createClass();
 // Connect to a Meteor backend
@@ -40,6 +40,7 @@ asteroid.ddp.on('added', (doc) => {
       store.dispatch(addLabel(docObj));
   }
 
+
 });
 
 asteroid.ddp.on('removed', (removedDoc) => {
@@ -60,8 +61,7 @@ asteroid.ddp.on('removed', (removedDoc) => {
 
 asteroid.ddp.on('changed', (updatedDoc) => {
   if (updatedDoc.collection === 'users') {
-
-      store.dispatch(editProfileUser(updatedDoc.fields));
+      store.dispatch(editProfileUser(updatedDoc.id, updatedDoc.fields));
   }
   if (updatedDoc.collection === 'boards') {
       store.dispatch(editBoard(updatedDoc.id, updatedDoc.fields));

@@ -34,7 +34,8 @@ class CardOptions extends Component {
     handleAddDeadline = (event) => {
         event.preventDefault();
         let newCard = this.state.card
-        newCard.cardDeadline = event.target.value
+        newCard.cardDeadline = this.state.cardDeadline
+        console.log(newCard.cardDeadline)
         callEditCard(this.state.idBoard,this.state.idList,newCard)
     }
 
@@ -136,7 +137,7 @@ class CardOptions extends Component {
                         <div className="card card-stats mb-4 mb-lg-0 cardForOptions">
                             <div className="card-body">
                                 <input type="date" id="start" name="trip-start"
-                                       value={this.state.cardDeadline}
+                                       value={this.state.cardDeadline} onChange={(e)=>this.state.cardDeadline=e.target.value}
                                 >
                                 </input>
                                 <button type="button" className="btn btn-success cardButtonEditDeadline" onClick={this.handleAddDeadline}>Add</button>

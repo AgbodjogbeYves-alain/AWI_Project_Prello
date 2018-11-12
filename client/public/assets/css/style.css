@@ -1,6 +1,8 @@
 @import 'dashboard.css';
 @import 'boardModal.css';
 @import 'home.css';
+@import 'board.css';
+@import 'loading-page.css';
 
 .dropdown-item{
     cursor: pointer;
@@ -55,6 +57,7 @@ nav .notifications {
     overflow-x: hidden;
     overflow-y: hidden;
     background-size: cover;
+    background-position-y: bottom;
 }
 
 [data-react-beautiful-dnd-droppable="0"]{
@@ -249,4 +252,37 @@ li{
 
 .cardLabelsDiv{
     margin-top: 5%;
+}
+.profile-picture {
+    background-color: #5e72e4;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 100px;
+    cursor: pointer;
+}
+.profile-picture.size-sm{
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+    line-height: 24px;
+    letter-spacing: 1px;
+    box-shadow: 1px 1px 8px 1px #adb5bd;
+}
+.profile-picture.size-lg{
+    height: 200px;
+    line-height: 200px;
+    width: 200px;
+    letter-spacing: 10px;
+    font-size: 80px;
+    box-shadow: 1px 1px 8px 0px #21252978;
+}
+.card-profile-image {
+    margin-top: -90px;
+    transition: 0.1s;
+    cursor: pointer
+}
+.card-profile-image:hover {
+    margin-top: -100px;
+    transition: 0.2s
 }

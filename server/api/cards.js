@@ -13,8 +13,8 @@ Meteor.methods({
             let board = (Boards.findOne({_id: idBoard}))
             let newBoardLists = board.boardLists.map((list) => {
                 if(list._id == idList){
-                    let newCard = {_id: id, cardTitle: "New card"}
-                    list.listCard.push(newCard)
+                    let newCard = {_id: id, cardTitle: "New card", cardLabels: [], cardComments: []}
+                    list.listCards.push(newCard)
                     find = true
                     return list
                 }else{
@@ -47,7 +47,7 @@ Meteor.methods({
             let newBoardLists = board.boardLists.map((list) => {
                 if(list._id == idList){
                     findList = true
-                    list.listCard = list.listCard.map((card) => {
+                    list.listCards = list.listCards.map((card) => {
                         if (card._id == newCard._id) {
                             findCard = true
                             return newCard
@@ -101,7 +101,7 @@ Meteor.methods({
             let newBoardLists = board.boardLists.map((list) => {
                 if(list._id == idList){
                     findList = true
-                    list.listCard = list.listCard.map((card) => {
+                    list.listCards = list.listCards.map((card) => {
                         if (card._id == newCard._id) {
                             findCard = true
                             return newCard
@@ -144,7 +144,7 @@ Meteor.methods({
             let newBoardLists = board.boardLists.map((list) => {
                 if(list._id == idList){
                     findList = true
-                    list.listCard = list.listCard.filter((card) => card._id!=idCard)
+                    list.listCards = list.listCards.filter((card) => card._id!=idCard)
                     return list
                 }else{
                     return list
