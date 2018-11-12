@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import asteroid from '../../../common/asteroid';
-
+import GoogleLogin from 'react-google-login';
 import Alert from "../../partials/Alert.js";
 import NavBar from "../../partials/NavBar.js"
 
@@ -14,6 +14,8 @@ class SignUp extends Component {
         this.state = {
             alerts: []
         };
+
+        this.googleSignUp = this.googleSignUp.bind(this)
     }
 
     addAlert(type, text) {
@@ -52,11 +54,37 @@ class SignUp extends Component {
         }
     }
 
-    renderAlerts(){
-        return this.state.alerts.map(a => (<Alert key={this.state.alerts.indexOf(a)} type={a.type}  text={a.text}/>));
+    googleSignUp(tokenId){
+        event.preventDefault();
+        let that = this;
+        asteroid.call('users.googleSignUp', tokenId)
+            .then((result) => {
+                   that.addAlert('success', "You're now Signed Up !")
+                   that.props.history.push("/login")
+               }).catch(error => {
+                    that.addAlert('danger', error.reason)
+           })
+
     }
 
+    renderAlerts(){
+        return this.state.alerts.map(a => (<Alert key={this.state.alerts.indexOf(a)} type={a.type}  text={a.text}/>));
+        
+    }
+
+   
+
     render() {
+        const sucessResponseGoogle = (response) => {
+            let tokenId = response.getAuthResponse().id_token;
+            this.googleSignUp(tokenId);
+            
+          }
+
+        const failResponseGoogle = (response) =>{
+            alert("An error occured !! Please try again!! ")
+        }
+
         const { user } = this.props;
         if(user) return(<Redirect to='/dashboard'/>)
         return(
@@ -82,12 +110,20 @@ class SignUp extends Component {
                             <small>Sign up with</small>
                             </div>
                             <div className="text-center">
-                            <a href="#" className="btn btn-neutral btn-icon">
-                                <span className="btn-inner--icon">
-                                    <img src="../assets/img/icons/common/google.svg"/>
-                                </span>
-                                <span className="btn-inner--text">Google</span>
-                            </a>
+                            <GoogleLogin
+                                clientId="909976969961-r4v6ls5qbgjvslotg7trcb066vig4cb8.apps.googleusercontent.com"
+                                render={renderProps => (
+                                    <a onClick={renderProps.onClick} href="#" className="btn btn-neutral btn-icon">
+                                    <span className="btn-inner--icon">
+                                        <img src="../assets/img/icons/common/google.svg"/>
+                                    </span>
+                                    <span className="btn-inner--text">Google</span>
+                                    </a>
+                                )}
+                                buttonText="Login"
+                                onSuccess={sucessResponseGoogle}
+                                onFailure={failResponseGoogle}
+                            />
                             </div>
                         </div>
                         <div className="card-body px-lg-5 py-lg-5">

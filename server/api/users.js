@@ -1,8 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 
+const verifToken = require('./Utils/tokenIdVerification')
+
+
 Meteor.publish('users', function(){
-    if(this.userId) return Meteor.users.find({_id: {$ne: this.userId}}, {fields: { 'profile.trelloToken': 0, services: 0 }});
+    if(this.userId) return Meteor.users.find({_id: {$ne: this.userId}}, {fields: { 'profile.trelloToken': 0, services: 0 }},{fields: { 'profile.google_id': 0, services: 0 }} );
 });
 
 Meteor.publish('user', function () {
@@ -27,6 +30,45 @@ Meteor.methods({
 
             Accounts.createUser(options);
         }
+    },
+    "users.googleSignUp"(tokenId){
+        return verifToken.verify(tokenId).then(payload=>{
+            let options = {
+                email: payload['email'],
+                profile: {
+                    lastname: payload['family_name'],
+                    firstname: payload['given_name'],
+                    enabledMails: false,
+                    email: payload['email'],
+                    google_id: payload['sub']
+                    
+                },
+                
+              
+            };
+
+             Accounts.createUser(options);
+        })
+    },
+    "users.googleLogin"(tokenId){
+        return (verifToken.verify(tokenId).then(payload=>{
+            let user_id = payload['sub'];
+            let user =  Meteor.users.findOne({"profile.google_id": user_id})
+            var stampedToken = Accounts._generateStampedLoginToken();
+            var hashStampedToken = Accounts._hashStampedToken(stampedToken);
+
+            Meteor.users.update(user._id, 
+                {$push: {'services.resume.loginTokens': hashStampedToken}}
+              );
+
+           
+           this.setUserId(user._id);
+           return {
+               token : stampedToken.token
+           }
+
+        }))
+        
     },
     "users.updateProfile"(email, lastname, firstname){
         //TODO Test if email already used
