@@ -1,6 +1,5 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
-import {LoginToken} from 'meteor/dispatch:login-token'
 
 const verifToken = require('./Utils/tokenIdVerification')
 
@@ -52,11 +51,24 @@ Meteor.methods({
         })
     },
     "users.googleLogin"(tokenId){
-        verifToken.verify(tokenId).then(payload=>{
+        return (verifToken.verify(tokenId).then(payload=>{
             let user_id = payload['sub'];
             let user =  Meteor.users.findOne({"profile.google_id": user_id})
-            Meteor.reconnect()
-        });
+            var stampedToken = Accounts._generateStampedLoginToken();
+            var hashStampedToken = Accounts._hashStampedToken(stampedToken);
+
+            Meteor.users.update(user._id, 
+                {$push: {'services.resume.loginTokens': hashStampedToken}}
+              );
+
+           
+           this.setUserId(user._id);
+           return {
+               token : stampedToken.token
+           }
+
+        }))
+        
     },
     "users.updateProfile"(email, lastname, firstname){
         //TODO Test if email already used

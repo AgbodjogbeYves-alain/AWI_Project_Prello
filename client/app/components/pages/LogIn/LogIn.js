@@ -48,7 +48,8 @@ class LogIn extends Component {
         event.preventDefault();
         let that = this;
         asteroid.call("users.googleLogin",token)
-        .then(result => {
+        .then((result) => {
+            localStorage.setItem('ws://localhost:9000/websocket__login_token__',result.token)
             that.addAlert("success", "You're Loged In !");
             that.props.history.push('/dashboard');
         })
