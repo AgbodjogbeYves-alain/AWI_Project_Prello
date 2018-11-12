@@ -25,8 +25,15 @@ export class List extends React.Component {
         let idBoard = this.props.board._id;
         let nlist = this.props.list;
         nlist.listArchived = true;
-        nlist.listCards.map((card) => {let newCard = card; newCard.cardArchived = true; callEditCard(idBoard, nlist._id, newCard)})
-        console.log(nlist)
+        nlist.listCards.map((card) => {let newCard = card; newCard.isArchived = true; callEditCard(idBoard, nlist._id, newCard)})
+        callEditList(idBoard, nlist);
+    }
+
+    archiveAllCards = () => {
+        let idBoard = this.props.board._id;
+        let nlist = this.props.list;
+        nlist.listCards.map((card) => {let newCard = card; newCard.isArchived = true; callEditCard(idBoard, nlist._id, newCard)})
+        console.log(nlist);
         callEditList(idBoard, nlist);
     }
 
@@ -78,6 +85,7 @@ export class List extends React.Component {
                         <Container {...provided.draggableProps} ref={provided.innerRef}>
                         <ConfirmModal id={"confirmDeletemodal"+this.props.list._id} text={"Are you sure you want to delete the list "+this.props.list.listTitle+" ?"} confirmAction={this.removeList}/>
                         <ConfirmModal id={"confirmArchivemodal"+this.props.list._id} text={"Are you sure you want to archive the list "+this.props.list.listTitle+" ?"} confirmAction={this.archiveList}/>
+                        <ConfirmModal id={"confirmArchiveCardsmodal"+this.props.list._id} text={"Are you sure you want to archive all the cards the list "+this.props.list.listTitle+" ?"} confirmAction={this.archiveAllCards}/>
                         <a className={"ni ni-fat-remove"} data-toggle="modal" data-target={"#"+"confirmDeletemodal"+this.props.list._id} style={{fontSize: "30px", position: "absolute", "right": "0px"}}></a>
                         <Title {...provided.dragHandleProps}>
                             <div id={this.props.list._id} onClick={this.titleToInput}>{this.props.list.listTitle}</div>
@@ -89,7 +97,7 @@ export class List extends React.Component {
                                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <a className="dropdown-item">Copy list</a>
                                         <a className="dropdown-item" href="#">Move list</a>
-                                        <a className="dropdown-item" href="#">Archive all cards</a>
+                                        <a className="dropdown-item" data-toggle="modal" data-target={"#"+"confirmArchiveCardsmodal"+this.props.list._id}>Archive all cards</a>
                                         <a className="dropdown-item" data-toggle="modal" data-target={"#"+"confirmArchivemodal"+this.props.list._id}>Archive list</a>
                                     </div>
                                 </div>
