@@ -26,7 +26,7 @@ if (process.env.NODE_ENV == 'production') {
             aggregateTimeout: 300,
             poll: 1000
         },
-    }).listen(8080, 'localhost', function (err, result) {
+    }).listen(3000, 'localhost', function (err, result) {
         if (err) {
             console.log(err);
         }
