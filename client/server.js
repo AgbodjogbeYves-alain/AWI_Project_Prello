@@ -30,6 +30,6 @@ if (process.env.NODE_ENV == 'production') {
         if (err) {
             console.log(err);
         }
-        console.log('Listening at localhost:8080');
+        console.log('Listening at localhost:3000');
     });
 }
