@@ -1,5 +1,5 @@
 FROM node:8
-LABEL maintainer Agbodjogbe Yves-alain, othniel.agbodjogbe@gmail.com
+LABEL maintainer Yves-alain, othniel.agbodjogbe@gmail.com
 RUN mkdir /home/client
 WORKDIR /home/client
 ADD . .
