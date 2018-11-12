@@ -100,6 +100,7 @@ class AddUserInput extends Component {
     }
 
     render(){
+        console.log(this.props.users)
         return (
             <div className="form-group mb-3">
                 {this.renderUsers()}

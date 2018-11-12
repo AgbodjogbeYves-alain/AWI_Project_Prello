@@ -2,10 +2,11 @@ import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 
 Meteor.publish('users', function(){
-    if(this.userId) return Meteor.users.find({_id: {$ne: this.userId}}, {fields: { 'profile.trelloToken': 0 }});
+    if(this.userId) return Meteor.users.find({_id: {$ne: this.userId}}, {fields: { 'profile.trelloToken': 0, services: 0 }});
 });
 
 Meteor.publish('user', function () {
+    console.log(this.userId)
     return Meteor.users.find({_id: this.userId});
 });
 
