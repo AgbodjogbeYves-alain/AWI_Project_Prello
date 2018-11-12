@@ -20,14 +20,14 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'React with Webpack and Redux - Meteor as a backend only!',
+      title: 'Prello groupe 1 Option2',
       template: './head.ejs',
       inject: 'body'
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
-        warnings: false
+        warnings: true
       }
     })
   ],
