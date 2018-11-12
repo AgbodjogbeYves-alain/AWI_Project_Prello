@@ -5,6 +5,8 @@ import './api/boards';
 import './api/lists';
 import './api/cards'
 import './api/teams';
+import './api/labels';
+
 
 Meteor.startup(() => {
 

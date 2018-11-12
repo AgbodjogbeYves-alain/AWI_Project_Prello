@@ -19,7 +19,7 @@ export const TeamSchema = new SimpleSchema({
         defaultValue: "" 
     },
     teamOwner : {
-        type: UserSchema,
+        type: String,
         label: "Owner"
     },
     teamMembers:{

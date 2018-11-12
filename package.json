@@ -18,6 +18,7 @@
     "babel": "^6.23.0",
     "concurrently": "^3.1.0",
     "react": "^16.6.0",
+    "react-color": "^2.14.1",
     "react-dom": "^16.6.0",
     "react-redux-sweetalert": "^1.0.2",
     "react-sidebar": "^3.0.2",

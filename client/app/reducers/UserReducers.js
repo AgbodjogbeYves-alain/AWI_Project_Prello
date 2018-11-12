@@ -3,9 +3,9 @@ import { SET_USER, UNSET_USER, EDIT_USER, REMOVE_USER } from '../actions/UserAct
 const user = (state = null, action) => {
   switch (action.type) {
     case SET_USER:
-      return action.user;
+      return action.data;
     case EDIT_USER:
-      return action.user;
+      return Object.assign({_id: state._id}, action.data);
     case UNSET_USER:
       return null;
     case REMOVE_USER:

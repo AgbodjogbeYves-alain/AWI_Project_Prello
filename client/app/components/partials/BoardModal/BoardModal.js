@@ -93,7 +93,6 @@ class BoardModal extends Component {
         asteroid.call("boards.editBoard", board)
         .then((result) => {
             $('#board-modal' + this.state.boardId).modal('toggle');
-            //that.props.history.push("/board/" + result.data._id)
         })
         .catch((error) => {
             this.addAlert("danger", error.reason)

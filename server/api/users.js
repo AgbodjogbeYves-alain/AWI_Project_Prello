@@ -5,7 +5,7 @@ const verifToken = require('./Utils/tokenIdVerification')
 
 
 Meteor.publish('users', function(){
-    if(this.userId) return Meteor.users.find({_id: {$ne: this.userId}}, {fields: { 'profile.google_id': 0 }});
+    if(this.userId) return Meteor.users.find({_id: {$ne: this.userId}}, {fields: { 'profile.trelloToken': 0, services: 0 }},{fields: { 'profile.google_id': 0, services: 0 }} );
 });
 
 Meteor.publish('user', function () {
@@ -101,5 +101,13 @@ Meteor.methods({
     },
     "users.getUsers"(){
         return Meteor.users.find();
+    },
+    "users.linkTrello"(token){
+        Meteor.users.update(this.userId, {$set: {'profile.trelloToken': token}});
+        return Meteor.user();
+    },
+    "users.unlinkTrello"(){
+        Meteor.users.update(this.userId, {$set: {'profile.trelloToken': null}});
+        return Meteor.user();
     }
 })

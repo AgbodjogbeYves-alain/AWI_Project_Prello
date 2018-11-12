@@ -8,6 +8,8 @@ import ChangePasswordForm from "./ChangePasswordForm/ChangePasswordForm.js";
 import EnabledMailsInput from "./EnabledMailsInput/EnabledMailsInput.js";
 import ConfirmModal from "./../../partials/ConfirmModal.js";
 import { callRemoveUser } from '../../../actions/UserActions.js';
+import { ProfilePicture } from '../../partials/ProfilePicture.js';
+import LinkTrelloButton from '../../partials/LinkTrelloButton.js';
 
 class MyAccount extends Component {
 
@@ -15,7 +17,7 @@ class MyAccount extends Component {
         super(props);
 
         this.removeAccount = this.removeAccount.bind(this);
-      }
+    }
 
     removeAccount(){
         const { dispatchCallRemoveUser } = this.props;
@@ -57,9 +59,9 @@ class MyAccount extends Component {
                                 <div className="row justify-content-center">
                                     <div className="col-lg-3 order-lg-2">
                                         <div className="card-profile-image">
-                                            <a href="#">
-                                                <img src="./img/profile_placeholder.png" className="rounded-circle"/>
-                                            </a>
+                                            { this.props.user ?
+                                                <ProfilePicture size={"lg"} user={this.props.user}/> : ""
+                                            }
                                         </div>
                                     </div>
                                     <div className="col-lg-4 order-lg-3 ">
@@ -72,10 +74,7 @@ class MyAccount extends Component {
                                             </button>
                                         </div>
                                         <div className="card-profile-actions py-4 mt-lg-0 text-right">
-                                            <button 
-                                                className="btn btn-primary btn-sm">
-                                                Link with Trello
-                                            </button>
+                                            <LinkTrelloButton trelloToken={this.props.user.profile.trelloToken} />
                                         </div>
                                     </div>
                                     <div className="col-lg-4 order-lg-1">
