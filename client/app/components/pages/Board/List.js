@@ -25,7 +25,8 @@ export class List extends React.Component {
         let idBoard = this.props.board._id;
         let nlist = this.props.list;
         nlist.listArchived = true;
-        //nlist.listCard.map((card) => {card.cardArchived = true; callEditCard(idBoard, nlist._id, card)}) Uncomment it when editCard done
+        nlist.listCards.map((card) => {let newCard = card; newCard.cardArchived = true; callEditCard(idBoard, nlist._id, newCard)})
+        console.log(nlist)
         callEditList(idBoard, nlist);
     }
 
