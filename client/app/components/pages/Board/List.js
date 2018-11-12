@@ -81,7 +81,7 @@ export class List extends React.Component {
                         <Title {...provided.dragHandleProps}>
                             <div id={this.props.list._id} onClick={this.titleToInput}>{this.props.list.listTitle}</div>
                         </Title>
-                            <div style={{textAlign: "center"}}>{this.props.list.listCards.filter((card) => card.isArchived==false).count() + " cards"}
+                            <div style={{textAlign: "center"}}>{this.props.list.listCards.filter((card) => {if(!card.isArchived) {return card}}).length + " cards"}
                                 <div className="dropdown" style={{float:"right"}}>
                                     <button className="btn fas fa-ellipsis-v" type="button" id={"dropdownMenuButton"+this.props.list.listId} data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     </button>
