@@ -16,7 +16,11 @@ const UserProfileSchema = new SimpleSchema({
     enabledMails: {
         type: Boolean,
         optional: true
-    }
+    },
+    google_id:{
+        type:String,
+        optional: true
+    },
 });
 
 export const UserSchema = new SimpleSchema({
@@ -70,6 +74,7 @@ export const UserSchema = new SimpleSchema({
         optional: true,
         blackbox: true
     },
+   
     // Add `roles` to your schema if you use the meteor-roles package.
     // Option 1: Object type
     // If you specify that type as Object, you must also specify the
@@ -97,7 +102,8 @@ export const UserSchema = new SimpleSchema({
     heartbeat: {
         type: Date,
         optional: true
-    }
+    },
+    
 });
 
 Meteor.users.attachSchema(UserSchema);

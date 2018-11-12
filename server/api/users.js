@@ -1,8 +1,12 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
+import {LoginToken} from 'meteor/dispatch:login-token'
+
+const verifToken = require('./Utils/tokenIdVerification')
+
 
 Meteor.publish('users', function(){
-    if(this.userId) return Meteor.users.find({_id: {$ne: this.userId}}, {fields: { profile: 1 }});
+    if(this.userId) return Meteor.users.find({_id: {$ne: this.userId}}, {fields: { 'profile.google_id': 0 }});
 });
 
 Meteor.publish('user', function () {
@@ -27,6 +31,32 @@ Meteor.methods({
 
             Accounts.createUser(options);
         }
+    },
+    "users.googleSignUp"(tokenId){
+        return verifToken.verify(tokenId).then(payload=>{
+            let options = {
+                email: payload['email'],
+                profile: {
+                    lastname: payload['family_name'],
+                    firstname: payload['given_name'],
+                    enabledMails: false,
+                    email: payload['email'],
+                    google_id: payload['sub']
+                    
+                },
+                
+              
+            };
+
+             Accounts.createUser(options);
+        })
+    },
+    "users.googleLogin"(tokenId){
+        verifToken.verify(tokenId).then(payload=>{
+            let user_id = payload['sub'];
+            let user =  Meteor.users.findOne({"profile.google_id": user_id})
+            Meteor.reconnect()
+        });
     },
     "users.updateProfile"(email, lastname, firstname){
         //TODO Test if email already used
