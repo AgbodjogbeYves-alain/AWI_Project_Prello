@@ -16,6 +16,11 @@ const UserProfileSchema = new SimpleSchema({
     enabledMails: {
         type: Boolean,
         optional: true
+    },
+    trelloToken: {
+        type: String,
+        optional: true,
+        defaultValue: null
     }
 });
 

@@ -34,3 +34,29 @@ export function callCreateCard(idBoard,idList) {
         console.log(error);
     })
 }
+
+export function callEditCard(idBoard,idList,newCard) {
+    asteroid.call('boards.card.editCard', idBoard,idList,newCard).catch(error => {
+        console.log(error);
+    })
+}
+
+export function callAddCommentCard(idBoard,idList,newCard) {
+    asteroid.call('boards.card.addComment', idBoard,idList,newCard).catch(error => {
+        console.log(error);
+    })
+}
+
+export function callRemoveCard(idBoard,idList,idCard){
+    asteroid.call('boards.card.removeCard', idBoard,idList,idCard).catch(error => {
+        console.log(error);
+    })
+}
+
+
+
+/*export function callEditCardLabels(idBoard,idList,id,idLabel) {
+    asteroid.call('boards.card.editCardLabel', idBoard,idList,id,idLabel).catch(error => {
+        console.log(error);
+    })
+}*/

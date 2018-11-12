@@ -11,7 +11,7 @@ export default class Teams extends Component {
     renderTeams(){
         return this.props.teams.map((t,i) =>
             <li key={i} className="nav-item" onClick={() => this.handleChangeActivedTeam(t)}>
-                <a class={"nav-link mb-sm-3 mb-md-0 " + ((this.props.activedTeam && this.props.activedTeam._id == t._id) ? 'active' : '')} href="#">
+                <div class={"nav-link mb-sm-3 mb-md-0 " + ((this.props.activedTeam && this.props.activedTeam._id == t._id) ? 'active' : '')} href="#">
                     {t.teamName}
                     <div class="dropdown float-right d-none">
                         <a class="btn-link btn-sm" data-toggle="dropdown" href="#" role="button">
@@ -31,7 +31,7 @@ export default class Teams extends Component {
                             </a>
                         </div>
                     </div>
-                </a>
+                </div>
             </li>
         )
     }

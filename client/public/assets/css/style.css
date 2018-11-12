@@ -1,6 +1,8 @@
 @import 'dashboard.css';
 @import 'boardModal.css';
 @import 'home.css';
+@import 'board.css';
+@import 'loading-page.css';
 
 .dropdown-item{
     cursor: pointer;
@@ -54,6 +56,8 @@ nav .notifications {
     height: -webkit-fill-available;
     overflow-x: hidden;
     overflow-y: hidden;
+    background-size: cover;
+    background-position-y: bottom;
 }
 
 [data-react-beautiful-dnd-droppable="0"]{
@@ -94,10 +98,11 @@ nav {
 }
 
 #divList{
-    overflow-x: auto;
+    overflow-x: scroll;
     overflow-y: hidden;
     float: left;
     width: 100%;
+    padding-top: 1%;
 }
 
 .sidenav {
@@ -169,13 +174,13 @@ nav {
 /* Track */
 ::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px grey;
-    border-radius: 10px;
+    border-radius: 2px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
     background: #5e72e3;
-    border-radius: 10px;
+    border-radius: 2px;
 }
 
 /* Handle on hover */
@@ -186,4 +191,98 @@ nav {
 .myAddListButton {
     margin-top: 6%;
     margin-left: 40%;
+}
+
+html{
+    overflow-y: hidden;
+}
+
+
+.cardactiondiv{
+    float: right;
+}
+
+.actionUl{
+    list-style-type: none;
+}
+
+.cardButtonEdit{
+    width: 100%;
+    height: 10%;
+}
+
+.modalCard  .modal-dialog {
+    max-width: 800px;
+}
+
+.formCardModal{
+    float:left;
+    width: 50%;
+}
+
+.modalContentCard{
+    width: 100%;
+}
+
+li{
+    margin: 20px 0;
+}
+
+.cardForOptions{
+    position: absolute;
+    z-index: 1;
+}
+
+.cardButtonEditLabel{
+    height: 15%;
+    width: 100%;
+
+
+}
+
+.cardButtonEditDeadline{
+    width: 100%;
+    height: 50%;
+}
+
+.buttonLabel{
+    width: 100%;
+    color: white;
+}
+
+.cardLabelsDiv{
+    margin-top: 5%;
+}
+.profile-picture {
+    background-color: #5e72e4;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 100px;
+    cursor: pointer;
+}
+.profile-picture.size-sm{
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+    line-height: 24px;
+    letter-spacing: 1px;
+    box-shadow: 1px 1px 8px 1px #adb5bd;
+}
+.profile-picture.size-lg{
+    height: 200px;
+    line-height: 200px;
+    width: 200px;
+    letter-spacing: 10px;
+    font-size: 80px;
+    box-shadow: 1px 1px 8px 0px #21252978;
+}
+.card-profile-image {
+    margin-top: -90px;
+    transition: 0.1s;
+    cursor: pointer
+}
+.card-profile-image:hover {
+    margin-top: -100px;
+    transition: 0.2s
 }
