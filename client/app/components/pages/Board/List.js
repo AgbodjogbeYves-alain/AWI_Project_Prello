@@ -33,7 +33,6 @@ export class List extends React.Component {
         let idBoard = this.props.board._id;
         let nlist = this.props.list;
         nlist.listCards.map((card) => {let newCard = card; newCard.isArchived = true; callEditCard(idBoard, nlist._id, newCard)})
-        console.log(nlist);
         callEditList(idBoard, nlist);
     }
 
