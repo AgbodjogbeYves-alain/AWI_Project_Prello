@@ -2,7 +2,7 @@
   "name": "server",
   "private": true,
   "scripts": {
-    "start": "meteor --settings settings-development.json",
+    "start": "meteor run",
     "test": "meteor test --once --driver-package meteortesting:mocha"
   },
   "dependencies": {

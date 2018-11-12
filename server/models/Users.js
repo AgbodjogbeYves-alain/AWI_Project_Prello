@@ -17,18 +17,15 @@ const UserProfileSchema = new SimpleSchema({
         type: Boolean,
         optional: true
     },
-<<<<<<< HEAD
     google_id:{
         type:String,
         optional: true
     },
-=======
     trelloToken: {
         type: String,
         optional: true,
         defaultValue: null
     }
->>>>>>> develop
 });
 
 export const UserSchema = new SimpleSchema({
