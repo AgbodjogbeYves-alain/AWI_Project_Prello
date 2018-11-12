@@ -6,7 +6,6 @@ Meteor.publish('users', function(){
 });
 
 Meteor.publish('user', function () {
-    console.log(this.userId)
     return Meteor.users.find({_id: this.userId});
 });
 
