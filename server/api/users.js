@@ -1,14 +1,16 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 
-Meteor.publish('users', function(){
-    if(this.userId) return Meteor.users.find({_id: {$ne: this.userId}}, {fields: { 'profile.trelloToken': 0 }});
-});
+if(Meteor.isServer) {
 
-Meteor.publish('user', function () {
-    return Meteor.users.find({_id: this.userId});
-});
+    Meteor.publish('users', function () {
+        if (this.userId) return Meteor.users.find({_id: {$ne: this.userId}}, {fields: {'profile.trelloToken': 0}});
+    });
 
+    Meteor.publish('user', function () {
+        return Meteor.users.find({_id: this.userId});
+    });
+}
 Meteor.methods({
     "users.signUp"({lastname, firstname, email, password}){
         if(password.length < 6) throw new Meteor.Error("Too short password, at least 6 characters.")
