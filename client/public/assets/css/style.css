@@ -3,6 +3,7 @@
 @import 'home.css';
 @import 'board.css';
 @import 'loading-page.css';
+@import 'stats.css';
 
 .dropdown-item{
     cursor: pointer;

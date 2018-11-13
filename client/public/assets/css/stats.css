@@ -1,0 +1,13 @@
+#stats .column{
+    padding-top: 75px;
+    height: 100%;
+}
+
+#stats .input-group.mb-3{
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+    width: 20%;
+    align-items: stretch;
+}
