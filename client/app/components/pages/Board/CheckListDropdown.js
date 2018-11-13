@@ -12,7 +12,7 @@ class CheckListDropdown extends Component {
         }
     }
 
-    handlecreateList(e){
+    handleCreateChecklist(e){
         e.preventDefault();
         let that = this;
         asteroid.call("checklists.addChecklist",this.props.cardId, this.state.checklistName)
@@ -27,7 +27,7 @@ class CheckListDropdown extends Component {
                 <div className="card card-stats mb-4 mb-lg-0 cardForOptions">
                     <div className="card-body" style={{width: "max-content"}}>
                         <h5>New checklist</h5>
-                        <form role="form" onSubmit={(e) => this.handleCreateList(e)}>
+                        <form role="form" onSubmit={(e) => this.handleCreateChecklist(e)}>
                             <div className="form-group mb-3">
                                 <div className="input-group input-group-alternative">
                                     <div className="input-group-prepend">

@@ -11,7 +11,7 @@ class ImportModal extends Component {
 
         this.state = {
             trelloBoards: [],
-            trelloBoardId: null,
+            trelloBoardId: "",
             loading: false
         }
     }
@@ -102,15 +102,15 @@ class ImportModal extends Component {
                         <div className="modal-body">
                             {this.props.trelloToken ? 
                                 <form>
-                                    <label for="trello-select">Choose a Trello Board</label><br/>
+                                    <label htmlFor="trello-select">Choose a Trello Board</label><br/>
                                     <select 
                                         id="trello-select" 
                                         value={this.state.trelloBoardId}
                                         onChange={(e) => this.setState({trelloBoardId: e.target.value})}
                                     >
                                         <option value={null}>Choose a board</option>
-                                        {this.state.trelloBoards.map((b) => 
-                                            <option value={b.id}>{b.name}</option>
+                                        {this.state.trelloBoards.map((b, i) => 
+                                            <option key={i} value={b.id}>{b.name}</option>
                                         )}
                                     </select>
                                 </form>

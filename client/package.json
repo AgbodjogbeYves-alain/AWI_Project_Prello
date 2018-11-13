@@ -28,6 +28,8 @@
     "asteroid": "^2.0.3",
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
+    "cloudinary-core": "^2.5.0",
+    "cloudinary-react": "^1.0.6",
     "express": "^4.16.4",
     "history": "^4.7.2",
     "meteor-node-stubs": "^0.4.1",
