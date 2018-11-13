@@ -3,6 +3,7 @@ import SimpleSchema from 'simpl-schema';
 import { Mongo } from 'meteor/mongo'
 import {LabelsSchema} from "./Labels";
 import {CommentSchema} from "./Comment";
+import { ChecklistSchema } from './Checklists';
 
 
 export const Cards = new Mongo.Collection('cards')
@@ -61,7 +62,7 @@ export const CardSchema = new SimpleSchema({
       defaultValue: [],
       optional: true
   },
-  'cardChecklists.$': Object, //se if need to replace Object with a schema*/
+  'cardChecklists.$': ChecklistSchema, //se if need to replace Object with a schema*/
   cardCreatedAt:{
     type: Date,
     autoValue: function(){return new Date();}

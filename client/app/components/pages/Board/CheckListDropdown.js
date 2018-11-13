@@ -4,7 +4,6 @@ import asteroid from '../../../common/asteroid';
 
 class CheckListDropdown extends Component {
 
-
     constructor(props) {
         super(props);
 
@@ -13,9 +12,13 @@ class CheckListDropdown extends Component {
         }
     }
 
-    createList(e){
+    handlecreateList(e){
         e.preventDefault();
-        asteroid.call("cards.addChecklist",this.props.cardId, this.state.checklistName)
+        let that = this;
+        asteroid.call("checklists.addChecklist",this.props.cardId, this.state.checklistName)
+        .then(() => {
+            that.setState({checklistName: checklistName})
+        })
     }
 
     render(){
@@ -24,7 +27,7 @@ class CheckListDropdown extends Component {
                 <div className="card card-stats mb-4 mb-lg-0 cardForOptions">
                     <div className="card-body" style={{width: "max-content"}}>
                         <h5>New checklist</h5>
-                        <form role="form" onSubmit={(e) => this.createList(e)}>
+                        <form role="form" onSubmit={(e) => this.handleCreateList(e)}>
                             <div className="form-group mb-3">
                                 <div className="input-group input-group-alternative">
                                     <div className="input-group-prepend">

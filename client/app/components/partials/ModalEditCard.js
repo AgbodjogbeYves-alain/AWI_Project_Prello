@@ -4,6 +4,7 @@ import {Title} from "../pages/Utils/Utils";
 import CardOptions from "./CardOptions";
 import {callAddCommentCard, callEditCard, callRemoveCard} from "../../actions/CardActions";
 import CheckListDropdown from '../pages/Board/CheckListDropdown';
+import Checklist from '../pages/Board/Checklist';
 
 
 class ModalEditCard extends Component {
@@ -133,11 +134,10 @@ class ModalEditCard extends Component {
     }
 
     renderChecklists(){
-        console.log(this.props.card)
         return(
             <div className="checklists">
-                {this.props.card.cardChecklists ? this.props.card.cardChecklists.map((c) =>
-                    <div>{c.name}</div>
+                {this.props.card.cardChecklists ? this.props.card.cardChecklists.map((c, index) =>
+                    <Checklist id={index} checklist={c}/>
                 ) : ""
                 }
             </div>

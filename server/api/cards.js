@@ -164,32 +164,5 @@ Meteor.methods({
         }else{
             throw new Meteor.Error(404, 'Board not found')
         }
-    },
-    "cards.addChecklist"(cardId, checklistName){
-        console.log(cardId),
-        console.log(checklistName)
-        let checklist = {
-            _id: Random.id,
-            checklistName: checklistName,
-            checklistItems: []
-        };
-        return Boards.update({
-            boardLists: {
-                $elemMatch: {
-                    listCards: {
-                        $elemMatch: {
-                            _id: cardId
-                        }
-                    }
-                }
-            }
-        },{
-            $push: {
-                cardChecklists: checklist
-            }
-        })
     }
-
 })
-
-//db.boards.updateOne({boardLists: {$elemMatch: {listCards: {$elemMatch: {_id: "wJXiKAsJWeMaCdGMn"}}}}},{$push: {"boardLists.$.listCards.0.cardChecklists": {checklistName: "truc"}}})
