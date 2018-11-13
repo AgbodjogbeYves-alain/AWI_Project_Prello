@@ -1,6 +1,5 @@
 import {Meteor} from "meteor/meteor";
 import {Random} from 'meteor/random';
-import {JsonRoutes} from 'meteor/simple:json-routes';
 import {Boards} from "../models/Boards";
 
 Meteor.methods({
@@ -35,7 +34,6 @@ Meteor.methods({
             throw new Meteor.Error(404, 'Board not found')
         }
     },
-
 
     'boards.card.editCard' (idBoard,idList,newCard) {
         let countDoc = Boards.find({"_id": idBoard}).count();
@@ -166,6 +164,32 @@ Meteor.methods({
         }else{
             throw new Meteor.Error(404, 'Board not found')
         }
+    },
+    "cards.addChecklist"(cardId, checklistName){
+        console.log(cardId),
+        console.log(checklistName)
+        let checklist = {
+            _id: Random.id,
+            checklistName: checklistName,
+            checklistItems: []
+        };
+        return Boards.update({
+            boardLists: {
+                $elemMatch: {
+                    listCards: {
+                        $elemMatch: {
+                            _id: cardId
+                        }
+                    }
+                }
+            }
+        },{
+            $push: {
+                cardChecklists: checklist
+            }
+        })
     }
 
 })
+
+//db.boards.updateOne({boardLists: {$elemMatch: {listCards: {$elemMatch: {_id: "wJXiKAsJWeMaCdGMn"}}}}},{$push: {"boardLists.$.listCards.0.cardChecklists": {checklistName: "truc"}}})

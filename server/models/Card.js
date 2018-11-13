@@ -54,14 +54,14 @@ export const CardSchema = new SimpleSchema({
       defaultValue: [],
       optional: true
   },
-  'cardAttachment.$': Object, //se if need to replace Object with a schema
-  cardChecklist: {
+  'cardAttachment.$': Object, //se if need to replace Object with a schema*/
+  cardChecklists: {
       type: Array,
-      label: "CheckLists",
+      label: "Checklists",
       defaultValue: [],
       optional: true
-  },*/
-  //'cardChecklist.$': Object, //se if need to replace Object with a schema*/
+  },
+  'cardChecklists.$': Object, //se if need to replace Object with a schema*/
   cardCreatedAt:{
     type: Date,
     autoValue: function(){return new Date();}
