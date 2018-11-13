@@ -41,7 +41,7 @@ class NavBar extends Component {
                     </li>
 
                     <li>
-                        <Link to={"/stats"} className="nav-link" href='#' >
+                        <Link to={"/statistics"} className="nav-link" href='#' >
                             <i className="ni ni-chart-pie-35 ni-lg"></i>
                             <span className="nav-link-inner--text d-lg-none">Accueil</span>
                         </Link>
