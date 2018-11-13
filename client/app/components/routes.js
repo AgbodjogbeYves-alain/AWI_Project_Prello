@@ -28,7 +28,7 @@ class MyRouter extends Component{
                         <Route path='/dashboard' component={Dashboard}/>
                         <Route path='/board/:id' component={Board}/>
                         <Route path="/myaccount" component={MyAccount}/>
-                        <Route path="/stats" component={Stats}/>
+                        <Route path="/statistics" component={Stats}/>
                     </Switch>
                 </ScrollToTop>
             </Router>
