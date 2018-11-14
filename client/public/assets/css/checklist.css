@@ -5,6 +5,7 @@
 }
 .checklist{
     position: relative;
+    background-color: #f5f7ff;
 }
 .checklist li{
     list-style-type: none;

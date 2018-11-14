@@ -72,7 +72,7 @@ class Card extends Component {
                         {this.props.card.cardTitle}
 
                         {this.hasChecklist() ?
-                            <div className="progress">
+                            <div className="progress card-progress">
                                 <div className="progress-bar bg-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 
                                     style={{"width": this.getCompletedPourcent() + "%"}}>
                                 </div>
