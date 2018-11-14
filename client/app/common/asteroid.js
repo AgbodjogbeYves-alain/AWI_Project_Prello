@@ -19,6 +19,7 @@ asteroid.subscribe('users');
 asteroid.subscribe('user');
 asteroid.subscribe('teams');
 asteroid.subscribe('labels');
+asteroid.subscribe('roles');
 
 asteroid.ddp.on('added', (doc) => {
   // we need proper document object format here
