@@ -4,4 +4,3 @@ node_modules/
 .meteor/local/
 yarn-error.log
 server/.meteor/local
-server/settings-development.json
