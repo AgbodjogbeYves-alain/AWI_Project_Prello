@@ -42,7 +42,6 @@ class Dashboard extends Component {
     }
 
     render(){
-        console.log(this.props.roles);
         const { user } = this.props;
         if(!user) return(<Redirect to='/'/>)
         return(
@@ -77,7 +76,6 @@ class Dashboard extends Component {
 const mapStateToProps = state => ({
     user: state.user,
     boards: state.boards,
-    teams: state.teams,
-    roles: state.roles
+    teams: state.teams
 });
 export default connect(mapStateToProps)(Dashboard);

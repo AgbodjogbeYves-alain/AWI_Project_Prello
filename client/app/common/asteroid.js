@@ -5,6 +5,7 @@ import { createBoard, removeBoard, editBoard } from '../actions/BoardActions';
 import { addTeam, removeTeam, editTeam } from '../actions/TeamActions';
 import { addLabel, removeLabel, editLabel } from '../actions/LabelActions';
 import { setRefreshed } from '../actions/RefreshActions';
+import { addRole } from '../actions/RoleActions';
 
 const Asteroid = createClass();
 // Connect to a Meteor backend
@@ -44,6 +45,10 @@ asteroid.ddp.on('added', (doc) => {
       const docObj = Object.assign({}, doc.fields, { _id: doc.id });
       store.dispatch(addLabel(docObj));
   }
+  if(doc.collection === 'roles'){
+    const docObj = Object.assign({}, doc.fields, { _id: doc.id });
+    store.dispatch(addRole(docObj));
+}
 
 
 });
