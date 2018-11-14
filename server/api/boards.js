@@ -2,11 +2,13 @@ import {Boards} from "../models/Boards";
 import {Meteor} from "meteor/meteor";
 import {boardUtils} from "./Utils/boardUtils";
 
-Meteor.publish('boards', function () {
-    let userId = this.userId;
-    return Boards.find({boardUsers : {$elemMatch: {'user._id': userId}}})
-});
-
+Meteor.isServer
+{
+    Meteor.publish('boards', function () {
+        let userId = this.userId;
+        return Boards.find({boardUsers: {$elemMatch: {'user._id': userId}}})
+    });
+}
 Meteor.methods({
 
     'boards.createBoard'(board) {
@@ -45,8 +47,8 @@ Meteor.methods({
 
     },
 
-    'boards.removeBoard'(boardId) {    
-        
+    'boards.removeBoard'(boardId) {
+
         let board = Boards.findOne(boardId);
 
         if (board) {

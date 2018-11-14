@@ -1,20 +1,22 @@
 import {Meteor} from "meteor/meteor";
 import {Teams}  from "../models/Teams";
 
-Meteor.publish('teams', function teamsPublication() {
-    let userId = Meteor.userId();
-    return Teams.find({
-        teamMembers : {$elemMatch: {'user._id': userId}}
-    })
-});
-
+Meteor.isServer
+{
+    Meteor.publish('teams', function teamsPublication() {
+        let userId = Meteor.userId();
+        return Teams.find({
+            teamMembers: {$elemMatch: {'user._id': userId}}
+        })
+    });
+}
 Meteor.methods({
     "teams.createTeam"(team){
         if(!this.userId){
             throw new Meteor.Error('Not-Authorized');
         }
         team.teamOwner = Meteor.user();
-        
+
         return Teams.insert(team);
 
     },
