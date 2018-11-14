@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 
-Meteor.isServer
+if(Meteor.isServer)
 {
     Meteor.publish('users', function () {
         if (this.userId) return Meteor.users.find({_id: {$ne: this.userId}}, {fields: {profile: 1}});

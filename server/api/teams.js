@@ -1,7 +1,7 @@
 import {Meteor} from "meteor/meteor";
 import {Teams}  from "../models/Teams";
 
-Meteor.isServer
+if(Meteor.isServer)
 {
     Meteor.publish('teams', function teamsPublication() {
         let userId = Meteor.userId();

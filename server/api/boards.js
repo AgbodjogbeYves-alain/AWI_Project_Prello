@@ -2,7 +2,7 @@ import {Boards} from "../models/Boards";
 import {Meteor} from "meteor/meteor";
 import {boardUtils} from "./Utils/boardUtils";
 
-Meteor.isServer
+if(Meteor.isServer)
 {
     Meteor.publish('boards', function () {
         let userId = this.userId;
