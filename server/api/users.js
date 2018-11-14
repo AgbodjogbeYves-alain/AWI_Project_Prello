@@ -57,8 +57,8 @@ Meteor.methods({
         return (verifToken.verify(tokenId).then(payload=>{
             let user_id = payload['sub'];
             let user =  Meteor.users.findOne({"profile.google_id": user_id})
-            var stampedToken = Accounts._generateStampedLoginToken();
-            var hashStampedToken = Accounts._hashStampedToken(stampedToken);
+            let stampedToken = Accounts._generateStampedLoginToken();
+            let hashStampedToken = Accounts._hashStampedToken(stampedToken);
 
             Meteor.users.update(user._id,
                 {$push: {'services.resume.loginTokens': hashStampedToken}}

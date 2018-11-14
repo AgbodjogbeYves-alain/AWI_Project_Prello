@@ -13,10 +13,10 @@ Meteor.methods({
             let newBoardLists = board.boardLists.map((list) => {
                 if(list._id == idList){
                     let newCard = {
-                        _id: id, 
-                        cardTitle: "New card", 
-                        cardLabels: [], 
-                        cardComments: [], 
+                        _id: id,
+                        cardTitle: "New card",
+                        cardLabels: [],
+                        cardComments: [],
                         cardChecklists: []
                     }
                     list.listCards.push(newCard)
@@ -100,7 +100,6 @@ Meteor.methods({
             let newComment  = newCard.cardComments[newCard.cardComments.length-1]
             //let newCommentI = {_id: id, commentContent: newComment.commentContent, userId: newComment.userId}
             newComment._id = id
-            console.log(newComment)
             newCard.cardComments[newCard.cardComments.length-1] = newComment
             let newBoardLists = board.boardLists.map((list) => {
                 if(list._id == idList){

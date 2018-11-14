@@ -24,7 +24,6 @@ Meteor.methods({
     'boards.getBoard' (idBoard) {
         let board;
         let countDoc = Boards.find({"boardId": idBoard}).count();
-        console.log(countDoc)
         if (countDoc === 1) {
             console.log('isIn')
             board = Boards.findOne({"boardId": idBoard});
@@ -65,7 +64,6 @@ Meteor.methods({
 
     'boards.editBoard' (newBoard) {
         let countDoc = Boards.find({"_id": newBoard._id}).count();
-        console.log(newBoard)
         if (countDoc === 1) {
 
             console.log("isIn")

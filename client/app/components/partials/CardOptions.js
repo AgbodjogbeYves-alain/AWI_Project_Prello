@@ -35,7 +35,6 @@ class CardOptions extends Component {
         event.preventDefault();
         let newCard = this.state.card
         newCard.cardDeadline = this.state.cardDeadline
-        console.log(newCard.cardDeadline)
         callEditCard(this.state.idBoard,this.state.idList,newCard)
     }
 
