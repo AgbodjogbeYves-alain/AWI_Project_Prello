@@ -6,3 +6,10 @@
 .checklist{
     position: relative;
 }
+.checklist li{
+    list-style-type: none;
+    margin: 5px 0px;
+}
+.checklist ul {
+    padding-left: 10px;
+}

@@ -1,4 +1,5 @@
 import SimpleSchema from 'simpl-schema';
+import { ItemSchema } from './Item';
 export const ChecklistSchema = new SimpleSchema({
     _id: {
         type: String,
@@ -14,7 +15,7 @@ export const ChecklistSchema = new SimpleSchema({
         label: "Items",
         defaultValue: []
     },
-    'checklistItems.$': String, //se if need to replace Object with a schema*/
+    'checklistItems.$': ItemSchema, //se if need to replace Object with a schema*/
     cardCreatedAt:{
         type: Date,
         autoValue: function(){return new Date();}
