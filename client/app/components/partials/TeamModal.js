@@ -48,7 +48,6 @@ class TeamModal extends Component {
             teamDescription: this.state.teamDescription,
             teamMembers: this.state.teamMembers,
         };
-        console.log(team)
         asteroid.call("teams.createTeam", team)
         .then((result) => {
             $('#team-modal' + this.state.teamId).modal('toggle');
