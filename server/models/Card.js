@@ -1,6 +1,10 @@
 import SimpleSchema from 'simpl-schema';
 
 import { Mongo } from 'meteor/mongo'
+import {LabelsSchema} from "./Labels";
+import {CommentSchema} from "./Comment";
+import { ChecklistSchema } from './Checklists';
+
 
 export const Cards = new Mongo.Collection('cards')
 
@@ -20,34 +24,44 @@ export const CardSchema = new SimpleSchema({
       defaultValue: "",
       optional: true
   },
-  /*cardTag: {
+  cardDeadline:{
+    type: String,
+    label: "Deadline",
+    required: false
+  },
+    cardLabels: {
       type: Array,
-      label: "Tags",
+      label: "Labels",
       defaultValue: [],
-      optional: true
-  },*/
-  //'cardTag.$': Object, //se if need to replace Object with a schema*/
-  /*cardComment: {
+
+    },
+  'cardLabels.$': SimpleSchema.RegEx.Id, //se if need to replace Object with a schema*/
+  cardComments: {
       type: Array,
       label: "Comments",
       defaultValue: [],
       optional: true
   },
-  'cardComment.$': Object, //se if need to replace Object with a schema
-  cardAttachment: {
+  'cardComments.$': CommentSchema, //se if need to replace Object with a schema
+  isArchived: {
+      type: Boolean,
+      label: "Archive",
+      defaultValue: false
+
+  },
+  /*cardAttachment: {
       type: Array,
       label: "Attachments",
       defaultValue: [],
       optional: true
   },
-  'cardAttachment.$': Object, //se if need to replace Object with a schema
-  cardChecklist: {
+  'cardAttachment.$': Object, //se if need to replace Object with a schema*/
+  cardChecklists: {
       type: Array,
-      label: "CheckLists",
-      defaultValue: [],
-      optional: true
-  },*/
-  //'cardChecklist.$': Object, //se if need to replace Object with a schema*/
+      label: "Checklists",
+      defaultValue: []
+  },
+  'cardChecklists.$': ChecklistSchema, //se if need to replace Object with a schema*/
   cardCreatedAt:{
     type: Date,
     autoValue: function(){return new Date();}

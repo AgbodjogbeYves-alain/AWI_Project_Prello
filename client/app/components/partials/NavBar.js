@@ -26,6 +26,13 @@ class NavBar extends Component {
             return (
                 <ul className="navbar-nav align-items-lg-center ml-lg-auto navbar-nav-hover">
                     <li>
+                        <Link to={"/dashboard"} className="nav-link" href='' >
+                            <i className="ni ni-tv-2 ni-lg"></i>
+                            <span className="nav-link-inner--text d-lg-none">Accueil</span>
+                        </Link>
+                    </li>
+
+                    <li>
                         <a className="nav-link notifications" href='#' >
                             <i className="ni ni-bell-55 ni-lg"></i>
                             <span className="badge badge-danger">4</span>
@@ -33,22 +40,6 @@ class NavBar extends Component {
                         </a>
                     </li>
 
-                    <li className="nav-item dropdown">
-                        <a className="nav-link nav-link-icon" href="#" id="navbar-default_dropdown_1"
-                           role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i className="ni ni-fat-add"/>
-                            <span className="nav-link-inner--text d-lg-none">Settings</span>
-                        </a>
-                        <div className="dropdown-menu dropdown-menu-right"
-                             aria-labelledby="navbar-default_dropdown_1">
-                            <button type="button" className="navbar-toggler" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
-                                Add
-                            </button>
-                            <a className="dropdown-item" data-toggle="modal" data-target="#modal-createBoard">Create board</a>
-                            <a className="dropdown-item" data-toggle="modal" data-target="#team-modal">Create team</a>
-                            <a className="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </li>
                     <li className="nav-item dropdown">
                         <a className="nav-link" data-toggle="dropdown" href='#' role="button">
                             <i className="ni ni-single-02 ni-lg"></i>
@@ -102,6 +93,7 @@ class NavBar extends Component {
                     <Link className="navbar-brand mr-lg-5" to={user ? "/dashboard" : "/"}>
                         <img src="../assets/img/brand/white.png"/>
                     </Link>
+                    
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                     </button>

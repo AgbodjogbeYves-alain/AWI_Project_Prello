@@ -7,10 +7,10 @@ export const REMOVE_USER = 'REMOVE_USER';
 export const ADD_USER = 'ADD_USER';
 export const RESET_USERS = "RESET_USERS";
 
-export function setLoggedUser(user) {
+export function setLoggedUser(data) {
   return {
     type: SET_USER,
-    user,
+    data,
   };
 }
 
@@ -20,10 +20,11 @@ export function unsetLoggedUser() {
   };
 }
 
-export function editProfileUser(user) {
+export function editProfileUser(_id, data) {
   return {
     type: EDIT_USER,
-    user
+    _id,
+    data
   };
 }
 

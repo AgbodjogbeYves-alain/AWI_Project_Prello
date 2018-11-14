@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
+import {Image} from 'cloudinary-react';
+
 
 import Alert from '../Alert';
 import AddUserInput from "../AddUserInput.js";
@@ -12,17 +14,26 @@ class BoardModal extends Component {
     constructor(props) {
         super(props);
 
+        let {activedTeam, board, user } = this.props;
+
         let boardTeams = [];
-        if(this.props.board) boardTeams = this.props.board.boardTeams;
-        else if(this.props.activedTeam) boardTeams = [{team: this.props.activedTeam, teamRole: "admin"}]
+        if(board) boardTeams = board.boardTeams;
+        else if(activedTeam) boardTeams = [activedTeam._id]
+
+        let boardUsers = [{userId: user._id, role: "admin"}]
+        if(board) boardUsers = board.boardUsers;
+        else if(activedTeam) boardUsers = activedTeam.teamMembers.map((teamMember) => {
+            return {'userId': teamMember.userId, 'role': 'member'};
+        });
 
         this.state = {
-            type: this.props.board ? 'edit' : 'add',
-            boardId: this.props.board ? this.props.board._id : '',
-            boardTitle: this.props.board ? this.props.board.boardTitle : '',
-            boardDescription: this.props.board ? this.props.board.boardDescription : '',
-            boardUsers: this.props.board ? this.props.board.boardUsers : [{user: this.props.user, userRole: "admin"}],
+            type: board ? 'edit' : 'add',
+            boardId: board ? board._id : '',
+            boardTitle: board ? board.boardTitle : '',
+            boardDescription: board ? board.boardDescription : '',
+            boardUsers: boardUsers,
             boardTeams: boardTeams,
+            boardBackground: board ? board.boardBackground : "walnut",
             alerts: []
         };
 
@@ -40,15 +51,16 @@ class BoardModal extends Component {
     }
 
     renderAlerts(){
-        return this.state.alerts.map(a => (<Alert key={this.state.alerts.indexOf(a)} type={a.type}  text={a.text}/>));
+        return this.state.alerts.map((a,i) => (<Alert key={i} type={a.type}  text={a.text}/>));
     }
 
     resetFields(){
         this.setState({
             boardTitle: '',
             boardDescription: '',
-            boardUsers: [{user: this.props.user, userRole: "admin"}],
-            boardTeams: []
+            boardUsers: [{userId: this.props.user._id, userRole: "admin"}],
+            boardTeams: [],
+            boardBackground: "walnut"
         });
     }
 
@@ -58,11 +70,13 @@ class BoardModal extends Component {
             boardDescription: this.state.boardDescription,
             boardUsers: this.state.boardUsers,
             boardTeams: this.state.boardTeams,
+            boardBackground: this.state.boardBackground,
             boardPrivacy: 1
         };
 
         asteroid.call("boards.createBoard", board)
         .then((result) => {
+            $('#board-modal' + this.state.boardId).modal('toggle');
             this.props.history.push("/board/" + result)
         })
         .catch((error) => {
@@ -76,24 +90,64 @@ class BoardModal extends Component {
         board.boardDescription = this.state.boardDescription;
         board.boardUsers = this.state.boardUsers;
         board.boardTeams = this.state.boardTeams;
+        board.boardBackground = this.state.boardBackground
 
         asteroid.call("boards.editBoard", board)
         .then((result) => {
             $('#board-modal' + this.state.boardId).modal('toggle');
-            //that.props.history.push("/board/" + result.data._id)
         })
         .catch((error) => {
             this.addAlert("danger", error.reason)
         })
     }
+
+    handleOnChangeTeams(field, value){
+        let team = value;
+        if(field === "addTeam"){
+            team.teamMembers.forEach((user) => {
+                let alreadyIn = this.state.boardUsers.filter((u) => u.userId === user.userId).length > 0;
+                if(!alreadyIn){
+                    let newBoardUsers = this.state.boardUsers;
+                    newBoardUsers.push({userId: user.userId, role: 'member'});
+                    this.setState({boardUsers: newBoardUsers});
+                } 
+            })
+        }
+        if(field === 'removeTeam'){
+
+            let newBoardUsers = this.state.boardUsers.filter((boardUser) => {
+                let isInTeam = team.teamMembers.filter((teamMember) => teamMember.userId === boardUser.userId).length > 0
+                return !isInTeam || boardUser.userId === this.props.user._id
+            });
+            this.setState({boardUsers: newBoardUsers});
+        }
+
+    }
     
-    componentWillReceiveProps(){
-        
+    renderBackgrounds(){
+        let backgrounds = ["walnut", "avenue", "pier", "tree", "boat", "heart", "hong-kong", "new-york-city", "sea", "vw-camper", "blue-watercolor", "blur-clean"];
+        return backgrounds.map((b, i) =>
+            <div key={i} className="col-6">
+                <Image 
+                    className={"thumbnail" + (this.state.boardBackground === b ? " active" : "")}
+                    cloudName="dxdyg7b5b"
+                    publicId={b}
+                    width="130"
+                    height="100"
+                    crop="scale"
+                    onClick={() => this.handleChangeBackground(b)}
+                />
+            </div>
+        );
+    }
+
+    handleChangeBackground(background){
+        this.setState({boardBackground: background})
     }
 
     render(){
         return ( 
-            <div className="modal fade" id={"board-modal" + this.state.boardId} tabIndex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+            <div className="modal board-modal fade" id={"board-modal" + this.state.boardId} tabIndex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
                 <div className="modal-dialog modal- modal-dialog-centered modal-" role="document">
                     <div className="modal-content">
 
@@ -110,45 +164,56 @@ class BoardModal extends Component {
                             <div>
                                 {this.renderAlerts()}
                             </div>
-                            <form role="form" onSubmit={(e) => e.preventDefault()}>
-                                <div className="form-group mb-3">
-                                    <div className="input-group input-group-alternative">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text"><i className="ni ni-email-83"></i></span>
+                            <div className="row">
+                                <div className="col-8">
+                                    <form role="form" onSubmit={(e) => e.preventDefault()}>
+                                        <div className="form-group mb-3">
+                                            <div className="input-group input-group-alternative">
+                                                <div className="input-group-prepend">
+                                                    <span className="input-group-text"><i className="ni ni-email-83"></i></span>
+                                                </div>
+                                                <input 
+                                                    className="form-control" 
+                                                    placeholder="Name" 
+                                                    type="text"
+                                                    value={this.state.boardTitle}
+                                                    onChange={(e) => this.setState({boardTitle: e.target.value})}
+                                                />
+                                            </div>
                                         </div>
-                                        <input 
-                                            className="form-control" 
-                                            placeholder="Name" 
-                                            type="text"
-                                            value={this.state.boardTitle}
-                                            onChange={(e) => this.setState({boardTitle: e.target.value})}
+                                        <div className="form-group mb-3">
+                                            <div className="input-group input-group-alternative">
+                                                <div className="input-group-prepend">
+                                                    <span className="input-group-text"><i className="ni ni-email-83"></i></span>
+                                                </div>
+                                                <textarea 
+                                                    className="form-control" 
+                                                    placeholder="Description" 
+                                                    type="text"
+                                                    value={this.state.boardDescription}
+                                                    onChange={(e) => this.setState({boardDescription: e.target.value})}
+                                                ></textarea>
+                                            </div>
+                                        </div>
+                                        <AddUserInput 
+                                            addedUsers={this.state.boardUsers} 
+                                            onChange={(field, value) => this.setState({"boardUsers": value})}
+                                            type={"board"}
                                         />
+                                        <AddTeamInput
+                                            addedTeams={this.state.boardTeams}
+                                            onChange={(field, value) => this.handleOnChangeTeams(field, value)}
+                                        />
+                                    </form>
+                                </div>
+                                <div className="col-4">
+                                    <h2>Arrière Plan</h2>
+                                    <div className="row backgrounds">
+                                        {this.renderBackgrounds()}
                                     </div>
                                 </div>
-                                <div className="form-group mb-3">
-                                    <div className="input-group input-group-alternative">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text"><i className="ni ni-email-83"></i></span>
-                                        </div>
-                                        <textarea 
-                                            className="form-control" 
-                                            placeholder="Description" 
-                                            type="text"
-                                            value={this.state.boardDescription}
-                                            onChange={(e) => this.setState({boardDescription: e.target.value})}
-                                        ></textarea>
-                                    </div>
-                                </div>
-                                <AddUserInput 
-                                    addedUsers={this.state.boardUsers} 
-                                    onChange={(field, value) => this.setState({"boardUsers": value})}
-                                    type={"board"}
-                                />
-                                <AddTeamInput
-                                    addedTeams={this.state.boardTeams}
-                                    onChange={(field, value) => this.setState({"boardTeams": value})}
-                                />
-                            </form>
+                            </div>
+                            
                         </div>
 
                         <div className="modal-footer">

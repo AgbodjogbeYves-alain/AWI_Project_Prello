@@ -2,18 +2,19 @@ import {Boards} from "../models/Boards";
 import {Meteor} from "meteor/meteor";
 import {boardUtils} from "./Utils/boardUtils";
 
-if(Meteor.isServer)
-{
+if(Meteor.isServer){
+
     Meteor.publish('boards', function () {
         let userId = this.userId;
-        return Boards.find({boardUsers: {$elemMatch: {'user._id': userId}}})
+        return Boards.find({boardUsers: {$elemMatch: {'userId': userId}}})
     });
+
 }
 Meteor.methods({
 
     'boards.createBoard'(board) {
         if(Meteor.userId()){
-            board.boardOwner = Meteor.user();
+            board.boardOwner = this.userId;
             return Boards.insert(board);
         }else{
             throw Meteor.Error(401, "You are not authentificated")
@@ -53,7 +54,7 @@ Meteor.methods({
 
         if (board) {
             if(!this.userId) throw new Meteor.Error('not-authorised');
-            let isTeamMember = board.boardUsers.filter((u) => u.user_id == this.userId && u.boardRole == 'admin').length > 0;
+            let isTeamMember = board.boardUsers.filter((u) => u.userId == this.userId && u.role == 'admin').length > 0;
             if(this.userId != board.boardOwner._id && !isTeamMember) throw new Meteor.Error('not-authorised');
 
             return Boards.remove(boardId);
@@ -74,12 +75,12 @@ Meteor.methods({
                 boardPrivacy: newBoard.boardPrivacy,
                 boardLists: newBoard.boardLists,
                 boardUsers: newBoard.boardUsers,
-                boardTeams: newBoard.boardTeams
+                boardTeams: newBoard.boardTeams,
+                boardBackground: newBoard.boardBackground
             }
         })
 
         }else {
-
             throw new Meteor.Error(404, 'Board not found')
         }
     },

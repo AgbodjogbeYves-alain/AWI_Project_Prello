@@ -6,7 +6,7 @@ if(Meteor.isServer)
     Meteor.publish('teams', function teamsPublication() {
         let userId = Meteor.userId();
         return Teams.find({
-            teamMembers: {$elemMatch: {'user._id': userId}}
+            teamMembers: {$elemMatch: {'userId': userId}}
         })
     });
 }
@@ -15,7 +15,8 @@ Meteor.methods({
         if(!this.userId){
             throw new Meteor.Error('Not-Authorized');
         }
-        team.teamOwner = Meteor.user();
+
+        team.teamOwner = this.userId;
 
         return Teams.insert(team);
 

@@ -7,6 +7,8 @@ import BoardModal from "../../partials/BoardModal/BoardModal.js"
 import Teams from "./Teams/Teams.js";
 import Boards from "./Boards/Boards.js";
 import TeamModal from '../../partials/TeamModal';
+import ImportModal from './Boards/ImportModal';
+import asteroid from '../../../common/asteroid';
 
 
 
@@ -34,7 +36,7 @@ class Dashboard extends Component {
     filteredBoards(){
         if(!this.state.activedTeam) return this.props.boards;
         return this.props.boards.filter((board) => {
-            let isInBoard = board.boardTeams.filter((boardTeam) => boardTeam.team._id == this.state.activedTeam._id).length > 0
+            let isInBoard = board.boardTeams.filter((teamId) => teamId == this.state.activedTeam._id).length > 0
             return isInBoard;
         });
     }
@@ -49,6 +51,7 @@ class Dashboard extends Component {
                     <span><BoardModal activedTeam={this.state.activedTeam}/></span> : <BoardModal />
                 }
                 <TeamModal />
+                <ImportModal trelloToken={this.props.user.profile.trelloToken}/>
                 {this.partialsBoardsRender()}
                 {this.partialsTeamsRender()}
                 <div className="container">

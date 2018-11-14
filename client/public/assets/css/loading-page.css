@@ -1,0 +1,8 @@
+#loading-page {
+    height: 100%;
+}
+#loading-page .progress-wrapper {
+    margin: auto;
+    width: 30%;
+    top: 35%;
+}
