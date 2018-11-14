@@ -11,8 +11,7 @@ class AddUserInput extends Component {
             userEmail: "",
             userRole: 'user',
             users: [],
-            alerts: [],
-            roles: []
+            alerts: []
         };
     }
 
@@ -93,7 +92,7 @@ class AddUserInput extends Component {
 
     renderRoleOptions(){
         let optionList = [];
-        if(this.props.type == "board") optionList = this.props.roles.map(r => r.role);
+        if(this.props.type == "board") optionList = ["Admin", "Member", "Observer"];
         else if(this.props.type == "team") optionList = ['Admin', 'Member'];
         return optionList.map((o, i) => 
             <option key={i} value={o.toLowerCase()}>{o}</option>
@@ -149,7 +148,6 @@ class AddUserInput extends Component {
 const mapStateToProps = state => ({
     users: state.users,
     user: state.user,
-    roles: state.roles
 });
 
 export default connect(mapStateToProps)(AddUserInput);

@@ -6,7 +6,6 @@ import './api/lists';
 import './api/cards'
 import './api/teams';
 import './api/labels';
-import './api/roles';
 import './api/checklists';
 
 
