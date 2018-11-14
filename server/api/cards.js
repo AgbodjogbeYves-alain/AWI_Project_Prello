@@ -1,6 +1,5 @@
 import {Meteor} from "meteor/meteor";
 import {Random} from 'meteor/random';
-import {JsonRoutes} from 'meteor/simple:json-routes';
 import {Boards} from "../models/Boards";
 
 Meteor.methods({
@@ -13,7 +12,13 @@ Meteor.methods({
             let board = (Boards.findOne({_id: idBoard}))
             let newBoardLists = board.boardLists.map((list) => {
                 if(list._id == idList){
-                    let newCard = {_id: id, cardTitle: "New card", cardLabels: [], cardComments: []}
+                    let newCard = {
+                        _id: id, 
+                        cardTitle: "New card", 
+                        cardLabels: [], 
+                        cardComments: [], 
+                        cardChecklists: []
+                    }
                     list.listCards.push(newCard)
                     find = true
                     return list
@@ -35,7 +40,6 @@ Meteor.methods({
             throw new Meteor.Error(404, 'Board not found')
         }
     },
-
 
     'boards.card.editCard' (idBoard,idList,newCard) {
         let countDoc = Boards.find({"_id": idBoard}).count();
@@ -167,5 +171,4 @@ Meteor.methods({
             throw new Meteor.Error(404, 'Board not found')
         }
     }
-
 })
