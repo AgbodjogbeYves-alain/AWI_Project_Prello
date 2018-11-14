@@ -44,14 +44,16 @@ class Checklist extends Component {
             <div className="checklist card">
                 <div className="card-body">
                     <h4>
-                        <span style={{verticalAlign: "sub"}}><i class="ni ni-bullet-list-67"></i> </span>
+                        <span style={{verticalAlign: "sub"}}><i className="ni ni-bullet-list-67"></i> </span>
                         {this.props.checklist.checklistName}
                     </h4>
+
                     <div className="progress">
                         <div className="progress-bar bg-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 
                             style={{"width": this.getCompletedPourcent() + "%"}}>
                         </div>
                     </div>
+                    
                     <button 
                         className="btn btn-danger btn-sm remove"
                         onClick={() => this.handleRemoveChecklist()}
@@ -61,12 +63,12 @@ class Checklist extends Component {
                     <ul className="items">
                         {this.renderItems()}
                     </ul>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa fa-check-square"></i></span>
+                    <div className="input-group">
+                        <div className="input-group-prepend">
+                            <span className="input-group-text"><i className="fa fa-check-square"></i></span>
                         </div>
                             <input 
-                                class="form-control" 
+                                className="form-control" 
                                 placeholder="New item" 
                                 type="text"
                                 value={this.state.newItemName}

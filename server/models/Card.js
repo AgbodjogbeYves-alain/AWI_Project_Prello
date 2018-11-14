@@ -59,8 +59,7 @@ export const CardSchema = new SimpleSchema({
   cardChecklists: {
       type: Array,
       label: "Checklists",
-      defaultValue: [],
-      optional: true
+      defaultValue: []
   },
   'cardChecklists.$': ChecklistSchema, //se if need to replace Object with a schema*/
   cardCreatedAt:{

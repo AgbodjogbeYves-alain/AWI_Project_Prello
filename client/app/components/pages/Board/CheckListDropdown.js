@@ -15,7 +15,8 @@ class CheckListDropdown extends Component {
     handleCreateChecklist(e){
         e.preventDefault();
         let that = this;
-        asteroid.call("checklists.addChecklist",this.props.cardId, this.state.checklistName)
+        let checklistName = this.state.checklistName
+        asteroid.call("checklists.addChecklist",this.props.cardId, checklistName)
         .then(() => {
             that.setState({checklistName: checklistName})
         })
