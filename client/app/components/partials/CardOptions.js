@@ -57,24 +57,31 @@ class CardOptions extends Component {
 
 
     handleAffectLabelToCard = (idLabel) => {
-        let newLabelList
-        if(this.state.card.cardLabels.includes(idLabel)) {
-            newLabelList = this.state.card.cardLabels.filter((label) => label._id != idLabel)
+        let newLabelList;
+        let labelList = this.props.card.cardLabels;
+        if(labelList.includes(idLabel)) {
+            newLabelList = labelList.filter((labelId) => labelId != idLabel)
         }else{
-            newLabelList = this.state.card.cardLabels
+            newLabelList = labelList
             newLabelList.push(idLabel)
 
         }
 
-        let newCard = this.state.card
+        let newCard = this.props.card
         newCard.cardLabels = newLabelList
 
-        console.log(newLabelList)
         callEditCard(this.state.idBoard,this.state.idList,newCard)
         this.setState({
             card: newCard
         })
 
+    }
+
+    renderLabelButton(){
+        let boardLabels = this.props.labels.filter((label) => label.labelBoard == this.props.idBoard );
+        return boardLabels.map((label)=>{
+            return <button className={"btn btn-secondary buttonLabel"} style={{background: label.labelColor}} onClick={(e) => { e.preventDefault();this.handleAffectLabelToCard(label._id)}}>{label.labelName}</button>
+         })
     }
 
     render(){
@@ -85,11 +92,7 @@ class CardOptions extends Component {
                             <div className="card-body">
                                 <div className={"divLabelBoard"}>
                                 <h5> Label list</h5>
-                                {
-                                    this.state.boardLabels.map((label)=>{
-                                        return <button className={"btn btn-secondary buttonLabel"} style={{background: label.labelColor}} onClick={(e) => { e.preventDefault();this.handleAffectLabelToCard(label._id)}}>{label.labelName}</button>
-                                     })
-                                }
+                                {this.renderLabelButton()}
                                 </div>
                                 <h5>Add label</h5>
                                 <input type="text" className={'form-control form-control-alternantive'} placeholder={"Enter new Label title here"}
