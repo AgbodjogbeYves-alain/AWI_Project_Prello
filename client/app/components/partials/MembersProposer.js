@@ -7,31 +7,54 @@ import {Title} from "../pages/Utils/Utils";
 import {callEditBoard} from "../../actions/BoardActions";
 import {callEditCard} from "../../actions/CardActions";
 import {callCreateLabel, callEditLabels, callRemoveLabel} from "../../actions/LabelActions";
+import {ProfilePicture} from "./ProfilePicture";
 
 class MemberProposer extends Component {
 
-
-    addMemberToCard = (event,user) => {
-        event.preventDefault()
-        console.log(user)
-        /*
-        calleditCard(idBoard,idList,newCard)
-        */
+    constructor(props){
+        super(props);
+        this.addMemberToCard = this.addMemberToCard.bind(this)
     }
+
+
+    addMemberToCard = (user) => {
+        let newCard = this.props.card
+        console.log(newCard)
+        if(newCard.cardUsers){
+            if(newCard.cardUsers.includes(user._id)){
+                console.log("In")
+                newCard.cardUsers = newCard.cardUsers.filter((id) => id!= user._id)
+            }else{
+                console.log("In2")
+
+                newCard.cardUsers.push(user._id)
+            }
+        }else{
+            newCard.cardUsers = [user._id]
+        }
+
+        callEditCard(this.props.idBoard,this.props.idList,newCard)
+
+    }
+
     render(){
             return (
-                    <div>
-                        <div className="card card-stats mb-4 mb-lg-0 cardForOptions">
-                            <div className="card-body">
-                                <ul>
-                                    {this.props.members.map((user) =>
-                                        <li><a onClick={this.addMemberToCard(user)}>{user.profile.lastname}+' '+{user.profile.firstname}</a></li>
+                    <div className="card card-stats mb-4 mb-lg-0 cardForOptions">
+                        <div className="card-body">
+                            <ul className={"actionUl"}>
+                                {this.props.members.map((user) =>
+                                        <li>
+                                            <button type='button' className={"btn btn-secondary btnNameMember"}
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        this.addMemberToCard(user)
+                                                    }}> {user.profile.lastname} {user.profile.firstname}</button>
+                                        </li>
                                     )}
-                                </ul>
-                                
-                            </div>
+                            </ul>
+
                         </div>
-                </div>
+                    </div>
             );
         }
 

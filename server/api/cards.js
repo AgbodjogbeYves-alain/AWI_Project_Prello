@@ -17,7 +17,8 @@ Meteor.methods({
                         cardTitle: "New card",
                         cardLabels: [],
                         cardComments: [],
-                        cardChecklists: []
+                        cardChecklists: [],
+                        cardUsers: []
                     }
                     list.listCards.push(newCard)
                     find = true
@@ -43,6 +44,9 @@ Meteor.methods({
 
     'boards.card.editCard' (idBoard,idList,newCard) {
         let countDoc = Boards.find({"_id": idBoard}).count();
+        console.log(idBoard)
+        console.log(idList)
+        console.log(newCard)
         if(countDoc==1){
             //List
             let findList = false;

@@ -6,6 +6,7 @@ import {callAddCommentCard, callEditCard, callRemoveCard} from "../../actions/Ca
 import CheckListDropdown from '../pages/Board/CheckListDropdown';
 import Checklist from '../pages/Board/Checklist';
 import MemberAdd from './MemberAdd';
+import {ProfilePicture} from "./ProfilePicture";
 
 
 class ModalEditCard extends Component {
@@ -151,6 +152,17 @@ class ModalEditCard extends Component {
         })
     }
 
+    renderUsers(){
+        console.log('In render users')
+        console.log(this.props.users)
+        return this.props.users.map((user, i) => {
+            if(this.props.card.cardUsers && this.props.card.cardUsers.includes(user._id)){
+                return (<div className={"profileInModalEdit"}><ProfilePicture key={i} user={user}/></div>)
+            }
+        })
+    }
+
+
     render(){
         return (
             <div className="modal fade modalCard" id={"card-modal" + this.props.card._id} tabIndex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
@@ -168,7 +180,15 @@ class ModalEditCard extends Component {
                         <div className="modal-body modalContentCard">
                             <div className="labelForCard">
                                 <span><i className="ni ni-tag"/></span>
+
                                 {this.renderLabels()}
+
+                            </div>
+
+                            <div className="userForCard">
+                                <span><i className="ni ni-single-02"/></span>
+                                {this.renderUsers()}
+
                             </div>
 
                             <div className={"deadLineDiv"}>
@@ -247,7 +267,7 @@ class ModalEditCard extends Component {
                                         </button>
                                         {this.state.modalDisplayed === "members" ?
                                             <MemberAdd function="members" card={this.props.card} idList={this.state.idList} idBoard={this.state.idBoard}/> : ""                                        }
-                                        
+
                                     </li>
                                     <li>
                                         <button className="btn btn-secondary cardButtonEdit"
@@ -298,6 +318,7 @@ class ModalEditCard extends Component {
 
 const mapStateToProps = state => ({
     user: state.user,
+    users: state.users,
     labels: state.labels
 });
 
