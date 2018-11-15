@@ -15,7 +15,6 @@ class ModalEditCard extends Component {
         this.state = {
             idList: this.props.idList,
             idBoard: this.props.idBoard,
-            card: this.props.card,
             cardTitle: this.props.card.cardTitle,
             cardComments: this.props.card.cardComments,
             newComment: "",
@@ -59,7 +58,7 @@ class ModalEditCard extends Component {
 
 
     updateCardName(value) {
-        let newCard = this.state.card
+        let newCard = this.props.card
         newCard.cardTitle = value
         callEditCard(this.state.idBoard,this.state.idList,newCard)
     }
@@ -72,7 +71,7 @@ class ModalEditCard extends Component {
                 userId: this.props.user._id
             }
 
-            let newCard = this.state.card
+            let newCard = this.props.card
             newCard.cardComments.push(newComment)
             callAddCommentCard(this.state.idBoard,this.state.idList,newCard)
 
@@ -84,7 +83,7 @@ class ModalEditCard extends Component {
 
     handleAddDescription = (event) => {
         event.preventDefault()
-        let newCard  = this.state.card
+        let newCard  = this.props.card
         if(this.state.newDescription != ""){
             newCard.cardDescription = this.state.newDescription
             callEditCard(this.state.idBoard,this.state.idList,newCard)
@@ -99,8 +98,8 @@ class ModalEditCard extends Component {
 
     handleChangeStatus = (event) => {
         event.preventDefault()
-        let newCard = this.state.card
-        newCard.isArchived = !this.state.card.isArchived
+        let newCard = this.props.card
+        newCard.isArchived = !this.props.card.isArchived
         callEditCard(this.state.idBoard,this.state.idList,newCard)
         this.setState({
             card: newCard
@@ -108,13 +107,13 @@ class ModalEditCard extends Component {
     }
 
     renderDeadLine(){
-        if(this.state.card.cardDeadline){
-            return <span><i className="ni ni-time-alarm"/>{this.state.card.cardDeadline}</span>
+        if(this.props.card.cardDeadline){
+            return <span><i className="ni ni-time-alarm"/>{this.props.card.cardDeadline}</span>
         }
     }
 
     unorarchive(){
-        if(this.state.card.isArchived){
+        if(this.props.card.isArchived){
             return <li><button type="button" className="btn btn-secondary cardButtonEdit" onClick={this.handleChangeStatus}>Unarchived</button></li>
         }else{
             return <li><button type="button" className="btn btn-secondary cardButtonEdit" onClick={this.handleChangeStatus}>Archived</button></li>
@@ -129,7 +128,7 @@ class ModalEditCard extends Component {
 
     handleDeleteCard = (event) => {
         event.preventDefault()
-        callRemoveCard(this.state.idBoard,this.state.idList,this.state.card._id)
+        callRemoveCard(this.state.idBoard,this.state.idList,this.props.card._id)
         let child = document.getElementsByClassName("modal-backdrop fade show")[0]
         child.parentNode.removeChild(child);
     }
@@ -154,12 +153,12 @@ class ModalEditCard extends Component {
 
     render(){
         return (
-            <div className="modal fade modalCard" id={"card-modal" + this.state.card._id} tabIndex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+            <div className="modal fade modalCard" id={"card-modal" + this.props.card._id} tabIndex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
                 <div className="modal-dialog modal- modal-dialog-centered modal-" role="document">
                     <div className="modal-content modalContentCard">
 
                         <div className="modal-header">
-                            <Title id={'title'+this.state.card._id} onClick={this.titleToInput}>{this.state.card.cardTitle}</Title>
+                            <Title id={'title'+this.props.card._id} onClick={this.titleToInput}>{this.props.card.cardTitle}</Title>
 
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
@@ -187,7 +186,7 @@ class ModalEditCard extends Component {
                                                     type="text"
                                                     onChange={(e) => this.setState({
                                                         newDescription: e.target.value
-                                                    })}>{this.state.card.cardDescription}</textarea>
+                                                    })}>{this.props.card.cardDescription}</textarea>
                                                 <button type="button" className="btn btn-success cardButtonEdit" onClick={this.handleAddDescription}>Add</button>
 
                                             </div>
@@ -219,7 +218,7 @@ class ModalEditCard extends Component {
                                             </div>
                                             <div id={"listComment"}>
                                                 <span> Comment list </span>
-                                                {this.state.card.cardComments.map((comment) => {
+                                                {this.props.card.cardComments.map((comment) => {
                                                     return <div><span><i className="ni ni-chat-round"/>{"  " + comment.commentContent}</span></div>
 
                                                 })
@@ -247,7 +246,7 @@ class ModalEditCard extends Component {
                                             Members
                                         </button>
                                         {this.state.modalDisplayed === "members" ?
-                                            <CardOptions function="members" card={this.state.card} idList={this.state.idList} idBoard={this.state.idBoard}/> : ""                                        }
+                                            <CardOptions function="members" card={this.props.card} idList={this.state.idList} idBoard={this.state.idBoard}/> : ""                                        }
 
                                     </li>
                                     <li>
@@ -256,7 +255,7 @@ class ModalEditCard extends Component {
                                                     modalDisplayed: this.state.modalDisplayed === "labels" ? null : "labels"
                                                 })}>Labels</button>
                                         {this.state.modalDisplayed === "labels" ?
-                                            <CardOptions function="labels" card={this.state.card} idList={this.state.idList} idBoard={this.state.idBoard}/> : ""
+                                            <CardOptions function="labels" card={this.props.card} idList={this.state.idList} idBoard={this.state.idBoard}/> : ""
                                         }
                                     </li>
                                     <li>
@@ -269,7 +268,7 @@ class ModalEditCard extends Component {
                                             CheckList
                                         </button>
                                         {this.state.modalDisplayed === "checklist" ?
-                                            <CheckListDropdown cardId={this.state.card._id}/> : ""
+                                            <CheckListDropdown cardId={this.props.card._id}/> : ""
                                         }
                                     </li>
                                     <li>
@@ -279,7 +278,7 @@ class ModalEditCard extends Component {
                                                 })}>Deadline</button>
 
                                         {this.state.modalDisplayed === "deadline" ?
-                                            <CardOptions function="deadline" card={this.state.card} idList={this.state.idList} idBoard={this.state.idBoard}/> : ""
+                                            <CardOptions function="deadline" card={this.props.card} idList={this.state.idList} idBoard={this.state.idBoard}/> : ""
                                         }
                                     </li>
 

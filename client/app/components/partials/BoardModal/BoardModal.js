@@ -77,7 +77,7 @@ class BoardModal extends Component {
         asteroid.call("boards.createBoard", board)
         .then((result) => {
             $('#board-modal' + this.state.boardId).modal('toggle');
-            this.props.history.push("/board/" + result)
+            this.props.history.push("/board/" + result);
         })
         .catch((error) => {
             this.addAlert("danger", error.reason)
@@ -110,7 +110,7 @@ class BoardModal extends Component {
                     let newBoardUsers = this.state.boardUsers;
                     newBoardUsers.push({userId: user.userId, role: 'member'});
                     this.setState({boardUsers: newBoardUsers});
-                } 
+                }
             })
         }
         if(field === 'removeTeam'){
@@ -123,12 +123,12 @@ class BoardModal extends Component {
         }
 
     }
-    
+
     renderBackgrounds(){
         let backgrounds = ["walnut", "avenue", "pier", "tree", "boat", "heart", "hong-kong", "new-york-city", "sea", "vw-camper", "blue-watercolor", "blur-clean"];
         return backgrounds.map((b, i) =>
             <div key={i} className="col-6">
-                <Image 
+                <Image
                     className={"thumbnail" + (this.state.boardBackground === b ? " active" : "")}
                     cloudName="dxdyg7b5b"
                     publicId={b}
@@ -146,7 +146,7 @@ class BoardModal extends Component {
     }
 
     render(){
-        return ( 
+        return (
             <div className="modal board-modal fade" id={"board-modal" + this.state.boardId} tabIndex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
                 <div className="modal-dialog modal- modal-dialog-centered modal-" role="document">
                     <div className="modal-content">
@@ -172,9 +172,9 @@ class BoardModal extends Component {
                                                 <div className="input-group-prepend">
                                                     <span className="input-group-text"><i className="ni ni-email-83"></i></span>
                                                 </div>
-                                                <input 
-                                                    className="form-control" 
-                                                    placeholder="Name" 
+                                                <input
+                                                    className="form-control"
+                                                    placeholder="Name"
                                                     type="text"
                                                     value={this.state.boardTitle}
                                                     onChange={(e) => this.setState({boardTitle: e.target.value})}
@@ -186,17 +186,17 @@ class BoardModal extends Component {
                                                 <div className="input-group-prepend">
                                                     <span className="input-group-text"><i className="ni ni-email-83"></i></span>
                                                 </div>
-                                                <textarea 
-                                                    className="form-control" 
-                                                    placeholder="Description" 
+                                                <textarea
+                                                    className="form-control"
+                                                    placeholder="Description"
                                                     type="text"
                                                     value={this.state.boardDescription}
                                                     onChange={(e) => this.setState({boardDescription: e.target.value})}
                                                 ></textarea>
                                             </div>
                                         </div>
-                                        <AddUserInput 
-                                            addedUsers={this.state.boardUsers} 
+                                        <AddUserInput
+                                            addedUsers={this.state.boardUsers}
                                             onChange={(field, value) => this.setState({"boardUsers": value})}
                                             type={"board"}
                                         />
@@ -213,19 +213,19 @@ class BoardModal extends Component {
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
 
                         <div className="modal-footer">
                             <button type="button" className="btn btn-link" data-dismiss="modal">Close</button>
                             {this.state.type == "edit" ?
-                                <button 
+                                <button
                                     className="btn btn-primary  ml-auto"
                                     onClick={() => this.handleEditBoard()}>
                                     Edit
                                 </button>
                                 :
-                                <button 
+                                <button
                                     className="btn btn-success  ml-auto"
                                     onClick={() => this.handleCreateBoard()}>
                                     Create
