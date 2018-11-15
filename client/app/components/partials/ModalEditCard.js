@@ -16,7 +16,6 @@ class ModalEditCard extends Component {
             idList: this.props.idList,
             idBoard: this.props.idBoard,
             cardTitle: this.props.card.cardTitle,
-            cardComments: this.props.card.cardComments,
             newComment: "",
             modalDisplayed: null,
             newDescription: ''
