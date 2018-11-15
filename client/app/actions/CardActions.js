@@ -31,32 +31,24 @@ export function editCard(_id, data) {
 
 export function callCreateCard(idBoard,idList) {
     asteroid.call('boards.card.createCard', idBoard,idList).catch(error => {
-        console.log(error);
+        alert("Card couldn't be created, please retry later");
     })
 }
 
 export function callEditCard(idBoard,idList,newCard) {
     asteroid.call('boards.card.editCard', idBoard,idList,newCard).catch(error => {
-        console.log(error);
+        alert("Card couldn't be updated, please retry later");
     })
 }
 
 export function callAddCommentCard(idBoard,idList,newCard) {
     asteroid.call('boards.card.addComment', idBoard,idList,newCard).catch(error => {
-        console.log(error);
+        alert("Comment couldn't be added, please retry later");
     })
 }
 
 export function callRemoveCard(idBoard,idList,idCard){
     asteroid.call('boards.card.removeCard', idBoard,idList,idCard).catch(error => {
-        console.log(error);
+        alert("Card couldn't be removed, please retry later");
     })
 }
-
-
-
-/*export function callEditCardLabels(idBoard,idList,id,idLabel) {
-    asteroid.call('boards.card.editCardLabel', idBoard,idList,id,idLabel).catch(error => {
-        console.log(error);
-    })
-}*/

@@ -5,6 +5,7 @@ import CardOptions from "./CardOptions";
 import {callAddCommentCard, callEditCard, callRemoveCard} from "../../actions/CardActions";
 import CheckListDropdown from '../pages/Board/CheckListDropdown';
 import Checklist from '../pages/Board/Checklist';
+import MemberAdd from './MemberAdd';
 
 
 class ModalEditCard extends Component {
@@ -246,8 +247,8 @@ class ModalEditCard extends Component {
                                             Members
                                         </button>
                                         {this.state.modalDisplayed === "members" ?
-                                            <CardOptions function="members" card={this.props.card} idList={this.state.idList} idBoard={this.state.idBoard}/> : ""                                        }
-
+                                            <MemberAdd function="members" card={this.props.card} idList={this.state.idList} idBoard={this.state.idBoard}/> : ""                                        }
+                                        
                                     </li>
                                     <li>
                                         <button className="btn btn-secondary cardButtonEdit"
