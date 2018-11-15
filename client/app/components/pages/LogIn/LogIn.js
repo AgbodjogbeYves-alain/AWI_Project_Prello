@@ -141,12 +141,6 @@ class LogIn extends Component {
                                                     <input className="form-control" placeholder="Password" type="password" ref={(password) => this.password = password}/>
                                                 </div>
                                             </div>
-                                            <div className="custom-control custom-control-alternative custom-checkbox">
-                                                <input className="custom-control-input" id=" customCheckLogin" type="checkbox"/>
-                                                <label className="custom-control-label" htmlFor=" customCheckLogin">
-                                                    <span>Remember me</span>
-                                                </label>
-                                            </div>
                                             <div className="text-center">
                                                 <button type="submit" className="btn btn-primary my-4">Sign in</button>
                                             </div>
