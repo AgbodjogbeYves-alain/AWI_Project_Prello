@@ -63,13 +63,13 @@ const renderBoardSuggestions = boardSuggestion => {
    //style={{marginBottom: "-17"}}
     return (
     <div>
-       <div style={{display: "inline-block", verticalAlign:"top", marginRight:"10",width:"14%"}}>
-        <img src= {"https://res.cloudinary.com/dxdyg7b5b/image/upload/v1541680009/backgrounds/"+ boardSuggestion.boardBackground +".jpg"}
+       <div style={{display: "inline-block", verticalAlign:"top", marginRight:"10",width:"25%"}}>
+        <img src= {"https://res.cloudinary.com/dxdyg7b5b/image/upload/c_thumb,w_300/"+ boardSuggestion.boardBackground +".jpg"}
             height="35"
             
         />
         </div>
-        <div  style={{display: "inline-block",width:"80%"}}>
+        <div  style={{display: "inline-block",width:"69%"}}>
             <h5 style={{textOverflow:"ellipsis",width:"100%",overflow:"hidden",whiteSpace:"nowrap"}}>{boardSuggestion.boardTitle}</h5>
             <p style={{textOverflow:"ellipsis",width:"100%",overflow:"hidden",whiteSpace:"nowrap"}}>{boardSuggestion.boardDescription}</p>  
         </div>
