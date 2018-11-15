@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import NavBar from "../../partials/NavBar";
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-
 import BoardModal from "../../partials/BoardModal/BoardModal.js"
 import Teams from "./Teams/Teams.js";
 import Boards from "./Boards/Boards.js";
@@ -69,7 +68,7 @@ class Dashboard extends Component {
                     </div>
                 </div>
             </main>
-        )
+        );
     }
 }
 
