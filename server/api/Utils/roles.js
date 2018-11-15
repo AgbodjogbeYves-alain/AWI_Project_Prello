@@ -25,7 +25,7 @@ export const ACCESS_CARD = "ACCESS_CARD"
 
 
 const roles = {
-    "admin": [DELETE_BOARD, 
+    admin: [DELETE_BOARD, 
         REMOVE_TEAM_MEMBER, 
         EDIT_BOARD_SETTINGS, 
         EXPORT_BOARD,
@@ -48,7 +48,7 @@ const roles = {
         CREATE_CARD,
         ACCESS_CARD
     ],
-    "member": [
+    member: [
         EXPORT_BOARD,
         ACCESS_ARCHIVES,
         COPY_BOARD,
@@ -63,7 +63,7 @@ const roles = {
         FOLLOW_CARD,
         ACCESS_CARD
     ],
-    "observer": [
+    observer: [
         ACCESS_BOARD,
 
         ACCESS_CARD
@@ -77,5 +77,5 @@ const roles = {
  * @param {*} right The right to check
  */
 export function canPerform(role, right){
-    roles.hasOwnProperty(role) && roles.role.includes(right)
+    return role && roles.hasOwnProperty(role) && roles[role].includes(right)
 }
