@@ -81,11 +81,12 @@ const renderCardSuggestion = (cardSuggestion,cardLabels) => {
     return (
         <div >
             <div style={{display: "inline-block", verticalAlign:"top",width:"36%",marginRight:"10" }}>
-            <ContainerC style={{height:"35"}}>
+            <ContainerC style={{height:"35", overflow: "visible"}}>
 
                         <h5 style={{textOverflow:"ellipsis",overflow:"hidden",whiteSpace:"nowrap",textAlign:"top",fontSize:"15"}}>{cardSuggestion.cardTitle}</h5>
                         <div className={"cardLabelsDiv"}>
                             {cardLabels.map((label) => {
+                                
                                 return <span className="badge badge-pill badge-default" style={{background: label.labelColor}}>{label.labelName}</span>
                             })}
                         </div>

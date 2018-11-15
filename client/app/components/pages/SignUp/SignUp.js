@@ -55,7 +55,6 @@ class SignUp extends Component {
     }
 
     googleSignUp(tokenId){
-        event.preventDefault();
         let that = this;
         asteroid.call('users.googleSignUp', tokenId)
             .then((result) => {
