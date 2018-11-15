@@ -17,31 +17,31 @@ class Card extends Component {
         }
     }
 
+    getCompletedPourcent(){
+        let checklists = this.props.card.cardChecklists;
+        
+        let totalItems = checklists.map((checklist) => checklist.checklistItems.length)
+        .reduce((acc, val) => acc + val)
 
-    /*componentDidMount(){
-        let boardLabelsT = []
-        this.props.labels.forEach((label) => {
-            this.props.board.boardLabels.forEach((idLabel) => {
-                if(label._id==idLabel){
-                    boardLabelsT.push(label)
-                }
-            })
-        })
+        if(totalItems == 0) return 100;
+        
+        let numCheckedItems = checklists.map((checklist) => checklist.checklistItems.filter((i) => i.itemChecked).length)
+        .reduce((acc, val) => acc + val)
+        
+        return 100*numCheckedItems/totalItems;
+    }
 
-        let cardLabelsT = []
-        this.props.labels.forEach((label) => {
-            this.props.card.cardLabels.forEach((idLabel) => {
-                if(label._id==idLabel){
-                    cardLabelsT.push(label)
-                }
-            })
-        })
+    hasChecklist(){
+        return this.props.card.cardChecklists.length !== 0;
+    }
 
-        this.setState({
-            boardLabels: boardLabelsT,
-            cardLabels: cardLabelsT
+    renderLabels(){
+        let cardLabels = this.props.labels.filter((label) => this.props.card.cardLabels.includes(label._id) );
+        return cardLabels.map((label) => {
+            return <span className="badge badge-pill badge-default" style={{background: label.labelColor}}>{label.labelName}</span>
         })
-    }*/
+    }
+    
     render() {
         return (
             <div>
@@ -52,10 +52,17 @@ class Card extends Component {
                                ref={provided.innerRef}
                                 data-toggle="modal" data-target={"#card-modal"+this.props.card._id}>
                         {this.props.card.cardTitle}
+
+                        {this.hasChecklist() ?
+                            <div className="progress card-progress">
+                                <div className="progress-bar bg-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 
+                                    style={{"width": this.getCompletedPourcent() + "%"}}>
+                                </div>
+                            </div> : ""
+                        }
+
                         <div className={"cardLabelsDiv"}>
-                            {this.state.cardLabels.map((label) => {
-                                return <span className="badge badge-pill badge-default" style={{background: label.labelColor}}>{label.labelName}</span>
-                            })}
+                            {this.renderLabels()}
                         </div>
                     </ContainerC>}
             </Draggable>

@@ -1,0 +1,16 @@
+.checklist .btn-danger.remove{
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+.checklist{
+    position: relative;
+    background-color: #f5f7ff;
+}
+.checklist li{
+    list-style-type: none;
+    margin: 5px 0px;
+}
+.checklist ul {
+    padding-left: 10px;
+}

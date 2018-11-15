@@ -14,7 +14,7 @@ class LogIn extends Component {
 
     constructor(props) {
         super(props);
-     
+
         this.state = {
             alerts: []
         };
@@ -66,7 +66,7 @@ class LogIn extends Component {
         const sucessResponseGoogle = (response) => {
             let tokenId = response.getAuthResponse().id_token;
             this.googleLogin(tokenId);
-            
+
           }
 
         const failResponseGoogle = (response) =>{
@@ -79,7 +79,7 @@ class LogIn extends Component {
             <main>
                 <NavBar/>
                 <div className='alert-container'>
-                    
+
                 </div>
                 <section className="section section-shaped section-lg">
                     <div className="shape shape-style-1 bg-gradient-default">
@@ -106,7 +106,7 @@ class LogIn extends Component {
                                             render={renderProps => (
                                                 <a onClick={renderProps.onClick} href="#" className="btn btn-neutral btn-icon">
                                                 <span className="btn-inner--icon">
-                                                    <img src="../assets/img/icons/common/google.svg"/>
+                                                    <img src="https://rawcdn.githack.com/AgbodjogbeYves-alain/AWI_Assets/7cf53ef40e7e2346c164640109b845b599cbe915/img/icons/common/google.svg"/>
                                                 </span>
                                                 <span className="btn-inner--text">Google</span>
                                                 </a>
@@ -140,12 +140,6 @@ class LogIn extends Component {
                                                     </div>
                                                     <input className="form-control" placeholder="Password" type="password" ref={(password) => this.password = password}/>
                                                 </div>
-                                            </div>
-                                            <div className="custom-control custom-control-alternative custom-checkbox">
-                                                <input className="custom-control-input" id=" customCheckLogin" type="checkbox"/>
-                                                <label className="custom-control-label" htmlFor=" customCheckLogin">
-                                                    <span>Remember me</span>
-                                                </label>
                                             </div>
                                             <div className="text-center">
                                                 <button type="submit" className="btn btn-primary my-4">Sign in</button>

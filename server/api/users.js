@@ -3,14 +3,17 @@ import { Accounts } from 'meteor/accounts-base';
 
 const verifToken = require('./Utils/tokenIdVerification')
 
+if(Meteor.isServer)
+{
 
-Meteor.publish('users', function(){
-    if(this.userId) return Meteor.users.find({_id: {$ne: this.userId}}, {fields: { 'profile.trelloToken': 0, services: 0 }},{fields: { 'profile.google_id': 0, services: 0 }} );
-});
+    Meteor.publish('users', function(){
+        if(this.userId) return Meteor.users.find({_id: {$ne: this.userId}}, {fields: { 'profile.trelloToken': 0, services: 0 }},{fields: { 'profile.google_id': 0, services: 0 }} );
+    });
 
-Meteor.publish('user', function () {
-    return Meteor.users.find({_id: this.userId});
-});
+    Meteor.publish('user', function () {
+        return Meteor.users.find({_id: this.userId});
+    });
+}
 
 Meteor.methods({
     "users.signUp"({lastname, firstname, email, password}){
@@ -24,7 +27,7 @@ Meteor.methods({
                     lastname: lastname,
                     firstname: firstname,
                     enabledMails: false,
-                    email: email 
+                    email: email
                 }
             };
 
@@ -41,10 +44,10 @@ Meteor.methods({
                     enabledMails: false,
                     email: payload['email'],
                     google_id: payload['sub']
-                    
+
                 },
-                
-              
+
+
             };
 
              Accounts.createUser(options);
@@ -54,21 +57,21 @@ Meteor.methods({
         return (verifToken.verify(tokenId).then(payload=>{
             let user_id = payload['sub'];
             let user =  Meteor.users.findOne({"profile.google_id": user_id})
-            var stampedToken = Accounts._generateStampedLoginToken();
-            var hashStampedToken = Accounts._hashStampedToken(stampedToken);
+            let stampedToken = Accounts._generateStampedLoginToken();
+            let hashStampedToken = Accounts._hashStampedToken(stampedToken);
 
-            Meteor.users.update(user._id, 
+            Meteor.users.update(user._id,
                 {$push: {'services.resume.loginTokens': hashStampedToken}}
               );
 
-           
+
            this.setUserId(user._id);
            return {
                token : stampedToken.token
            }
 
         }))
-        
+
     },
     "users.updateProfile"(email, lastname, firstname){
         //TODO Test if email already used

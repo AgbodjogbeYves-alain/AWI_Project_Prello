@@ -26,7 +26,7 @@ class MyAccount extends Component {
 
     render() {
         const { user } = this.props;
-        if(user && !user.profile) return(<Redirect to='/'/>)
+        if(!user) return(<Redirect to='/'/>)
         return (
             <main className="profile-page">
             <NavBar/>
