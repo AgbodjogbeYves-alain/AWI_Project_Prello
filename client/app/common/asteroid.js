@@ -4,7 +4,6 @@ import store from '../components/store';
 import { createBoard, removeBoard, editBoard } from '../actions/BoardActions';
 import { addTeam, removeTeam, editTeam } from '../actions/TeamActions';
 import { addLabel, removeLabel, editLabel } from '../actions/LabelActions';
-import { setRefreshed } from '../actions/RefreshActions';
 
 const Asteroid = createClass();
 // Connect to a Meteor backend
