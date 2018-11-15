@@ -6,7 +6,8 @@ import {canPerform,
     DELETE_BOARD, 
     EDIT_BOARD_SETTINGS,
     ACCESS_CARD,
-    ACCESS_ARCHIVES
+    ACCESS_ARCHIVES,
+    ARCHIVE_CARD
     } from './Utils/roles';
 
 
@@ -27,7 +28,6 @@ Meteor.methods({
 
     'boards.createBoard'(board) {
         if(Meteor.userId()){
-            console.log(board)
             board.boardOwner = this.userId;
             return Boards.insert(board);
         }else{
@@ -37,10 +37,8 @@ Meteor.methods({
 
     'boards.getBoard' (idBoard) {
         let userId = this.userId
-        let board;
-        let countDoc = Boards.find({"boardId": idBoard}).count();
-        if (countDoc === 1) {
-            board = Boards.findOne({"boardId": idBoard});
+        let board = Boards.findOne({"boardId": idBoard});
+        if (board) {
             let userRole = boardUtils.getUserRole(userId, board)
             // The user can access the board if he has the rights or the board is public
             if(canPerform(userRole, ACCESS_BOARD))
@@ -194,7 +192,14 @@ Meteor.methods({
     },
 
     'board.archiveCard' (boardId, cardId) {
-
+        let userId = this.userId
+        let board = Boards.findOne({"_id": boardId})
+        if(board){
+            let userRole = boardUtils.getUserRole(userId, board)
+            if(canPerform(userRole, ARCHIVE_CARD)){
+                // TODO: archive the card here
+            }
+        }
     }
 
 })
