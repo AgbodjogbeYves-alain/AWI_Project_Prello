@@ -20,9 +20,10 @@ export function removeBoard(_id) {
   };
 }
 
-export function editBoard(data) {
+export function editBoard(_id, data) {
   return {
     type: EDIT_BOARD,
+    _id,
     data
   };
 }

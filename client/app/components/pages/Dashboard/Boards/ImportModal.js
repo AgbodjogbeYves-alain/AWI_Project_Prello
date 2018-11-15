@@ -45,43 +45,65 @@ class ImportModal extends Component {
 
             let trelloBoard = this.state.trelloBoards.filter((b) => b.id === this.state.trelloBoardId)[0];
             Trello.get("/boards/"+ trelloBoard.id +"/lists", (lists) => {
-                Trello.get("/boards/"+ trelloBoard.id +"/cards", (cards => {
-                    cards.forEach((c) => {
-                        let list = lists.filter((l) => l.id === c.idList)[0];
-                        let card = {
-                            _id: c.id,
-                            cardTitle: c.name,
-                            cardDescription: c.desc,
-                            cardArchived: c.closed
-                        }
-                        if(list.listCards) list.listCards.push(card)
-                        else list.listCards = [card]
-                    });
+                Trello.get("/boards/"+ trelloBoard.id +"/cards", (cards) => {
+                    Trello.get("/boards/"+ trelloBoard.id +"/checklists", (checklists) => {
+                        console.log(checklists)
+                        checklists.forEach((cl) => {
+                            let card = cards.filter((c) => c.id === cl.idCard)[0];
+                            let newItems = cl.checkItems.map((item) => {
+                                return {
+                                    _id: item.id,
+                                    itemName: item.name,
+                                    itemChecked: item.state === "complete"
+                                }
+                            });
+                            let checklist = {
+                                _id: cl.id,
+                                checklistName: cl.name,
+                                checklistItems: newItems
+                            };
+                            if(card.cardChecklists) card.cardChecklists.push(checklist)
+                            else card.cardChecklists = [checklist]
+                        });
 
-                    trelloBoard.boardLists = lists.map((l) => {
-                        return {
-                            _id: l.id,
-                            listTitle: l.name,
-                            listCards: l.listCards ? l.listCards : [],
-                            listArchived: l.closed
-                        }
-                    });
-                    
-                    let finalBoard = {
-                        boardTitle: trelloBoard.name,
-                        boardDescription: trelloBoard.desc,
-                        boardBackground: 'walnut',
-                        boardUsers: [{userId: this.props.user._id, role: 'admin'}],
-                        boardPrivacy: 0,
-                        boardLists: trelloBoard.boardLists
-                    }
+                        cards.forEach((c) => {
+                            let list = lists.filter((l) => l.id === c.idList)[0];
+                            let card = {
+                                _id: c.id,
+                                cardTitle: c.name,
+                                cardDescription: c.desc,
+                                cardArchived: c.closed,
+                                cardChecklists: c.cardChecklists ? c.cardChecklists : []
+                            }
+                            if(list.listCards) list.listCards.push(card)
+                            else list.listCards = [card]
+                        });
 
-                    asteroid.call("boards.createBoard", finalBoard)
-                    .then(() => {
-                        that.setState({loading: false});
-                        $('#import-modal').modal('toggle');
+                        trelloBoard.boardLists = lists.map((l) => {
+                            return {
+                                _id: l.id,
+                                listTitle: l.name,
+                                listCards: l.listCards ? l.listCards : [],
+                                listArchived: l.closed
+                            }
+                        });
+                        
+                        let finalBoard = {
+                            boardTitle: trelloBoard.name,
+                            boardDescription: trelloBoard.desc,
+                            boardBackground: 'walnut',
+                            boardUsers: [{userId: this.props.user._id, role: 'admin'}],
+                            boardPrivacy: 0,
+                            boardLists: trelloBoard.boardLists
+                        }
+
+                        asteroid.call("boards.createBoard", finalBoard)
+                        .then(() => {
+                            that.setState({loading: false});
+                            $('#import-modal').modal('toggle');
+                        })
                     })
-                }))
+                })
             })
         }
         
