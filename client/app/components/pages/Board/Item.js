@@ -25,17 +25,25 @@ export default class Item extends Component {
         asteroid.call("checklists.removeItem", this.props.item._id);
     }
 
+    componentWillReceiveProps(nextProps){
+        console.log(nextProps)
+        this.setState({itemChecked: nextProps.item.itemChecked});
+    }
+
     render() {
+        let item = this.props.item;
         return(
             <div className="custom-control custom-checkbox">
                 <input 
                     className="custom-control-input" 
-                    id={"check"+this.props.item._id} 
+                    id={"check"+item._id} 
                     type="checkbox"
                     checked={this.state.itemChecked}
                     onChange={(e) => this.handleToggleCheck(e)}
                 />
-                <label className="custom-control-label" htmlFor={"check"+this.props.item._id}>{this.props.item.itemName}</label>
+                <label className={"custom-control-label " + (item.itemChecked ? " checked" : "") } htmlFor={"check"+item._id}>
+                    {this.props.item.itemName}
+                </label>
                 <button 
                     className="btn btn-secondary btn-sm float-right"
                     onClick={() => this.handleRemoveItem()}
