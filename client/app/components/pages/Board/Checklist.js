@@ -27,8 +27,6 @@ class Checklist extends Component {
 
     handleAddItem(e){
         if(e.key === "Enter" && this.state.newItemName !== ""){
-            console.log(this.props.checklist)
-            console.log(this.state.newItemName)
             asteroid.call("checklists.addItem", this.props.checklist._id, this.state.newItemName);
             this.setState({newItemName: ""});
         }

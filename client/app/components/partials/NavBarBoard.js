@@ -1,5 +1,4 @@
 import React, { Component,PureComponent } from 'react';
-import Menu from "./Menu"
 import {callEditBoard} from "../../actions/BoardActions";
 import { connect } from 'react-redux';
 import { ProfilePicture } from './ProfilePicture';
@@ -11,13 +10,11 @@ class NavBarBoard extends Component {
         this.state = {
             board:{boardTeams: []},
             teamsB: ["Personal"],
-            newBoardName: '',
-            visibleMenu: false
+            newBoardName: ''
         }
 
         this.handleSubmitTitle = this.handleSubmitTitle.bind(this)
         this.handleBNChange = this.handleBNChange.bind(this)
-        this.toggleMenu = this.toggleMenu.bind(this)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -42,11 +39,6 @@ class NavBarBoard extends Component {
                 board: 'unknow',
             })
         }
-    }
-
-    toggleMenu = () =>{
-        const { visibleMenu } = this.state
-        this.setState({visibleMenu: !visibleMenu})
     }
 
 
@@ -113,7 +105,6 @@ class NavBarBoard extends Component {
                     <span> <i className="ni ni-settings"/>Display settings</span>
                 </button>
             </nav>
-                {this.state.visibleMenu && <Menu idBoard={this.state.board._id}/>}
                 <div className="modal fade" id="modalChangeBN" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog modal-dialog-centered" role="document">
                         <div className="modal-content">

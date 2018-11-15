@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import asteroid from '../../../common/asteroid';
 
- 
+
 // App component - represents the whole app
 export default class Item extends Component {
 
@@ -26,7 +26,6 @@ export default class Item extends Component {
     }
 
     componentWillReceiveProps(nextProps){
-        console.log(nextProps)
         this.setState({itemChecked: nextProps.item.itemChecked});
     }
 
@@ -34,9 +33,9 @@ export default class Item extends Component {
         let item = this.props.item;
         return(
             <div className="custom-control custom-checkbox">
-                <input 
-                    className="custom-control-input" 
-                    id={"check"+item._id} 
+                <input
+                    className="custom-control-input"
+                    id={"check"+item._id}
                     type="checkbox"
                     checked={this.state.itemChecked}
                     onChange={(e) => this.handleToggleCheck(e)}
@@ -44,7 +43,7 @@ export default class Item extends Component {
                 <label className={"custom-control-label " + (item.itemChecked ? " checked" : "") } htmlFor={"check"+item._id}>
                     {this.props.item.itemName}
                 </label>
-                <button 
+                <button
                     className="btn btn-secondary btn-sm float-right"
                     onClick={() => this.handleRemoveItem()}
                 >

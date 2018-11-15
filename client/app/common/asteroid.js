@@ -8,7 +8,7 @@ import { addLabel, removeLabel, editLabel } from '../actions/LabelActions';
 const Asteroid = createClass();
 // Connect to a Meteor backend
 const asteroid = new Asteroid({
-  endpoint: 'ws://prello12s.igpolytech.fr/websocket',
+  endpoint: 'ws://localhost:9000/websocket',
 });
 
 // if you want realitme updates in all connected clients
@@ -39,7 +39,6 @@ asteroid.ddp.on('added', (doc) => {
     store.dispatch(addTeam(docObj));
   }
   if(doc.collection === 'labels'){
-    console.log(doc)
       const docObj = Object.assign({}, doc.fields, { _id: doc.id });
       store.dispatch(addLabel(docObj));
   }
