@@ -100,7 +100,7 @@ Meteor.methods({
 
     'boards.card.addComment' (idBoard,idList,newCard) {
         let userId = this.userId
-        let board = Boards.find({"_id": idBoard})
+        let board = Boards.findOne({"_id": idBoard})
 
         if(board){
             let userRole = boardUtils.getUserRole(userId, board)

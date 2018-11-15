@@ -20,6 +20,7 @@ export class boardUtils {
      *      observer if the board is public and "" otherwise
      */
     static getUserRole(idUser, board){
+        if(!board) return ""
         let user = board.boardUsers.find(u => u.userId == idUser)
         if(user) return user.role
         else return (board.boardPrivacy == 0) ? "observer" : ""
