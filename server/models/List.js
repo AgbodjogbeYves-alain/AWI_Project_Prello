@@ -14,15 +14,19 @@ export const ListSchema = new SimpleSchema({
     label: "Title",
     required: true
   },
-  listCard:{
+  listCards:{
     type: Array,
     label: "Cards"
   },
-  'listCard.$': CardSchema, //se if need to replace Object with a schema
+  'listCards.$': CardSchema, //se if need to replace Object with a schema
   listCreatedAt:{
     type: Date,
     autoValue: function(){return new Date();}
-}
+  },
+  listArchived: {
+    type: Boolean,
+    label: "Archived"
+  }
 });
 
 Lists.attachSchema(ListSchema);

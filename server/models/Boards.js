@@ -5,8 +5,7 @@ export const Boards = new Mongo.Collection('boards')
 import SimpleSchema from 'simpl-schema';
 import {ListSchema} from "./List";
 import { BoardUserSchema } from './BoardUser';
-import { UserSchema } from './Users';
-import { BoardTeamSchema } from './BoardTeam';
+
 
 export const BoardSchema = new SimpleSchema({
   _id: {
@@ -22,6 +21,11 @@ export const BoardSchema = new SimpleSchema({
       type: String,
       label: "Description",
       required: false
+  },
+  boardBackground: {
+      type: String,
+      label: "Background",
+      required: true
   },
   boardUsers: {
       type: Array,
@@ -40,21 +44,15 @@ export const BoardSchema = new SimpleSchema({
       defaultValue: [],
   },
   'boardLists.$': ListSchema, //se if need to replace Object with a schema
-  /*boardTags: {
-      type: Array,
-      label: "Tags",
-      defaultValue: []
-  },
-  'boardTags.$': Object, //se if need to replace Object with a schema*/
   boardTeams: {
       type: Array,
       label: "Teams",
       defaultValue: []
   },
 
-  'boardTeams.$': BoardTeamSchema, //se if need to replace Object with a schema
+  'boardTeams.$': SimpleSchema.RegEx.Id, //se if need to replace Object with a schema
   boardOwner : {
-    type: UserSchema,
+    type: SimpleSchema.RegEx.Id,
     label: "Owner"
     },
   boardCreatedAt:{

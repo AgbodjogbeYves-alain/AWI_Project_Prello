@@ -49,3 +49,30 @@
     top: 10px;
     right: 0;
 }
+#dashboard .thumbnail{
+    height: 100px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 1px 1px 2px 0px grey;
+}
+#dashboard .thumbnail.active{
+    box-shadow: 0px 0px 8px 3px #1f2b6f;
+}
+#dashboard .board-modal .modal-dialog {
+    max-width: 1000px;
+}
+#dashboard .backgrounds{
+    overflow-y: scroll;
+    height: 264px;
+    box-shadow: -1px 2px 7px 0px rgba(50, 50, 93, .11);
+}
+#dashboard .board-card .card-stats{
+    background-size: cover;
+}
+#dashboard .board-card .card-body{
+    border-radius: 5px;
+    margin: 5px;
+    background-color: rgba(255, 255, 255, 0.66);
+}

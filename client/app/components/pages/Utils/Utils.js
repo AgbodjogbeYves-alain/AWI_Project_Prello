@@ -27,6 +27,9 @@ export const CardList = styled.div`
   flex-grow: 1;
   min-height: 100px;
   max-height: 400px;
+  position: relative
+  overflow-y: scroll;
+  
   
   
 `;

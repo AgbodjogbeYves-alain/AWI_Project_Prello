@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import {DragDropContext, Droppable} from "react-beautiful-dnd";
 import List from "./List";
 import NavBarBoard from "../../partials/NavBarBoard";
-import asteroid from "../../../common/asteroid.js";
+
 import { connect } from 'react-redux';
 import {callEditBoard} from "../../../actions/BoardActions";
 import {ContainerB} from "../Utils/Utils";
@@ -15,19 +15,33 @@ class BoardDisplay extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            board: {boardLists: [],boardTeams: []}
+            board: null
         }
 
         this.onDragEnd = this.onDragEnd.bind(this);
         this.createList = this.createList.bind(this)
     }
 
+    componentDidMount(){
+        let id = this.props.match.params.id
+        let board = this.props.boards.filter((board) => board._id === id)[0]
+        if(board !== undefined){
+            this.setState({
+                board: board,
+            })
+        }else{
+            this.setState({
+                board: 'unknow',
+            })
+
+        }
+    }
+
 
     componentWillReceiveProps(nextProps){
+        console.log("test")
         let id = nextProps.match.params.id
-        console.log(id)
         let board = nextProps.boards.filter((board) => board._id === id)[0]
-        console.log(board)
         if(board !== undefined){
             this.setState({
                 board: board,
@@ -173,13 +187,15 @@ class BoardDisplay extends Component {
         callCreateList(this.state.board._id)
     };
 
-
     render() {
 
-        return this.state.board != 'unknow' ? (
-            <div id={"boardDisplay"}>
+        return this.state.board && this.state.board != 'unknow' ? (
+            <div
+                id={"boardDisplay"}
+                style={{backgroundImage: "url('https://res.cloudinary.com/dxdyg7b5b/image/upload/v1541680009/backgrounds/"+ this.state.board.boardBackground +".jpg')"}}
+            >
                 <NavBar/>
-                <NavBarBoard idBoard={this.state.board._id}/>
+                <NavBarBoard board={this.state.board}/>
                 <button className="btn btn-success myAddListButton" onClick={this.createList}>Create a new List</button>
                 <div id={"divList"}>
                     <DragDropContext onDragEnd={this.onDragEnd}>
@@ -193,13 +209,15 @@ class BoardDisplay extends Component {
                                     >
                                         {
                                             this.state.board.boardLists.map((list, index) => {
-                                                const cards = list.listCard;
-                                                return (
-                                                    <div key={'div'+list._id}>
-                                                    <List key={list._id} list={list} index={index}
-                                                             cards={cards} idBoard={this.props.match.params.id}/>
-                                                    </div>
-                                                );
+                                                if(!list.listArchived){
+                                                    const cards = list.listCards;
+                                                    return (
+                                                        <div key={'div'+list._id}>
+                                                        <List key={list._id} list={list} index={index}
+                                                              cards={cards} board={this.state.board}/>
+                                                        </div>
+                                                    );
+                                                }
                                             })}
 
                                         {provided.placeholder}
@@ -225,7 +243,8 @@ class BoardDisplay extends Component {
 
 const mapStateToProps = state => ({
     user: state.user,
-    boards: state.boards
+    boards: state.boards,
+    labels: state.labels
 });
 
 export default connect(mapStateToProps)(BoardDisplay);

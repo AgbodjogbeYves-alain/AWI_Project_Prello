@@ -9,53 +9,60 @@ class AddUserInput extends Component {
         this.state = {
             addedUsers: this.props.addedUsers,
             userEmail: "",
-            userRole: 1,
+            userRole: 'user',
             users: [],
             alerts: []
         };
     }
 
     renderUsers(){
-        return this.props.addedUsers.map((u,i) => 
-            <div className="row" key={i}>
-                <div className="col-7">
-                    {u.user.profile.email}
+        return this.props.addedUsers.map((addedUser,i) => {
+            let user = this.props.users.filter((u) => u._id === addedUser.userId)[0];
+            if(addedUser.userId === this.props.user._id) user = this.props.user;
+            if(!user) return ""
+            
+            return (
+                <div className="row" key={i}>
+                    <div className="col-7">
+                        {user.profile.email}
+                    </div>
+                    <div className="col-3">
+                        <select 
+                            className="mb-3" 
+                            value={addedUser.role} 
+                            onChange={(e) => this.handleChangeUserRole(user._id, e.target.value)}
+                        >
+                            {this.renderRoleOptions()}
+                        </select>
+                    </div>
+                    {user._id != this.props.user._id ?
+                    <div className="col-2">
+                        <button className="btn btn-danger btn-sm" onClick={() => this.handleRemoveUser(user._id)}>
+                            x
+                        </button>
+                    </div> : ""}
                 </div>
-                <div className="col-3">
-                    <select 
-                        className="mb-3" 
-                        value={u.userRole} 
-                        onChange={(e) => this.handleChangeUserRole(u, e.target.value)}
-                    >
-                        {this.renderRoleOptions()}
-                    </select>
-                </div>
-                {u.user._id != this.props.user._id ?
-                <div className="col-2">
-                    <button className="btn btn-danger btn-sm" onClick={() => this.handleRemoveUser(u.user._id)}>
-                        x
-                    </button>
-                </div> : ""}
-            </div>
-        )
+            )
+        })
     }
 
     handleRemoveUser(userId){
-        let newAddedUsers = this.state.addedUsers.filter((u) => u.user._id != userId);
-        this.setState({addedUsers: newAddedUsers});
-        this.onChange();
+        let newAddedUsers = this.state.addedUsers.filter((u) => u.userId != userId);
+        this.setState({addedUsers: newAddedUsers}, function(){
+            this.onChange();
+        });
+        
     }
 
     handleAddUser(){
         let addedUsers = this.props.addedUsers;
         let user = this.props.users.filter((u) => u.profile.email === this.state.userEmail)[0];
-        let alreadyUser = addedUsers.filter((u) => u.user.profile.email == this.state.userEmail);
+        let alreadyUser = addedUsers.filter((u) => u.userId == user._id);
         if(alreadyUser.length > 0) alert("This user has been already put.")
         else if(user){
-            
             addedUsers.push({
-                user: user,
-                userRole: this.state.userRole
+                userId: user._id,
+                role: this.state.userRole
             })
             
             this.setState({addedUsers: addedUsers});
@@ -69,16 +76,18 @@ class AddUserInput extends Component {
         this.props.onChange('addedUsers', this.state.addedUsers);
     }
 
-    handleChangeUserRole(addedUser, userRole){
-        let newAddedUsers = this.state.addedUsers.map((u) => {
-            if(u.user._id == addedUser.user._id){
-                u.userRole = userRole
+    handleChangeUserRole(userId, userRole){
+        let newAddedUsers = this.props.addedUsers.map((u) => {
+            if(u.userId == userId){
+                u.role = userRole
             } 
             return u
         })
 
-        this.setState({addedUsers: newAddedUsers});
-        this.onChange();
+        this.setState({addedUsers: newAddedUsers}, function(){
+            this.onChange();
+        });
+        
     }
 
     renderRoleOptions(){

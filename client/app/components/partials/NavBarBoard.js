@@ -2,6 +2,7 @@ import React, { Component,PureComponent } from 'react';
 import Menu from "./Menu"
 import {callEditBoard} from "../../actions/BoardActions";
 import { connect } from 'react-redux';
+import { ProfilePicture } from './ProfilePicture';
 
 class NavBarBoard extends Component {
 
@@ -20,9 +21,7 @@ class NavBarBoard extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        let id = nextProps.idBoard
-        let theBoard = nextProps.boards.filter((board) => board._id == id)[0]
-
+        let theBoard = nextProps.board
 
         if(theBoard !== undefined){
             let teamsB = ["Personal"];
@@ -42,10 +41,7 @@ class NavBarBoard extends Component {
             this.setState({
                 board: 'unknow',
             })
-
         }
-
-
     }
 
     toggleMenu = () =>{
@@ -75,14 +71,26 @@ class NavBarBoard extends Component {
         event.preventDefault()
         let newBoard = this.state.board
         newBoard.boardPrivacy = event.target.value
+        console.log(event.target.value)
         this.setState({
             board: newBoard
         })
 
-        const { dispatchCallEditBoard } = this.props;
-        dispatchCallEditBoard(newBoard)
+        callEditBoard(newBoard)
     }
 
+    renderProfilePictures(){
+        return this.props.board.boardUsers.map((boardUser) => {
+            let user = null;
+            if(this.props.user._id === boardUser.userId) user = this.props.user;
+            else user = this.props.users.filter((u) => u._id === boardUser.userId)[0];
+            return (
+                <div className="d-inline-block" style={{marginLeft: '5px'}}>
+                    <ProfilePicture user={user} size={"sm"} />
+                </div>
+            )
+        });
+    }
 
     render(){
         return (
@@ -90,13 +98,17 @@ class NavBarBoard extends Component {
             <div id="navBarBoard">
             <nav className="navbar navbar-expand-lg navbar-dark">
                 <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#modalChangeBN">
-                    {this.state.board.boardTitle}
+                    {this.props.board.boardTitle}
                 </button>
 
                 <select className="btn btn-primary" defaultValue={(this.state.board.boardPrivacy===0)? 0: 1} onChange={this.handlePrivacyChange}>
                     <option value={0}> Public</option>
                     <option value={1}> Private</option>
                 </select>
+
+                <div className="board-users">
+                    {this.renderProfilePictures()}
+                </div>
 
                 <button className={"btn btn-primary"} id={'toggleButton'} onClick={() => this.toggleMenu(true)}>
                     <span> <i className="ni ni-settings"/>Display settings</span>
@@ -136,6 +148,7 @@ class NavBarBoard extends Component {
 
 const mapStateToProps = state => ({
     user: state.user,
+    users: state.users,
     boards: state.boards
 });
 export default connect(mapStateToProps)(NavBarBoard);
