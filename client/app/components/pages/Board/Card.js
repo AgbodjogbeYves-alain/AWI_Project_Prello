@@ -35,31 +35,13 @@ class Card extends Component {
         return this.props.card.cardChecklists.length !== 0;
     }
 
-
-    /*componentDidMount(){
-        let boardLabelsT = []
-        this.props.labels.forEach((label) => {
-            this.props.board.boardLabels.forEach((idLabel) => {
-                if(label._id==idLabel){
-                    boardLabelsT.push(label)
-                }
-            })
+    renderLabels(){
+        let cardLabels = this.props.labels.filter((label) => this.props.card.cardLabels.includes(label._id) );
+        return cardLabels.map((label) => {
+            return <span className="badge badge-pill badge-default" style={{background: label.labelColor}}>{label.labelName}</span>
         })
-
-        let cardLabelsT = []
-        this.props.labels.forEach((label) => {
-            this.props.card.cardLabels.forEach((idLabel) => {
-                if(label._id==idLabel){
-                    cardLabelsT.push(label)
-                }
-            })
-        })
-
-        this.setState({
-            boardLabels: boardLabelsT,
-            cardLabels: cardLabelsT
-        })
-    }*/
+    }
+    
     render() {
         return (
             <div>
@@ -80,9 +62,7 @@ class Card extends Component {
                         }
 
                         <div className={"cardLabelsDiv"}>
-                            {this.state.cardLabels.map((label) => {
-                                return <span className="badge badge-pill badge-default" style={{background: label.labelColor}}>{label.labelName}</span>
-                            })}
+                            {this.renderLabels()}
                         </div>
                     </ContainerC>}
             </Draggable>
