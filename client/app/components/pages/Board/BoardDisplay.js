@@ -14,26 +14,26 @@ class BoardDisplay extends Component {
 
     constructor(props) {
         super(props);
+
+        let id = this.props.match.params.id
+        let board = this.props.boards.filter((board) => board._id === id)[0]
+
         this.state = {
-            board: null
+            board: board ? board : "unknow",
+
         }
 
         this.onDragEnd = this.onDragEnd.bind(this);
         this.createList = this.createList.bind(this)
     }
 
-    componentDidMount(){
-        let id = this.props.match.params.id
-        let board = this.props.boards.filter((board) => board._id === id)[0]
-        if(board !== undefined){
-            this.setState({
-                board: board,
-            })
-        }else{
-            this.setState({
-                board: 'unknow',
-            })
+    
 
+    componentDidMount(){
+       
+        if(this.props.history.location.state){
+            let card = this.props.history.location.state.card
+           $("#card-modal" + card._id).modal("show")
         }
     }
 

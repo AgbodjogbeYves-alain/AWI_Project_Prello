@@ -22,6 +22,7 @@ export const FOLLOW_CARD = "FOLLOW_CARD"
 export const ARCHIVE_CARD = "ARCHIVE_BOARD"
 export const CREATE_CARD = "CREATE_CARD"
 export const ACCESS_CARD = "ACCESS_CARD"
+export const EDIT_CARD = "EDIT_CARD"
 
 
 const roles = {
@@ -46,7 +47,8 @@ const roles = {
         FOLLOW_CARD,
         ARCHIVE_CARD,
         CREATE_CARD,
-        ACCESS_CARD
+        ACCESS_CARD,
+        EDIT_CARD
     ],
     member: [
         EXPORT_BOARD,
@@ -61,7 +63,9 @@ const roles = {
         MOVE_CARD,
         COPY_CARD,
         FOLLOW_CARD,
-        ACCESS_CARD
+        CREATE_CARD,
+        ACCESS_CARD,
+        EDIT_CARD
     ],
     observer: [
         ACCESS_BOARD,

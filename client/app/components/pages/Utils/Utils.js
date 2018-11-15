@@ -46,4 +46,5 @@ export const ContainerC = styled.div`
   padding: 8px;
   margin-bottom: 8px;
   background-color: white;
+  overflow: hidden;
 `;
