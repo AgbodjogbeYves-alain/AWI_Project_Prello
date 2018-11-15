@@ -13,10 +13,10 @@ class NavBar extends Component {
     handleLogOut(){
         asteroid.logout()
         .then(() => {
+            this.props.history.push("/");
             this.props.dispatchResetBoards();
             this.props.dispatchResetTeams();
             this.props.dispatchResetUsers();
-            this.props.history.push("/");
         });
     }
 
