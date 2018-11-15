@@ -56,15 +56,16 @@ class ImportModal extends Component {
                         }
                         if(list.listCards) list.listCards.push(card)
                         else list.listCards = [card]
-                    })
+                    });
+
                     trelloBoard.boardLists = lists.map((l) => {
                         return {
                             _id: l.id,
                             listTitle: l.name,
-                            listCards: l.listCards,
+                            listCards: l.listCards ? l.listCards : [],
                             listArchived: l.closed
                         }
-                    })
+                    });
                     
                     let finalBoard = {
                         boardTitle: trelloBoard.name,

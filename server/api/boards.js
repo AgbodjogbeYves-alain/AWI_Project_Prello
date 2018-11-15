@@ -3,16 +3,20 @@ import {Meteor} from "meteor/meteor";
 import {boardUtils} from "./Utils/boardUtils";
 import {canPerform, ACCESS_BOARD, DELETE_BOARD, EDIT_BOARD_SETTINGS } from './Utils/roles';
 
-Meteor.publish('boards', function () {
-    let userId = this.userId;
-    let boards = Boards.find({boardUsers : {$elemMatch: {'userId': userId}}})
-    let ids = boards.fetch().filter(b => {
-        let role = boardUtils.getUserRole(userId, b)
-        return canPerform(role, ACCESS_BOARD)
-    }).map(b => b._id)
-    return Boards.find({_id : {$in: ids}})
-});
 
+if(Meteor.isServer){
+
+    Meteor.publish('boards', function () {
+        let userId = this.userId;
+        let boards = Boards.find({boardUsers : {$elemMatch: {'userId': userId}}})
+        let ids = boards.fetch().filter(b => {
+            let role = boardUtils.getUserRole(userId, b)
+            return canPerform(role, ACCESS_BOARD)
+        }).map(b => b._id)
+        return Boards.find({_id : {$in: ids}})
+    });
+
+}
 Meteor.methods({
 
     'boards.createBoard'(board) {
@@ -77,7 +81,6 @@ Meteor.methods({
                 })
             } else
                 throw new Meteor.Error(403, "You are not allowed to edit the board")
-
         }else {
             throw new Meteor.Error(404, 'Board not found')
         }
