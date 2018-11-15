@@ -14,7 +14,7 @@ class LogIn extends Component {
 
     constructor(props) {
         super(props);
-     
+
         this.state = {
             alerts: []
         };
@@ -66,7 +66,7 @@ class LogIn extends Component {
         const sucessResponseGoogle = (response) => {
             let tokenId = response.getAuthResponse().id_token;
             this.googleLogin(tokenId);
-            
+
           }
 
         const failResponseGoogle = (response) =>{
@@ -79,7 +79,7 @@ class LogIn extends Component {
             <main>
                 <NavBar/>
                 <div className='alert-container'>
-                    
+
                 </div>
                 <section className="section section-shaped section-lg">
                     <div className="shape shape-style-1 bg-gradient-default">
@@ -106,7 +106,7 @@ class LogIn extends Component {
                                             render={renderProps => (
                                                 <a onClick={renderProps.onClick} href="#" className="btn btn-neutral btn-icon">
                                                 <span className="btn-inner--icon">
-                                                    <img src="../assets/img/icons/common/google.svg"/>
+                                                    <img src="https://rawcdn.githack.com/AgbodjogbeYves-alain/AWI_Assets/7cf53ef40e7e2346c164640109b845b599cbe915/img/icons/common/google.svg"/>
                                                 </span>
                                                 <span className="btn-inner--text">Google</span>
                                                 </a>

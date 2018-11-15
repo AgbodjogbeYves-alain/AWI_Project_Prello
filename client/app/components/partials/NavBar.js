@@ -70,7 +70,7 @@ class NavBar extends Component {
                             <span className="btn-inner--text">Log In</span>
                         </Link>
                     </li>
-                    
+
                     <li className="nav-item d-none d-lg-block ml-lg-4">
                         <Link to="/signup" className="btn btn-neutral btn-icon">
                             <span className="btn-inner--icon">
@@ -86,14 +86,14 @@ class NavBar extends Component {
 
     render(){
         const { user } = this.props
-        return (     
+        return (
 
             <nav id="navbar-main" className="navbar navbar-main navbar-expand-lg navbar-dark bg-primary headroom">
                 <div className="container">
                     <Link className="navbar-brand mr-lg-5" to={user ? "/dashboard" : "/"}>
-                        <img src="../assets/img/brand/white.png"/>
+                        <img src="https://rawcdn.githack.com/AgbodjogbeYves-alain/AWI_Assets/7cf53ef40e7e2346c164640109b845b599cbe915/img/brand/white.png"/>
                     </Link>
-                    
+
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                     </button>
@@ -103,7 +103,7 @@ class NavBar extends Component {
                         <div className="row">
                         <div className="col-6 collapse-brand">
                             <Link to={user ? "/dashboard" : "/"}>
-                                <img src="../assets/img/brand/blue.png"/>
+                                <img src="https://rawcdn.githack.com/AgbodjogbeYves-alain/AWI_Assets/7cf53ef40e7e2346c164640109b845b599cbe915/img/brand/blue.png"/>
                             </Link>
                         </div>
                         <div className="col-6 collapse-close">
