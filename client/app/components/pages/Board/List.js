@@ -18,7 +18,7 @@ export class List extends React.Component {
     }
 
     removeList = () => {
-        callRemoveList(this.props.idBoard,this.props.list._id)
+        callRemoveList(this.props.board._id,this.props.list._id)
     }
 
     archiveList = () => {

@@ -130,6 +130,8 @@ class ModalEditCard extends Component {
     handleDeleteCard = (event) => {
         event.preventDefault()
         callRemoveCard(this.state.idBoard,this.state.idList,this.state.card._id)
+        let child = document.getElementsByClassName("modal-backdrop fade show")[0]
+        child.parentNode.removeChild(child);
     }
 
     renderChecklists(){
@@ -258,7 +260,7 @@ class ModalEditCard extends Component {
                                         }
                                     </li>
                                     <li>
-                                        <button 
+                                        <button
                                             className="btn btn-secondary cardButtonEdit"
                                             onClick={() => this.setState({
                                                 modalDisplayed: this.state.modalDisplayed === "checklist" ? null : "checklist"
