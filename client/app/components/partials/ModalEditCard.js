@@ -15,7 +15,6 @@ class ModalEditCard extends Component {
         this.state = {
             idList: this.props.idList,
             idBoard: this.props.idBoard,
-            cardLabels: this.props.labels.filter((label) => this.props.card.cardLabels.includes(label._id) ),
             card: this.props.card,
             cardTitle: this.props.card.cardTitle,
             cardComments: this.props.card.cardComments,
@@ -144,6 +143,13 @@ class ModalEditCard extends Component {
         )
     }
 
+    renderLabels(){
+        let cardLabels = this.props.labels.filter((label) => this.props.card.cardLabels.includes(label._id) );
+        return cardLabels.map((label, i) => {
+            return <span key={i} className="badge badge-pill badge-default" style={{background: label.labelColor}}>{label.labelName}</span>
+        })
+    }
+
     render(){
         return (
             <div className="modal fade modalCard" id={"card-modal" + this.state.card._id} tabIndex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
@@ -161,9 +167,7 @@ class ModalEditCard extends Component {
                         <div className="modal-body modalContentCard">
                             <div className="labelForCard">
                                 <span><i className="ni ni-tag"/></span>
-                                {this.state.cardLabels.map((label) => {
-                                    return <span className="badge badge-pill badge-default" style={{background: label.labelColor}}>{label.labelName}</span>
-                                })}
+                                {this.renderLabels()}
                             </div>
 
                             <div className={"deadLineDiv"}>
