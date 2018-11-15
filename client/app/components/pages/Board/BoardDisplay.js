@@ -21,15 +21,12 @@ class BoardDisplay extends Component {
         this.state = {
             board: board ? board : "unknow"
         }
-        console.log(board)
 
         this.onDragEnd = this.onDragEnd.bind(this);
         this.createList = this.createList.bind(this)
     }
 
     componentWillReceiveProps(nextProps,nextContext){
-        console.log(nextProps)
-        console.log(nextProps)
         let id = nextProps.match.params.id
         let board = nextProps.boards.filter((board) => board._id === id)[0]
         if(board !== undefined){
