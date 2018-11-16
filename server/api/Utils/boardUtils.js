@@ -22,7 +22,6 @@ export class boardUtils {
     static getUserRole(idUser, board){
         if(!board) return ""
         let user = board.boardUsers.find(u => u.userId == idUser)
-        console.log(user)
         if(user) return user.role
         else return (board.boardPrivacy == 0) ? "observer" : ""
     }

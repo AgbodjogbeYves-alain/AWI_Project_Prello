@@ -37,7 +37,6 @@ class MemberAdd extends Component {
             hidden:false
 
         })
-        console.log(members)
 
     }
 

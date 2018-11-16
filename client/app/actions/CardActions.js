@@ -38,7 +38,6 @@ export function callCreateCard(idBoard,idList) {
 export function callEditCard(idBoard,idList,newCard) {
     asteroid.call('boards.card.editCard', idBoard,idList,newCard).catch(error => {
         alert(error.reason);
-        console.log(error)
     })
 }
 
