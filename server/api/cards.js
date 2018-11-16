@@ -14,40 +14,41 @@ Meteor.methods({
         let userId = this.userId
         let board = Boards.findOne({"_id": idBoard});
 
-        if(board){
+        if(board) {
             let userRole = boardUtils.getUserRole(userId, board)
-            if(canPerform(userRole, CREATE_CARD)){
+            if (canPerform(userRole, CREATE_CARD)) {
                 let listFound = false
                 let id = Random.id();
                 let newBoardLists = board.boardLists.map((list) => {
-                    if(list._id == idList){
+                    if (list._id == idList) {
                         let newCard = {
                             _id: id,
                             cardTitle: "New card",
                             cardLabels: [],
                             cardComments: [],
-                            cardChecklists: []
+                            cardChecklists: [],
+                            cardUsers: []
                         }
                         list.listCards.push(newCard)
                         listFound = true
                         return list
-                    }else{
+                    } else {
                         return list
                     }
                 })
-                if(!listFound){
+                if (!listFound) {
                     throw new Meteor.Error(404, 'List in Board not found')
-                }else{
-                    Boards.update({_id: board._id},{
+
+                } else {
+                    Boards.update({_id: board._id}, {
                         $set: {
                             boardLists: newBoardLists
                         }
                     })
                 }
-            } else
-                throw new Meteor.Error(403, "You do not have permission to create a card")
-        }else{
-            throw new Meteor.Error(404, 'Board not found')
+            } else {
+                throw new Meteor.Error(404, 'Board not found')
+            }
         }
     },
 
@@ -90,7 +91,7 @@ Meteor.methods({
                         })
                     }
                 }
-            } else 
+            } else
                 throw new Meteor.Error(403, "You do not have permission to edit a card")
         }else{
             throw new Meteor.Error(404, 'Board not found')
@@ -145,7 +146,7 @@ Meteor.methods({
                         })
                     }
                 }
-            } else 
+            } else
                 throw new Meteor.Error(403, "You do not have permission to comment a card")
         }else{
             throw new Meteor.Error(404, 'Board not found')

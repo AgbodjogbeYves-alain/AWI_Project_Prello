@@ -57,18 +57,21 @@ Meteor.methods({
         return (verifToken.verify(tokenId).then(payload=>{
             let user_id = payload['sub'];
             let user =  Meteor.users.findOne({"profile.google_id": user_id})
-            let stampedToken = Accounts._generateStampedLoginToken();
-            let hashStampedToken = Accounts._hashStampedToken(stampedToken);
+            if(user){
+                let stampedToken = Accounts._generateStampedLoginToken();
+                let hashStampedToken = Accounts._hashStampedToken(stampedToken);
 
-            Meteor.users.update(user._id,
-                {$push: {'services.resume.loginTokens': hashStampedToken}}
-              );
+                Meteor.users.update(user._id,
+                    {$push: {'services.resume.loginTokens': hashStampedToken}}
+                );
 
 
-           this.setUserId(user._id);
-           return {
-               token : stampedToken.token
-           }
+                this.setUserId(user._id);
+                return {
+                    token : stampedToken.token
+                }
+            }
+            
 
         }))
 

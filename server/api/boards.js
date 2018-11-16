@@ -1,14 +1,15 @@
 import {Boards} from "../models/Boards";
 import {Meteor} from "meteor/meteor";
 import {boardUtils} from "./Utils/boardUtils";
-import {canPerform, 
-    ACCESS_BOARD, 
-    DELETE_BOARD, 
-    EDIT_BOARD_SETTINGS,
-    ACCESS_CARD,
+import {
     ACCESS_ARCHIVES,
-    ARCHIVE_CARD
-    } from './Utils/roles';
+    ACCESS_BOARD,
+    ACCESS_CARD,
+    ARCHIVE_CARD,
+    canPerform,
+    DELETE_BOARD,
+    EDIT_BOARD_SETTINGS
+} from './Utils/roles';
 
 
 if(Meteor.isServer){
@@ -40,7 +41,7 @@ Meteor.methods({
 
     'boards.getBoard' (idBoard) {
         let userId = this.userId
-        let board = Boards.findOne({"boardId": idBoard});
+        let board = Boards.findOne({"_id": idBoard});
         if (board) {
             let userRole = boardUtils.getUserRole(userId, board)
             // The user can access the board if he has the rights or the board is public
@@ -54,7 +55,7 @@ Meteor.methods({
 
     },
 
-    'boards.removeBoard'(boardId) {    
+    'boards.removeBoard'(boardId) {
         let userId = this.userId
         let board = Boards.findOne(boardId);
 
@@ -64,7 +65,7 @@ Meteor.methods({
                 return Boards.remove(boardId)
             else
                 throw new Meteor.Error(403, "You do not have permission to delete the board")
-            
+
         } else {
             throw new Meteor.Error(404, 'Board not found')
         }
@@ -157,7 +158,7 @@ Meteor.methods({
             let userRole = boardUtils.getUserRole(userId, board)
             if(canPerform(userId, ACCESS_BOARD))
                 return board.boardTags
-            else 
+            else
                 throw new Meteor.Error(403, "You do not have permission to access the tags")
         } else {
             throw new Meteor.Error(404, 'Board not found')

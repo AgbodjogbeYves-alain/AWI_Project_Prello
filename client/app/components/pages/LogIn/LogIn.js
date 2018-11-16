@@ -45,13 +45,19 @@ class LogIn extends Component {
     }
 
     googleLogin(token){
-        event.preventDefault();
         let that = this;
         asteroid.call("users.googleLogin",token)
         .then((result) => {
-            localStorage.setItem('ws://localhost:9000/websocket__login_token__',result.token)
+            if(result){
+                localStorage.setItem('ws://localhost:9000/websocket__login_token__',result.token)
             that.addAlert("success", "You're Loged In !");
             that.props.history.push('/dashboard');
+            }
+            else
+            {
+                this.addAlert("danger", "Vueillez créez un compte d'abord!!")
+            }
+            
         })
         .catch(function(error){
             that.addAlert("danger", error.reason)

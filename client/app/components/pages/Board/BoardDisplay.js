@@ -8,37 +8,34 @@ import { connect } from 'react-redux';
 import {callEditBoard} from "../../../actions/BoardActions";
 import {ContainerB} from "../Utils/Utils";
 import {callCreateList} from "../../../actions/ListActions";
+import boards from "../../../reducers/BoardReducers";
 
 
 class BoardDisplay extends Component {
 
     constructor(props) {
         super(props);
+
+        let id = this.props.match.params.id
+        let board = this.props.boards.filter((board) => board._id === id)[0]
         this.state = {
-            board: null
+            board: board ? board : "unknow"
         }
 
         this.onDragEnd = this.onDragEnd.bind(this);
         this.createList = this.createList.bind(this)
     }
 
-    componentDidMount(){
-        let id = this.props.match.params.id
-        let board = this.props.boards.filter((board) => board._id === id)[0]
-        if(board !== undefined){
-            this.setState({
-                board: board,
-            })
-        }else{
-            this.setState({
-                board: 'unknow',
-            })
 
+    componentDidMount(){
+
+        if(this.props.history.location.state){
+            let card = this.props.history.location.state.card
+           $("#card-modal" + card._id).modal("show")
         }
     }
 
-
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps(nextProps,nextContext){
         let id = nextProps.match.params.id
         let board = nextProps.boards.filter((board) => board._id === id)[0]
         if(board !== undefined){
@@ -188,7 +185,11 @@ class BoardDisplay extends Component {
 
     render() {
         let imageUrl = this.state.board && this.state.board != 'unknow' ? "https://res.cloudinary.com/dxdyg7b5b/image/upload/"+ this.state.board.boardBackground +".png" : "";
-        return this.state.board && this.state.board != 'unknow' ? (
+        let id = this.props.match.params.id
+
+        let board = this.props.boards.filter((board) => board._id === id)[0]
+
+        return board && this.state.board != 'unknow' ? (
             <div
                 id={"boardDisplay"}
                 style={{backgroundImage: "url('"+ imageUrl +"')"}}
