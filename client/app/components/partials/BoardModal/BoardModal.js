@@ -207,7 +207,7 @@ class BoardModal extends Component {
                                     </form>
                                 </div>
                                 <div className="col-4">
-                                    <h2>Arrière Plan</h2>
+                                    <h2>Background</h2>
                                     <div className="row backgrounds">
                                         {this.renderBackgrounds()}
                                     </div>

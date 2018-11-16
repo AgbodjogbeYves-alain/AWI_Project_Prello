@@ -31,18 +31,18 @@ export function editList(_id, data) {
 //Asynchroneous
 export function callCreateList(idBoard) {
   return asteroid.call('boards.lists.createList', idBoard).catch(error => {
-      alert("List couldn't be created, please retry later");
+      alert(error.reason);
   });
 }
 
 export function callRemoveList(idBoard,idList) {
   return asteroid.call('boards.lists.deleteList', idBoard,idList).catch(error => {
-      alert("List couldn't be removed, please retry later");
+      alert(error.reason);
   });
 }
 
 export function callEditList(idBoard,newList) {
   return asteroid.call('boards.lists.editList', idBoard,newList).catch(error => {
-    alert("List couldn't be edited, please retry later");
+      alert(error.reason);
 });
 }

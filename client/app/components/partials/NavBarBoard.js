@@ -100,10 +100,6 @@ class NavBarBoard extends Component {
                 <div className="board-users">
                     {this.renderProfilePictures()}
                 </div>
-
-                <button className={"btn btn-primary"} id={'toggleButton'} onClick={() => this.toggleMenu(true)}>
-                    <span> <i className="ni ni-settings"/>Display settings</span>
-                </button>
             </nav>
                 <div className="modal fade" id="modalChangeBN" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog modal-dialog-centered" role="document">

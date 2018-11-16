@@ -34,19 +34,19 @@ export function editLabel(_id, data) {
 
 export function callCreateLabel(idBoard,newLabel) {
     asteroid.call('labels.createLabel', idBoard,newLabel).catch(error => {
-        alert("Label couldn't be created, please retry later");
+        alert(error.reason);
     })
 }
 
 export function callEditLabels(idBoard,newLabel) {
     asteroid.call('boards.labels.editLabel', idBoard,newLabel).catch(error => {
-        alert("Label couldn't be edited, please retry later");
+        alert(error.reason);
     })
 }
 
 
 export function callRemoveLabel(idLabel) {
     asteroid.call('labels.removeLabel', idLabel).catch(error => {
-        alert("Label couldn't be removed, please retry later");
+        alert(error.reason);
     })
 }

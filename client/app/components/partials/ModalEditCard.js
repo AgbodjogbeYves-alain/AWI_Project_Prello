@@ -102,9 +102,8 @@ class ModalEditCard extends Component {
         let newCard = this.props.card
         newCard.isArchived = !this.props.card.isArchived
         callEditCard(this.state.idBoard,this.state.idList,newCard)
-        this.setState({
-            card: newCard
-        })
+        let child = document.getElementsByClassName("modal-backdrop fade show")[0]
+        child.parentNode.removeChild(child);
     }
 
     renderDeadLine(){
@@ -155,7 +154,7 @@ class ModalEditCard extends Component {
     renderUsers(){
         return this.props.users.map((user, i) => {
             if(this.props.card.cardUsers && this.props.card.cardUsers.includes(user._id)){
-                return (<div className={"profileInModalEdit"}><ProfilePicture key={i} user={user}/></div>)
+                return <ProfilePicture key={i} user={user}/>
             }
         })
     }
@@ -173,6 +172,11 @@ class ModalEditCard extends Component {
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
+
+                            <div className="userForCard">
+                                <span><i className="ni ni-single-02"/></span>
+                                {this.renderUsers()}
+                            </div>
                         </div>
 
                         <div className="modal-body modalContentCard">
@@ -183,11 +187,7 @@ class ModalEditCard extends Component {
 
                             </div>
 
-                            <div className="userForCard">
-                                <span><i className="ni ni-single-02"/></span>
-                                {this.renderUsers()}
 
-                            </div>
 
                             <div className={"deadLineDiv"}>
                                 {this.renderDeadLine()}
