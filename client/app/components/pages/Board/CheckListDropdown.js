@@ -32,7 +32,7 @@ class CheckListDropdown extends Component {
                             <div className="form-group mb-3">
                                 <div className="input-group input-group-alternative">
                                     <div className="input-group-prepend">
-                                        <span className="input-group-text"><i className="ni ni-email-83"></i></span>
+                                        <span className="input-group-text"><i className="ni ni-bullet-list-67"></i></span>
                                     </div>
                                     <input 
                                         className="form-control" 

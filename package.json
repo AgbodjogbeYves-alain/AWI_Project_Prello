@@ -5,7 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "concurrently \"cd server && meteor npm install\" \"cd client && npm install\"",
-    "start": "concurrently \"cd server && meteor -p 9000 --settings settings.json\" \"cd client && npm start\""
+    "start": "concurrently \"cd server && meteor -p 9000 \" \"cd client && npm start\""
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
     "concurrently": "^3.1.0",
     "npm": "^6.4.1",
     "react": "^16.6.0",
+    "react-autosuggest": "^9.4.2",
     "react-color": "^2.14.1",
     "react-dom": "^16.6.0",
     "react-redux-sweetalert": "^1.0.2",

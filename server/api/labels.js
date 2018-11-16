@@ -19,7 +19,26 @@ Meteor.methods({
         }
     },
 
-    'labels.removeLabel' (idBoard,idLabel){
+    'labels.removeLabel' (idLabel){
+        let countDoc = Labels.find({_id: idLabel}).count();
+        if(countDoc==1){
+            label = Labels.findOne({_id: idLabel})
+            let countDocB = Boards.findOne({_id: label.labelBoard})
+            if(countDocB ==1 ){
+                let board = Boards.findOne({_id: label.labelBoard})
+                let boardLabels = board.boardLabels
+                let newBL = boardLabels.filter((labelId) => labelId != labal._id)
+                Boards.update({_id: board._id},{
+                    $set: {
+                        boardLabels: newBL
+                    }
+                })
+            }
+
+            Labels.remove({_id: idLabel})
+        }else{
+            throw new Meteor.Error(404,"Label not found")
+        }
 
     },
 

@@ -45,13 +45,20 @@ class LogIn extends Component {
     }
 
     googleLogin(token){
-        event.preventDefault();
         let that = this;
         asteroid.call("users.googleLogin",token)
         .then((result) => {
-            localStorage.setItem('ws://localhost:9000/websocket__login_token__',result.token)
+            if(result){
+                let key = process.env.STORAGEKEY ? process.env.STORAGEKEY : 'ws://localhost:9000/websocket__login_token__';
+                localStorage.setItem(key,result.token)
             that.addAlert("success", "You're Loged In !");
             that.props.history.push('/dashboard');
+            }
+            else
+            {
+                this.addAlert("danger", "Veillez créez un compte d'abord")
+            }
+
         })
         .catch(function(error){
             that.addAlert("danger", error.reason)
@@ -72,6 +79,8 @@ class LogIn extends Component {
         const failResponseGoogle = (response) =>{
             alert("An error occured !! Please try again!! ")
         }
+
+        const key = process.env.KEYAPI
 
         const { user } = this.props;
         if(user) return(<Redirect to='/dashboard'/>)
@@ -102,7 +111,7 @@ class LogIn extends Component {
                                         </div>
                                         <div className="btn-wrapper text-center">
                                         <GoogleLogin
-                                            clientId="909976969961-r4v6ls5qbgjvslotg7trcb066vig4cb8.apps.googleusercontent.com"
+                                            clientId={key}
                                             render={renderProps => (
                                                 <a onClick={renderProps.onClick} href="#" className="btn btn-neutral btn-icon">
                                                 <span className="btn-inner--icon">

@@ -6,7 +6,7 @@ export const EXPORT_BOARD = "EXPORT_BOARD"
 export const ACCESS_ARCHIVES = "ACCESS_ARCHIVES"
 export const COPY_BOARD = "COPY_BOARD"
 export const ACCESS_BOARD = "ACCESS_BOARD"
-export const REMOVE_MEMBER = "REOMVE_MEMBER"
+export const REMOVE_MEMBER = "REMOVE_MEMBER"
 export const CHANGE_RIGHTS_TEAM_MEMBER = "CHANGE_RIGHTS_TEAM_MEMBER"
 export const ADD_MEMBER_BOARD = "ADD_MEMBER"
 
@@ -22,6 +22,7 @@ export const FOLLOW_CARD = "FOLLOW_CARD"
 export const ARCHIVE_CARD = "ARCHIVE_BOARD"
 export const CREATE_CARD = "CREATE_CARD"
 export const ACCESS_CARD = "ACCESS_CARD"
+export const EDIT_CARD = "EDIT_CARD"
 
 
 const roles = {
@@ -46,7 +47,8 @@ const roles = {
         FOLLOW_CARD,
         ARCHIVE_CARD,
         CREATE_CARD,
-        ACCESS_CARD
+        ACCESS_CARD,
+        EDIT_CARD
     ],
     member: [
         EXPORT_BOARD,
@@ -61,7 +63,9 @@ const roles = {
         MOVE_CARD,
         COPY_CARD,
         FOLLOW_CARD,
-        ACCESS_CARD
+        CREATE_CARD,
+        ACCESS_CARD,
+        EDIT_CARD
     ],
     observer: [
         ACCESS_BOARD,

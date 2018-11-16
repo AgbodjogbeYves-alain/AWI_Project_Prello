@@ -20,9 +20,10 @@ export function removeBoard(_id) {
   };
 }
 
-export function editBoard(data) {
+export function editBoard(_id, data) {
   return {
     type: EDIT_BOARD,
+    _id,
     data
   };
 }
@@ -35,10 +36,11 @@ export function resetBoards() {
 //Asynchroneous
 export function callCreateBoard(boardTitle) {
   return dispatch => asteroid.call('boards.createBoard', boardTitle)
-      .then(result => dispatch(createBoard({ _id: result, boardTitle})));
+      .then(result => dispatch(createBoard({ _id: result, boardTitle})))
+      .catch(error => { alert(error.reason);});
 }
 
 export function callEditBoard(newBoard) {
-  asteroid.call('boards.editBoard', newBoard)//.then(result => dispatch(editBoard({_id: result, data: newBoard})))
+  asteroid.call('boards.editBoard', newBoard).catch(error => {alert(error.reason);})//.then(result => dispatch(editBoard({_id: result, data: newBoard})))
 
 }

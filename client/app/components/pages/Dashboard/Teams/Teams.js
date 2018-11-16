@@ -52,7 +52,7 @@ export default class Teams extends Component {
                     <div className="col-12">
                         <ul className="col-12 team-nav nav nav-pills nav-fill flex-column flex-sm-row">
                             <li className="nav-item" onClick={() => this.handleChangeActivedTeam(null)}>
-                                <a className={"nav-link mb-sm-3 mb-md-0" + (this.props.activedTeam ? '' : ' active')} href="#">Mes boards</a>
+                                <a className={"nav-link mb-sm-3 mb-md-0" + (this.props.activedTeam ? '' : ' active')} href="#">My boards</a>
                             </li>
                             {this.renderTeams()}
                         </ul>
