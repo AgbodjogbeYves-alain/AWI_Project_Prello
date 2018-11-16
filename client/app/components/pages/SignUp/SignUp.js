@@ -84,6 +84,8 @@ class SignUp extends Component {
             alert("An error occured !! Please try again!! ")
         }
 
+        const key = process.env.KEYAPI
+
         const { user } = this.props;
         if(user) return(<Redirect to='/dashboard'/>)
         return(
@@ -110,7 +112,7 @@ class SignUp extends Component {
                             </div>
                             <div className="text-center">
                             <GoogleLogin
-                                clientId="909976969961-r4v6ls5qbgjvslotg7trcb066vig4cb8.apps.googleusercontent.com"
+                                clientId={key}
                                 render={renderProps => (
                                     <a onClick={renderProps.onClick} href="#" className="btn btn-neutral btn-icon">
                                     <span className="btn-inner--icon">
