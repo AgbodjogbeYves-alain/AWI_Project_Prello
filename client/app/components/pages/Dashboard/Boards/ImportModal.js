@@ -40,15 +40,17 @@ class ImportModal extends Component {
 
     handleImport(){
         if(this.state.trelloBoardId){
+            console.log("test")
             this.setState({loading: true});
             let that = this;
-
             let trelloBoard = this.state.trelloBoards.filter((b) => b.id === this.state.trelloBoardId)[0];
             Trello.get("/boards/"+ trelloBoard.id +"/lists", (lists) => {
                 Trello.get("/boards/"+ trelloBoard.id +"/cards", (cards) => {
                     Trello.get("/boards/"+ trelloBoard.id +"/checklists", (checklists) => {
-                        checklists.forEach((cl) => {
+                        checklists.forEach((cl,i) => {
+                            
                             let card = cards.filter((c) => c.id === cl.idCard)[0];
+                            
                             let newItems = cl.checkItems.map((item) => {
                                 return {
                                     _id: item.id,
@@ -61,10 +63,11 @@ class ImportModal extends Component {
                                 checklistName: cl.name,
                                 checklistItems: newItems
                             };
-                            if(card.cardChecklists) card.cardChecklists.push(checklist)
-                            else card.cardChecklists = [checklist]
+                            if(card && card.cardChecklists) card.cardChecklists.push(checklist)
+                            else if(card) card.cardChecklists = [checklist]
                         });
-
+                        
+                        
                         cards.forEach((c) => {
                             let list = lists.filter((l) => l.id === c.idList)[0];
                             let card = {

@@ -6,8 +6,8 @@ import {Image} from 'cloudinary-react';
 
 import Alert from '../Alert';
 import AddUserInput from "../AddUserInput.js";
-import asteroid from '../../../common/asteroid';
 import AddTeamInput from './AddTeamInput';
+import { callEditBoard, callCreateBoard } from '../../../actions/BoardActions';
 
 class BoardModal extends Component {
 
@@ -73,8 +73,8 @@ class BoardModal extends Component {
             boardBackground: this.state.boardBackground,
             boardPrivacy: 1
         };
-
-        asteroid.call("boards.createBoard", board)
+        
+        callCreateBoard(board)
         .then((result) => {
             $('#board-modal' + this.state.boardId).modal('toggle');
             this.props.history.push("/board/" + result);
@@ -90,15 +90,13 @@ class BoardModal extends Component {
         board.boardDescription = this.state.boardDescription;
         board.boardUsers = this.state.boardUsers;
         board.boardTeams = this.state.boardTeams;
-        board.boardBackground = this.state.boardBackground
+        board.boardBackground = this.state.boardBackground;
 
-        asteroid.call("boards.editBoard", board)
-        .then((result) => {
+        if(board.boardTitle && board.boardBackground){
+            this.props.dispatchCallEditBoard(board)
             $('#board-modal' + this.state.boardId).modal('toggle');
-        })
-        .catch((error) => {
-            this.addAlert("danger", error.reason)
-        })
+        } 
+        else this.addAlert("danger", error.reason);
     }
 
     handleOnChangeTeams(field, value){
@@ -243,4 +241,8 @@ const mapStateToProps = state => ({
     user: state.user
 });
 
-export default connect(mapStateToProps)(withRouter(BoardModal));
+const mapDispatchToProps = dispatch => ({
+    dispatchCallEditBoard: board => dispatch(callEditBoard(board))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(BoardModal));
