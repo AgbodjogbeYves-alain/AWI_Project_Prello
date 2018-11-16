@@ -3,6 +3,10 @@ import { connect } from 'react-redux';
 import {Title} from "../pages/Utils/Utils";
 import CardOptions from "./CardOptions";
 import {callAddCommentCard, callEditCard, callRemoveCard} from "../../actions/CardActions";
+import CheckListDropdown from '../pages/Board/CheckListDropdown';
+import Checklist from '../pages/Board/Checklist';
+import MemberAdd from './MemberAdd';
+import {ProfilePicture} from "./ProfilePicture";
 
 
 class ModalEditCard extends Component {
@@ -13,22 +17,15 @@ class ModalEditCard extends Component {
         this.state = {
             idList: this.props.idList,
             idBoard: this.props.idBoard,
-            cardLabels: this.props.labels.filter((label) => this.props.card.cardLabels.includes(label._id) ),
-            card: this.props.card,
             cardTitle: this.props.card.cardTitle,
-            cardComments: this.props.card.cardComments,
             newComment: "",
-            hiddenMembers: true,
-            hiddenDeadline: true,
-            hiddenLabels: true,
+            modalDisplayed: null,
             newDescription: ''
         };
 
         this.titleToInput = this.titleToInput.bind(this)
         this.inputToTitle = this.inputToTitle.bind(this);
         this.handleAddComment = this.handleAddComment.bind(this)
-        this.toggleDisplay = this.toggleDisplay.bind(this)
-        this.addComponent = this.addComponent.bind(this)
         this.handleChangeStatus = this.handleChangeStatus.bind(this)
         this.unorarchive = this.unorarchive.bind(this)
         this.renderDeleteButton = this.renderDeleteButton.bind(this)
@@ -62,7 +59,7 @@ class ModalEditCard extends Component {
 
 
     updateCardName(value) {
-        let newCard = this.state.card
+        let newCard = this.props.card
         newCard.cardTitle = value
         callEditCard(this.state.idBoard,this.state.idList,newCard)
     }
@@ -75,7 +72,7 @@ class ModalEditCard extends Component {
                 userId: this.props.user._id
             }
 
-            let newCard = this.state.card
+            let newCard = this.props.card
             newCard.cardComments.push(newComment)
             callAddCommentCard(this.state.idBoard,this.state.idList,newCard)
 
@@ -85,47 +82,9 @@ class ModalEditCard extends Component {
 
     };
 
-    toggleDisplay = (labelButton) => {
-        let previousHM = this.state.hiddenMembers
-        let previousHL = this.state.hiddenLabels
-        let previousDeadL = this.state.hiddenDeadline
-        if(labelButton == 'labels'){
-            this.setState({
-                hiddenLabels: !previousHL,
-                hiddenDeadline: true,
-                hiddenMembers: true
-            })
-        }else if(labelButton == 'members'){
-            this.setState({
-                hiddenLabels: true,
-                hiddenMembers: !previousHM,
-                hiddenDeadline: true
-            })
-        }else if(labelButton == 'deadline'){
-            this.setState({
-                hiddenLabels: true,
-                hiddenMembers: true,
-                hiddenDeadline: !previousDeadL
-            })
-        }
-
-
-    }
-
-    addComponent = (labelButton) => {
-        if(labelButton=='labels' && !this.state.hiddenLabels){
-            return <CardOptions function="labels" card={this.state.card} idList={this.state.idList} idBoard={this.state.idBoard}/>
-        }else if(labelButton == 'members' && !this.state.hiddenMembers){
-            return <CardOptions function="members" card={this.state.card} idList={this.state.idList} idBoard={this.state.idBoard}/>
-        }else if(labelButton == 'deadline' && !this.state.hiddenDeadline){
-            return <CardOptions function="deadline" card={this.state.card} idList={this.state.idList} idBoard={this.state.idBoard}/>
-
-        }
-    }
-
     handleAddDescription = (event) => {
         event.preventDefault()
-        let newCard  = this.state.card
+        let newCard  = this.props.card
         if(this.state.newDescription != ""){
             newCard.cardDescription = this.state.newDescription
             callEditCard(this.state.idBoard,this.state.idList,newCard)
@@ -140,8 +99,8 @@ class ModalEditCard extends Component {
 
     handleChangeStatus = (event) => {
         event.preventDefault()
-        let newCard = this.state.card
-        newCard.isArchived = !this.state.card.isArchived
+        let newCard = this.props.card
+        newCard.isArchived = !this.props.card.isArchived
         callEditCard(this.state.idBoard,this.state.idList,newCard)
         this.setState({
             card: newCard
@@ -149,13 +108,13 @@ class ModalEditCard extends Component {
     }
 
     renderDeadLine(){
-        if(this.state.card.cardDeadline){
-            return <span><i className="ni ni-time-alarm"/>{this.state.card.cardDeadline}</span>
+        if(this.props.card.cardDeadline){
+            return <span><i className="ni ni-time-alarm"/>{this.props.card.cardDeadline}</span>
         }
     }
 
     unorarchive(){
-        if(this.state.card.isArchived){
+        if(this.props.card.isArchived){
             return <li><button type="button" className="btn btn-secondary cardButtonEdit" onClick={this.handleChangeStatus}>Unarchived</button></li>
         }else{
             return <li><button type="button" className="btn btn-secondary cardButtonEdit" onClick={this.handleChangeStatus}>Archived</button></li>
@@ -170,29 +129,66 @@ class ModalEditCard extends Component {
 
     handleDeleteCard = (event) => {
         event.preventDefault()
-        callRemoveCard(this.state.idBoard,this.state.idList,this.state.card._id)
+        callRemoveCard(this.state.idBoard,this.state.idList,this.props.card._id)
+        let child = document.getElementsByClassName("modal-backdrop fade show")[0]
+        child.parentNode.removeChild(child);
     }
+
+    renderChecklists(){
+        return(
+            <div className="checklists">
+                {this.props.card.cardChecklists ? this.props.card.cardChecklists.map((c, index) =>
+                    <Checklist id={index} checklist={c}/>
+                ) : ""
+                }
+            </div>
+        )
+    }
+
+    renderLabels(){
+        let cardLabels = this.props.labels.filter((label) => this.props.card.cardLabels.includes(label._id) );
+        return cardLabels.map((label, i) => {
+            return <span key={i} className="badge badge-pill badge-default" style={{background: label.labelColor}}>{label.labelName}</span>
+        })
+    }
+
+    renderUsers(){
+        return this.props.users.map((user, i) => {
+            if(this.props.card.cardUsers && this.props.card.cardUsers.includes(user._id)){
+                return <ProfilePicture key={i} user={user}/>
+            }
+        })
+    }
+
+
     render(){
         return (
-            <div className="modal fade modalCard" id={"card-modal" + this.state.card._id} tabIndex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true" style={{width:1700+'px'}}>
+            <div className="modal fade modalCard" id={"card-modal" + this.props.card._id} tabIndex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
                 <div className="modal-dialog modal- modal-dialog-centered modal-" role="document">
                     <div className="modal-content modalContentCard">
 
                         <div className="modal-header">
-                            <Title id={'title'+this.state.card._id} onClick={this.titleToInput}>{this.state.card.cardTitle}</Title>
+                            <Title id={'title'+this.props.card._id} onClick={this.titleToInput}>{this.props.card.cardTitle}</Title>
 
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
+
+                            <div className="userForCard">
+                                <span><i className="ni ni-single-02"/></span>
+                                {this.renderUsers()}
+                            </div>
                         </div>
 
                         <div className="modal-body modalContentCard">
                             <div className="labelForCard">
                                 <span><i className="ni ni-tag"/></span>
-                                {this.state.cardLabels.map((label) => {
-                                    return <span className="badge badge-pill badge-default" style={{background: label.labelColor}}>{label.labelName}</span>
-                                })}
+
+                                {this.renderLabels()}
+
                             </div>
+
+
 
                             <div className={"deadLineDiv"}>
                                 {this.renderDeadLine()}
@@ -209,13 +205,17 @@ class ModalEditCard extends Component {
                                                     type="text"
                                                     onChange={(e) => this.setState({
                                                         newDescription: e.target.value
-                                                    })}>{this.state.card.cardDescription}</textarea>
+                                                    })}>{this.props.card.cardDescription}</textarea>
                                                 <button type="button" className="btn btn-success cardButtonEdit" onClick={this.handleAddDescription}>Add</button>
 
                                             </div>
 
                                         </div>
                                     </div>
+                                </form>
+
+                                {this.renderChecklists()}
+                                <form role="form" onSubmit={(e) => e.preventDefault()}>
                                     <div className="form-group mb-3">
                                         <div id={"commentDiv"}>
                                             <span> Add comment </span>
@@ -237,7 +237,7 @@ class ModalEditCard extends Component {
                                             </div>
                                             <div id={"listComment"}>
                                                 <span> Comment list </span>
-                                                {this.state.card.cardComments.map((comment) => {
+                                                {this.props.card.cardComments.map((comment) => {
                                                     return <div><span><i className="ni ni-chat-round"/>{"  " + comment.commentContent}</span></div>
 
                                                 })
@@ -258,39 +258,47 @@ class ModalEditCard extends Component {
                                     {this.unorarchive()}
                                     {this.renderDeleteButton()}
                                     <li>
-                                        <button className="btn btn-secondary cardButtonEdit " type="button"
-                                                onClick={(e) =>{
-                                                    e.preventDefault()
-                                                    this.toggleDisplay('members')
-                                                }}>
+                                        <button className="btn btn-secondary cardButtonEdit "
+                                                onClick={() => this.setState({
+                                                    modalDisplayed: this.state.modalDisplayed === "members" ? null : "members"
+                                                })}>
                                             Members
                                         </button>
-                                        {this.addComponent('members')}
-
+                                        {this.state.modalDisplayed === "members" ?
+                                            <MemberAdd function="members" card={this.props.card} idList={this.state.idList} idBoard={this.state.idBoard}/> : ""                                        }
 
                                     </li>
                                     <li>
-                                        <button className="btn btn-secondary cardButtonEdit" type="button"
-                                                onClick={(e) => {
-                                                    e.preventDefault()
-                                                    this.toggleDisplay('labels')
-                                                }}>Labels</button>
-                                        {this.addComponent('labels')}
+                                        <button className="btn btn-secondary cardButtonEdit"
+                                                onClick={() => this.setState({
+                                                    modalDisplayed: this.state.modalDisplayed === "labels" ? null : "labels"
+                                                })}>Labels</button>
+                                        {this.state.modalDisplayed === "labels" ?
+                                            <CardOptions function="labels" card={this.props.card} idList={this.state.idList} idBoard={this.state.idBoard}/> : ""
+                                        }
                                     </li>
                                     <li>
-                                        <div className="dropdown">
-                                            <button type="button" className="btn btn-secondary cardButtonEdit">CheckList</button>
-                                        </div>
+                                        <button
+                                            className="btn btn-secondary cardButtonEdit"
+                                            onClick={() => this.setState({
+                                                modalDisplayed: this.state.modalDisplayed === "checklist" ? null : "checklist"
+                                            })}
+                                        >
+                                            CheckList
+                                        </button>
+                                        {this.state.modalDisplayed === "checklist" ?
+                                            <CheckListDropdown cardId={this.props.card._id}/> : ""
+                                        }
                                     </li>
                                     <li>
-                                        <button className="btn btn-secondary cardButtonEdit " type="button"
-                                                onClick={(e) => {
-                                                    e.preventDefault()
-                                                    this.toggleDisplay('deadline')
-                                                }}>Deadline</button>
+                                        <button className="btn btn-secondary cardButtonEdit "
+                                                onClick={() => this.setState({
+                                                    modalDisplayed: this.state.modalDisplayed === "deadline" ? null : "deadline"
+                                                })}>Deadline</button>
 
-                                        {this.addComponent('deadline')}
-
+                                        {this.state.modalDisplayed === "deadline" ?
+                                            <CardOptions function="deadline" card={this.props.card} idList={this.state.idList} idBoard={this.state.idBoard}/> : ""
+                                        }
                                     </li>
 
                                 </ul>
@@ -309,6 +317,7 @@ class ModalEditCard extends Component {
 
 const mapStateToProps = state => ({
     user: state.user,
+    users: state.users,
     labels: state.labels
 });
 

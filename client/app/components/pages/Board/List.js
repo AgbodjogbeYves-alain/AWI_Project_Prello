@@ -18,7 +18,7 @@ export class List extends React.Component {
     }
 
     removeList = () => {
-        callRemoveList(this.props.idBoard,this.props.list._id)
+        callRemoveList(this.props.board._id,this.props.list._id)
     }
 
     archiveList = () => {
@@ -63,11 +63,9 @@ export class List extends React.Component {
         event.preventDefault()
 
         let idBoard = this.props.board._id
-
         let idList = this.props.list._id
         callCreateCard(idBoard,idList)
     }
-
 
     render() {
         return (
@@ -81,14 +79,14 @@ export class List extends React.Component {
                         <Title {...provided.dragHandleProps}>
                             <div id={this.props.list._id} onClick={this.titleToInput}>{this.props.list.listTitle}</div>
                         </Title>
-                            <div style={{textAlign: "center"}}>{this.props.list.listCards.length + " cards"}
+                            <div style={{textAlign: "center"}}>{this.props.list.listCards.filter((card) => {if(!card.isArchived) {return card}}).length + " cards"}
                                 <div className="dropdown" style={{float:"right"}}>
                                     <button className="btn fas fa-ellipsis-v" type="button" id={"dropdownMenuButton"+this.props.list.listId} data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     </button>
                                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <a className="dropdown-item">Copy list</a>
-                                        <a className="dropdown-item" href="#">Move list</a>
-                                        <a className="dropdown-item" href="#">Archive all cards</a>
+                                        <a className="dropdown-item" data-toggle="modal" data-target={"#"+"confirmArchiveCardsmodal"+this.props.list._id}>Archive all cards</a>
+                                        <a className="dropdown-item">Move list</a>
                                         <a className="dropdown-item" data-toggle="modal" data-target={"#"+"confirmArchivemodal"+this.props.list._id}>Archive list</a>
                                     </div>
                                 </div>

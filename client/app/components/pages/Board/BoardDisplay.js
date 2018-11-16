@@ -8,38 +8,34 @@ import { connect } from 'react-redux';
 import {callEditBoard} from "../../../actions/BoardActions";
 import {ContainerB} from "../Utils/Utils";
 import {callCreateList} from "../../../actions/ListActions";
+import boards from "../../../reducers/BoardReducers";
 
 
 class BoardDisplay extends Component {
 
     constructor(props) {
         super(props);
+
+        let id = this.props.match.params.id
+        let board = this.props.boards.filter((board) => board._id === id)[0]
         this.state = {
-            board: null
+            board: board ? board : "unknow"
         }
 
         this.onDragEnd = this.onDragEnd.bind(this);
         this.createList = this.createList.bind(this)
     }
 
-    componentDidMount(){
-        let id = this.props.match.params.id
-        let board = this.props.boards.filter((board) => board._id === id)[0]
-        if(board !== undefined){
-            this.setState({
-                board: board,
-            })
-        }else{
-            this.setState({
-                board: 'unknow',
-            })
 
+    componentDidMount(){
+
+        if(this.props.history.location.state){
+            let card = this.props.history.location.state.card
+           $("#card-modal" + card._id).modal("show")
         }
     }
 
-
-    componentWillReceiveProps(nextProps){
-        console.log("test")
+    componentWillReceiveProps(nextProps,nextContext){
         let id = nextProps.match.params.id
         let board = nextProps.boards.filter((board) => board._id === id)[0]
         if(board !== undefined){
@@ -94,7 +90,7 @@ class BoardDisplay extends Component {
 
             if(start === finish){
                 ///////////////////////////////////////////////
-                const newCardsList = Array.from(start.listCard);
+                const newCardsList = Array.from(start.listCards);
 
                 const cardToMove = newCardsList.filter((card) => card._id == draggableId)[0];
                 newCardsList.splice(source.index, 1);
@@ -102,7 +98,7 @@ class BoardDisplay extends Component {
 
                 const newStart = {
                     ...start,
-                    listCard: newCardsList
+                    listCards: newCardsList
                 };
 
                 ///////////////////////////////////////////////
@@ -129,23 +125,23 @@ class BoardDisplay extends Component {
             }else {
 
                 //Move from a list to another
-                const startCards = Array.from(start.listCard)
+                const startCards = Array.from(start.listCards)
                 const cardToMove = startCards.filter((card) => card._id == draggableId)[0];
 
                 startCards.splice(source.index, 1);
 
                 const newStart = {
                     ...start,
-                    listCard: startCards,
+                    listCards: startCards,
 
                 }
 
-                const finishedCards = Array.from(finish.listCard)
+                const finishedCards = Array.from(finish.listCards)
                 finishedCards.splice(destination.index, 0, cardToMove);
 
                 const newFinish = {
                     ...finish,
-                    listCard: finishedCards
+                    listCards: finishedCards
                 };
 
                 ///////////////////////////////////////////////
@@ -188,11 +184,15 @@ class BoardDisplay extends Component {
     };
 
     render() {
+        let imageUrl = this.state.board && this.state.board != 'unknow' ? "https://res.cloudinary.com/dxdyg7b5b/image/upload/"+ this.state.board.boardBackground +".png" : "";
+        let id = this.props.match.params.id
 
-        return this.state.board && this.state.board != 'unknow' ? (
+        let board = this.props.boards.filter((board) => board._id === id)[0]
+
+        return board && this.state.board != 'unknow' ? (
             <div
                 id={"boardDisplay"}
-                style={{backgroundImage: "url('https://res.cloudinary.com/dxdyg7b5b/image/upload/v1541680009/backgrounds/"+ this.state.board.boardBackground +".jpg')"}}
+                style={{backgroundImage: "url('"+ imageUrl +"')"}}
             >
                 <NavBar/>
                 <NavBarBoard board={this.state.board}/>

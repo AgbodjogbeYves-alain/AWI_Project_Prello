@@ -92,10 +92,10 @@ class AddUserInput extends Component {
 
     renderRoleOptions(){
         let optionList = [];
-        if(this.props.type == "board") optionList = ['Admin', 'Member', 'Observer'];
+        if(this.props.type == "board") optionList = ["Admin", "Member", "Observer"];
         else if(this.props.type == "team") optionList = ['Admin', 'Member'];
-        return optionList.map((o) => 
-            <option value={o.toLowerCase()}>{o}</option>
+        return optionList.map((o, i) => 
+            <option key={i} value={o.toLowerCase()}>{o}</option>
         )
     }
 
@@ -147,7 +147,7 @@ class AddUserInput extends Component {
 
 const mapStateToProps = state => ({
     users: state.users,
-    user: state.user
+    user: state.user,
 });
 
 export default connect(mapStateToProps)(AddUserInput);

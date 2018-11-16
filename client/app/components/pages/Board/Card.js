@@ -4,44 +4,52 @@ import {ContainerC} from "../Utils/Utils";
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
 import ModalEditCard from "../../partials/ModalEditCard";
+import {ProfilePicture} from "../../partials/ProfilePicture";
 
 class Card extends Component {
     constructor(props) {
         super(props)
         this.state = {
             board: this.props.board,
-            cardLabels: this.props.labels.filter((label) => this.props.card.cardLabels.includes(label._id) ),
 
             //cardLabels: [],
             //boardLabels: []
         }
     }
 
+    getCompletedPourcent(){
+        let checklists = this.props.card.cardChecklists;
 
-    /*componentDidMount(){
-        let boardLabelsT = []
-        this.props.labels.forEach((label) => {
-            this.props.board.boardLabels.forEach((idLabel) => {
-                if(label._id==idLabel){
-                    boardLabelsT.push(label)
-                }
-            })
-        })
+        let totalItems = checklists.map((checklist) => checklist.checklistItems.length)
+        .reduce((acc, val) => acc + val)
 
-        let cardLabelsT = []
-        this.props.labels.forEach((label) => {
-            this.props.card.cardLabels.forEach((idLabel) => {
-                if(label._id==idLabel){
-                    cardLabelsT.push(label)
-                }
-            })
-        })
+        if(totalItems == 0) return 100;
 
-        this.setState({
-            boardLabels: boardLabelsT,
-            cardLabels: cardLabelsT
+        let numCheckedItems = checklists.map((checklist) => checklist.checklistItems.filter((i) => i.itemChecked).length)
+        .reduce((acc, val) => acc + val)
+
+        return 100*numCheckedItems/totalItems;
+    }
+
+    hasChecklist(){
+        return this.props.card.cardChecklists.length !== 0;
+    }
+
+    renderLabels(){
+        let cardLabels = this.props.labels.filter((label) => this.props.card.cardLabels.includes(label._id) );
+        return cardLabels.map((label) => {
+            return <span className="badge badge-pill badge-default" style={{background: label.labelColor}}>{label.labelName}</span>
         })
-    }*/
+    }
+
+    renderUsers(){
+        return this.props.users.map((user, i) => {
+            if(this.props.card.cardUsers && this.props.card.cardUsers.includes(user._id)){
+                return (<ProfilePicture key={i} user={user}/>)
+            }
+        })
+    }
+
     render() {
         return (
             <div>
@@ -52,10 +60,18 @@ class Card extends Component {
                                ref={provided.innerRef}
                                 data-toggle="modal" data-target={"#card-modal"+this.props.card._id}>
                         {this.props.card.cardTitle}
+
+                        <div className={"profilInCard"}>{this.renderUsers()}</div>
+                        {this.hasChecklist() ?
+                            <div className="progress card-progress">
+                                <div className="progress-bar bg-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+                                    style={{"width": this.getCompletedPourcent() + "%"}}>
+                                </div>
+                            </div> : ""
+                        }
+
                         <div className={"cardLabelsDiv"}>
-                            {this.state.cardLabels.map((label) => {
-                                return <span className="badge badge-pill badge-default" style={{background: label.labelColor}}>{label.labelName}</span>
-                            })}
+                            {this.renderLabels()}
                         </div>
                     </ContainerC>}
             </Draggable>
@@ -67,7 +83,8 @@ class Card extends Component {
 
 const mapStateToProps = state => ({
     user: state.user,
-    labels: state.labels
+    labels: state.labels,
+    users: state.users
 });
 
 export default connect(mapStateToProps)(Card);

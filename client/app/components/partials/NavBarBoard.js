@@ -1,5 +1,4 @@
 import React, { Component,PureComponent } from 'react';
-import Menu from "./Menu"
 import {callEditBoard} from "../../actions/BoardActions";
 import { connect } from 'react-redux';
 import { ProfilePicture } from './ProfilePicture';
@@ -11,13 +10,11 @@ class NavBarBoard extends Component {
         this.state = {
             board:{boardTeams: []},
             teamsB: ["Personal"],
-            newBoardName: '',
-            visibleMenu: false
+            newBoardName: ''
         }
 
         this.handleSubmitTitle = this.handleSubmitTitle.bind(this)
         this.handleBNChange = this.handleBNChange.bind(this)
-        this.toggleMenu = this.toggleMenu.bind(this)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -44,11 +41,6 @@ class NavBarBoard extends Component {
         }
     }
 
-    toggleMenu = () =>{
-        const { visibleMenu } = this.state
-        this.setState({visibleMenu: !visibleMenu})
-    }
-
 
     handleBNChange = (event) => {
         event.preventDefault()
@@ -58,20 +50,19 @@ class NavBarBoard extends Component {
     }
     handleSubmitTitle = (event) => {
         event.preventDefault()
-        let newBoard = this.state.board
+        let newBoard = this.props.board
         newBoard.boardTitle = this.state.newBoardName
-        this.setState({
-            board: newBoard
-        })
+        // this.setState({
+        //     board: newBoard
+        // })
 
         callEditBoard(newBoard)
     }
 
     handlePrivacyChange = (event) => {
         event.preventDefault()
-        let newBoard = this.state.board
+        let newBoard = this.props.board
         newBoard.boardPrivacy = event.target.value
-        console.log(event.target.value)
         this.setState({
             board: newBoard
         })
@@ -101,7 +92,7 @@ class NavBarBoard extends Component {
                     {this.props.board.boardTitle}
                 </button>
 
-                <select className="btn btn-primary" defaultValue={(this.state.board.boardPrivacy===0)? 0: 1} onChange={this.handlePrivacyChange}>
+                <select className="btn btn-primary" defaultValue={(this.props.board.boardPrivacy===0)? 0: 1} onChange={this.handlePrivacyChange}>
                     <option value={0}> Public</option>
                     <option value={1}> Private</option>
                 </select>
@@ -109,12 +100,7 @@ class NavBarBoard extends Component {
                 <div className="board-users">
                     {this.renderProfilePictures()}
                 </div>
-
-                <button className={"btn btn-primary"} id={'toggleButton'} onClick={() => this.toggleMenu(true)}>
-                    <span> <i className="ni ni-settings"/>Display settings</span>
-                </button>
             </nav>
-                {this.state.visibleMenu && <Menu idBoard={this.state.board._id}/>}
                 <div className="modal fade" id="modalChangeBN" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog modal-dialog-centered" role="document">
                         <div className="modal-content">

@@ -4,7 +4,6 @@ import store from '../components/store';
 import { createBoard, removeBoard, editBoard } from '../actions/BoardActions';
 import { addTeam, removeTeam, editTeam } from '../actions/TeamActions';
 import { addLabel, removeLabel, editLabel } from '../actions/LabelActions';
-import { setRefreshed } from '../actions/RefreshActions';
 
 const Asteroid = createClass();
 // Connect to a Meteor backend
@@ -24,8 +23,12 @@ asteroid.ddp.on('added', (doc) => {
   // we need proper document object format here
   if (doc.collection === 'users') {
     const docObj = Object.assign({}, doc.fields, { _id: doc.id });
-    if(docObj.emails) store.dispatch(setLoggedUser(docObj));
-    else store.dispatch(addUser(docObj));
+    if(docObj.services) store.dispatch(setLoggedUser(docObj));
+    else {
+
+      store.dispatch(addUser(docObj));
+    }
+
   }
   if(doc.collection === 'boards'){
     const docObj = Object.assign({}, doc.fields, { _id: doc.id });
@@ -39,7 +42,6 @@ asteroid.ddp.on('added', (doc) => {
       const docObj = Object.assign({}, doc.fields, { _id: doc.id });
       store.dispatch(addLabel(docObj));
   }
-
 
 });
 

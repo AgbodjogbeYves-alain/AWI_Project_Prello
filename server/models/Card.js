@@ -3,6 +3,7 @@ import SimpleSchema from 'simpl-schema';
 import { Mongo } from 'meteor/mongo'
 import {LabelsSchema} from "./Labels";
 import {CommentSchema} from "./Comment";
+import { ChecklistSchema } from './Checklists';
 
 
 export const Cards = new Mongo.Collection('cards')
@@ -54,14 +55,19 @@ export const CardSchema = new SimpleSchema({
       defaultValue: [],
       optional: true
   },
-  'cardAttachment.$': Object, //se if need to replace Object with a schema
-  cardChecklist: {
+  'cardAttachment.$': Object, //se if need to replace Object with a schema*/
+  cardUsers: {
+      type:Array,
+      label: "Users",
+      defaultValue: []
+  },
+  'cardUsers.$' : SimpleSchema.RegEx.Id,
+  cardChecklists: {
       type: Array,
-      label: "CheckLists",
-      defaultValue: [],
-      optional: true
-  },*/
-  //'cardChecklist.$': Object, //se if need to replace Object with a schema*/
+      label: "Checklists",
+      defaultValue: []
+  },
+  'cardChecklists.$': ChecklistSchema, //se if need to replace Object with a schema*/
   cardCreatedAt:{
     type: Date,
     autoValue: function(){return new Date();}

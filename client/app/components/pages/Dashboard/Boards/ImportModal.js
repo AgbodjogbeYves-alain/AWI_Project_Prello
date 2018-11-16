@@ -11,7 +11,7 @@ class ImportModal extends Component {
 
         this.state = {
             trelloBoards: [],
-            trelloBoardId: null,
+            trelloBoardId: "",
             loading: false
         }
     }
@@ -45,42 +45,64 @@ class ImportModal extends Component {
 
             let trelloBoard = this.state.trelloBoards.filter((b) => b.id === this.state.trelloBoardId)[0];
             Trello.get("/boards/"+ trelloBoard.id +"/lists", (lists) => {
-                Trello.get("/boards/"+ trelloBoard.id +"/cards", (cards => {
-                    cards.forEach((c) => {
-                        let list = lists.filter((l) => l.id === c.idList)[0];
-                        let card = {
-                            _id: c.id,
-                            cardTitle: c.name,
-                            cardDescription: c.desc,
-                            cardArchived: c.closed
-                        }
-                        if(list.listCards) list.listCards.push(card)
-                        else list.listCards = [card]
-                    })
-                    trelloBoard.boardLists = lists.map((l) => {
-                        return {
-                            _id: l.id,
-                            listTitle: l.name,
-                            listCards: l.listCards,
-                            listArchived: l.closed
-                        }
-                    })
-                    
-                    let finalBoard = {
-                        boardTitle: trelloBoard.name,
-                        boardDescription: trelloBoard.desc,
-                        boardBackground: 'walnut',
-                        boardUsers: [{userId: this.props.user._id, role: 'admin'}],
-                        boardPrivacy: 0,
-                        boardLists: trelloBoard.boardLists
-                    }
+                Trello.get("/boards/"+ trelloBoard.id +"/cards", (cards) => {
+                    Trello.get("/boards/"+ trelloBoard.id +"/checklists", (checklists) => {
+                        checklists.forEach((cl) => {
+                            let card = cards.filter((c) => c.id === cl.idCard)[0];
+                            let newItems = cl.checkItems.map((item) => {
+                                return {
+                                    _id: item.id,
+                                    itemName: item.name,
+                                    itemChecked: item.state === "complete"
+                                }
+                            });
+                            let checklist = {
+                                _id: cl.id,
+                                checklistName: cl.name,
+                                checklistItems: newItems
+                            };
+                            if(card.cardChecklists) card.cardChecklists.push(checklist)
+                            else card.cardChecklists = [checklist]
+                        });
 
-                    asteroid.call("boards.createBoard", finalBoard)
-                    .then(() => {
-                        that.setState({loading: false});
-                        $('#import-modal').modal('toggle');
+                        cards.forEach((c) => {
+                            let list = lists.filter((l) => l.id === c.idList)[0];
+                            let card = {
+                                _id: c.id,
+                                cardTitle: c.name,
+                                cardDescription: c.desc,
+                                cardArchived: c.closed,
+                                cardChecklists: c.cardChecklists ? c.cardChecklists : []
+                            }
+                            if(list.listCards) list.listCards.push(card)
+                            else list.listCards = [card]
+                        });
+
+                        trelloBoard.boardLists = lists.map((l) => {
+                            return {
+                                _id: l.id,
+                                listTitle: l.name,
+                                listCards: l.listCards ? l.listCards : [],
+                                listArchived: l.closed
+                            }
+                        });
+                        
+                        let finalBoard = {
+                            boardTitle: trelloBoard.name,
+                            boardDescription: trelloBoard.desc,
+                            boardBackground: 'walnut',
+                            boardUsers: [{userId: this.props.user._id, role: 'admin'}],
+                            boardPrivacy: 0,
+                            boardLists: trelloBoard.boardLists
+                        }
+
+                        asteroid.call("boards.createBoard", finalBoard)
+                        .then(() => {
+                            that.setState({loading: false});
+                            $('#import-modal').modal('toggle');
+                        })
                     })
-                }))
+                })
             })
         }
         
@@ -102,15 +124,15 @@ class ImportModal extends Component {
                         <div className="modal-body">
                             {this.props.trelloToken ? 
                                 <form>
-                                    <label for="trello-select">Choose a Trello Board</label><br/>
+                                    <label htmlFor="trello-select">Choose a Trello Board</label><br/>
                                     <select 
                                         id="trello-select" 
                                         value={this.state.trelloBoardId}
                                         onChange={(e) => this.setState({trelloBoardId: e.target.value})}
                                     >
                                         <option value={null}>Choose a board</option>
-                                        {this.state.trelloBoards.map((b) => 
-                                            <option value={b.id}>{b.name}</option>
+                                        {this.state.trelloBoards.map((b, i) => 
+                                            <option key={i} value={b.id}>{b.name}</option>
                                         )}
                                     </select>
                                 </form>

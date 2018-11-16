@@ -6,7 +6,7 @@ import asteroid from '../../common/asteroid';
 import {Title} from "../pages/Utils/Utils";
 import {callEditBoard} from "../../actions/BoardActions";
 import {callEditCard} from "../../actions/CardActions";
-import {callCreateLabel, callEditLabels} from "../../actions/LabelActions";
+import {callCreateLabel, callEditLabels, callRemoveLabel} from "../../actions/LabelActions";
 
 class CardOptions extends Component {
 
@@ -28,14 +28,14 @@ class CardOptions extends Component {
         this.handleAddDeadline = this.handleAddDeadline.bind(this)
         this.handleAddLabel = this.handleAddLabel.bind(this)
         this.handleAffectLabelToCard = this.handleAffectLabelToCard.bind(this)
+        this.removeLabelFromBoard = this.removeLabelFromBoard.bind(this)
     }
 
 
     handleAddDeadline = (event) => {
         event.preventDefault();
-        let newCard = this.state.card
+        let newCard = this.props.card
         newCard.cardDeadline = this.state.cardDeadline
-        console.log(newCard.cardDeadline)
         callEditCard(this.state.idBoard,this.state.idList,newCard)
     }
 
@@ -55,27 +55,39 @@ class CardOptions extends Component {
 
     }
 
-
+    removeLabelFromBoard = (idLabel) => {
+        callRemoveLabel(idLabel)
+    }
 
     handleAffectLabelToCard = (idLabel) => {
-        let newLabelList
-        if(this.state.card.cardLabels.includes(idLabel)) {
-            newLabelList = this.state.card.cardLabels.filter((label) => label._id != idLabel)
+        let newLabelList;
+        let labelList = this.props.card.cardLabels;
+        if(labelList.includes(idLabel)) {
+            newLabelList = labelList.filter((labelId) => labelId != idLabel)
         }else{
-            newLabelList = this.state.card.cardLabels
+            newLabelList = labelList
             newLabelList.push(idLabel)
 
         }
 
-        let newCard = this.state.card
+        let newCard = this.props.card
         newCard.cardLabels = newLabelList
 
-        console.log(newLabelList)
         callEditCard(this.state.idBoard,this.state.idList,newCard)
         this.setState({
             card: newCard
         })
 
+    }
+
+    renderLabelButton(){
+        let boardLabels = this.props.labels.filter((label) => label.labelBoard == this.props.idBoard );
+        return boardLabels.map((label)=>{
+            return (
+            <div>
+            <button className={"btn btn-secondary buttonLabel"} style={{background: label.labelColor}} onClick={(e) => { e.preventDefault();this.handleAffectLabelToCard(label._id)}}>{label.labelName}</button>
+            <a className={"ni ni-fat-remove"} onClick={(e) => {e.preventDefault; this.removeLabelFromBoard(label._id)}}></a></div>)
+         })
     }
 
     render(){
@@ -85,12 +97,9 @@ class CardOptions extends Component {
                         <div className="card card-stats mb-4 mb-lg-0 cardForOptions">
                             <div className="card-body">
                                 <div className={"divLabelBoard"}>
-                                <h5> Label list</h5>
-                                {
-                                    this.state.boardLabels.map((label)=>{
-                                        return <button className={"btn btn-secondary buttonLabel"} style={{background: label.labelColor}} onClick={(e) => { e.preventDefault();this.handleAffectLabelToCard(label._id)}}>{label.labelName}</button>
-                                     })
-                                }
+                                    <h5> Label list</h5>
+                                    {this.renderLabelButton()}
+                                   
                                 </div>
                                 <h5>Add label</h5>
                                 <input type="text" className={'form-control form-control-alternantive'} placeholder={"Enter new Label title here"}
