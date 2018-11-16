@@ -56,6 +56,12 @@ export const CardSchema = new SimpleSchema({
       optional: true
   },
   'cardAttachment.$': Object, //se if need to replace Object with a schema*/
+  cardUsers: {
+      type:Array,
+      label: "Users",
+      defaultValue: []
+  },
+  'cardUsers.$' : SimpleSchema.RegEx.Id,
   cardChecklists: {
       type: Array,
       label: "Checklists",

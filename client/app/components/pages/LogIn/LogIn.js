@@ -56,9 +56,9 @@ class LogIn extends Component {
             }
             else
             {
-                this.addAlert("danger", "Vueillez créez un compte d'abord!!")
+                this.addAlert("danger", "Veillez créez un compte d'abord")
             }
-            
+
         })
         .catch(function(error){
             that.addAlert("danger", error.reason)

@@ -13,7 +13,7 @@ export class boardUtils {
 
     /**
      * Get the role of an user in a board
-     * 
+     *
      * @param {*} idUser The user to search
      * @param {*} board The board to check
      * @returns The role of the user. If the user is not in the board,

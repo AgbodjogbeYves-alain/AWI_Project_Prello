@@ -47,7 +47,6 @@ class ImportModal extends Component {
             Trello.get("/boards/"+ trelloBoard.id +"/lists", (lists) => {
                 Trello.get("/boards/"+ trelloBoard.id +"/cards", (cards) => {
                     Trello.get("/boards/"+ trelloBoard.id +"/checklists", (checklists) => {
-                        console.log(checklists)
                         checklists.forEach((cl) => {
                             let card = cards.filter((c) => c.id === cl.idCard)[0];
                             let newItems = cl.checkItems.map((item) => {

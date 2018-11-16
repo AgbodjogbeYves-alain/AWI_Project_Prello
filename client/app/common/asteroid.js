@@ -25,9 +25,10 @@ asteroid.ddp.on('added', (doc) => {
     const docObj = Object.assign({}, doc.fields, { _id: doc.id });
     if(docObj.services) store.dispatch(setLoggedUser(docObj));
     else {
+
       store.dispatch(addUser(docObj));
     }
-    
+
   }
   if(doc.collection === 'boards'){
     const docObj = Object.assign({}, doc.fields, { _id: doc.id });
@@ -38,7 +39,6 @@ asteroid.ddp.on('added', (doc) => {
     store.dispatch(addTeam(docObj));
   }
   if(doc.collection === 'labels'){
-    console.log(doc)
       const docObj = Object.assign({}, doc.fields, { _id: doc.id });
       store.dispatch(addLabel(docObj));
   }

@@ -77,7 +77,7 @@ class AddTeamInput extends Component {
                                 onChange={(e) => this.setState({teamName: e.target.value})}
                                 onSelect={(val) => this.setState({teamName: val})}
                                 wrapperStyle={{'display': 'inline-block', 'width': '100%'}}
-                                menuStyle={{left: 'auto', top: 'auto', position: 'fixed'}}
+                                menuStyle={{left: 'auto', top: 'auto', position: 'fixed', "zIndex": "10"}}
                                 inputProps={{
                                     'placeholder': 'Team',
                                     'class': 'form-control w-100'
