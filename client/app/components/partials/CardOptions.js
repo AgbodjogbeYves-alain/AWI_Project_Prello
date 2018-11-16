@@ -99,10 +99,10 @@ class CardOptions extends Component {
                                 <div className={"divLabelBoard"}>
                                     <h5> Label list</h5>
                                     {this.renderLabelButton()}
-                                   
+
                                 </div>
                                 <h5>Add label</h5>
-                                <input type="text" className={'form-control form-control-alternantive'} placeholder={"Enter new Label title here"}
+                                <input type="text" className={'form-control form-control-alternantive'} maxLength="10" placeholder={"Enter new Label title here"}
                                        onChange={(e)=> {
                                            this.setState({newLabelName: e.target.value})
                                        }}

@@ -237,7 +237,7 @@ class ModalEditCard extends Component {
                                             <div id={"listComment"}>
                                                 <span> Comment list </span>
                                                 {this.props.card.cardComments.map((comment) => {
-                                                    return <div><span><i className="ni ni-chat-round"/>{"  " + comment.commentContent}</span></div>
+                                                    return <div className={"divComment"}><span><i className="ni ni-chat-round"/>{"  " + comment.commentContent}</span></div>
 
                                                 })
                                                 }
