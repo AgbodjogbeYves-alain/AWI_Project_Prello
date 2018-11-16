@@ -246,10 +246,6 @@ class ModalEditCard extends Component {
                                         </div>
                                     </div>
                                 </form>
-                                <div id={'cardactivitydiv'}>
-                                    <span> Activity </span>
-
-                                </div>
                             </div>
                             <div className={'cardactiondiv'}>
                                 <span> Action </span>

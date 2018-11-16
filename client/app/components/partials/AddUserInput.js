@@ -119,7 +119,7 @@ class AddUserInput extends Component {
                                 onChange={(e) => this.setState({userEmail: e.target.value})}
                                 onSelect={(val) => this.setState({userEmail: val})}
                                 wrapperStyle={{'display': 'inline-block', 'width': '100%'}}
-                                menuStyle={{left: 'auto', top: 'auto', position: 'fixed'}}
+                                menuStyle={{left: 'auto', top: 'auto', position: 'fixed', "zIndex": "10"}}
                                 inputProps={{
                                     'placeholder': 'User',
                                     'class': 'form-control w-100'

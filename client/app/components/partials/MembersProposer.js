@@ -45,7 +45,8 @@ class MemberProposer extends Component {
                                                     onClick={(e) => {
                                                         e.preventDefault();
                                                         this.addMemberToCard(user)
-                                                    }}> {user.profile.lastname} {user.profile.firstname}</button>
+                                                    }}> {user.profile.lastname} {user.profile.firstname}
+                                            </button>
                                         </li>
                                     )}
                             </ul>
