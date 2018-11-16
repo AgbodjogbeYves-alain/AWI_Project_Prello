@@ -154,7 +154,7 @@ class ModalEditCard extends Component {
     renderUsers(){
         return this.props.users.map((user, i) => {
             if(this.props.card.cardUsers && this.props.card.cardUsers.includes(user._id)){
-                return <ProfilePicture key={i} user={user}/>
+                return (<div className={"profileInModalEdit"}><ProfilePicture key={i} user={user} size={"sm"}/></div>)
             }
         })
     }
