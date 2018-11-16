@@ -56,15 +56,15 @@ export function resetUsers(){
 
 export function callEditProfileUser(email, lastname, firstname) {
   return dispatch => asteroid.call('users.updateProfile', email, lastname, firstname)
-      .then(result => dispatch(editProfileUser(result)));
+      .then(result => dispatch(editProfileUser(result))).catch(error => {alert(error.reason);});
 }
 
 export function callRemoveUser() {
   return dispatch => asteroid.call('users.remove')
-      .then(result => dispatch(removeUser(result)));
+      .then(result => dispatch(removeUser(result))).catch(error => {alert(error.reason);})
 }
 
 export function callEnabledMails(val) {
   return dispatch => asteroid.call('users.setEnabledMails', val)
-      .then(result => dispatch(enabledMails(result)));
+      .then(result => dispatch(enabledMails(result))).catch(error => {alert(error.reason);})
 }

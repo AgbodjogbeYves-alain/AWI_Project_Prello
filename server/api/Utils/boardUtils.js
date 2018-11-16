@@ -13,7 +13,7 @@ export class boardUtils {
 
     /**
      * Get the role of an user in a board
-     * 
+     *
      * @param {*} idUser The user to search
      * @param {*} board The board to check
      * @returns The role of the user. If the user is not in the board,
@@ -22,6 +22,7 @@ export class boardUtils {
     static getUserRole(idUser, board){
         if(!board) return ""
         let user = board.boardUsers.find(u => u.userId == idUser)
+        console.log(user)
         if(user) return user.role
         else return (board.boardPrivacy == 0) ? "observer" : ""
     }

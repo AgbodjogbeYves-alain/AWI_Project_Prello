@@ -102,9 +102,8 @@ class ModalEditCard extends Component {
         let newCard = this.props.card
         newCard.isArchived = !this.props.card.isArchived
         callEditCard(this.state.idBoard,this.state.idList,newCard)
-        this.setState({
-            card: newCard
-        })
+        let child = document.getElementsByClassName("modal-backdrop fade show")[0]
+        child.parentNode.removeChild(child);
     }
 
     renderDeadLine(){

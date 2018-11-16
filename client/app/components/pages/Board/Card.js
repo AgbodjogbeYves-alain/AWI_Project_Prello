@@ -37,8 +37,8 @@ class Card extends Component {
 
     renderLabels(){
         let cardLabels = this.props.labels.filter((label) => this.props.card.cardLabels.includes(label._id) );
-        return cardLabels.map((label) => {
-            return <span className="badge badge-pill badge-default" style={{background: label.labelColor}}>{label.labelName}</span>
+        return cardLabels.map((label,i) => {
+            return <span className="badge badge-pill badge-default" key={i} style={{background: label.labelColor}}>{label.labelName}</span>
         })
     }
 
