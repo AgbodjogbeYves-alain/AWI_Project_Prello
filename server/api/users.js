@@ -3,6 +3,7 @@ import { Accounts } from 'meteor/accounts-base';
 
 const verifToken = require('./Utils/tokenIdVerification')
 
+
 if(Meteor.isServer)
 {
 
@@ -33,7 +34,7 @@ Meteor.methods({
 
             Accounts.createUser(options);
         }
-    },
+    }, 
     "users.googleSignUp"(tokenId){
         return verifToken.verify(tokenId).then(payload=>{
             let options = {

@@ -98,9 +98,9 @@ class ImportModal extends Component {
                         }
 
                         asteroid.call("boards.createBoard", finalBoard)
-                        .then(() => {
-                            that.setState({loading: false});
-                            $('#import-modal').modal('toggle');
+                         .then(() => {
+                             that.setState({loading: false});
+                             $('#import-modal').modal('toggle');
                         })
                     })
                 })
