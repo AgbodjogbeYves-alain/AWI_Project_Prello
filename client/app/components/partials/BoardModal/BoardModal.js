@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
+import {Image} from 'cloudinary-react';
+
 
 import Alert from '../Alert';
 import AddUserInput from "../AddUserInput.js";
@@ -49,7 +51,7 @@ class BoardModal extends Component {
     }
 
     renderAlerts(){
-        return this.state.alerts.map(a => (<Alert key={this.state.alerts.indexOf(a)} type={a.type}  text={a.text}/>));
+        return this.state.alerts.map((a,i) => (<Alert key={i} type={a.type}  text={a.text}/>));
     }
 
     resetFields(){
@@ -124,11 +126,15 @@ class BoardModal extends Component {
     
     renderBackgrounds(){
         let backgrounds = ["walnut", "avenue", "pier", "tree", "boat", "heart", "hong-kong", "new-york-city", "sea", "vw-camper", "blue-watercolor", "blur-clean"];
-        return backgrounds.map((b) =>
-            <div className="col-6">
-                <img 
+        return backgrounds.map((b, i) =>
+            <div key={i} className="col-6">
+                <Image 
                     className={"thumbnail" + (this.state.boardBackground === b ? " active" : "")}
-                    src={"https://res.cloudinary.com/dxdyg7b5b/image/upload/c_thumb,h_100,w_130/v1541680096/backgrounds/"+ b +".jpg"}
+                    cloudName="dxdyg7b5b"
+                    publicId={b}
+                    width="130"
+                    height="100"
+                    crop="scale"
                     onClick={() => this.handleChangeBackground(b)}
                 />
             </div>

@@ -3,6 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 import asteroid from '../../../common/asteroid';
+import GoogleLogin from 'react-google-login';
 
 import NavBar from "../../partials/NavBar.js"
 import ForgottenPasswordModal from "./ForgottenPasswordModal/ForgottenPasswordModal.js"
@@ -13,10 +14,12 @@ class LogIn extends Component {
 
     constructor(props) {
         super(props);
-     
+
         this.state = {
             alerts: []
         };
+
+        this.googleLogin = this.googleLogin.bind(this);
     }
 
     addAlert(type, text) {
@@ -41,18 +44,42 @@ class LogIn extends Component {
         })
     }
 
+    googleLogin(token){
+        event.preventDefault();
+        let that = this;
+        asteroid.call("users.googleLogin",token)
+        .then((result) => {
+            localStorage.setItem('ws://localhost:9000/websocket__login_token__',result.token)
+            that.addAlert("success", "You're Loged In !");
+            that.props.history.push('/dashboard');
+        })
+        .catch(function(error){
+            that.addAlert("danger", error.reason)
+        })
+    }
+
     renderAlerts(){
         return this.state.alerts.map(a => (<Alert key={this.state.alerts.indexOf(a)} type={a.type}  text={a.text}/>));
     }
 
     render() {
+        const sucessResponseGoogle = (response) => {
+            let tokenId = response.getAuthResponse().id_token;
+            this.googleLogin(tokenId);
+
+          }
+
+        const failResponseGoogle = (response) =>{
+            alert("An error occured !! Please try again!! ")
+        }
+
         const { user } = this.props;
         if(user) return(<Redirect to='/dashboard'/>)
         return (
             <main>
                 <NavBar/>
                 <div className='alert-container'>
-                    
+
                 </div>
                 <section className="section section-shaped section-lg">
                     <div className="shape shape-style-1 bg-gradient-default">
@@ -74,12 +101,20 @@ class LogIn extends Component {
                                             <small>Sign in with</small>
                                         </div>
                                         <div className="btn-wrapper text-center">
-                                            <a href="#" className="btn btn-neutral btn-icon">
+                                        <GoogleLogin
+                                            clientId="909976969961-r4v6ls5qbgjvslotg7trcb066vig4cb8.apps.googleusercontent.com"
+                                            render={renderProps => (
+                                                <a onClick={renderProps.onClick} href="#" className="btn btn-neutral btn-icon">
                                                 <span className="btn-inner--icon">
-                                                    <img src="../assets/img/icons/common/google.svg"/>
+                                                    <img src="https://rawcdn.githack.com/AgbodjogbeYves-alain/AWI_Assets/7cf53ef40e7e2346c164640109b845b599cbe915/img/icons/common/google.svg"/>
                                                 </span>
                                                 <span className="btn-inner--text">Google</span>
-                                            </a>
+                                                </a>
+                                            )}
+                                            buttonText="Login"
+                                            onSuccess={sucessResponseGoogle}
+                                            onFailure={failResponseGoogle}
+                                        />
                                         </div>
                                     </div>
                                     <div className="card-body px-lg-5 py-lg-5">
@@ -105,12 +140,6 @@ class LogIn extends Component {
                                                     </div>
                                                     <input className="form-control" placeholder="Password" type="password" ref={(password) => this.password = password}/>
                                                 </div>
-                                            </div>
-                                            <div className="custom-control custom-control-alternative custom-checkbox">
-                                                <input className="custom-control-input" id=" customCheckLogin" type="checkbox"/>
-                                                <label className="custom-control-label" htmlFor=" customCheckLogin">
-                                                    <span>Remember me</span>
-                                                </label>
                                             </div>
                                             <div className="text-center">
                                                 <button type="submit" className="btn btn-primary my-4">Sign in</button>

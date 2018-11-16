@@ -39,7 +39,6 @@ class BoardDisplay extends Component {
 
 
     componentWillReceiveProps(nextProps){
-        console.log("test")
         let id = nextProps.match.params.id
         let board = nextProps.boards.filter((board) => board._id === id)[0]
         if(board !== undefined){
@@ -188,11 +187,11 @@ class BoardDisplay extends Component {
     };
 
     render() {
-
+        let imageUrl = this.state.board && this.state.board != 'unknow' ? "https://res.cloudinary.com/dxdyg7b5b/image/upload/"+ this.state.board.boardBackground +".png" : "";
         return this.state.board && this.state.board != 'unknow' ? (
             <div
                 id={"boardDisplay"}
-                style={{backgroundImage: "url('https://res.cloudinary.com/dxdyg7b5b/image/upload/v1541680009/backgrounds/"+ this.state.board.boardBackground +".jpg')"}}
+                style={{backgroundImage: "url('"+ imageUrl +"')"}}
             >
                 <NavBar/>
                 <NavBarBoard board={this.state.board}/>

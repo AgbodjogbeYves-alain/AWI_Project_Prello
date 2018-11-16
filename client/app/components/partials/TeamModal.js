@@ -48,7 +48,6 @@ class TeamModal extends Component {
             teamDescription: this.state.teamDescription,
             teamMembers: this.state.teamMembers,
         };
-        console.log(team)
         asteroid.call("teams.createTeam", team)
         .then((result) => {
             $('#team-modal' + this.state.teamId).modal('toggle');
@@ -83,7 +82,7 @@ class TeamModal extends Component {
     }
 
     render(){
-        return ( 
+        return (
             <div className="modal fade" id={"team-modal" + this.state.teamId} tabIndex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
                 <div className="modal-dialog modal- modal-dialog-centered modal-" role="document">
                     <div className="modal-content">
@@ -107,9 +106,9 @@ class TeamModal extends Component {
                                         <div className="input-group-prepend">
                                             <span className="input-group-text"><i className="ni ni-email-83"></i></span>
                                         </div>
-                                        <input 
-                                            className="form-control" 
-                                            placeholder="Name" 
+                                        <input
+                                            className="form-control"
+                                            placeholder="Name"
                                             type="text"
                                             value={this.state.teamName}
                                             onChange={(e) => this.setState({teamName: e.target.value})}
@@ -121,17 +120,17 @@ class TeamModal extends Component {
                                         <div className="input-group-prepend">
                                             <span className="input-group-text"><i className="ni ni-email-83"></i></span>
                                         </div>
-                                        <textarea 
-                                            className="form-control" 
-                                            placeholder="Description" 
+                                        <textarea
+                                            className="form-control"
+                                            placeholder="Description"
                                             type="text"
                                             value={this.state.teamDescription}
                                             onChange={(e) => this.setState({teamDescription: e.target.value})}
                                         ></textarea>
                                     </div>
                                 </div>
-                                <AddUserInput 
-                                    addedUsers={this.state.teamMembers} 
+                                <AddUserInput
+                                    addedUsers={this.state.teamMembers}
                                     onChange={(field, value) => this.setState({"teamMembers": value})}
                                     type={'team'}
                                 />
@@ -141,13 +140,13 @@ class TeamModal extends Component {
                         <div className="modal-footer">
                             <button type="button" className="btn btn-link" data-dismiss="modal">Close</button>
                             {this.state.type == "edit" ?
-                                <button 
+                                <button
                                     className="btn btn-primary  ml-auto"
                                     onClick={() => this.handleEditTeam()}>
                                     Edit
                                 </button>
                                 :
-                                <button 
+                                <button
                                     className="btn btn-success  ml-auto"
                                     onClick={() => this.handleCreateTeam()}>
                                     Create

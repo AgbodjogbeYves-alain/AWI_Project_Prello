@@ -71,7 +71,6 @@ class NavBarBoard extends Component {
         event.preventDefault()
         let newBoard = this.props.board
         newBoard.boardPrivacy = event.target.value
-        console.log(event.target.value)
         this.setState({
             board: newBoard
         })
