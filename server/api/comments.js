@@ -8,6 +8,16 @@ import {canPerform,
 } from "./Utils/roles"
 
 Meteor.methods({
+    /**
+     * Add a comment in a card
+     *
+     * @param idBoard The id of the board
+     * @param idList The id of the list
+     * @param idCard The id of the card
+     * @param newComment The new cmment to add
+     * @returns the id of the board edited,
+     *  an error if the board, list, card doesn't exist or if the user doesn't have the right to edit the card
+     */
     'boards.comment.addComment' (idBoard,idList,idCard, newComment) {
         let userId = this.userId
         let board = Boards.find({"_id": idBoard})

@@ -8,6 +8,13 @@ import {canPerform,
 } from "./Utils/roles"
 
 Meteor.methods({
+    /**
+     * Create a list in a card
+     *
+     * @param idBoard The id of the board
+     * @returns the id of board edited,
+     *  an error if the board doesn't exist or if he user doesn't have the right to add a list
+     */
     'boards.lists.createList'(idBoard) {
         let userId = this.userId
         let board = Boards.findOne({"_id": idBoard})
@@ -30,6 +37,14 @@ Meteor.methods({
         }
     },
 
+    /**
+     * Delete a list in a card
+     *
+     * @param idBoard The id of the Board
+     * @param idList the id ot the List
+     * @returns the id of board edited,
+     *  an error if the board doesn't exist or if he user doesn't have the right to delete a list
+     */
     'boards.lists.deleteList'(idBoard,idList) {
         let userId = this.userId
         let board = Boards.findOne({"_id": idBoard})
@@ -50,6 +65,14 @@ Meteor.methods({
         }
     },
 
+    /**
+     * Edit a list in a card
+     *
+     * @param idBoard The id of the board
+     * @param newList The new list 
+     * @returns the id of board edited,
+     *  an error if the board doesn't exist or if he user doesn't have the right to edit a list
+     */
     'boards.lists.editList' (idBoard, newList) {
         let userId = this.userId
         let board = Boards.findOne({"_id": idBoard})

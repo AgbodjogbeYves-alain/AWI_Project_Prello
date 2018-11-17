@@ -10,6 +10,15 @@ import {canPerform,
 
 
 Meteor.methods({
+    
+    /**
+     * Create a card in a board
+     *
+     * @param idBoard The id of the board where to add the card
+     * @param idList The id of the list where to add the card
+     * @returns the id of the board edited,
+     *  an error if the board, list doesn't exist
+     */
     'boards.card.createCard'(idBoard,idList) {
         let userId = this.userId
         let board = Boards.findOne({"_id": idBoard});
@@ -52,6 +61,15 @@ Meteor.methods({
         }
     },
 
+    /**
+     * Edit a card in a board
+     *
+     * @param idBoard The id of the board where the card is
+     * @param idList The id of the list where the card is
+     * @param newCard The new card to insert
+     * @returns the id of the board edited,
+     *  an error if the board, list, card doesn't exist or if the user doesn't have the right to edit the card
+     */
     'boards.card.editCard' (idBoard,idList,newCard) {
         let userId = this.userId
         let board = Boards.findOne({"_id": idBoard});
@@ -98,7 +116,15 @@ Meteor.methods({
         }
     },
 
-
+    /**
+     * Add a comment to a card in a board
+     *
+     * @param idBoard The id of the board where the card is
+     * @param idList The id of the list where the card is
+     * @param newCard The new card with the comment to insert
+     * @returns the id of the board edited,
+     *  an error if the board, list, card doesn't exist or if the user doesn't have the right to edit the card
+     */
     'boards.card.addComment' (idBoard,idList,newCard) {
         let userId = this.userId
         let board = Boards.findOne({"_id": idBoard})
@@ -151,9 +177,17 @@ Meteor.methods({
         }else{
             throw new Meteor.Error(404, 'Board not found')
         }
-
-
     },
+
+    /**
+     * Remove a card in a board
+     *
+     * @param idBoard The id of the board where the card is
+     * @param idList The id of the list where the card is
+     * @param idCard The card to remove
+     * @returns the id of the board edited,
+     *  an error if the board, list doesn't exist or if the user doesn't have the right to edit the card
+     */
     'boards.card.removeCard' (idBoard,idList,idCard){
         let userId = this.userId
         let board = Boards.findOne({"_id": idBoard})

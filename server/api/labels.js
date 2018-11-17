@@ -9,6 +9,14 @@ Meteor.publish('labels', function () {
 });
 
 Meteor.methods({
+    /**
+     * Add a label in a card
+     *
+     * @param idBoard The id of the board
+     * @param newLabel The label to add
+     * @returns the id of the label inserted,
+     *  an error if the board doesn't exist
+     */
     'labels.createLabel'(idBoard,newLabel) {
         let id = Random.id();
         let countDoc = Boards.find({_id: idBoard}).count();
@@ -19,6 +27,13 @@ Meteor.methods({
         }
     },
 
+    /**
+     * Remove a label in a card
+     *
+     * @param idLabel The id of the label
+     * @returns the number of element removed,
+     *  an error if the label doesn't exist
+     */
     'labels.removeLabel' (idLabel){
         let countDoc = Labels.find({_id: idLabel}).count();
         if(countDoc==1){
@@ -41,8 +56,4 @@ Meteor.methods({
         }
 
     },
-
-    'labels.editLabel' (idBoard,newLabel){
-
-    }
 })
