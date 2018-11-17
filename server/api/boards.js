@@ -30,6 +30,13 @@ if(Meteor.isServer){
 }
 Meteor.methods({
 
+    /**
+     * Create a board
+     *
+     * @param board The board to create
+     * @returns the id of the board inserted if the user is connected, 
+     *  an error otherwise
+     */
     'boards.createBoard'(board) {
         if(Meteor.userId()){
             board.boardOwner = this.userId;
@@ -39,6 +46,13 @@ Meteor.methods({
         }
     },
 
+    /**
+     * Get a board
+     *
+     * @param idBoard The id of the board to get
+     * @returns the board with the id we search,
+     *  an error if the board doesn't exist or the user doesn't have the right to acces the board
+     */
     'boards.getBoard' (idBoard) {
         let userId = this.userId
         let board = Boards.findOne({"_id": idBoard});
@@ -55,6 +69,13 @@ Meteor.methods({
 
     },
 
+    /**
+     * Remove a board
+     *
+     * @param boardId The id of the board to remove
+     * @returns the number of element removed,
+     *  an error if the board doesn't exist or the user doesn't have the right to remove the board
+     */
     'boards.removeBoard'(boardId) {
         let userId = this.userId
         let board = Boards.findOne(boardId);
@@ -71,6 +92,13 @@ Meteor.methods({
         }
     },
 
+    /**
+     * Edit a board
+     *
+     * @param newBoard The new board to insert
+     * @returns the id of the element edited,
+     *  an error if the board doesn't exist or the user doesn't have the right to edit the board
+     */
     'boards.editBoard' (newBoard) {
         let userId = this.userId
         let oldBoard = Boards.findOne({"_id": newBoard._id});
@@ -95,12 +123,12 @@ Meteor.methods({
         }
     },
 
-    /* Should not be used
-    'board.getAllBoards' (){
-        return Boards.find().fetch();
-    },
-    */
-
+    /**
+     * Get all the boards of a user
+     *
+     * @param userId The id of the user, which we want to get the boards
+     * @returns the list of the board where the user is member,
+     */
     'board.getUserAllBoards' (userId){
         let allBoards = Boards.find().fetch()
         let userBoard = []
@@ -109,11 +137,16 @@ Meteor.methods({
                 userBoard.push(board)
             }
         })
-
         return allBoards
-
     },
 
+    /**
+     * Get team in a board
+     *
+     * @param boardId The id of the board which we want to get the team
+     * @returns the list of the teams in the board,
+     *  an error if the board doesn't exist or the user doesn't have the right to access the board
+     */
     'board.getTeam' (boardId){
         let userId = this.userId
         let board = Boards.findOne({"_id": boardId})
@@ -128,6 +161,13 @@ Meteor.methods({
         }
     },
 
+    /**
+     * Get cards in a board
+     *
+     * @param boardId The id of the board which we want to get the cards
+     * @returns the list of the cards in the board,
+     *  an error if the board doesn't exist or the user doesn't have the right to access the cards
+     */
     'board.getCards' (boardId) {
         let userId = this.userId
         let board = Boards.findOne({"_id": boardId});
@@ -151,6 +191,13 @@ Meteor.methods({
         }
     },
 
+    /**
+     * Get tags in a board
+     *
+     * @param boardId The id of the board, which we want to get the tags
+     * @returns the list of the tags in the board,
+     *  an error if the board doesn't exist or the user doesn't have the right to access the tags
+     */
     'boards.getTags' (boardId) {
         let userId = this.userId
         let board = Boards.findOne({"_id": boardId});
@@ -165,6 +212,13 @@ Meteor.methods({
         }
     },
 
+    /**
+     * Get lists in a board
+     *
+     * @param boardId The id of the board, which we want to get the lits
+     * @returns the list of the lists in the board,
+     *  an error if the board doesn't exist or the user doesn't have the right to access the lists
+     */
     'boards.getLists' (boardId) {
         let userId = this.userId
         let lists = []
@@ -178,32 +232,9 @@ Meteor.methods({
                 })
                 return lists
             } else
-                throw new Meteor.Error(403, "You do not have permission to access the tags")
+                throw new Meteor.Error(403, "You do not have permission to access the lists")
         } else {
             throw new Meteor.Error(404, 'Board not found')
         }
     },
-
-    'board.archiveList' (boardId, listId) {
-        let userId = this.userId
-        let board = Boards.findOne({"_id": boardId})
-        if(board){
-            let userRole = boardUtils.getUserRole(userId, board)
-            if(canPerform(userRole, ACCESS_ARCHIVES)){
-                // TODO: archive the list here
-            }
-        }
-    },
-
-    'board.archiveCard' (boardId, cardId) {
-        let userId = this.userId
-        let board = Boards.findOne({"_id": boardId})
-        if(board){
-            let userRole = boardUtils.getUserRole(userId, board)
-            if(canPerform(userRole, ARCHIVE_CARD)){
-                // TODO: archive the card here
-            }
-        }
-    }
-
 })
