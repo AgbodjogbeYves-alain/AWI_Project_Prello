@@ -16,15 +16,13 @@ if(Meteor.isServer){
 
     Meteor.publish('boards', function () {
         let userId = this.userId;
-        /* Should manage accuarately the access rights but make the board creation bugged
-        let boards = Boards.find({boardUsers : {$elemMatch: {'userId': userId}}})
-        let ids = boards.fetch().filter(b => {
+        /*let ids = boards.fetch().filter(b => {
             let role = boardUtils.getUserRole(userId, b)
             return canPerform(role, ACCESS_BOARD)
         }).map(b => b._id)
-        return Boards.find({_id : {$in: ids}})
         */
-        return Boards.find({boardUsers : {$elemMatch: {'userId': userId}}})
+        return Boards.find({boardUsers: {$elemMatch: {'userId': userId}}})
+        //return Boards.find({_id : {$in: ids}})
     });
 
 }
