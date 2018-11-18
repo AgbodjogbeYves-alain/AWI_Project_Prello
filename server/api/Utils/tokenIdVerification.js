@@ -1,6 +1,6 @@
 const {OAuth2Client} = require('google-auth-library');
 
-const clientId =process.env.KEYAPI; 
+const clientId = process.env.KEYAPI;
 const client = new OAuth2Client(clientId);
 module.exports = {
     verify : async function(tokenId){
