@@ -49,7 +49,7 @@ class LogIn extends Component {
         asteroid.call("users.googleLogin",token)
         .then((result) => {
             if(result){
-                let key = process.env.STORAGEKEY ? process.env.STORAGEKEY : 'ws://localhost:9000/websocket__login_token__';
+                let key = "wss://prello12s.igpolytech.fr/websocket__login_token__" //? process.env.STORAGEKEY : 'ws://localhost:9000/websocket__login_token__';
                 localStorage.setItem(key,result.token)
             that.addAlert("success", "You're Loged In !");
             that.props.history.push('/dashboard');
