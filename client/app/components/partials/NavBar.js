@@ -40,6 +40,13 @@ class NavBar extends Component {
                         </a>
                     </li>
 
+                    <li>
+                        <Link to={"/statistics"} className="nav-link" href='#' >
+                            <i className="ni ni-chart-pie-35 ni-lg"></i>
+                            <span className="nav-link-inner--text d-lg-none">Accueil</span>
+                        </Link>
+                    </li>
+
                     <li className="nav-item dropdown">
                         <a className="nav-link" data-toggle="dropdown" href='#' role="button">
                             <i className="ni ni-single-02 ni-lg"></i>

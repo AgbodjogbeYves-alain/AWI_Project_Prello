@@ -11,22 +11,22 @@ export default class Teams extends Component {
     renderTeams(){
         return this.props.teams.map((t,i) =>
             <li key={i} className="nav-item" onClick={() => this.handleChangeActivedTeam(t)}>
-                <div class={"nav-link mb-sm-3 mb-md-0 " + ((this.props.activedTeam && this.props.activedTeam._id == t._id) ? 'active' : '')} href="#">
+                <div className={"nav-link mb-sm-3 mb-md-0 " + ((this.props.activedTeam && this.props.activedTeam._id == t._id) ? 'active' : '')} href="#">
                     {t.teamName}
-                    <div class="dropdown float-right d-none">
-                        <a class="btn-link btn-sm" data-toggle="dropdown" href="#" role="button">
-                            <i class="ni ni-settings-gear-65 ni-lg"></i>
+                    <div className="dropdown float-right d-none">
+                        <a className="btn-link btn-sm" data-toggle="dropdown" href="#" role="button">
+                            <i className="ni ni-settings-gear-65 ni-lg"></i>
                         </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item"
+                        <div className="dropdown-menu">
+                            <a className="dropdown-item"
                                 data-toggle="modal"
                                 data-target={"#team-modal" + t._id}
                             >
-                                <i class="ni ni-settings"></i>
+                                <i className="ni ni-settings"></i>
                                 Edit
                             </a>
-                            <a class="dropdown-item" onClick={() => this.handleRemoveTeam(t)}>
-                                <i class="ni ni-fat-remove"></i>
+                            <a className="dropdown-item" onClick={() => this.handleRemoveTeam(t)}>
+                                <i className="ni ni-fat-remove"></i>
                                 Remove
                             </a>
                         </div>

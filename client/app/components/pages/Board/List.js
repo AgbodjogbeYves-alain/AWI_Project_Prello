@@ -22,11 +22,17 @@ export class List extends React.Component {
     }
 
     archiveList = () => {
-        let idBoard = this.props.idBoard;
+        let idBoard = this.props.board._id;
         let nlist = this.props.list;
         nlist.listArchived = true;
-        //nlist.listCard.map((card) => {card.cardArchived = true; callEditCard(idBoard, nlist._id, card)}) Uncomment it when editCard done
+        nlist.listCards.map((card) => {card.isArchived = true; callEditCard(idBoard, nlist._id, card)})
         callEditList(idBoard, nlist);
+    }
+
+    archiveAllCards = () => {
+        let idBoard = this.props.board._id;
+        let nlist = this.props.list;
+        nlist.listCards.map((card) => {card.isArchived = true; callEditCard(idBoard, nlist._id, card)})
     }
 
     updateListName = (newTitle) =>{
@@ -39,12 +45,20 @@ export class List extends React.Component {
     inputToTitle = (event) =>{
         event.preventDefault();
         const input = document.getElementById(this.props.list._id);
-        this.updateListName(input.value);
-        const title = document.createElement("div");
-        title.innerHTML = input.value;
-        title.id = this.props.list._id;
-        title.onclick = this.titleToInput;
-        input.parentNode.replaceChild(title, input);
+        if(input.value === ""){
+            const title = document.createElement("div");
+            title.innerHTML = this.props.list.listTitle;
+            title.id = this.props.list._id;
+            title.onclick = this.titleToInput;
+            input.parentNode.replaceChild(title, input);
+        }else{
+            this.updateListName(input.value);
+            const title = document.createElement("div");
+            title.innerHTML = input.value;
+            title.id = this.props.list._id;
+            title.onclick = this.titleToInput;
+            input.parentNode.replaceChild(title, input);
+        }   
     }
 
     titleToInput = (event) =>{
@@ -75,6 +89,7 @@ export class List extends React.Component {
                         <Container {...provided.draggableProps} ref={provided.innerRef}>
                         <ConfirmModal id={"confirmDeletemodal"+this.props.list._id} text={"Are you sure you want to delete the list "+this.props.list.listTitle+" ?"} confirmAction={this.removeList}/>
                         <ConfirmModal id={"confirmArchivemodal"+this.props.list._id} text={"Are you sure you want to archive the list "+this.props.list.listTitle+" ?"} confirmAction={this.archiveList}/>
+                        <ConfirmModal id={"confirmArchiveCardsmodal"+this.props.list._id} text={"Are you sure you want to archive all the cards ?"} confirmAction={this.archiveAllCards}/>
                         <a className={"ni ni-fat-remove"} data-toggle="modal" data-target={"#"+"confirmDeletemodal"+this.props.list._id} style={{fontSize: "30px", position: "absolute", "right": "0px"}}></a>
                         <Title {...provided.dragHandleProps}>
                             <div id={this.props.list._id} onClick={this.titleToInput}>{this.props.list.listTitle}</div>
@@ -84,9 +99,7 @@ export class List extends React.Component {
                                     <button className="btn fas fa-ellipsis-v" type="button" id={"dropdownMenuButton"+this.props.list.listId} data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     </button>
                                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a className="dropdown-item">Copy list</a>
                                         <a className="dropdown-item" data-toggle="modal" data-target={"#"+"confirmArchiveCardsmodal"+this.props.list._id}>Archive all cards</a>
-                                        <a className="dropdown-item">Move list</a>
                                         <a className="dropdown-item" data-toggle="modal" data-target={"#"+"confirmArchivemodal"+this.props.list._id}>Archive list</a>
                                     </div>
                                 </div>

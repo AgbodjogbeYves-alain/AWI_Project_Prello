@@ -8,6 +8,7 @@ import Home from './pages/Home/Home.js';
 import LogIn from './pages/LogIn/LogIn.js';
 import SignUp from './pages/SignUp/SignUp.js';
 import Dashboard from './pages/Dashboard/Dashboard.js';
+import Stats from './pages/Stats/Stats.js';
 import Board from './pages/Board/BoardDisplay.js';
 import MyAccount from './pages/MyAccount/MyAccount.js';
 import LoadingPage from './pages/LoadingPage.js';
@@ -27,6 +28,7 @@ class MyRouter extends Component{
                         <Route path='/dashboard' component={Dashboard}/>
                         <Route path='/board/:id' component={Board}/>
                         <Route path="/myaccount" component={MyAccount}/>
+                        <Route path="/statistics" component={Stats}/>
                     </Switch>
                 </ScrollToTop>
             </Router>

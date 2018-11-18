@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import asteroid from '../../../common/asteroid';
 import Item from './Item';
+import { callRemoveChecklist } from '../../../actions/BoardActions';
 
  
 // App component - represents the whole app
@@ -16,7 +17,7 @@ class Checklist extends Component {
     }
 
     handleRemoveChecklist(){
-        if(confirm("Are you sure to remove ?")) asteroid.call("checklists.removeChecklist", this.props.checklist._id);
+        if(confirm("Are you sure to remove ?")) this.props.dispatchRemoveChecklists(this.props.checklist._id)
     }
 
     renderItems(){
@@ -86,4 +87,8 @@ const mapStateToProps = state => ({
     user: state.user,
 });
 
-export default connect(mapStateToProps)(Checklist);
+const mapDispatchToProps = dispatch => ({
+    dispatchRemoveChecklists: (checklistId) => dispatch(callRemoveChecklist(checklistId)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Checklist);
