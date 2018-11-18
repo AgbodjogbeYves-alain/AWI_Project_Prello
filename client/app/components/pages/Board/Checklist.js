@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import asteroid from '../../../common/asteroid';
 import Item from './Item';
-import { callRemoveChecklist } from '../../../actions/BoardActions';
+import { callRemoveChecklist } from '../../../actions/ChecklistActions';
 
  
 // App component - represents the whole app
@@ -17,36 +17,45 @@ class Checklist extends Component {
     }
 
     handleRemoveChecklist(){
-        if(confirm("Are you sure to remove ?")) this.props.dispatchRemoveChecklists(this.props.checklist._id)
+        const checklist = this.props.checklists.find((checklist) => checklist._id === this.props.checklistId);
+        if(confirm("Are you sure to remove ?")) this.props.dispatchRemoveChecklist(checklist._id)
     }
 
     renderItems(){
-        return this.props.checklist.checklistItems.map((item,i) => 
+        const checklist = this.props.checklists.find((checklist) => checklist._id === this.props.checklistId);
+        return checklist.checklistItems.map((item,i) => 
             <li key={i}><Item item={item}/></li>
         )
     }
 
     handleAddItem(e){
+        const checklist = this.props.checklists.find((checklist) => checklist._id === this.props.checklistId);
+
+        const that = this;
         if(e.key === "Enter" && this.state.newItemName !== ""){
-            asteroid.call("checklists.addItem", this.props.checklist._id, this.state.newItemName);
-            this.setState({newItemName: ""});
+            asteroid.call("checklists.addItem", checklist._id, this.state.newItemName)
+            .then(() => that.setState({newItemName: ""}))
+            
         }
     }
 
     getCompletedPourcent(){
-        let totalItems = this.props.checklist.checklistItems.length;
+        const checklist = this.props.checklists.find((checklist) => checklist._id === this.props.checklistId);
+
+        let totalItems = checklist.checklistItems.length;
         if(totalItems == 0) return 100;
-        let numCheckedItems = this.props.checklist.checklistItems.filter((i) => i.itemChecked).length;
+        let numCheckedItems = checklist.checklistItems.filter((i) => i.itemChecked).length;
         return 100*numCheckedItems/totalItems;
     }
 
     render() {
+        const checklist = this.props.checklists.find((checklist) => checklist._id === this.props.checklistId);
         return(
             <div className="checklist card">
                 <div className="card-body">
                     <h4>
                         <span style={{verticalAlign: "sub"}}><i className="ni ni-bullet-list-67"></i> </span>
-                        {this.props.checklist.checklistName}
+                        {checklist.checklistName}
                     </h4>
 
                     <div className="progress">
@@ -83,12 +92,13 @@ class Checklist extends Component {
     }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     user: state.user,
+    checklists : state.checklists
 });
 
 const mapDispatchToProps = dispatch => ({
-    dispatchRemoveChecklists: (checklistId) => dispatch(callRemoveChecklist(checklistId)),
+    dispatchRemoveChecklist: (checklistId) => dispatch(callRemoveChecklist(checklistId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Checklist);

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import {ContainerC} from "../Utils/Utils";
 import { connect } from 'react-redux';
-import { withRouter } from "react-router-dom";
 import ModalEditCard from "../../partials/ModalEditCard";
 import {ProfilePicture} from "../../partials/ProfilePicture";
 
@@ -11,22 +10,19 @@ class Card extends Component {
         super(props)
         this.state = {
             board: this.props.board,
-
-            //cardLabels: [],
-            //boardLabels: []
         }
     }
 
     getCompletedPourcent(){
-        let checklists = this.props.card.cardChecklists;
+        const checklists = this.props.checklists.filter((checklist) => this.props.card.cardChecklists.includes(checklist._id));
 
         let totalItems = checklists.map((checklist) => checklist.checklistItems.length)
-        .reduce((acc, val) => acc + val)
+        .reduce(((acc, val) => acc + val),0)
 
         if(totalItems == 0) return 100;
 
         let numCheckedItems = checklists.map((checklist) => checklist.checklistItems.filter((i) => i.itemChecked).length)
-        .reduce((acc, val) => acc + val)
+        .reduce(((acc, val) => acc + val),0)
 
         return 100*numCheckedItems/totalItems;
     }
@@ -84,7 +80,8 @@ class Card extends Component {
 const mapStateToProps = state => ({
     user: state.user,
     labels: state.labels,
-    users: state.users
+    users: state.users,
+    checklists: state.checklists
 });
 
 export default connect(mapStateToProps)(Card);

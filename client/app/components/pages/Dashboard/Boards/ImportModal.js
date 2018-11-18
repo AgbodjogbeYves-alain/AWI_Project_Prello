@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import LinkTrelloButton from '../../../partials/LinkTrelloButton.js';
 import asteroid from '../../../../common/asteroid.js';
+import { ObjectId } from "bson";
 
 class ImportModal extends Component {
 
@@ -40,14 +41,16 @@ class ImportModal extends Component {
 
     handleImport(){
         if(this.state.trelloBoardId){
-            console.log("test")
             this.setState({loading: true});
             let that = this;
             let trelloBoard = this.state.trelloBoards.filter((b) => b.id === this.state.trelloBoardId)[0];
             Trello.get("/boards/"+ trelloBoard.id +"/lists", (lists) => {
                 Trello.get("/boards/"+ trelloBoard.id +"/cards", (cards) => {
                     Trello.get("/boards/"+ trelloBoard.id +"/checklists", (checklists) => {
+                        let newChecklists = [];
                         checklists.forEach((cl,i) => {
+
+                            const checklistId = (new ObjectId()).toString().slice(0,17);
                             
                             let card = cards.filter((c) => c.id === cl.idCard)[0];
                             
@@ -58,13 +61,14 @@ class ImportModal extends Component {
                                     itemChecked: item.state === "complete"
                                 }
                             });
-                            let checklist = {
-                                _id: cl.id,
+                            newChecklists.push({
+                                _id: checklistId,
                                 checklistName: cl.name,
-                                checklistItems: newItems
-                            };
-                            if(card && card.cardChecklists) card.cardChecklists.push(checklist)
-                            else if(card) card.cardChecklists = [checklist]
+                                checklistItems: newItems,
+                            });
+
+                            if(card && card.cardChecklists) card.cardChecklists.push(checklistId)
+                            else if(card) card.cardChecklists = [checklistId]
                         });
                         
                         
@@ -100,9 +104,16 @@ class ImportModal extends Component {
                         }
 
                         asteroid.call("boards.createBoard", finalBoard)
-                         .then(() => {
-                             that.setState({loading: false});
-                             $('#import-modal').modal('toggle');
+                         .then((result) => {
+                             console.log(newChecklists)
+                             asteroid.call("checklists.addManyChecklist", newChecklists.map((cl) =>{
+                                cl.boardId = result;
+                                return cl
+                             }))
+                             .then(() => {
+                                that.setState({loading: false});
+                                $('#import-modal').modal('toggle');
+                             });
                         })
                     })
                 })
