@@ -22,7 +22,7 @@ Meteor.methods({
     'labels.removeLabel' (idLabel){
         let countDoc = Labels.find({_id: idLabel}).count();
         if(countDoc==1){
-            label = Labels.findOne({_id: idLabel})
+            let label = Labels.findOne({_id: idLabel})
             let countDocB = Boards.findOne({_id: label.labelBoard})
             if(countDocB ==1 ){
                 let board = Boards.findOne({_id: label.labelBoard})

@@ -26,11 +26,11 @@ export const EDIT_CARD = "EDIT_CARD"
 
 
 const roles = {
-    admin: [DELETE_BOARD, 
-        REMOVE_TEAM_MEMBER, 
-        EDIT_BOARD_SETTINGS, 
+    admin: [DELETE_BOARD,
+        REMOVE_TEAM_MEMBER,
+        EDIT_BOARD_SETTINGS,
         EXPORT_BOARD,
-        ACCESS_ARCHIVES, 
+        ACCESS_ARCHIVES,
         COPY_BOARD,
         ACCESS_BOARD,
         REMOVE_MEMBER,
@@ -76,8 +76,8 @@ const roles = {
 
 /**
  * Tests whether a role has a given right
- * 
- * @param {*} role The role to test
+ *
+ * @param {*} role The role to tests
  * @param {*} right The right to check
  */
 export function canPerform(role, right){

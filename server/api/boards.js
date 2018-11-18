@@ -182,7 +182,7 @@ Meteor.methods({
         }
     },
 
-    'board.archiveList' (boardId, listId) {
+    /*'board.archiveList' (boardId, listId) {
         let userId = this.userId
         let board = Boards.findOne({"_id": boardId})
         if(board){
@@ -202,6 +202,6 @@ Meteor.methods({
                 // TODO: archive the card here
             }
         }
-    }
+    }*/
 
 })
