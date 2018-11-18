@@ -48,7 +48,7 @@ function getBoardFromItem(itemId){
 
 //Asynchroneous
 export function callCreateBoard(board) {
-  return asteroid.call('boards.createBoard', board);
+  return asteroid.call('boards.createBoard', board).catch((error) => {alert(error.reason)});
 }
 
 export function callEditBoard(newBoard) {

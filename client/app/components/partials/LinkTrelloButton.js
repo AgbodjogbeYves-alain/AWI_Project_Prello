@@ -19,7 +19,7 @@ export default class LinkTrelloButton extends Component {
             success: function(val){
                 let token = Trello.token();
                 that.setState({"trelloLinked": true})
-                asteroid.call("users.linkTrello", token);
+                asteroid.call("users.linkTrello", token).catch((error) => {alert(error.reason)});
             }
         })
     }
@@ -27,13 +27,13 @@ export default class LinkTrelloButton extends Component {
     handleClickUnlinkTrello(){
         Trello.deauthorize();
         this.setState({"trelloLinked": false});
-        asteroid.call("users.unlinkTrello");
+        asteroid.call("users.unlinkTrello").catch((error) => {alert(error.reason)});
     }
 
     render(){
         if(this.props.trelloToken){
             return(
-                <button 
+                <button
                     onClick={() => this.handleClickUnlinkTrello()}
                     className="btn btn-primary btn-sm">
                     Unlink Trello account
@@ -41,7 +41,7 @@ export default class LinkTrelloButton extends Component {
             )
         }
         return (
-            <button 
+            <button
                 onClick={() => this.handleClickLinkTrello()}
                 className="btn btn-primary btn-sm">
                 Link Trello account

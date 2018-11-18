@@ -4,7 +4,7 @@ import asteroid from '../../../common/asteroid';
 import Item from './Item';
 import { callRemoveChecklist } from '../../../actions/ChecklistActions';
 
- 
+
 // App component - represents the whole app
 class Checklist extends Component {
 
@@ -23,7 +23,7 @@ class Checklist extends Component {
 
     renderItems(){
         const checklist = this.props.checklists.find((checklist) => checklist._id === this.props.checklistId);
-        return checklist.checklistItems.map((item,i) => 
+        return checklist.checklistItems.map((item,i) =>
             <li key={i}><Item item={item}/></li>
         )
     }
@@ -34,8 +34,8 @@ class Checklist extends Component {
         const that = this;
         if(e.key === "Enter" && this.state.newItemName !== ""){
             asteroid.call("checklists.addItem", checklist._id, this.state.newItemName)
-            .then(() => that.setState({newItemName: ""}))
-            
+            .then(() => that.setState({newItemName: ""})).catch((error) => {alert(error.reason)})
+
         }
     }
 
@@ -59,12 +59,12 @@ class Checklist extends Component {
                     </h4>
 
                     <div className="progress">
-                        <div className="progress-bar bg-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 
+                        <div className="progress-bar bg-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
                             style={{"width": this.getCompletedPourcent() + "%"}}>
                         </div>
                     </div>
-                    
-                    <button 
+
+                    <button
                         className="btn btn-danger btn-sm remove"
                         onClick={() => this.handleRemoveChecklist()}
                     >
@@ -77,9 +77,9 @@ class Checklist extends Component {
                         <div className="input-group-prepend">
                             <span className="input-group-text"><i className="fa fa-check-square"></i></span>
                         </div>
-                            <input 
-                                className="form-control" 
-                                placeholder="New item" 
+                            <input
+                                className="form-control"
+                                placeholder="New item"
                                 type="text"
                                 value={this.state.newItemName}
                                 onChange={(e) => this.setState({newItemName: e.target.value})}

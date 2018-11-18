@@ -15,7 +15,7 @@ class Board extends Component {
     handleRemoveBoard(e){
         e.preventDefault();
         if(confirm("Are you sure to delete this board ?")){
-            asteroid.call("boards.removeBoard", this.props.board._id)
+            asteroid.call("boards.removeBoard", this.props.board._id).then(() => {alert("The board is delete")}).catch((error) => {alert(error.reason)})
         }
     }
     render(){
@@ -35,7 +35,7 @@ class Board extends Component {
                                 <i className="ni ni-settings-gear-65 ni-lg"></i>
                             </div>
                             <div className="dropdown-menu">
-                                <div className="dropdown-item" 
+                                <div className="dropdown-item"
                                     data-toggle="modal"
                                     data-target={"#board-modal" + board._id}
                                     onClick={(e) => e.preventDefault()}

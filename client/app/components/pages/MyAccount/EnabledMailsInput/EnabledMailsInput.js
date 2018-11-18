@@ -13,15 +13,15 @@ class EnabledMailsinput extends Component {
     }
 
     changeEnabledMails(e){
-        asteroid.call("users.setEnabledMails", e.target.checked);
+        asteroid.call("users.setEnabledMails", e.target.checked).catch((error) => {alert(error.reason)});
     }
 
     render() {
         return (
             <div className="card-profile-actions py-4 mt-lg-0">
                 <label className="custom-toggle">
-                    <input 
-                        type="checkbox" 
+                    <input
+                        type="checkbox"
                         defaultChecked={this.state.enabledMails}
                         onChange={(e) => this.changeEnabledMails(e)}
                     />

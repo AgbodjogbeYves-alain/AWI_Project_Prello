@@ -51,9 +51,9 @@ class ImportModal extends Component {
                         checklists.forEach((cl,i) => {
 
                             const checklistId = (new ObjectId()).toString().slice(0,17);
-                            
+
                             let card = cards.filter((c) => c.id === cl.idCard)[0];
-                            
+
                             let newItems = cl.checkItems.map((item) => {
                                 return {
                                     _id: item.id,
@@ -70,8 +70,8 @@ class ImportModal extends Component {
                             if(card && card.cardChecklists) card.cardChecklists.push(checklistId)
                             else if(card) card.cardChecklists = [checklistId]
                         });
-                        
-                        
+
+
                         cards.forEach((c) => {
                             let list = lists.filter((l) => l.id === c.idList)[0];
                             let card = {
@@ -93,7 +93,7 @@ class ImportModal extends Component {
                                 listArchived: l.closed
                             }
                         });
-                        
+
                         let finalBoard = {
                             boardTitle: trelloBoard.name,
                             boardDescription: trelloBoard.desc,
@@ -113,17 +113,17 @@ class ImportModal extends Component {
                              .then(() => {
                                 that.setState({loading: false});
                                 $('#import-modal').modal('toggle');
-                             });
+                             }).catch((error) => {alert(error.reason)});
                         })
                     })
                 })
             })
         }
-        
+
     }
 
     render(){
-        return ( 
+        return (
             <div className="modal fade" id="import-modal" tabIndex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
                 <div className="modal-dialog modal- modal-dialog-centered modal-" role="document">
                     <div className="modal-content">
@@ -136,16 +136,16 @@ class ImportModal extends Component {
                         </div>
 
                         <div className="modal-body">
-                            {this.props.trelloToken ? 
+                            {this.props.trelloToken ?
                                 <form>
                                     <label htmlFor="trello-select">Choose a Trello Board</label><br/>
-                                    <select 
-                                        id="trello-select" 
+                                    <select
+                                        id="trello-select"
                                         value={this.state.trelloBoardId}
                                         onChange={(e) => this.setState({trelloBoardId: e.target.value})}
                                     >
                                         <option value={null}>Choose a board</option>
-                                        {this.state.trelloBoards.map((b, i) => 
+                                        {this.state.trelloBoards.map((b, i) =>
                                             <option key={i} value={b.id}>{b.name}</option>
                                         )}
                                     </select>
@@ -153,7 +153,7 @@ class ImportModal extends Component {
                                 :
                                 <LinkTrelloButton trelloToken={this.props.trelloToken} />
                             }
-                            
+
                         </div>
 
                         <div className="modal-footer">
@@ -163,7 +163,7 @@ class ImportModal extends Component {
                                     Wait...
                                 </button>
                                 :
-                                <button 
+                                <button
                                     className="btn btn-primary  ml-auto"
                                     onClick={() => this.handleImport()}>
                                     Import

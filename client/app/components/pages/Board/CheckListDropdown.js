@@ -16,7 +16,7 @@ class CheckListDropdown extends Component {
         e.preventDefault();
         let checklistName = this.state.checklistName;
         if(checklistName) {
-            asteroid.call("checklists.addChecklist", this.props.card._id, checklistName)
+            asteroid.call("checklists.addChecklist", this.props.card._id, checklistName).catch((error) => {alert(error.reason)})
             this.setState({checklistName: ""})
         }
         else alert("You should put a checklist name.");
@@ -34,9 +34,9 @@ class CheckListDropdown extends Component {
                                     <div className="input-group-prepend">
                                         <span className="input-group-text"><i className="ni ni-bullet-list-67"></i></span>
                                     </div>
-                                    <input 
-                                        className="form-control" 
-                                        placeholder="Checklist name" 
+                                    <input
+                                        className="form-control"
+                                        placeholder="Checklist name"
                                         type="text"
                                         required
                                         value={this.state.checklistName}
@@ -45,7 +45,7 @@ class CheckListDropdown extends Component {
                                 </div>
                             </div>
                             <div className="text-center">
-                                <button 
+                                <button
                                     className="btn btn-primary my-4"
                                     type="submit"
                                 >

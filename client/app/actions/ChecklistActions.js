@@ -67,20 +67,20 @@ export function callRemoveChecklist(checklistId) {
   return (dispatch) =>{
     dispatch(editBoard({_id: board._id, data: board}));
     dispatch(removeChecklist(checklistId));
-  } 
+  }
 }
 
 export function callSetItemChecked(itemId, itemChecked){
   let checklist = store.getState().checklists.find((checklist) => checklist.checklistItems.find((item) => item._id === itemId));
-  
+
   checklist.checklistItems = checklist.checklistItems.map((item) => {
     if(item._id === itemId) item.itemChecked = itemChecked
     return item
   });
 
-  
+
   return dispatch =>{
     dispatch(editChecklist(checklist._id, checklist));
-    asteroid.call("checklists.setItemChecked",itemId,itemChecked);
-  } 
+    asteroid.call("checklists.setItemChecked",itemId,itemChecked).catch((error) => {alert(error.reason)});
+  }
 }

@@ -23,7 +23,7 @@ class Item extends Component {
     }
 
     handleRemoveItem(){
-        asteroid.call("checklists.removeItem", this.props.item._id);
+        asteroid.call("checklists.removeItem", this.props.item._id).catch((error) => {alert(error.reason)});
     }
 
     componentWillReceiveProps(nextProps){
