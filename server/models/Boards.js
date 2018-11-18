@@ -9,8 +9,7 @@ import { BoardUserSchema } from './BoardUser';
 
 export const BoardSchema = new SimpleSchema({
   _id: {
-      type: String,
-      optional: true
+    type: SimpleSchema.RegEx.Id
   },
   boardTitle: {
       type: String,

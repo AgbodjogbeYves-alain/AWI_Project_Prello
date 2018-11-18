@@ -67,7 +67,7 @@ export const CardSchema = new SimpleSchema({
       label: "Checklists",
       defaultValue: []
   },
-  'cardChecklists.$': ChecklistSchema, //se if need to replace Object with a schema*/
+  'cardChecklists.$': String, //se if need to replace Object with a schema*/
   cardCreatedAt:{
     type: Date,
     autoValue: function(){return new Date();}

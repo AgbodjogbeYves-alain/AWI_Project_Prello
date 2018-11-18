@@ -34,17 +34,6 @@ export function resetBoards() {
   };
 }
 
-
-function getBoardFromChecklist(checklistId){
-  return store.getState().boards.filter((b) =>{
-    return b.boardLists.filter((l) =>{
-      return l.listCards.filter((c) => {
-        return c.cardChecklists.filter((cl) => cl._id == checklistId).length > 0
-      }).length > 0
-    }).length > 0
-  })[0];
-}
-
 function getBoardFromItem(itemId){
   return store.getState().boards.filter((b) =>{
     return b.boardLists.filter((l) =>{
@@ -67,24 +56,6 @@ export function callEditBoard(newBoard) {
   return dispatch => dispatch(editBoard({_id: newBoard._id, data: newBoard}));
 }
 
-export function callRemoveChecklist(checklistId) {
-  let board = getBoardFromChecklist(checklistId);
-
-  let newBoardLists = board.boardLists.map((list) => {
-    let newListCards = list.listCards.map((card) => {
-      let newCardChecklists = card.cardChecklists.filter((checklist) => checklist._id !== checklistId)
-      card.cardChecklists = newCardChecklists;
-      return card;
-    });
-    list.listCards = newListCards;
-    return list;
-  });
-  board.boardLists = newBoardLists;
-
-  asteroid.call('boards.editBoard', board).catch(error => {alert(error.reason);})
-  return dispatch => dispatch(editBoard({_id: board._id, data: board}));
-}
-
 export function callRemoveItem(itemId) {
   let board = getBoardFromItem(itemId);
 
@@ -92,31 +63,6 @@ export function callRemoveItem(itemId) {
     let newListCards = list.listCards.map((card) => {
       let newCardChecklists = card.cardChecklists.map((checklist) =>{
         let newChecklistItems = checklist.checklistItems.filter((item) => item._id !== itemId)
-        checklist.checklistItems = newChecklistItems;
-        return checklist
-      });
-      card.cardChecklists = newCardChecklists;
-      return card;
-    });
-    list.listCards = newListCards;
-    return list;
-  });
-  board.boardLists = newBoardLists;
-
-  asteroid.call('boards.editBoard', board).catch(error => {alert(error.reason);})
-  return dispatch => dispatch(editBoard({_id: board._id, data: board}));
-}
-
-export function callSetItemChecked(itemId, checked) {
-  let board = getBoardFromItem(itemId);
-  
-  let newBoardLists = board.boardLists.map((list) => {
-    let newListCards = list.listCards.map((card) => {
-      let newCardChecklists = card.cardChecklists.map((checklist) =>{
-        let newChecklistItems = checklist.checklistItems.map((item) =>{
-          if(item._id === itemId) item.itemChecked = checked;
-          return item;
-        })
         checklist.checklistItems = newChecklistItems;
         return checklist
       });

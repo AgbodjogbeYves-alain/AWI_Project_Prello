@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import asteroid from '../../../common/asteroid';
+import { connect } from 'react-redux';
+import { callSetItemChecked } from '../../../actions/ChecklistActions';
 
 
 // App component - represents the whole app
-export default class Item extends Component {
+class Item extends Component {
 
     constructor(props){
         super(props)
@@ -16,9 +18,8 @@ export default class Item extends Component {
     handleToggleCheck(e){
         let itemChecked = e.target.checked;
         let itemId = this.props.item._id;
-        this.setState({itemChecked: itemChecked}, () => {
-            asteroid.call("checklists.setItemChecked", itemId, itemChecked)
-        });
+        this.setState({itemChecked: itemChecked});
+        this.props.dispatchCallSetItemChecked(itemId, itemChecked);
     }
 
     handleRemoveItem(){
@@ -53,3 +54,11 @@ export default class Item extends Component {
         );
     }
 }
+
+const mapStateToProps = (state) => ({});
+
+const mapDispatchToProps = dispatch => ({
+    dispatchCallSetItemChecked: (itemId, itemChecked) => dispatch(callSetItemChecked(itemId, itemChecked)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Item);

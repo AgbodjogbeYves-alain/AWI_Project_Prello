@@ -49,7 +49,7 @@ class LogIn extends Component {
         asteroid.call("users.googleLogin",token)
         .then((result) => {
             if(result){
-                let key = process.env.STORAGEKEY ? process.env.STORAGEKEY : 'ws://localhost:9000/websocket__login_token__';
+                let key = "wss://prello12s.igpolytech.fr/websocket__login_token__" //? process.env.STORAGEKEY : 'ws://localhost:9000/websocket__login_token__';
                 localStorage.setItem(key,result.token)
             that.addAlert("success", "You're Loged In !");
             that.props.history.push('/dashboard');
@@ -77,10 +77,10 @@ class LogIn extends Component {
           }
 
         const failResponseGoogle = (response) =>{
-            alert("An error occured !! Please try again!! ")
+           // alert("An error occured !! Please try again!! ")
         }
 
-        const key = "909976969961-r4v6ls5qbgjvslotg7trcb066vig4cb8.apps.googleusercontent.com"
+        const key = process.env.KEYAPI ? process.env.KEYAPI : "909976969961-r4v6ls5qbgjvslotg7trcb066vig4cb8.apps.googleusercontent.com"
 
         const { user } = this.props;
         if(user) return(<Redirect to='/dashboard'/>)
@@ -120,7 +120,7 @@ class LogIn extends Component {
                                                 <span className="btn-inner--text">Google</span>
                                                 </a>
                                             )}
-                                            buttonText="Login"
+
                                             onSuccess={sucessResponseGoogle}
                                             onFailure={failResponseGoogle}
                                         />
