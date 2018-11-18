@@ -81,7 +81,7 @@ class SignUp extends Component {
           }
 
         const failResponseGoogle = (response) =>{
-            alert("An error occured !! Please try again!! ")
+            //alert("An error occured !! Please try again!! ")
         }
 
         const key = process.env.KEYAPI ? process.env.KEYAPI : "909976969961-r4v6ls5qbgjvslotg7trcb066vig4cb8.apps.googleusercontent.com"
@@ -120,7 +120,6 @@ class SignUp extends Component {
                                     <span className="btn-inner--text">Google</span>
                                     </a>
                                 )}
-                                buttonText="Login"
                                 onSuccess={sucessResponseGoogle}
                                 onFailure={failResponseGoogle}
                             />
