@@ -4,6 +4,7 @@ import boards from './BoardReducers';
 import users from './UsersReducers';
 import teams from './TeamReducers';
 import labels from './LabelReducers';
+import checklists from './ChecklistReducers';
 
 import refreshed from './RefreshReducers';
 
@@ -13,7 +14,8 @@ const mainReducer = combineReducers({
   users,
   teams,
   labels,
-  refreshed
+  refreshed,
+  checklists
 });
 
 export default mainReducer;

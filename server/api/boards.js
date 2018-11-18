@@ -10,6 +10,7 @@ import {
     DELETE_BOARD,
     EDIT_BOARD_SETTINGS
 } from './Utils/roles';
+import { Checklists } from "../models/Checklists";
 
 
 if(Meteor.isServer){
@@ -61,8 +62,10 @@ Meteor.methods({
 
         if (board) {
             let userRole = boardUtils.getUserRole(userId, board)
-            if(canPerform(userRole, DELETE_BOARD))
+            if(canPerform(userRole, DELETE_BOARD)){
+                Checklists.remove({boardId: boardId});
                 return Boards.remove(boardId)
+            }
             else
                 throw new Meteor.Error(403, "You do not have permission to delete the board")
 

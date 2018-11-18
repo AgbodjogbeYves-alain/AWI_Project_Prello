@@ -133,13 +133,13 @@ class ModalEditCard extends Component {
         child.parentNode.removeChild(child);
     }
 
-    renderChecklists(){
+    renderChecklists() {
+        let checklists = this.props.checklists.filter((checklist) => this.props.card.cardChecklists.includes(checklist._id));
         return(
             <div className="checklists">
-                {this.props.card.cardChecklists ? this.props.card.cardChecklists.map((c, index) =>
-                    <Checklist id={index} checklist={c}/>
-                ) : ""
-                }
+                {checklists && checklists.map((c, i) =>
+                    <Checklist key={i} checklistId={c._id}/>
+                )}
             </div>
         )
     }
@@ -214,6 +214,7 @@ class ModalEditCard extends Component {
                                 </form>
 
                                 {this.renderChecklists()}
+
                                 <form role="form" onSubmit={(e) => e.preventDefault()}>
                                     <div className="form-group mb-3">
                                         <div id={"commentDiv"}>
@@ -282,7 +283,7 @@ class ModalEditCard extends Component {
                                             CheckList
                                         </button>
                                         {this.state.modalDisplayed === "checklist" ?
-                                            <CheckListDropdown cardId={this.props.card._id}/> : ""
+                                            <CheckListDropdown card={this.props.card}/> : ""
                                         }
                                     </li>
                                     <li>
@@ -313,7 +314,8 @@ class ModalEditCard extends Component {
 const mapStateToProps = state => ({
     user: state.user,
     users: state.users,
-    labels: state.labels
+    labels: state.labels,
+    checklists: state.checklists
 });
 
 export default connect(mapStateToProps)(ModalEditCard);

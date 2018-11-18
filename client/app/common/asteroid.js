@@ -4,6 +4,7 @@ import store from '../components/store';
 import { createBoard, removeBoard, editBoard } from '../actions/BoardActions';
 import { addTeam, removeTeam, editTeam } from '../actions/TeamActions';
 import { addLabel, removeLabel, editLabel } from '../actions/LabelActions';
+import { addChecklist, editChecklist, removeChecklist } from '../actions/ChecklistActions';
 
 const Asteroid = createClass();
 // Connect to a Meteor backend
@@ -18,28 +19,30 @@ asteroid.subscribe('users');
 asteroid.subscribe('user');
 asteroid.subscribe('teams');
 asteroid.subscribe('labels');
+asteroid.subscribe('checklists');
 
 asteroid.ddp.on('added', (doc) => {
   // we need proper document object format here
-  if (doc.collection === 'users') {
-    const docObj = Object.assign({}, doc.fields, { _id: doc.id });
-    if(docObj.services) store.dispatch(setLoggedUser(docObj));
-    else store.dispatch(addUser(docObj));
-
-  }
-  if(doc.collection === 'boards'){
-    const docObj = Object.assign({}, doc.fields, { _id: doc.id });
-    store.dispatch(createBoard(docObj));
-  }
-  if(doc.collection === 'teams'){
-    const docObj = Object.assign({}, doc.fields, { _id: doc.id });
-    store.dispatch(addTeam(docObj));
-  }
-  if(doc.collection === 'labels'){
-      const docObj = Object.assign({}, doc.fields, { _id: doc.id });
+  const docObj = Object.assign({}, doc.fields, { _id: doc.id });
+  
+  switch(doc.collection){
+    case "users":
+      if(docObj.services) store.dispatch(setLoggedUser(docObj));
+      else store.dispatch(addUser(docObj));
+      break;
+    case 'boards':
+      store.dispatch(createBoard(docObj));
+      break;
+    case 'teams':
+      store.dispatch(addTeam(docObj));
+      break;
+    case 'labels':
       store.dispatch(addLabel(docObj));
+      break;
+    case 'checklists':
+      store.dispatch(addChecklist(docObj));
+      break;  
   }
-
 });
 
 asteroid.ddp.on('removed', (removedDoc) => {
@@ -55,6 +58,9 @@ asteroid.ddp.on('removed', (removedDoc) => {
   if(removedDoc.collection === 'labels'){
       store.dispatch(removeLabel(removedDoc.id));
   }
+  if(removedDoc.collection === 'checklists'){
+    store.dispatch(removeChecklist(removedDoc.id));
+}
 
 });
 
@@ -70,6 +76,9 @@ asteroid.ddp.on('changed', (updatedDoc) => {
   }
   if (updatedDoc.collection === 'labels') {
       store.dispatch(editLabel(updatedDoc.id, updatedDoc.fields));
+  }
+  if (updatedDoc.collection === 'checklists') {
+    store.dispatch(editChecklist(updatedDoc.id, updatedDoc.fields));
   }
 });
 

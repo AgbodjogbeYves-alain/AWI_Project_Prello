@@ -16,3 +16,4 @@ export const ItemSchema = new SimpleSchema({
         defaultValue: false
     }
 });
+

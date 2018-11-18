@@ -14,12 +14,12 @@ class CheckListDropdown extends Component {
 
     handleCreateChecklist(e){
         e.preventDefault();
-        let that = this;
-        let checklistName = this.state.checklistName
-        asteroid.call("checklists.addChecklist",this.props.cardId, checklistName)
-        .then(() => {
-            that.setState({checklistName: checklistName})
-        })
+        let checklistName = this.state.checklistName;
+        if(checklistName) {
+            asteroid.call("checklists.addChecklist", this.props.card._id, checklistName)
+            this.setState({checklistName: ""})
+        }
+        else alert("You should put a checklist name.");
     }
 
     render(){
@@ -62,7 +62,9 @@ class CheckListDropdown extends Component {
 
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+    boards: state.boards
+});
 
 export default connect(mapStateToProps)(CheckListDropdown);
 
