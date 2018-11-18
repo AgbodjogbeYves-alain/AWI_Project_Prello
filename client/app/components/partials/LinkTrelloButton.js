@@ -19,7 +19,7 @@ export default class LinkTrelloButton extends Component {
             success: function(val){
                 let token = Trello.token();
                 that.setState({"trelloLinked": true})
-                asteroid.call("users.linkTrello", token).catch((error) => {alert(error.reason)});
+                asteroid.call("users.linkTrello", token);
             }
         })
     }

@@ -51,7 +51,7 @@ class Stats extends Component {
         let c = cardsArchived.length
         return(c);
     }
-    
+
     render(){
         const { user } = this.props;
         if(!user) return(<Redirect to='/'/>)
@@ -112,7 +112,7 @@ class Stats extends Component {
                             <div className="card-body">
                                 <div className="row">
                                     <div className="col">
-                                        <h5 className="card-title text-uppercase text-muted mb-0">Number of active cards</h5>
+                                        <h5 className="card-title text-uppercase text-muted mb-0">Total cards number</h5>
                                         <span className="h2 font-weight-bold mb-0">{this.state.nbCardsActive}</span>
                                     </div>
                                     <div className="col-auto">

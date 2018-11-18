@@ -241,7 +241,7 @@ li{
 }
 
 .cardLabelsDiv{
-    margin-top: 5%;
+    margin-top: 12%;
 }
 .profile-picture {
     background-color: #5e72e4;
@@ -290,6 +290,7 @@ li{
     width: fit-content;
     margin-left: 25px;
     margin-top: 5%;
+    display: flex;
 }
 
 .userForCard .profile-picture{
