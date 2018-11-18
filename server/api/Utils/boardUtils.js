@@ -1,5 +1,11 @@
 export class boardUtils {
-
+    /**
+     * Get if the user is in a board
+     *
+     * @param idUser The user to search
+     * @param board The board to check
+     * @returns true if the user is in the board, false otherwise
+     */
     static checkInBoardUser(idUser, board){
         let isIn = false
         board.boardUsers.map((user) => {

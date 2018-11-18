@@ -7,6 +7,12 @@ import {canPerform,
         EDIT_CARD
 } from "./Utils/roles";
 
+/**
+ * get a board with the given checklist
+ *
+ * @param checklistId The id of the checklist
+ * @returns the board with the checklist,
+ */
 function findBoardWithChecklist(checklistId){
     return Boards.findOne({
         boardLists: {
@@ -25,6 +31,12 @@ function findBoardWithChecklist(checklistId){
     });
 }
 
+/**
+ * get a board with the given checlist item
+ *
+ * @param itemId The id of the checlist item
+ * @returns the board with the checlist item,
+ */
 function findBoardWithItem(itemId){
     return Boards.findOne({
         boardLists: {
@@ -48,6 +60,15 @@ function findBoardWithItem(itemId){
 }
 
 Meteor.methods({
+
+    /**
+     * Add a checklist to a card in a board
+     *
+     * @param cardId The id of the card
+     * @param checklistName The name of the checklist to add
+     * @returns the id of the board edited,
+     *  an error if the board doesn't exist or if the user doesn't have the right to edit the card
+     */
     "checklists.addChecklist"(cardId, checklistName){
         let userId = this.userId
         let board = Boards.findOne({
@@ -89,6 +110,13 @@ Meteor.methods({
             throw new Meteor.Error(404, "Board not found")
     },
 
+    /**
+     * Remove a checklist to a card in a board
+     *
+     * @param checklistId The id of the checklist to remove
+     * @returns the id of the board edited,
+     *  an error if the board doesn't exist or if the user doesn't have the right to edit the card
+     */
     "checklists.removeChecklist"(checklistId){
         let userId = this.userId
         let board = findBoardWithChecklist(checklistId);
@@ -115,6 +143,14 @@ Meteor.methods({
             throw new Meteor.Error(404, "Board not found")
     },
 
+    /**
+     * Add an item to a checklist
+     *
+     * @param checklistId The id of the checklist
+     * @param itemName The name of the item to add
+     * @returns the id of the board edited,
+     *  an error if the board doesn't exist or if the user doesn't have the right to edit the card
+     */
     "checklists.addItem"(checklistId, itemName){
         let userId = this.userId
         let board = findBoardWithChecklist(checklistId);
@@ -148,6 +184,14 @@ Meteor.methods({
             throw new Meteor.Error(404, "Board not found")
     },
 
+    /**
+     * Set an item in a checklist
+     *
+     * @param itemId The id of the item
+     * @param itemChecked The new value for the checked
+     * @returns the id of the board edited,
+     *  an error if the board doesn't exist or if the user doesn't have the right to edit the card
+     */
     "checklists.setItemChecked"(itemId, itemChecked){
         let userId = this.userId
         let board = findBoardWithItem(itemId);
@@ -180,6 +224,13 @@ Meteor.methods({
             throw new Meteor.Error(404, "Board not found")
     },
 
+    /**
+     * Remove an item in a checklist
+     *
+     * @param itemId The id of the item
+     * @returns the id of the board edited,
+     *  an error if the board doesn't exist or if the user doesn't have the right to edit the card
+     */
     "checklists.removeItem"(itemId){
         let userId = this.userId
         let board = findBoardWithItem(itemId);
