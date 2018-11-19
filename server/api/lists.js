@@ -4,7 +4,8 @@ import  { Random } from 'meteor/random';
 import {Boards} from "../models/Boards";
 import {boardUtils} from "./Utils/boardUtils";
 import {canPerform,
-        EDIT_BOARD_SETTINGS
+        CREATE_LIST,
+        DELETE_LIST
 } from "./Utils/roles"
 
 Meteor.methods({
@@ -21,7 +22,7 @@ Meteor.methods({
         let board = Boards.findOne({"_id": idBoard})
         if(board){
             let userRole = boardUtils.getUserRole(userId, board)
-            if(canPerform(userRole, EDIT_BOARD_SETTINGS)){
+            if(canPerform(userRole, CREATE_LIST)){
                 let boardLists = board.boardLists
                 let id = Random.id();
                 let newList = {_id: id, listTitle: "New list", listCards: [], listArchived: false}
@@ -51,7 +52,7 @@ Meteor.methods({
         let board = Boards.findOne({"_id": idBoard})
         if(board){
             let userRole = boardUtils.getUserRole(userId, board)
-            if(canPerform(userRole, EDIT_BOARD_SETTINGS)){
+            if(canPerform(userRole, DELETE_LIST)){
                 let boardLists = board.boardLists
                 let newBoardList = boardLists.filter((list) => list._id!=idList)
                 Boards.update({_id: idBoard},{
@@ -79,7 +80,7 @@ Meteor.methods({
         let board = Boards.findOne({"_id": idBoard})
         if(board){
             let userRole = boardUtils.getUserRole(userId, board)
-            if(canPerform(userRole, EDIT_BOARD_SETTINGS)){
+            if(canPerform(userRole, CREATE_LIST)){
                 let boardLists = board.boardLists
                 let newBoardList = boardLists.map((list) => {
                     if(list._id == newList._id){

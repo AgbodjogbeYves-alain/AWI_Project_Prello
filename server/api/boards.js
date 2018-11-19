@@ -111,7 +111,6 @@ Meteor.methods({
                     $set: {
                         boardTitle: newBoard.boardTitle,
                         boardPrivacy: newBoard.boardPrivacy,
-                        boardLists: newBoard.boardLists,
                         boardUsers: newBoard.boardUsers,
                         boardTeams: newBoard.boardTeams,
                         boardBackground: newBoard.boardBackground

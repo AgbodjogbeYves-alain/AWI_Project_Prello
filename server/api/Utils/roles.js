@@ -9,6 +9,8 @@ export const ACCESS_BOARD = "ACCESS_BOARD"
 export const REMOVE_MEMBER = "REMOVE_MEMBER"
 export const CHANGE_RIGHTS_TEAM_MEMBER = "CHANGE_RIGHTS_TEAM_MEMBER"
 export const ADD_MEMBER_BOARD = "ADD_MEMBER"
+export const CREATE_LIST = "CREATE_LIST"
+export const DELETE_LIST = "DELETE_LIST"
 
 // Card rights
 export const DELETE_CARD = "DELETE_CARD"
@@ -36,6 +38,7 @@ const roles = {
         REMOVE_MEMBER,
         CHANGE_RIGHTS_TEAM_MEMBER,
         ADD_MEMBER_BOARD,
+        CREATE_LIST,
 
         DELETE_CARD,
         ADD_MEMBER_CARD,
@@ -55,6 +58,7 @@ const roles = {
         ACCESS_ARCHIVES,
         COPY_BOARD,
         ACCESS_BOARD,
+        CREATE_LIST,
 
         ADD_MEMBER_CARD,
         CREATE_CHECKLIST,
