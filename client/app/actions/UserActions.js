@@ -54,9 +54,15 @@ export function resetUsers(){
   }
 }
 
-export function callEditProfileUser(email, lastname, firstname) {
-  return dispatch => asteroid.call('users.updateProfile', email, lastname, firstname)
-      .then(result => dispatch(editProfileUser(result)));
+export function callEditProfileUser(userId, profile) {
+  
+  
+  return dispatch => {
+    dispatch(editProfileUser(userId, {
+      profile : profile
+    }));
+    return asteroid.call('users.updateProfile', profile.email, profile.lastname, profile.firstname)
+  } 
 }
 
 export function callRemoveUser() {

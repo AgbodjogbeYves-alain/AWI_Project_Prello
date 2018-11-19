@@ -4,7 +4,7 @@ export class ProfilePicture extends Component {
 
     getInitials(){
         let {lastname, firstname} = this.props.user.profile;
-        return firstname.slice(0,1).toUpperCase()+lastname.slice(0,1).toUpperCase();
+        return (firstname ? firstname.slice(0,1).toUpperCase() : "") + (lastname ? lastname.slice(0,1).toUpperCase() : "");
     }
     getColor(){
         let {lastname, firstname} = this.props.user.profile;

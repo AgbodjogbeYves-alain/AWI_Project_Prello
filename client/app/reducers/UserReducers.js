@@ -5,7 +5,9 @@ const user = (state = null, action) => {
     case SET_USER:
       return action.data;
     case EDIT_USER:
-      return Object.assign({_id: state._id}, action.data);
+      let newUser = Object.assign({_id: state._id}, action.data)
+      console.log(newUser)
+      return newUser;
     case UNSET_USER:
       return null;
     case REMOVE_USER:

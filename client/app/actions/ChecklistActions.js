@@ -61,12 +61,13 @@ export function callRemoveChecklist(checklistId) {
   });
   board.boardLists = newBoardLists;
 
-  asteroid.call('boards.editBoard', board).catch(error => {alert(error.reason);})
-  asteroid.call('checklists.removeChecklist', checklistId).catch(error => {alert(error.reason);})
+  
 
   return (dispatch) =>{
     dispatch(editBoard({_id: board._id, data: board}));
     dispatch(removeChecklist(checklistId));
+    asteroid.call('boards.editBoard', board).catch(error => {alert(error.reason);})
+    return asteroid.call('checklists.removeChecklist', checklistId).catch(error => {alert(error.reason);})
   }
 }
 
@@ -81,6 +82,6 @@ export function callSetItemChecked(itemId, itemChecked){
 
   return dispatch =>{
     dispatch(editChecklist(checklist._id, checklist));
-    asteroid.call("checklists.setItemChecked",itemId,itemChecked).catch((error) => {alert(error.reason)});
+    return asteroid.call("checklists.setItemChecked",itemId,itemChecked).catch((error) => {alert(error.reason)});
   }
 }

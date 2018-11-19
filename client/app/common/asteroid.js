@@ -66,6 +66,7 @@ asteroid.ddp.on('removed', (removedDoc) => {
 
 asteroid.ddp.on('changed', (updatedDoc) => {
   if (updatedDoc.collection === 'users') {
+    console.log(updatedDoc)
       store.dispatch(editProfileUser(updatedDoc.id, updatedDoc.fields));
   }
   if (updatedDoc.collection === 'boards') {

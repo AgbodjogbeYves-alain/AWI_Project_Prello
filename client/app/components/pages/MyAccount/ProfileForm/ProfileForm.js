@@ -31,9 +31,13 @@ class ProfileForm extends Component {
 
     handleSubmit= (event) => {
         event.preventDefault();
-        const { dispatchCallEditProfileUser } = this.props;
+        const { dispatchCallEditProfileUser, user } = this.props;
+        let profile = user.profile;
+        profile.email = this.state.email;
+        profile.lastname = this.state.lastname;
+        profile.firstname = this.state.firstname;
         let that = this;
-        dispatchCallEditProfileUser(this.state.email, this.state.lastname, this.state.firstname)
+        dispatchCallEditProfileUser(this.props.user._id, profile)
         .then(() => {
             that.addAlert("success", "Profile saved.");
         })
@@ -110,7 +114,9 @@ class ProfileForm extends Component {
     }
 }
 
-const mapStateToProps = () => ({});
+const mapStateToProps = (state) => ({
+    user: state.user
+});
 const mapDispatchToProps = dispatch => ({
     dispatchCallEditProfileUser: (email, lastname, firstname) => dispatch(callEditProfileUser(email, lastname, firstname)),
 });

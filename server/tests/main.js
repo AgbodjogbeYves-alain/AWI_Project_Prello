@@ -272,3 +272,30 @@ describe("lists", function() {
         })
     });
 })
+
+// --------- TESTS ON TEAM ------------
+
+describe("teams", function() {
+    it('should create a new team', function() {
+
+        let team = {
+            teamName: "teamname",
+            teamDescription: "description de team",
+            teamMembers: [
+                {
+                    userId: "aaaaaaaaaaaaaaaaa",
+                    role: 'admin'
+                }
+            ]
+        };
+
+        const teamId = Meteor.call('teams.createTeam', team)
+        .then(() => {
+            assert.isString(teamId)
+            assert.strictEqual(teamId.length, 17);
+        });
+        
+
+        
+    });
+})
