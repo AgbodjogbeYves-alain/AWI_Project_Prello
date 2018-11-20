@@ -73,7 +73,7 @@ class BoardModal extends Component {
             boardBackground: this.state.boardBackground,
             boardPrivacy: 1
         };
-        
+
         callCreateBoard(board)
         .then((result) => {
             $('#board-modal' + this.state.boardId).modal('toggle');
@@ -95,7 +95,7 @@ class BoardModal extends Component {
         if(board.boardTitle && board.boardBackground){
             this.props.dispatchCallEditBoard(board)
             $('#board-modal' + this.state.boardId).modal('toggle');
-        } 
+        }
         else this.addAlert("danger", error.reason);
     }
 
@@ -204,7 +204,7 @@ class BoardModal extends Component {
                                         />
                                     </form>
                                 </div>
-                                <div className="col-4">
+                                <div className="backgroundDiv col-4">
                                     <h2>Background</h2>
                                     <div className="row backgrounds">
                                         {this.renderBackgrounds()}

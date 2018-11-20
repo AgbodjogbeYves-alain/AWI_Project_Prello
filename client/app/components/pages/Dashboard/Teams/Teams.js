@@ -41,7 +41,7 @@ export default class Teams extends Component {
     }
 
     handleRemoveTeam(team){
-        if(confirm("Are you sure to delete the team ?")) asteroid.call("teams.removeTeam", team).catch((error) => {alert(error.reason)});
+        if(confirm("Are you sure to delete the team ?")) asteroid.call("teams.removeTeam", team).catch((error) => {alert(error)});
     }
 
     render(){

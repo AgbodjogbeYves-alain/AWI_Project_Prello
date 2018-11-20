@@ -23,7 +23,7 @@ class AddTeamInput extends Component {
                     {team.teamName}
                 </div>
                 <div className="col-2">
-                    <button className="btn btn-danger btn-sm" onClick={() => this.handleRemoveTeam(teamId)}>
+                    <button className="btn btn-danger btn-sm deleteAddMember" onClick={() => this.handleRemoveTeam(teamId)}>
                         x
                     </button>
                 </div>
@@ -42,7 +42,7 @@ class AddTeamInput extends Component {
         let addedTeams = this.state.addedTeams;
         let team = this.props.teams.filter((t) => t.teamName === this.state.teamName)[0]
         let alreadyTeam = this.state.addedTeams.filter((t) => t == team._id).length > 0;
-        
+
         if(alreadyTeam) alert("This team has been already put.")
         else if(team){
             addedTeams.push(team._id);
