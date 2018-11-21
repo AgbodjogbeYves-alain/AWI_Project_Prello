@@ -17,16 +17,20 @@ class MemberProposer extends Component {
     }
 
 
-    addMemberToCard = (user) => {
+    addMemberToCard = (user,index) => {
         let newCard = this.props.card
+        let button = document.getElementById("btnNameMember"+index)
         if(newCard.cardUsers){
             if(newCard.cardUsers.includes(user._id)){
+                //button.firstChild = user.profile.lastname+' '+user.profile.firstname+;
+                button.innerHTML = user.profile.lastname+' '+user.profile.firstname
                 newCard.cardUsers = newCard.cardUsers.filter((id) => id!= user._id)
             }else{
 
                 newCard.cardUsers.push(user._id)
             }
         }else{
+            button.innerHTML = user.profile.lastname+' '+user.profile.firstname+' '+'<i class="ni ni-check-bold"/>'
             newCard.cardUsers = [user._id]
         }
 
@@ -36,15 +40,16 @@ class MemberProposer extends Component {
 
     render(){
             return (
+                <div>
                     <div className="card card-stats mb-4 mb-lg-0 cardForOptions">
                         <div className="card-body">
                             <ul className={"actionUl"}>
-                                {this.props.members.map((user) =>
-                                        <li>
-                                            <button type='button' className={"btn btn-secondary btnNameMember"}
+                                {this.props.members.map((user,index) =>
+                                        <li className={"actionMemLi"}>
+                                            <button type='button' key={index} id={"btnNameMember"+index} className={"btn btn-secondary btnNameMember"}
                                                     onClick={(e) => {
                                                         e.preventDefault();
-                                                        this.addMemberToCard(user)
+                                                        this.addMemberToCard(user,index)
                                                     }}> {user.profile.lastname} {user.profile.firstname}
                                             </button>
                                         </li>
@@ -53,6 +58,7 @@ class MemberProposer extends Component {
 
                         </div>
                     </div>
+                </div>
             );
         }
 

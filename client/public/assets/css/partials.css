@@ -194,6 +194,7 @@ nav {
 
 .actionUl{
     list-style-type: none;
+    padding-left: 0px;
 }
 
 .cardButtonEdit{
@@ -241,7 +242,7 @@ li{
 }
 
 .cardLabelsDiv{
-    margin-top: 12%;
+    margin-top: 5px;
 }
 .profile-picture {
     background-color: #5e72e4;
@@ -277,12 +278,13 @@ li{
     transition: 0.2s
 }
 .progress.card-progress{
-    margin-top: 20%;
+    margin-top: 10px;
 }
 
 .btnNameMember {
     margin-top: -40%;
     margin-left: -30%;
+    width: 100%;
     border-color: blue;
 }
 
@@ -301,12 +303,6 @@ li{
     float: left;
 }
 
-.profilInCard .profile-picture{
-    width: fit-content;
-    float: left
-
-}
-
 #listComment{
     max-width: 100%;
     word-break: break-all;
@@ -316,4 +312,11 @@ li{
     width: 88%
 }
 
+.profilInCard{
+    width: 0px;
+}
 
+
+.actionMemLi{
+    margin: 1px 0px
+}

@@ -23,6 +23,7 @@ class MemberAdd extends Component {
     }
 
     refreshUsers = (e) => {
+        e.preventDefault()
         let newSearch = e.target.value
         let usersId = this.state.board.boardUsers.map((user) => {
             return user.userId
@@ -40,9 +41,6 @@ class MemberAdd extends Component {
 
     }
 
-    renderMemberProposal(){
-
-    }
     render(){
             return (
                     <div>

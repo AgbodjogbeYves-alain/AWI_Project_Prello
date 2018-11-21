@@ -9,7 +9,7 @@ class AddUserInput extends Component {
         this.state = {
             addedUsers: this.props.addedUsers,
             userEmail: "",
-            userRole: 'user',
+            userRole: 'admin',
             users: [],
             alerts: []
         };
@@ -20,16 +20,16 @@ class AddUserInput extends Component {
             let user = this.props.users.filter((u) => u._id === addedUser.userId)[0];
             if(addedUser.userId === this.props.user._id) user = this.props.user;
             if(!user) return ""
-            
+
             return (
                 <div className="row" key={i}>
                     <div className="col-7">
                         {user.profile.email}
                     </div>
                     <div className="col-3">
-                        <select 
-                            className="mb-3" 
-                            value={addedUser.role} 
+                        <select
+                            className="mb-3"
+                            value={addedUser.role}
                             onChange={(e) => this.handleChangeUserRole(user._id, e.target.value)}
                         >
                             {this.renderRoleOptions()}
@@ -51,7 +51,7 @@ class AddUserInput extends Component {
         this.setState({addedUsers: newAddedUsers}, function(){
             this.onChange();
         });
-        
+
     }
 
     handleAddUser(){
@@ -64,11 +64,11 @@ class AddUserInput extends Component {
                 userId: user._id,
                 role: this.state.userRole
             })
-            
+
             this.setState({addedUsers: addedUsers});
             this.setState({userEmail: ''});
             this.onChange();
-        }    
+        }
         else this.addAlert("danger", "No user with this email.");
     }
 
@@ -80,21 +80,21 @@ class AddUserInput extends Component {
         let newAddedUsers = this.props.addedUsers.map((u) => {
             if(u.userId == userId){
                 u.role = userRole
-            } 
+            }
             return u
         })
 
         this.setState({addedUsers: newAddedUsers}, function(){
             this.onChange();
         });
-        
+
     }
 
     renderRoleOptions(){
         let optionList = [];
         if(this.props.type == "board") optionList = ["Admin", "Member", "Observer"];
         else if(this.props.type == "team") optionList = ['Admin', 'Member'];
-        return optionList.map((o, i) => 
+        return optionList.map((o, i) =>
             <option key={i} value={o.toLowerCase()}>{o}</option>
         )
     }
@@ -128,9 +128,9 @@ class AddUserInput extends Component {
                         </div>
                     </div>
                     <div className="col-3" style={{paddingTop: "11px"}}>
-                        <select 
-                            className="mb-3" 
-                            valus={this.state.userRole} 
+                        <select
+                            className="mb-3"
+                            valus={this.state.userRole}
                             onChange={(e) => this.setState({userRole: e.target.value})}
                         >
                             {this.renderRoleOptions()}

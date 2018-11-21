@@ -39,9 +39,14 @@ class Card extends Component {
     }
 
     renderUsers(){
-        return this.props.users.map((user, i) => {
+        let users = this.props.users
+        if(!users.includes(this.props.user)){
+            users.push(this.props.user)
+        }
+
+        return users.map((user, i) => {
             if(this.props.card.cardUsers && this.props.card.cardUsers.includes(user._id)){
-                return (<div className={"profilInCard"}><ProfilePicture key={i} user={user} size={"sm"}/></div>)
+                return (<div className="d-inline-block" style={{marginRight: "5px"}}><ProfilePicture key={i} user={user} size={"sm"}/></div>)
             }
         })
     }
@@ -57,7 +62,7 @@ class Card extends Component {
                                 data-toggle="modal" data-target={"#card-modal"+this.props.card._id}>
                         {this.props.card.cardTitle}
 
-                        <div className={"profilInCard"}>{this.renderUsers()}</div>
+                        <div className={"profilInCardDiv"}>{this.renderUsers()}</div>
                         {this.hasChecklist() ?
                             <div className="progress card-progress">
                                 <div className="progress-bar bg-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
