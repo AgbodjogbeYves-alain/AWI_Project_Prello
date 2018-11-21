@@ -50,7 +50,6 @@ nav .notifications {
 #boardDisplay{
     height: 100%;
     overflow-x: hidden;
-    overflow-y: hidden;
     background-size: cover;
     background-position-y: bottom;
 }
@@ -58,8 +57,6 @@ nav .notifications {
 [data-react-beautiful-dnd-droppable="0"]{
     margin-top: 5% ;
 }
-
-
 
 #navBarBoard {
     color: transparent;
@@ -93,11 +90,10 @@ nav {
 }
 
 #divList{
-    overflow-x: scroll;
-    overflow-y: hidden;
+    overflow-x: auto;
+    overflow-y: auto;
     float: left;
     width: 100%;
-    padding-top: 1%;
 }
 
 .sidenav {
@@ -317,3 +313,36 @@ li{
 
 
 
+@media screen and (max-width: 1000px) {
+    #navBarBoard{
+        display: none;
+    }
+
+    #searchBar{
+        display: none
+    }
+
+    .myAddListButton{
+        margin-top: 20%;
+        margin-left: 25%;
+    }
+    .card-body{
+
+    }
+
+    .addUser{
+        margin-left: 40px;
+    }
+
+    .deleteAddMember{
+        margin-left: 40px;
+    }
+
+    .card-body{
+        width: fit-content;
+    }
+
+    .backgroundDiv{
+        display: none;
+    }
+}

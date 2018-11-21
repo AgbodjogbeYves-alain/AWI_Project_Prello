@@ -33,7 +33,7 @@ Meteor.methods({
                     }
                 })
             } else
-                throw new Meteor.Error(403, "You do not have permission to create a list")            
+                throw new Meteor.Error(403, "You do not have permission to create a list")
         }else{
             throw new Meteor.Error(404, 'Board not found')
         }
@@ -61,7 +61,7 @@ Meteor.methods({
                     }
                 })
             } else
-                throw new Meteor.Error(403, "You do not have permission to delete a list")            
+                throw new Meteor.Error(403, "You do not have permission to delete a list")
         }else{
             throw new Meteor.Error(404, 'Board not found')
         }
@@ -71,13 +71,14 @@ Meteor.methods({
      * Edit a list in a card
      *
      * @param idBoard The id of the board
-     * @param newList The new list 
+     * @param newList The new list
      * @returns the id of board edited,
      *  an error if the board doesn't exist or if he user doesn't have the right to edit a list
      */
     'boards.lists.editList' (idBoard, newList) {
         let userId = this.userId
         let board = Boards.findOne({"_id": idBoard})
+        console.log(board)
         if(board){
             let userRole = boardUtils.getUserRole(userId, board)
             if(canPerform(userRole, CREATE_LIST)){
@@ -96,7 +97,7 @@ Meteor.methods({
                     }
                 })
             } else
-                throw new Meteor.Error(403, "You do not have permission to edit a list")            
+                throw new Meteor.Error(403, "You do not have permission to edit a list")
         }else{
             throw new Meteor.Error(404, 'Board not found')
         }

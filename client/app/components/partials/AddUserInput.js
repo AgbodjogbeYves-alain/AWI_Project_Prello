@@ -130,14 +130,14 @@ class AddUserInput extends Component {
                     <div className="col-3" style={{paddingTop: "11px"}}>
                         <select
                             className="mb-3"
-                            valus={this.state.userRole}
+                            value={this.state.userRole}
                             onChange={(e) => this.setState({userRole: e.target.value})}
                         >
                             {this.renderRoleOptions()}
                         </select>
                     </div>
                     <div className="col-3">
-                        <button className="btn btn-primary" onClick={() => this.handleAddUser()}>Add</button>
+                        <button className="btn btn-primary addUser" onClick={() => this.handleAddUser()}>Add</button>
                     </div>
                 </div>
             </div>

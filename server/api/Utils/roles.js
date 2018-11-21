@@ -59,7 +59,6 @@ const roles = {
         COPY_BOARD,
         ACCESS_BOARD,
         CREATE_LIST,
-
         ADD_MEMBER_CARD,
         CREATE_CHECKLIST,
         ADD_DEADLINE,
