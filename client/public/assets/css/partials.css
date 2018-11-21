@@ -283,7 +283,6 @@ li{
 
 .btnNameMember {
     margin-top: -40%;
-    margin-left: -30%;
     width: 100%;
     border-color: blue;
 }
@@ -317,6 +316,4 @@ li{
 }
 
 
-.actionMemLi{
-    margin: 1px 0px
-}
+

@@ -31,6 +31,7 @@ export default class LinkTrelloButton extends Component {
     }
 
     render(){
+        console.log(this.props.trelloToken)
         if(this.props.trelloToken){
             return(
                 <button

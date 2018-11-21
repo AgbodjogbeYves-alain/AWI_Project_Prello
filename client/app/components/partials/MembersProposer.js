@@ -26,11 +26,11 @@ class MemberProposer extends Component {
                 button.innerHTML = user.profile.lastname+' '+user.profile.firstname
                 newCard.cardUsers = newCard.cardUsers.filter((id) => id!= user._id)
             }else{
-
+                button.innerHTML = user.profile.lastname+' '+user.profile.firstname+' '+'<i class="ni ni-check-bold"/>'
                 newCard.cardUsers.push(user._id)
             }
         }else{
-            button.innerHTML = user.profile.lastname+' '+user.profile.firstname+' '+'<i class="ni ni-check-bold"/>'
+
             newCard.cardUsers = [user._id]
         }
 
