@@ -74,7 +74,7 @@ class MyAccount extends Component {
                                             </button>
                                         </div>
                                         <div className="card-profile-actions py-4 mt-lg-0 text-right">
-                                            <LinkTrelloButton trelloToken={this.props.user.profile.trelloToken} />
+                                            <LinkTrelloButton trelloToken={user ? user.profile.trelloToken : null} />
                                         </div>
                                     </div>
                                     <div className="col-lg-4 order-lg-1">
